@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayursiddhit | Admin Panel</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; margin: 0; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .hidden { display: none; }
+        h2 { color: #2e7d32; text-align: center; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #2e7d32; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .logout { background: #d32f2f; margin-top: 10px; }
+        .item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .del-btn { background: #ff5252; width: auto; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+<div id="login-box" class="container">
+    <h2>Admin Login</h2>
+    <input type="password" id="pass" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<div id="admin-box" class="container hidden">
+    <h2>Manage Products</h2>
+    <form id="p-form">
+        <input type="text" id="p-name" placeholder="Product Name (e.g. Neem Soap)" required>
+        <input type="number" id="p-price" placeholder="Price (e.g. 99)" required>
+        <input type="text" id="p-img" placeholder="Firebase Image Link" required>
+        <textarea id="p-desc" placeholder="Product Description" rows="3"></textarea>
+        <button type="submit">Add Product to Store</button>
+    </form>
+    
+    <hr>
+    <h3>Live Inventory</h3>
+    <div id="live-list">Loading...</div>
+    <button onclick="logout()" class="logout">Logout</button>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+      authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
+      projectId: "ayursiddhitnaturals-d2ecb",
+      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+      messagingSenderId: "704398728935",
+      appId: "1:704398728935:web:6330cb27578d80ce15cc42"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.login = () => {
+        if(document.getElementById('pass').value === "ayur123") {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('admin-box').classList.remove('hidden');
+            loadP();
+        } else { alert("Wrong Password!"); }
+    };
+
+    document.getElementById('p-form').onsubmit = async (e) => {
+        e.preventDefault();
+        await addDoc(collection(db, "products"), {
+            name: document.getElementById('p-name').value,
+            price: document.getElementById('p-price').value,
+            image: document.getElementById('p-img').value,
+            description: document.getElementById('p-desc').value
+        });
+        alert("Product Added!");
+        document.getElementById('p-form').reset();
+        loadP();
+    };
+
+    async function loadP() {
+        const snap = await getDocs(collection(db, "products"));
+        const list = document.getElementById('live-list');
+        list.innerHTML = '';
+        snap.forEach(pDoc => {
+            const p = pDoc.data();
+            list.innerHTML += `<div class="item"><span>${p.name} - ₹${p.price}</span><button class="del-btn" onclick="delP('${pDoc.id}')">Delete</button></div>`;
+        });
+    }
+
+    window.delP = async (id) => {
+        if(confirm("Remove this product?")) {
+            await deleteDoc(doc(db, "products", id));
+            loadP();
+        }
+    };
+
+    window.logout = () => location.reload();
+</script>
+</body>
+</html>
