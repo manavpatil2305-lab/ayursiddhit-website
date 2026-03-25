@@ -1,142 +1,126 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayursiddhit Admin | Secure Dashboard</title>
+    <title>Ayursiddhit | Admin Panel</title>
     <style>
-        body { font-family: sans-serif; background: #131921; color: white; padding: 20px; padding-bottom: 100px; }
-        .box { background: #232f3e; padding: 20px; border-radius: 12px; max-width: 450px; margin: auto; margin-bottom: 30px; border: 1px solid #3a4b5f; }
-        h2 { color: #febd69; text-align: center; margin-top: 0; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; box-sizing: border-box; font-size: 1rem; }
-        button { width: 100%; padding: 15px; background: #febd69; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; color: #131921; }
-        
-        /* Login Overlay */
-        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #131921; z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        
-        /* Inventory List */
-        .inventory-item { background: #1b2633; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #444; }
-        .item-info b { color: #febd69; display: block; font-size: 1.1rem; }
-        .del-btn { width: auto; background: #ff4d4d; color: white; padding: 8px 15px; font-size: 0.9rem; border-radius: 5px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; margin: 0; }
+        .container { max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
         .hidden { display: none !important; }
-        #msg { text-align: center; margin-top: 10px; font-weight: bold; color: #2ecc71; }
+        
+        /* LOGO STYLING */
+        .admin-logo { display: block; margin: 0 auto 15px; width: 70px; height: 70px; border-radius: 50%; border: 2px solid #2e7d32; object-fit: cover; }
+        
+        h2 { color: #2e7d32; text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
+        h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        button { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #1b5e20; }
+        
+        .logout { background: #d32f2f; margin-top: 20px; }
+        .item { background: #fff; border: 1px solid #eee; padding: 12px; margin: 8px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .del-btn { background: #ff5252; width: auto; padding: 6px 12px; font-size: 0.8rem; margin: 0; }
     </style>
 </head>
 <body>
 
-    <div id="login-overlay">
-        <div class="box">
-            <h2>Admin Login</h2>
-            <input type="password" id="admin-pass" placeholder="Enter Admin Password">
-            <button onclick="checkLogin()">Login to Dashboard</button>
-        </div>
+<div id="login-box" class="container">
+    <img src="logo.png" class="admin-logo" alt="Ayursiddhit Logo">
+    <h2>Admin Login</h2>
+    <input type="password" id="pass" placeholder="Enter Admin Password">
+    <button onclick="login()">Enter Dashboard</button>
+</div>
+
+<div id="admin-box" class="container hidden">
+    <img src="logo.png" class="admin-logo" alt="Ayursiddhit Logo">
+    <h2>Store Manager</h2>
+    
+    <form id="p-form">
+        <h3>Add New Product</h3>
+        <input type="text" id="p-name" placeholder="Product Name (e.g., Beetroot Soap)" required>
+        <input type="number" id="p-price" placeholder="Price in ₹" required>
+        <input type="text" id="p-img" placeholder="Firebase Image URL" required>
+        <textarea id="p-desc" placeholder="Product Description..." rows="3"></textarea>
+        <button type="submit">Publish to Store</button>
+    </form>
+    
+    <div style="margin-top: 30px;">
+        <h3>Live Inventory</h3>
+        <div id="live-list">Loading items...</div>
     </div>
+    
+    <button onclick="logout()" class="logout">Secure Logout</button>
+</div>
 
-    <div id="admin-content" class="hidden">
-        <div class="box">
-            <h2>List New Product</h2>
-            <input type="text" id="pName" placeholder="Product Name (e.g. Ubtan Soap)">
-            <input type="number" id="pPrice" placeholder="Price (₹)">
-            <input type="text" id="pImage" placeholder="Image Filename (e.g. soap1.jpg)">
-            <textarea id="pDesc" placeholder="Product Description" rows="2"></textarea>
-            <button id="addBtn">Add to Storefront</button>
-            <div id="msg"></div>
-        </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        <div class="box">
-            <h2>Live Inventory</h2>
-            <div id="inventory-list">Connecting to Cloud...</div>
-        </div>
-    </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+      authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
+      projectId: "ayursiddhitnaturals-d2ecb",
+      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+      messagingSenderId: "704398728935",
+      appId: "1:704398728935:web:6330cb27578d80ce15cc42"
+    };
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        // Your Firebase Keys
-        const firebaseConfig = {
-          apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
-          authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
-          projectId: "ayursiddhitnaturals-d2ecb",
-          storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
-          messagingSenderId: "704398728935",
-          appId: "1:704398728935:web:6330cb27578d80ce15cc42"
-        };
+    window.login = () => {
+        if(document.getElementById('pass').value === "ayur123") {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('admin-box').classList.remove('hidden');
+            listenToProducts();
+        } else { alert("Access Denied: Wrong Password"); }
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const colRef = collection(db, "products");
-
-        // === LOGIN LOGIC ===
-        window.checkLogin = () => {
-            const passInput = document.getElementById('admin-pass').value;
-            const correctPass = "230501"; // <--- CHANGE YOUR PASSWORD HERE
-
-            if (passInput === correctPass) {
-                document.getElementById('login-overlay').classList.add('hidden');
-                document.getElementById('admin-content').classList.remove('hidden');
-            } else {
-                alert("Incorrect Password! Access Denied.");
-            }
-        };
-
-        // === ADD PRODUCT ===
-        document.getElementById('addBtn').onclick = async () => {
-            const name = document.getElementById('pName').value;
-            const price = document.getElementById('pPrice').value;
-            const img = document.getElementById('pImage').value;
-            const desc = document.getElementById('pDesc').value;
-
-            if(!name || !price) return alert("Product Name and Price are required!");
-
-            document.getElementById('msg').innerText = "Uploading...";
-
-            try {
-                await addDoc(colRef, {
-                    name: name,
-                    price: Number(price),
-                    image: img,
-                    description: desc,
-                    date: new Date()
-                });
-                document.querySelectorAll('input, textarea').forEach(i => i.value = '');
-                document.getElementById('msg').innerText = "✅ Product Added Successfully!";
-                setTimeout(() => document.getElementById('msg').innerText = "", 3000);
-            } catch (e) { alert("Error: " + e.message); }
-        };
-
-        // === LIVE INVENTORY VIEW ===
-        onSnapshot(colRef, (snapshot) => {
-            const list = document.getElementById('inventory-list');
-            list.innerHTML = '';
-            
-            snapshot.forEach((productDoc) => {
-                const p = productDoc.data();
-                const id = productDoc.id;
-
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'inventory-item';
-                itemDiv.innerHTML = `
-                    <div class="item-info">
-                        <b>${p.name}</b>
-                        <span>₹${p.price}</span>
-                    </div>
-                    <button class="del-btn" onclick="deleteProduct('${id}')">Delete</button>
-                `;
-                list.appendChild(itemDiv);
+    document.getElementById('p-form').onsubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await addDoc(collection(db, "products"), {
+                name: document.getElementById('p-name').value,
+                price: Number(document.getElementById('p-price').value),
+                image: document.getElementById('p-img').value,
+                description: document.getElementById('p-desc').value,
+                timestamp: Date.now()
             });
-            
-            if(snapshot.empty) list.innerHTML = "<p style='text-align:center;'>Your store is currently empty.</p>";
-        });
+            alert("Success! Product is now live.");
+            document.getElementById('p-form').reset();
+        } catch (err) { alert("Error adding product: " + err.message); }
+    };
 
-        // === DELETE FUNCTION ===
-        window.deleteProduct = async (id) => {
-            if(confirm("Confirm: Permanently delete this item from the store?")) {
-                try {
-                    await deleteDoc(doc(db, "products", id));
-                } catch (e) { alert("Delete Error: " + e.message); }
-            }
-        };
-    </script>
+    function listenToProducts() {
+        onSnapshot(collection(db, "products"), (snap) => {
+            const list = document.getElementById('live-list');
+            list.innerHTML = '';
+            if (snap.empty) { list.innerHTML = '<p style="text-align:center;color:#999;">No products in store.</p>'; return; }
+            snap.forEach(pDoc => {
+                const p = pDoc.data();
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<span><b>${p.name}</b> - ₹${p.price}</span>`;
+                const delBtn = document.createElement('button');
+                delBtn.innerText = 'Delete';
+                delBtn.className = 'del-btn';
+                delBtn.onclick = () => delP(pDoc.id);
+                div.appendChild(delBtn);
+                list.appendChild(div);
+            });
+        });
+    }
+
+    window.delP = async (id) => {
+        if(confirm("Permanently delete this product?")) {
+            await deleteDoc(doc(db, "products", id));
+        }
+    };
+
+    window.logout = () => location.reload();
+</script>
 </body>
 </html>
+    
