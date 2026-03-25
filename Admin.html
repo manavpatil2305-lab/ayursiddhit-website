@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayursiddhit Admin | Secure Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background: #131921; color: white; padding: 20px; padding-bottom: 100px; }
+        .box { background: #232f3e; padding: 20px; border-radius: 12px; max-width: 450px; margin: auto; margin-bottom: 30px; border: 1px solid #3a4b5f; }
+        h2 { color: #febd69; text-align: center; margin-top: 0; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; box-sizing: border-box; font-size: 1rem; }
+        button { width: 100%; padding: 15px; background: #febd69; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; color: #131921; }
+        
+        /* Login Overlay */
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #131921; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        
+        /* Inventory List */
+        .inventory-item { background: #1b2633; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #444; }
+        .item-info b { color: #febd69; display: block; font-size: 1.1rem; }
+        .del-btn { width: auto; background: #ff4d4d; color: white; padding: 8px 15px; font-size: 0.9rem; border-radius: 5px; }
+        .hidden { display: none !important; }
+        #msg { text-align: center; margin-top: 10px; font-weight: bold; color: #2ecc71; }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="box">
+            <h2>Admin Login</h2>
+            <input type="password" id="admin-pass" placeholder="Enter Admin Password">
+            <button onclick="checkLogin()">Login to Dashboard</button>
+        </div>
+    </div>
+
+    <div id="admin-content" class="hidden">
+        <div class="box">
+            <h2>List New Product</h2>
+            <input type="text" id="pName" placeholder="Product Name (e.g. Ubtan Soap)">
+            <input type="number" id="pPrice" placeholder="Price (₹)">
+            <input type="text" id="pImage" placeholder="Image Filename (e.g. soap1.jpg)">
+            <textarea id="pDesc" placeholder="Product Description" rows="2"></textarea>
+            <button id="addBtn">Add to Storefront</button>
+            <div id="msg"></div>
+        </div>
+
+        <div class="box">
+            <h2>Live Inventory</h2>
+            <div id="inventory-list">Connecting to Cloud...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Your Firebase Keys
+        const firebaseConfig = {
+          apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+          authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
+          projectId: "ayursiddhitnaturals-d2ecb",
+          storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+          messagingSenderId: "704398728935",
+          appId: "1:704398728935:web:6330cb27578d80ce15cc42"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const colRef = collection(db, "products");
+
+        // === LOGIN LOGIC ===
+        window.checkLogin = () => {
+            const passInput = document.getElementById('admin-pass').value;
+            const correctPass = "ayur123"; // <--- CHANGE YOUR PASSWORD HERE
+
+            if (passInput === correctPass) {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+            } else {
+                alert("Incorrect Password! Access Denied.");
+            }
+        };
+
+        // === ADD PRODUCT ===
+        document.getElementById('addBtn').onclick = async () => {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const img = document.getElementById('pImage').value;
+            const desc = document.getElementById('pDesc').value;
+
+            if(!name || !price) return alert("Product Name and Price are required!");
+
+            document.getElementById('msg').innerText = "Uploading...";
+
+            try {
+                await addDoc(colRef, {
+                    name: name,
+                    price: Number(price),
+                    image: img,
+                    description: desc,
+                    date: new Date()
+                });
+                document.querySelectorAll('input, textarea').forEach(i => i.value = '');
+                document.getElementById('msg').innerText = "✅ Product Added Successfully!";
+                setTimeout(() => document.getElementById('msg').innerText = "", 3000);
+            } catch (e) { alert("Error: " + e.message); }
+        };
+
+        // === LIVE INVENTORY VIEW ===
+        onSnapshot(colRef, (snapshot) => {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = '';
+            
+            snapshot.forEach((productDoc) => {
+                const p = productDoc.data();
+                const id = productDoc.id;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'inventory-item';
+                itemDiv.innerHTML = `
+                    <div class="item-info">
+                        <b>${p.name}</b>
+                        <span>₹${p.price}</span>
+                    </div>
+                    <button class="del-btn" onclick="deleteProduct('${id}')">Delete</button>
+                `;
+                list.appendChild(itemDiv);
+            });
+            
+            if(snapshot.empty) list.innerHTML = "<p style='text-align:center;'>Your store is currently empty.</p>";
+        });
+
+        // === DELETE FUNCTION ===
+        window.deleteProduct = async (id) => {
+            if(confirm("Confirm: Permanently delete this item from the store?")) {
+                try {
+                    await deleteDoc(doc(db, "products", id));
+                } catch (e) { alert("Delete Error: " + e.message); }
+            }
+        };
+    </script>
+</body>
+</html>
