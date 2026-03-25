@@ -1,54 +1,75 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayursiddhit | Admin Panel</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>Ayursiddhit | Admin Dashboard</title>
+    
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; margin: 0; }
-        .container { max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        :root {
+            --admin-green: #2e7d32;
+            --bg-gray: #f8f9fa;
+            --white: #ffffff;
+            --danger: #d32f2f;
+        }
+
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg-gray); padding: 15px; margin: 0; color: #333; }
         .hidden { display: none !important; }
         
+        .container { max-width: 480px; margin: 20px auto; background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        
         /* LOGO STYLING */
-        .admin-logo { display: block; margin: 0 auto 15px; width: 70px; height: 70px; border-radius: 50%; border: 2px solid #2e7d32; object-fit: cover; }
+        .admin-logo { display: block; margin: 0 auto 15px; width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--admin-green); object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        h2 { color: #2e7d32; text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
-        h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
+        h2 { text-align: center; color: var(--admin-green); margin-bottom: 25px; font-weight: 700; }
+        h3 { font-size: 1.1rem; border-left: 4px solid var(--admin-green); padding-left: 10px; margin: 20px 0 15px; }
+
+        input, textarea { width: 100%; padding: 14px; margin: 10px 0; border: 1.5px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 1rem; transition: 0.3s; }
+        input:focus { border-color: var(--admin-green); outline: none; box-shadow: 0 0 5px rgba(46,125,50,0.2); }
         
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        button { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #1b5e20; }
+        button { width: 100%; padding: 16px; background: var(--admin-green); color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 1.05rem; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:active { transform: scale(0.98); }
         
-        .logout { background: #d32f2f; margin-top: 20px; }
-        .item { background: #fff; border: 1px solid #eee; padding: 12px; margin: 8px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .del-btn { background: #ff5252; width: auto; padding: 6px 12px; font-size: 0.8rem; margin: 0; }
+        .nav-btn { background: #555; margin-bottom: 15px; padding: 10px; font-size: 0.9rem; }
+        .logout { background: var(--danger); margin-top: 25px; }
+        
+        /* LIST STYLING */
+        .item { background: #fff; border: 1px solid #eee; padding: 15px; margin: 10px 0; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .item span { font-weight: 600; font-size: 0.95rem; }
+        .del-btn { background: #ff5252; width: auto; padding: 8px 15px; font-size: 0.85rem; margin: 0; }
     </style>
 </head>
 <body>
 
 <div id="login-box" class="container">
-    <img src="logo.png" class="admin-logo" alt="Ayursiddhit Logo">
-    <h2>Admin Login</h2>
-    <input type="password" id="pass" placeholder="Enter Admin Password">
-    <button onclick="login()">Enter Dashboard</button>
+    <img src="logo.png" class="admin-logo" alt="Logo">
+    <h2>Admin Access</h2>
+    <input type="password" id="pass" placeholder="Enter Secure Password">
+    <button onclick="login()">Open Store Manager</button>
 </div>
 
 <div id="admin-box" class="container hidden">
-    <img src="logo.png" class="admin-logo" alt="Ayursiddhit Logo">
-    <h2>Store Manager</h2>
+    <img src="logo.png" class="admin-logo" alt="Logo">
+    <button class="nav-btn" onclick="window.open('https://ayursiddhit-website.vercel.app', '_blank')">🌐 View Live Store</button>
+    <h2>Dashboard</h2>
     
     <form id="p-form">
-        <h3>Add New Product</h3>
-        <input type="text" id="p-name" placeholder="Product Name (e.g., Beetroot Soap)" required>
-        <input type="number" id="p-price" placeholder="Price in ₹" required>
-        <input type="text" id="p-img" placeholder="Firebase Image URL" required>
-        <textarea id="p-desc" placeholder="Product Description..." rows="3"></textarea>
-        <button type="submit">Publish to Store</button>
+        <h3>+ Add New Product</h3>
+        <input type="text" id="p-name" placeholder="Name (e.g., Neem Tulsi Soap)" required>
+        <input type="number" id="p-price" placeholder="Price (₹)" required>
+        <input type="text" id="p-img" placeholder="Firebase Image Link" required>
+        <textarea id="p-desc" placeholder="Product Details/Benefits..." rows="3"></textarea>
+        <button type="submit">Publish to Website</button>
     </form>
     
     <div style="margin-top: 30px;">
-        <h3>Live Inventory</h3>
-        <div id="live-list">Loading items...</div>
+        <h3>📦 Current Inventory</h3>
+        <div id="live-list">Checking products...</div>
     </div>
     
     <button onclick="logout()" class="logout">Secure Logout</button>
@@ -71,11 +92,12 @@
     const db = getFirestore(app);
 
     window.login = () => {
+        // Your current password is set to: ayur123
         if(document.getElementById('pass').value === "ayur123") {
             document.getElementById('login-box').classList.add('hidden');
             document.getElementById('admin-box').classList.remove('hidden');
             listenToProducts();
-        } else { alert("Access Denied: Wrong Password"); }
+        } else { alert("Incorrect Password!"); }
     };
 
     document.getElementById('p-form').onsubmit = async (e) => {
@@ -88,21 +110,21 @@
                 description: document.getElementById('p-desc').value,
                 timestamp: Date.now()
             });
-            alert("Success! Product is now live.");
+            alert("✅ Product is now live!");
             document.getElementById('p-form').reset();
-        } catch (err) { alert("Error adding product: " + err.message); }
+        } catch (err) { alert("Failed to add product: " + err.message); }
     };
 
     function listenToProducts() {
         onSnapshot(collection(db, "products"), (snap) => {
             const list = document.getElementById('live-list');
             list.innerHTML = '';
-            if (snap.empty) { list.innerHTML = '<p style="text-align:center;color:#999;">No products in store.</p>'; return; }
+            if (snap.empty) { list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No products found.</p>'; return; }
             snap.forEach(pDoc => {
                 const p = pDoc.data();
                 const div = document.createElement('div');
                 div.className = 'item';
-                div.innerHTML = `<span><b>${p.name}</b> - ₹${p.price}</span>`;
+                div.innerHTML = `<span><b>${p.name}</b><br><small>₹${p.price}</small></span>`;
                 const delBtn = document.createElement('button');
                 delBtn.innerText = 'Delete';
                 delBtn.className = 'del-btn';
@@ -114,7 +136,7 @@
     }
 
     window.delP = async (id) => {
-        if(confirm("Permanently delete this product?")) {
+        if(confirm("Confirm: Delete product from website?")) {
             await deleteDoc(doc(db, "products", id));
         }
     };
@@ -123,4 +145,4 @@
 </script>
 </body>
 </html>
-    
+
