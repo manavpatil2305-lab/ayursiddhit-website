@@ -19,82 +19,56 @@
         body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); padding-bottom: 20px; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* HEADER & TOUCH FIXES */
-        header { 
-            background: var(--amazon-navy); 
-            color: white; 
-            padding: 10px 12px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 2000;
-            border-bottom: 2px solid var(--luxury-gold);
-        }
-
-        .h-top-row { display: flex; align-items: center; justify-content: space-between; position: relative; }
-        
-        /* LOGO (LEFT) */
+        /* HEADER: FIXED OVERLAP */
+        header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury-gold); }
+        .h-top-row { display: flex; align-items: center; justify-content: space-between; }
         .h-logo-section { display: flex; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0; }
         .h-logo { height: 38px; width: 38px; border-radius: 50%; border: 1.5px solid var(--luxury-gold); object-fit: cover; }
         .h-brand-text { font-size: 0.9rem; font-weight: 700; line-height: 1; }
         .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
 
-        /* ACTIONS (RIGHT) - FIXED SPACING */
+        /* ACTIONS: ENQUIRY LEFT, SIGN IN RIGHT */
         .h-pro-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        
-        /* MOVED ENQUIRY SLIGHTLY LEFT */
         .h-enquiry-pro { text-align: right; padding-right: 8px; border-right: 1px solid #3a4553; }
-        .h-enquiry-pro span { display: block; font-size: 0.5rem; color: #aaa; text-transform: uppercase; }
-        .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.72rem; animation: pulse 2s infinite; }
+        .h-enquiry-pro span { display: block; font-size: 0.5rem; color: #aaa; }
+        .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.72rem; }
 
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-
-        /* FIXED SIGN IN BUTTON AREA */
-        .h-action-item { 
-            background: none; 
-            border: none; 
-            color: white; 
-            cursor: pointer; 
-            text-align: center; 
-            padding: 5px; 
-            position: relative; 
-            z-index: 2100; /* Higher z-index to ensure touch works */
-            min-width: 50px;
-        }
-        .h-action-item b { font-size: 0.9rem; display: block; color: white; }
+        .h-action-item { background: none; border: none; color: white; cursor: pointer; text-align: center; padding: 5px; z-index: 2100; min-width: 50px; }
+        .h-action-item b { font-size: 0.85rem; display: block; color: white; }
         .h-action-item span { font-size: 0.55rem; color: var(--brand-gold); font-weight: bold; }
 
+        /* SEARCH BAR */
         .h-search-row { margin-top: 8px; }
         .h-search-box { display: flex; position: relative; width: 100%; }
-        .h-search-input { width: 100%; padding: 8px 15px; border-radius: 20px; border: none; font-size: 0.85rem; outline: none; background: #fff; }
-        .h-search-btn { position: absolute; right: 4px; top: 4px; bottom: 4px; background: var(--brand-green); width: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .h-search-input { width: 100%; padding: 8px 15px; border-radius: 20px; border: none; outline: none; font-size: 0.85rem; }
+        .h-search-btn { position: absolute; right: 4px; top: 4px; bottom: 4px; background: var(--brand-green); width: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; }
 
-        /* ADS TRACK (AUTO-MOVING) */
+        /* AUTO-SLIDING ADS */
         .ads-wrapper { background: #fff; overflow: hidden; padding: 10px 0; border-bottom: 1px solid #ddd; }
         .ads-track { display: flex; width: calc(260px * 4 + 40px); animation: scroll 15s linear infinite; gap: 10px; padding-left: 10px; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-260px * 2 - 10px)); } }
-        .ad-card { flex: 0 0 260px; border-radius: 10px; padding: 10px; color: white; position: relative; display: flex; align-items: center; height: 60px; }
+        .ad-card { flex: 0 0 260px; border-radius: 10px; padding: 10px; color: white; height: 60px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; font-size: 0.85rem; }
         .ad-1 { background: linear-gradient(45deg, #1b5e20, #388e3c); }
         .ad-2 { background: linear-gradient(45deg, #8d6e35, #c5a059); }
-        .ad-text h4 { margin: 0; font-size: 0.85rem; }
-        .ad-text p { margin: 2px 0 0; font-size: 0.7rem; }
 
-        /* PRODUCT LIST */
+        /* PRODUCT GRID */
         .main-container { padding: 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .p-card { background: white; border-radius: 8px; padding: 8px; position: relative; border: 1px solid #eee; }
-        .p-badge { position: absolute; top: 6px; left: 6px; background: rgba(27, 94, 32, 0.9); color: white; font-size: 0.55rem; padding: 2px 6px; border-radius: 3px; font-weight: bold; z-index: 10; }
+        .p-card { background: white; border-radius: 8px; padding: 8px; border: 1px solid #eee; position: relative; }
         .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 6px; }
-        .p-title { font-size: 0.8rem; font-weight: 600; margin: 8px 0 4px; height: 2.4em; overflow: hidden; color: #333; line-height: 1.2; }
+        .p-title { font-size: 0.8rem; height: 2.4em; overflow: hidden; margin: 8px 0; color: #333; }
         .p-price { font-size: 1rem; font-weight: bold; color: var(--price-red); }
-        .btn-prime { background: var(--brand-gold); color: #111; border: none; padding: 8px; width: 100%; border-radius: 8px; font-weight: bold; margin-top: 6px; font-size: 0.75rem; }
+        .btn-prime { background: var(--brand-gold); border: none; padding: 8px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 6px; }
 
-        /* MODALS */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 8px; font-size: 0.9rem; }
-        
+        /* CART VIEW */
+        .cart-overlay { padding: 15px; max-width: 500px; margin: auto; }
+        .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; text-align: center; border: 1px solid #c3e6cb; font-size: 0.8rem; }
+
         /* FLOATING WHATSAPP */
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+        
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
     </style>
 </head>
 <body>
@@ -105,25 +79,16 @@
             <img src="logo.png" class="h-logo">
             <div class="h-brand-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
-        
         <div class="h-pro-actions">
-            <div class="h-enquiry-pro">
-                <span>Enquiry</span>
-                <b>8080926195</b>
-            </div>
-            
+            <div class="h-enquiry-pro"><span>Enquiry</span><b>8080926195</b></div>
             <button class="h-action-item" id="auth-btn" onclick="openLogin()">
-                <span id="welcome-text">Sign In</span>
-                <b>Account</b>
+                <span id="welcome-text">Sign In</span><b>Account</b>
             </button>
-            
-            <button class="h-action-item" onclick="showCart()" style="position:relative; margin-left:5px;">
-                <b>🛒</b>
-                <span id="cart-badge" style="position:absolute; top:-4px; right:-6px; background:red; color:white; padding:1px 4px; border-radius:50%; font-size:0.6rem;">0</span>
+            <button class="h-action-item" onclick="showCart()" style="position:relative;">
+                <b>🛒</b><span id="cart-badge" style="position:absolute; top:-4px; right:-6px; background:red; color:white; padding:1px 4px; border-radius:50%; font-size:0.6rem;">0</span>
             </button>
         </div>
     </div>
-    
     <div class="h-search-row">
         <div class="h-search-box">
             <input type="text" id="search-bar" class="h-search-input" placeholder="Search soaps, oils..." onkeyup="search()">
@@ -132,88 +97,54 @@
     </div>
 </header>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+<div class="ads-wrapper">
+    <div class="ads-track">
+        <div class="ad-card ad-1">🚚 FREE DELIVERY (Above ₹800)</div>
+        <div class="ad-card ad-2">🧼 5 SOAPS = FREE SHIPPING</div>
+        <div class="ad-card ad-1">🚚 FREE DELIVERY (Above ₹800)</div>
+        <div class="ad-card ad-2">🧼 5 SOAPS = FREE SHIPPING</div>
+    </div>
+</div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
-      authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
-      projectId: "ayursiddhitnaturals-d2ecb",
-      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
-      messagingSenderId: "704398728935",
-      appId: "1:704398728935:web:6330cb27578d80ce15cc42"
-    };
+<main class="main-container" id="main-view">
+    <div class="product-grid" id="product-list">
+        <p style="text-align:center; padding:50px;">Handcrafting your store...</p>
+    </div>
+</main>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    // REAL LOGIN OPENING
-    window.openLogin = () => {
-        console.log("Opening Login Modal");
-        document.getElementById('login-modal').classList.remove('hidden');
-    };
-    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
-
-    window.handleGoogleLogin = async () => {
-        try {
-            await signInWithPopup(auth, provider);
-            closeLogin();
-        } catch (e) {
-            console.error(e);
-            alert("Please use Chrome or Safari for Google Login.");
-        }
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        const welcome = document.getElementById('welcome-text');
-        if(user) {
-            welcome.innerText = "Hi, " + user.displayName.split(' ')[0];
-            document.getElementById('auth-btn').onclick = () => {
-                if(confirm("Do you want to logout?")) signOut(auth);
-            };
-        } else {
-            welcome.innerText = "Sign In";
-            document.getElementById('auth-btn').onclick = openLogin;
-        }
-    });
-
-    // (Include renderCart, addToCart, and load functions to ensure full functionality)
-    let allProducts = [];
-    let cart = {};
-    async function load() {
-        const snap = await getDocs(collection(db, "products"));
-        allProducts = [];
-        snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
-        render(allProducts);
-    }
-    function render(list) {
-        const grid = document.getElementById('product-list');
-        grid.innerHTML = '';
-        list.forEach(p => {
-            grid.innerHTML += `<div class="p-card"><div class="p-badge">DR'S PICK</div><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><div class="p-price">₹${p.price}</div><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
-        });
-    }
-    window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); };
-    function updateBadge() { document.getElementById('cart-badge').innerText = Object.values(cart).reduce((a, b) => a + b, 0); }
-    window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
-    window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
-    load();
-</script>
+<div id="cart-view" class="hidden cart-overlay">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items-list"></div>
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
+        <div id="ship-promo" class="ship-alert hidden">🎉 CONGRATS! You unlocked FREE SHIPPING!</div>
+        <p>Subtotal: ₹<span id="sub-total">0</span></p>
+        <p>Shipping Charge: <span id="ship-cost-text">₹50</span></p>
+        <h3 style="color:var(--price-red);">Final Total: ₹<span id="final-total">0</span></h3>
+        <button onclick="checkoutWA()" class="btn-prime" style="background:#25D366; color:white; border:none; padding:15px;">Order on WhatsApp</button>
+        <button onclick="closeCart()" style="width:100%; background:none; border:none; color:blue; margin-top:10px;">Back to Shopping</button>
+    </div>
+</div>
 
 <div id="login-modal" class="modal hidden">
     <div class="modal-content">
         <img src="logo.png" style="height:50px; border-radius:50%; margin-bottom:10px;">
         <h3>Sign In</h3>
-        <button class="btn-prime" onclick="handleGoogleLogin()" style="background:#fff; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;">
+        <button onclick="handleGoogleLogin()" class="btn-prime" style="background:white; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16"> Continue with Google
         </button>
-        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:15px; font-size:0.8rem;">Close</button>
+        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:20px;">Close</button>
     </div>
 </div>
 
-</body>
-</html>
+<a href="https://wa.me/918080926195" class="floating-wa">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
+</a>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+      authDomain: "
