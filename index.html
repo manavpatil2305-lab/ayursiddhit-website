@@ -147,4 +147,100 @@
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
-      authDomain: "
+      authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
+      projectId: "ayursiddhitnaturals-d2ecb",
+      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+      messagingSenderId: "704398728935",
+      appId: "1:704398728935:web:6330cb27578d80ce15cc42"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // SERVICE WORKER REGISTRATION (For Install Button)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+
+    let allProducts = [];
+    let cart = {};
+
+    window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
+    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
+    
+    window.handleGoogleLogin = async () => {
+        try { await signInWithPopup(auth, provider); closeLogin(); }
+        catch(e) { alert("Login failed. Please use Chrome browser."); }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+        const welcome = document.getElementById('welcome-text');
+        if(user) { welcome.innerText = user.displayName.split(' ')[0]; }
+        else { welcome.innerText = "Sign In"; }
+    });
+
+    async function load() {
+        try {
+            const snap = await getDocs(collection(db, "products"));
+            allProducts = [];
+            snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
+            render(allProducts);
+        } catch(e) { document.getElementById('product-list').innerHTML = "Connection Error. Refresh Page."; }
+    }
+
+    function render(list) {
+        const grid = document.getElementById('product-list');
+        grid.innerHTML = '';
+        list.forEach(p => {
+            grid.innerHTML += `<div class="p-card"><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><p class="p-price">₹${p.price}</p><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
+        });
+    }
+
+    window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); };
+    window.updateQty = (id, delta) => { cart[id] += delta; if(cart[id] <= 0) delete cart[id]; renderCart(); updateBadge(); };
+    function updateBadge() { document.getElementById('cart-badge').innerText = Object.values(cart).reduce((a, b) => a + b, 0); }
+    
+    window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
+    window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
+
+    function renderCart() {
+        const list = document.getElementById('cart-items-list'); list.innerHTML = '';
+        let sub = 0; let totalItems = 0;
+        for(let id in cart) {
+            const p = allProducts.find(x => x.id === id);
+            if(p) { sub += (p.price * cart[id]); totalItems += cart[id];
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} x ${cart[id]}</span><span>₹${p.price * cart[id]}</span></div>`;
+            }
+        }
+        const free = (sub >= 800 || totalItems >= 5);
+        document.getElementById('sub-total').innerText = sub;
+        document.getElementById('ship-cost-text').innerText = free ? "FREE" : "₹50";
+        document.getElementById('final-total').innerText = sub + (free ? 0 : 50);
+        if(free && totalItems > 0) document.getElementById('ship-promo').classList.remove('hidden');
+        else document.getElementById('ship-promo').classList.add('hidden');
+    }
+
+    window.checkoutWA = () => {
+        let msg = `🛍️ *Order: Ayursiddhit Naturals*\n\n`;
+        for(let id in cart) {
+            const p = allProducts.find(x => x.id === id);
+            msg += `- ${p.name} x ${cart[id]}\n`;
+        }
+        msg += `\n*TOTAL:* ₹${document.getElementById('final-total').innerText}`;
+        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+    };
+
+    window.search = () => {
+        const q = document.getElementById('search-bar').value.toLowerCase();
+        render(allProducts.filter(p => p.name.toLowerCase().includes(q)));
+    };
+
+    load();
+</script>
+</body>
+</html>
+  
