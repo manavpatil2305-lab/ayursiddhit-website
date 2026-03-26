@@ -16,20 +16,17 @@
             --price-red: #B12704;
         }
 
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-gray); padding-bottom: 20px; }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-gray); padding-bottom: 20px; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* PREMIUM HEADER */
+        /* HEADER */
         header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; }
         .h-top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        
-        /* LOGO SECTION */
         .h-logo-section { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .h-logo { height: 42px; width: 42px; border-radius: 50%; border: 1.5px solid var(--brand-gold); object-fit: cover; }
         .h-brand-text { font-size: 1rem; font-weight: bold; line-height: 1.1; }
         .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.75rem; }
 
-        /* RIGHT ACTIONS (Enquiry, Login, Cart) */
         .h-pro-actions { display: flex; align-items: center; gap: 12px; }
         .h-action-item { text-align: right; background: none; border: none; color: white; cursor: pointer; padding: 0; }
         .h-action-item span { display: block; font-size: 0.7rem; color: #ccc; }
@@ -38,28 +35,41 @@
         .h-enquiry-pro span { display: block; font-size: 0.65rem; color: #ccc; }
         .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.8rem; }
 
-        /* SEARCH BAR ROW */
         .h-search-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #3a4553; }
         .h-search-box { flex-grow: 1; display: flex; position: relative; }
         .h-search-input { width: 100%; padding: 11px 45px 11px 15px; border-radius: 6px; border: none; font-size: 0.95rem; outline: none; }
-        .h-search-btn { position: absolute; right: 0; top: 0; bottom: 0; background: var(--brand-gold); width: 45px; border-radius: 0 6px 6px 0; border: none; display: flex; align-items: center; justify-content: center; color: #333; }
+        .h-search-btn { position: absolute; right: 0; top: 0; bottom: 0; background: var(--brand-gold); width: 45px; border-radius: 0 6px 6px 0; border: none; display: flex; align-items: center; justify-content: center; }
 
-        /* PRODUCT CARDS */
-        .main-container { padding: 10px; }
+        /* AUTO-MOVING BANNERS */
+        .ads-wrapper { background: #fff; overflow: hidden; padding: 15px 0; border-bottom: 2px solid #ddd; }
+        .ads-track { display: flex; width: calc(280px * 4 + 40px); animation: scroll 15s linear infinite; gap: 10px; padding-left: 10px; }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-280px * 2 - 20px)); }
+        }
+
+        .ad-card { flex: 0 0 280px; border-radius: 12px; padding: 15px; color: white; position: relative; display: flex; align-items: center; height: 80px; }
+        .ad-1 { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); border-bottom: 4px solid var(--brand-gold); }
+        .ad-2 { background: linear-gradient(135deg, #c5a059 0%, #8d6e35 100%); border-bottom: 4px solid #1b5e20; }
+        .ad-text h4 { margin: 0; font-size: 1rem; text-transform: uppercase; }
+        .ad-text p { margin: 5px 0 0; font-size: 0.8rem; opacity: 0.9; }
+        .ad-icon { font-size: 2rem; position: absolute; right: 10px; bottom: 5px; opacity: 0.2; }
+
+        /* PRODUCTS */
+        .main-container { padding: 15px 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .p-card { background: white; border-radius: 6px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #eee; }
-        .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; }
-        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 8px 0; color: #222; font-weight: 500; }
+        .p-card { background: white; border-radius: 8px; padding: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.06); border: 1px solid #eee; }
+        .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 6px; }
+        .p-badge { position: absolute; top: 6px; left: 6px; background: var(--brand-green); color: white; font-size: 0.6rem; padding: 3px 7px; border-radius: 4px; font-weight: bold; }
         .p-price { font-size: 1.15rem; font-weight: bold; color: var(--price-red); }
-
         .btn-prime { background: #f0c14b; border: 1px solid #a88734; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; margin-top: 10px; }
         
-        /* CHECKOUT FORM */
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.95rem; }
-        
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
+        /* CART & CHECKOUT */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 380px; text-align: center; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; }
+        .free-ship-alert { background: #e7f4e8; color: #1b5e20; padding: 12px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px; border: 1px solid #c3e6cb; }
     </style>
 </head>
 <body>
@@ -67,83 +77,59 @@
 <header>
     <div class="h-top-row">
         <div class="h-logo-section" onclick="location.reload()">
-            <img src="logo.png" class="h-logo" alt="logo">
+            <img src="logo.png" class="h-logo">
             <div class="h-brand-text">Ayursiddhit<span>Naturals.in</span></div>
         </div>
-
         <div class="h-pro-actions">
-            <div class="h-enquiry-pro">
-                <span>Enquiry</span>
-                <b>8080926195</b>
-            </div>
-            <button class="h-action-item" id="auth-btn" onclick="openLogin()">
-                <span>Hello, <span id="welcome-text">Sign in</span></span>
-                <b>Account</b>
-            </button>
-            <button class="h-action-item" onclick="showCart()">
-                <span>Cart</span>
-                <b>🛒 <span id="cart-badge">0</span></b>
-            </button>
+            <div class="h-enquiry-pro"><span>Enquiry</span><b>8080926195</b></div>
+            <button class="h-action-item" id="auth-btn" onclick="openLogin()"><span>Hello, <span id="welcome-text">Sign in</span></span><b>Account</b></button>
+            <button class="h-action-item" onclick="showCart()"><span>Cart</span><b>🛒 <span id="cart-badge">0</span></b></button>
         </div>
     </div>
-
     <div class="h-search-row">
-        <div class="h-search-box">
-            <input type="text" id="search-bar" class="h-search-input" placeholder="Search Ayursiddhit Naturals" onkeyup="search()">
-            <button class="h-search-btn">🔍</button>
-        </div>
+        <div class="h-search-box"><input type="text" id="search-bar" class="h-search-input" placeholder="Search soaps, oils..." onkeyup="search()"><button class="h-search-btn">🔍</button></div>
     </div>
 </header>
 
-<main class="main-container" id="main-view">
-    <div class="product-grid" id="product-list">
-        <p style="text-align:center; padding:50px;">Loading store...</p>
+<div class="ads-wrapper">
+    <div class="ads-track">
+        <div class="ad-card ad-1"><div class="ad-text"><h4>🚚 FREE DELIVERY</h4><p>On all orders above <b>₹800</b></p></div><div class="ad-icon">📦</div></div>
+        <div class="ad-card ad-2"><div class="ad-text"><h4>🧼 SOAP OFFER</h4><p>Buy <b>any 5 Soaps</b> & get<br><b>FREE SHIPPING!</b></p></div><div class="ad-icon">🧼</div></div>
+        <div class="ad-card ad-1"><div class="ad-text"><h4>🚚 FREE DELIVERY</h4><p>On all orders above <b>₹800</b></p></div><div class="ad-icon">📦</div></div>
+        <div class="ad-card ad-2"><div class="ad-text"><h4>🧼 SOAP OFFER</h4><p>Buy <b>any 5 Soaps</b> & get<br><b>FREE SHIPPING!</b></p></div><div class="ad-icon">🧼</div></div>
     </div>
-</main>
+</div>
+
+<main class="main-container" id="main-view"><div class="product-grid" id="product-list"></div></main>
 
 <div id="login-modal" class="modal hidden">
     <div class="modal-content">
         <img src="logo.png" style="height:60px; border-radius:50%; margin-bottom:10px;">
         <h3>Sign In</h3>
-        <button class="btn-prime" onclick="handleGoogleLogin()" style="background:#fff; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
-        </button>
+        <button class="btn-prime" onclick="handleGoogleLogin()" style="background:#fff; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google</button>
         <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:20px;">Close</button>
     </div>
 </div>
 
 <div id="cart-view" class="hidden" style="padding:15px; max-width:500px; margin:auto;">
-    <h2>Your Shopping Cart</h2>
+    <h2>Cart Summary</h2>
     <div id="cart-items-list"></div>
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
-        <h3 style="margin-top:0;">Delivery Details</h3>
+        <div id="ship-promo" class="free-ship-alert hidden">🎉 CONGRATS! You unlocked FREE SHIPPING!</div>
         <form id="checkout-form">
             <input type="text" id="f-name" placeholder="Full Name" required>
             <input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
-            <div class="form-row">
-                <input type="text" id="f-house" placeholder="Flat/House No." required>
-                <input type="text" id="f-building" placeholder="Building/Society" required>
-            </div>
-            <textarea id="f-address" placeholder="Full Address & Landmark" rows="3" required></textarea>
-            <div class="form-row">
-                <input type="text" id="f-city" placeholder="City" required>
-                <input type="number" id="f-pin" placeholder="Pincode" required>
-            </div>
-            
-            <div style="border-top:2px dashed #eee; padding-top:15px; margin-top:15px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#555;">
-                    <span>Items Subtotal:</span> <span>₹<span id="sub-total">0</span></span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#555; margin-bottom:10px;">
-                    <span>Shipping Fee:</span> <span>₹50</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-size:1.3rem; font-weight:bold; color:var(--price-red);">
-                    <span>Total Amount:</span> <span>₹<span id="final-total">0</span></span>
-                </div>
-                <button type="submit" class="btn-prime" style="background:#25D366; color:white; border:none; margin-top:20px;">🚀 Confirm Order on WhatsApp</button>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><input type="text" id="f-house" placeholder="Flat No." required><input type="text" id="f-building" placeholder="Building" required></div>
+            <textarea id="f-address" placeholder="Address & Landmark" rows="3" required></textarea>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><input type="text" id="f-city" placeholder="City" required><input type="number" id="f-pin" placeholder="Pincode" required></div>
+            <div style="border-top:1px solid #eee; padding-top:15px; margin-top:10px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.9rem;"><span>Subtotal:</span> <span>₹<span id="sub-total">0</span></span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.9rem;"><span>Delivery:</span> <span id="ship-cost-text">₹50</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:1.3rem; font-weight:bold; color:var(--price-red); margin-top:10px;"><span>Total:</span> <span>₹<span id="final-total">0</span></span></div>
+                <button type="submit" class="btn-prime" style="background:#25D366; color:white; border:none; margin-top:20px;">Order on WhatsApp</button>
             </div>
         </form>
-        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:15px;">Back to Shopping</button>
+        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:15px;">Continue Shopping</button>
     </div>
 </div>
 
@@ -168,7 +154,6 @@
 
     let allProducts = [];
     let cart = {};
-    const SHIPPING_FEE = 50;
 
     async function load() {
         const snap = await getDocs(collection(db, "products"));
@@ -181,7 +166,7 @@
         const grid = document.getElementById('product-list');
         grid.innerHTML = '';
         list.forEach(p => {
-            grid.innerHTML += `<div class="p-card"><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><div class="p-price">₹${p.price}</div><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
+            grid.innerHTML += `<div class="p-card"><div class="p-badge">DR'S RECOMMENDED</div><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><div class="p-price">₹${p.price}</div><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
         });
     }
 
@@ -191,7 +176,7 @@
     
     window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
     window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
-    window.handleGoogleLogin = async () => { try { await signInWithPopup(auth, provider); closeLogin(); } catch (e) { alert("Try again!"); } };
+    window.handleGoogleLogin = async () => { try { await signInWithPopup(auth, provider); closeLogin(); } catch (e) { alert("Error!"); } };
 
     onAuthStateChanged(auth, (user) => {
         const welcome = document.getElementById('welcome-text');
@@ -211,32 +196,35 @@
         const list = document.getElementById('cart-items-list');
         list.innerHTML = '';
         let subtotal = 0;
+        let totalItems = 0;
         for(let id in cart) {
             const p = allProducts.find(x => x.id === id);
             if(p) {
                 subtotal += (p.price * cart[id]);
+                totalItems += cart[id];
                 list.innerHTML += `<div style="background:white; padding:10px; margin-bottom:10px; border-radius:8px; display:flex; gap:10px; border:1px solid #ddd;">
-                    <img src="${p.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;">
-                    <div style="flex:1;"><div style="font-size:0.85rem; font-weight:bold;">${p.name}</div><div style="color:red;">₹${p.price} x ${cart[id]}</div>
-                    <div style="display:flex; gap:10px; margin-top:5px;"><button onclick="updateQty('${id}',-1)">-</button> <span>${cart[id]}</span> <button onclick="updateQty('${id}',1)">+</button></div></div>
+                    <img src="${p.image}" style="width:50px; height:50px; object-fit:cover;"><div style="flex:1;"><div style="font-size:0.85rem; font-weight:bold;">${p.name}</div><div style="color:red;">₹${p.price} x ${cart[id]}</div><div style="display:flex; gap:10px; margin-top:5px;"><button onclick="updateQty('${id}',-1)">-</button> <span>${cart[id]}</span> <button onclick="updateQty('${id}',1)">+</button></div></div>
                 </div>`;
             }
         }
+        const isFree = (subtotal >= 800 || totalItems >= 5);
+        const shipping = isFree ? 0 : 50;
         document.getElementById('sub-total').innerText = subtotal;
-        document.getElementById('final-total').innerText = subtotal + SHIPPING_FEE;
+        document.getElementById('ship-cost-text').innerText = isFree ? "FREE" : "₹50";
+        document.getElementById('ship-cost-text').style.color = isFree ? "green" : "black";
+        document.getElementById('final-total').innerText = subtotal + shipping;
+        if(isFree && totalItems > 0) document.getElementById('ship-promo').classList.remove('hidden');
+        else document.getElementById('ship-promo').classList.add('hidden');
     }
 
     document.getElementById('checkout-form').onsubmit = (e) => {
         e.preventDefault();
-        let msg = `🛍️ *ORDER FROM AYURSIDDHIT* 🛍️\n\n`;
+        let msg = `🛍️ *ORDER: AYURSIDDHIT*\n\n`;
         for(let id in cart) {
             const p = allProducts.find(x => x.id === id);
-            msg += `- ${p.name} (x${cart[id]}) = ₹${p.price * cart[id]}\n`;
+            msg += `- ${p.name} (x${cart[id]})\n`;
         }
-        msg += `\n*Subtotal:* ₹${document.getElementById('sub-total').innerText}`;
-        msg += `\n*Shipping:* ₹50`;
-        msg += `\n*TOTAL PAYABLE:* ₹${document.getElementById('final-total').innerText}\n\n`;
-        msg += `*Delivery Details:*\nName: ${document.getElementById('f-name').value}\nPhone: ${document.getElementById('f-phone').value}\nAddress: ${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-address').value}\nCity: ${document.getElementById('f-city').value} - ${document.getElementById('f-pin').value}`;
+        msg += `\n*TOTAL:* ₹${document.getElementById('final-total').innerText}\n\n*Address:* ${document.getElementById('f-name').value}, ${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-address').value}, ${document.getElementById('f-city').value} - ${document.getElementById('f-pin').value}`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
