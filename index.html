@@ -4,253 +4,274 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo.png">
     <title>Ayursiddhit Naturals | Official Store</title>
     <style>
         :root {
-            --primary-dark: #131921;
-            --accent-color: #febd69;
-            --background: #f6f6f6;
-            --card-bg: #ffffff;
-            --text-main: #0f1111;
+            --amazon-navy: #131921;
+            --amazon-light: #232f3e;
+            --brand-green: #1b5e20;
+            --brand-gold: #febd69;
+            --bg-gray: #eaeded;
             --price-red: #B12704;
-            --whatsapp-green: #25D366;
         }
 
-        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--background); color: var(--text-main); padding-bottom: 20px; }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-gray); }
         .hidden { display: none !important; }
 
         /* HEADER */
-        header { 
-            background: #fff; 
-            padding: 10px 15px; 
-            border-bottom: 1px solid #e0e0e0;
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px;
-            position: sticky; 
-            top: 0; 
-            z-index: 1000;
-        }
+        header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 1000; }
+        .h-top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        .h-logo-section { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .h-logo { height: 35px; width: 35px; border-radius: 4px; object-fit: cover; }
+        .h-brand-text { font-size: 0.9rem; font-weight: bold; line-height: 1; }
+        .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.7rem; }
 
-        .h-row-top { display: flex; align-items: center; justify-content: space-between; }
-        .nav-logo { height: 40px; width: 40px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
-        .brand-name { font-weight: bold; font-size: 1.1rem; color: #333; cursor: pointer; flex-grow: 1; margin-left: 10px; }
+        .h-search-box { flex-grow: 1; display: flex; position: relative; }
+        .h-search-input { width: 100%; padding: 10px 45px 10px 15px; border-radius: 6px; border: none; font-size: 0.95rem; outline: none; }
+        .h-search-btn { position: absolute; right: 0; top: 0; bottom: 0; background: var(--brand-gold); width: 45px; border-radius: 0 6px 6px 0; border: none; display: flex; align-items: center; justify-content: center; color: #333; font-size: 1.2rem; }
+
+        .h-actions { display: flex; align-items: center; gap: 12px; }
+        .h-action-item { text-align: left; background: none; border: none; color: white; cursor: pointer; padding: 0; position: relative; }
+        .h-action-item span { display: block; font-size: 0.7rem; color: #ccc; }
+        .h-action-item b { font-size: 0.85rem; color: white; }
+
+        /* LOCATION BAR */
+        .sub-nav { background: var(--amazon-light); padding: 8px 12px; display: flex; align-items: center; gap: 5px; font-size: 0.8rem; color: white; cursor: pointer; }
+
+        /* PRODUCT LIST */
+        .main-container { padding: 10px; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .p-card { background: white; border-radius: 4px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; }
+        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 8px 0; font-weight: 500; }
+        .p-rating { color: #ffa41c; font-size: 0.75rem; margin-bottom: 5px; }
+        .p-price { font-size: 1.1rem; font-weight: bold; color: var(--price-red); }
+
+        /* COUNTER & BUTTONS */
+        .counter { display: flex; align-items: center; gap: 10px; margin: 10px 0; background: #eee; width: fit-content; border-radius: 20px; padding: 2px 10px; }
+        .counter button { border: none; background: none; font-size: 1.2rem; font-weight: bold; padding: 5px 10px; cursor: pointer; }
+        .btn-prime { background: #f0c14b; border: 1px solid #a88734; padding: 10px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        /* MODALS */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
         
-        .header-actions { display: flex; align-items: center; gap: 8px; }
-        
-        /* INSTALL BUTTON STYLE */
-        #install-btn { 
-            background: var(--whatsapp-green); 
-            color: white; 
-            border: none; 
-            padding: 7px 12px; 
-            border-radius: 5px; 
-            font-weight: bold; 
-            font-size: 0.75rem; 
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .cart-btn { background: var(--accent-color); padding: 7px 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: #131921; }
-        
-        .h-row-bottom { display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 8px; }
-        .enquiry-link { color: #444; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 5px; }
-        .enquiry-link b { color: var(--price-red); }
-
-        /* PRODUCT GRID */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; }
-        .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .product-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; }
-        .p-info { padding: 12px; }
-        .p-info h3 { margin: 0; font-size: 0.9rem; height: 2.6em; overflow: hidden; font-weight: 600; line-height: 1.3; color: #333; }
-        .price { font-size: 1.1rem; font-weight: bold; color: var(--price-red); margin: 6px 0; }
-        .btn-view { background: #ffd814; border: 1px solid #fcd200; width: 100%; padding: 8px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
-
-        /* CHECKOUT CARD */
-        #checkout-screen { padding: 15px; }
-        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .bill-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.95rem; }
-        .total-row { border-top: 2px solid #eee; margin-top: 10px; padding-top: 10px; font-weight: bold; font-size: 1.2rem; color: var(--price-red); }
-        
-        input, textarea { width: 100%; padding: 14px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        .place-order-btn { background: var(--whatsapp-green); color: white; width: 100%; padding: 16px; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
-
-        /* DETAILS VIEW */
-        #product-screen { background: #fff; min-height: 100vh; }
-        .large-img { width: 100%; height: 350px; background-size: cover; background-position: center; border-bottom: 1px solid #eee; }
-        .action-bar { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px; display: flex; gap: 12px; box-sizing: border-box; border-top: 1px solid #ddd; z-index: 1001; }
-        .btn-action { flex: 1; padding: 15px; border-radius: 10px; border: none; font-weight: bold; font-size: 1rem; cursor: pointer; }
+        .btn-google { background: white; border: 1px solid #ddd; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="h-row-top">
-            <div style="display:flex; align-items:center;">
-                <button id="back-btn" class="hidden" onclick="goHome()" style="background:none; border:none; color:#333; font-size:1.6rem; cursor:pointer; margin-right:10px;">←</button>
-                <img src="logo.png" class="nav-logo" alt="logo" onclick="goHome()">
-                <div class="brand-name" onclick="goHome()">Ayursiddhit Naturals</div>
-            </div>
-            <div class="header-actions">
-                <button id="install-btn" class="hidden">Install App</button>
-                <button onclick="showCheckout()" class="cart-btn">🛒 <span id="cart-count">0</span></button>
-            </div>
+<header>
+    <div class="h-top-row">
+        <div class="h-logo-section" onclick="location.reload()">
+            <img src="logo.png" class="h-logo" alt="logo">
+            <div class="h-brand-text">Ayursiddhit<span>Naturals.in</span></div>
         </div>
-        <div class="h-row-bottom">
-            <a href="tel:+918080926195" class="enquiry-link">Enquiry Call: <b>+91 8080926195</b></a>
-        </div>
-    </header>
-
-    <div id="home-screen">
-        <div style="background:#232f3e; color:#febd69; text-align:center; padding:10px; font-size:0.75rem; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">
-            Pure Ayurvedic Beauty • Formulated by Dr. Prasiddhi Patil
-        </div>
-        <div class="product-grid" id="product-list">
-            <p style="grid-column: span 2; text-align:center; padding: 50px; color: #888;">Fetching fresh products...</p>
+        <div class="h-actions">
+            <button class="h-action-item" id="auth-btn" onclick="openLogin()">
+                <span id="welcome-text">Hello, Sign in</span>
+                <b>Account</b>
+            </button>
+            <button class="h-action-item" onclick="showCart()">
+                <b style="font-size: 1.2rem;">🛒</b>
+                <span id="cart-badge" style="position:absolute; top:-5px; right:-5px; background:var(--brand-gold); color:#000; padding:1px 5px; border-radius:50%; font-size:0.7rem; font-weight:bold;">0</span>
+            </button>
         </div>
     </div>
-
-    <div id="product-screen" class="hidden">
-        <div class="large-img" id="det-img"></div>
-        <div style="padding: 20px;">
-            <h1 id="det-title" style="margin:0; font-size:1.4rem; color:#333;"></h1>
-            <div class="price" style="font-size:1.6rem;">₹<span id="det-price"></span></div>
-            <p id="det-desc" style="color:#555; font-size:1rem; line-height:1.6;"></p>
-        </div>
-        <div class="action-bar">
-            <button class="btn-action" style="background:#ffd814; color:#333;" onclick="addToCart()">Add to Cart</button>
-            <button class="btn-action" style="background:#ffa41c; color:#fff;" onclick="buyNow()">Buy Now</button>
-        </div>
+    <div class="h-search-box">
+        <input type="text" id="search-bar" class="h-search-input" placeholder="Search Ayursiddhit Naturals" onkeyup="search()">
+        <button class="h-search-btn">🔍</button>
     </div>
+</header>
 
-    <div id="checkout-screen" class="hidden">
-        <div class="card">
-            <h3 style="margin-top:0;">Order Summary</h3>
-            <div id="cart-items" style="border-bottom:1px solid #eee; padding-bottom:10px;"></div>
-            <div class="bill-row" style="margin-top:10px;"><span>Total Items:</span> <span>₹<span id="sub-total">0</span></span></div>
-            <div class="bill-row"><span>Flat Shipping Charges:</span> <span>+ ₹50</span></div>
-            <div class="bill-row total-row"><span>Amount to Pay:</span> <span>₹<span id="final-total">50</span></span></div>
-        </div>
-        <div class="card">
-            <h3 style="margin-top:0;">Shipping Address</h3>
-            <form id="order-form">
-                <input type="text" id="c-name" placeholder="Enter Your Full Name" required>
-                <input type="tel" id="c-phone" placeholder="Enter WhatsApp Number" required>
-                <textarea id="c-address" placeholder="Full Address (House No, Landmark, Pincode)" rows="3" required></textarea>
-                <button type="submit" class="place-order-btn">Confirm Order on WhatsApp</button>
-            </form>
-        </div>
+<div class="sub-nav" onclick="setCity()">
+    <span>📍 Deliver to <b id="user-city">Select your city</b></span>
+</div>
+
+<main class="main-container" id="main-view">
+    <div class="product-grid" id="product-list">
+        <p style="text-align:center; padding:50px;">Loading your Ayurvedic store...</p>
     </div>
+</main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+        <img src="logo.png" style="height:60px; margin-bottom:15px;">
+        <h3>Sign In</h3>
+        <p style="font-size:0.8rem; color:#666; margin-bottom:20px;">Save your address and track orders.</p>
+        <button class="btn-google" onclick="handleGoogleLogin()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
+        </button>
+        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:20px; font-size:0.8rem;">Maybe Later</button>
+    </div>
+</div>
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
-          authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
-          projectId: "ayursiddhitnaturals-d2ecb",
-          storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
-          messagingSenderId: "704398728935",
-          appId: "1:704398728935:web:6330cb27578d80ce15cc42"
-        };
+<div id="cart-view" class="hidden" style="padding:15px;">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items-list"></div>
+    <div style="background:white; padding:15px; border-radius:8px; margin-top:15px; border:1px solid #ddd;">
+        <h3>Subtotal: ₹<span id="cart-subtotal">0</span></h3>
+        <textarea id="order-address" placeholder="Enter Full Delivery Address & Pincode" rows="3"></textarea>
+        <button class="btn-prime" onclick="checkoutWA()">Proceed to Buy (WhatsApp)</button>
+        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px;">← Back to Shopping</button>
+    </div>
+</div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        
-        let cart = [];
-        let currentP = null;
-        const shipping_fee = 50;
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // PWA INSTALL LOGIC
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+      authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
+      projectId: "ayursiddhitnaturals-d2ecb",
+      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+      messagingSenderId: "704398728935",
+      appId: "1:704398728935:web:6330cb27578d80ce15cc42"
+    };
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.classList.remove('hidden');
-        });
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') installBtn.classList.add('hidden');
-                deferredPrompt = null;
-            }
-        });
+    let allProducts = [];
+    let cart = {};
 
-        async function getProducts() {
-            try {
-                const snap = await getDocs(collection(db, "products"));
-                const list = document.getElementById('product-list');
-                list.innerHTML = '';
-                snap.forEach(doc => {
-                    const p = { id: doc.id, ...doc.data() };
-                    const div = document.createElement('div');
-                    div.className = 'product-card';
-                    div.onclick = () => openP(p);
-                    div.innerHTML = `<div class="product-img" style="background-image:url('${p.image}')"></div><div class="p-info"><h3>${p.name}</h3><div class="price">₹${p.price}</div><button class="btn-view">Details</button></div>`;
-                    list.appendChild(div);
-                });
-            } catch (e) { list.innerHTML = "Sync error. Please reload."; }
+    // REAL GOOGLE LOGIN
+    window.handleGoogleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            closeLogin();
+        } catch (e) { alert("Login failed! Try again."); }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+        const welcome = document.getElementById('welcome-text');
+        if(user) {
+            welcome.innerText = "Hello, " + user.displayName.split(' ')[0];
+            document.getElementById('auth-btn').onclick = () => {
+                if(confirm("Logout?")) signOut(auth);
+            };
+        } else {
+            welcome.innerText = "Hello, Sign in";
+            document.getElementById('auth-btn').onclick = openLogin;
         }
+    });
 
-        window.openP = (p) => {
-            currentP = p;
-            document.getElementById('det-title').innerText = p.name;
-            document.getElementById('det-price').innerText = p.price;
-            document.getElementById('det-desc').innerText = p.description || "Formulated with care by Ayursiddhit Naturals.";
-            document.getElementById('det-img').style.backgroundImage = `url('${p.image}')`;
-            document.getElementById('home-screen').classList.add('hidden');
-            document.getElementById('product-screen').classList.remove('hidden');
-            document.getElementById('back-btn').classList.remove('hidden');
-            window.scrollTo(0,0);
-        };
+    // CART & LOCATION LOGIC
+    window.setCity = () => {
+        const city = prompt("Where should we deliver? (City Name)");
+        if(city) {
+            document.getElementById('user-city').innerText = city;
+            localStorage.setItem('ayur_city', city);
+        }
+    };
+    if(localStorage.getItem('ayur_city')) document.getElementById('user-city').innerText = localStorage.getItem('ayur_city');
+    if(localStorage.getItem('ayur_addr')) document.getElementById('order-address').value = localStorage.getItem('ayur_addr');
 
-        window.goHome = () => {
-            document.getElementById('home-screen').classList.remove('hidden');
-            document.getElementById('product-screen').classList.add('hidden');
-            document.getElementById('checkout-screen').classList.add('hidden');
-            document.getElementById('back-btn').classList.add('hidden');
-        };
+    // UI CONTROLS
+    window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
+    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
+    window.showCart = () => {
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('cart-view').classList.remove('hidden');
+        renderCart();
+    };
+    window.closeCart = () => {
+        document.getElementById('main-view').classList.remove('hidden');
+        document.getElementById('cart-view').classList.add('hidden');
+    };
 
-        window.showCheckout = () => {
-            if(cart.length === 0) return alert("Add items to your cart first!");
-            document.getElementById('home-screen').classList.add('hidden');
-            document.getElementById('product-screen').classList.add('hidden');
-            document.getElementById('checkout-screen').classList.remove('hidden');
-            document.getElementById('back-btn').classList.remove('hidden');
-            
-            let sub = 0;
-            const itemsDiv = document.getElementById('cart-items');
-            itemsDiv.innerHTML = '';
-            cart.forEach(i => {
-                sub += Number(i.price);
-                itemsDiv.innerHTML += `<div class="bill-row"><span>${i.name}</span><b>₹${i.price}</b></div>`;
-            });
-            document.getElementById('sub-total').innerText = sub;
-            document.getElementById('final-total').innerText = sub + shipping_fee;
-        };
+    // PRODUCTS LOGIC
+    async function load() {
+        const snap = await getDocs(collection(db, "products"));
+        allProducts = [];
+        snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
+        render(allProducts);
+    }
 
-        window.addToCart = () => { cart.push(currentP); document.getElementById('cart-count').innerText = cart.length; alert("✅ Item added to cart!"); };
-        window.buyNow = () => { cart = [currentP]; document.getElementById('cart-count').innerText = "1"; showCheckout(); };
+    function render(list) {
+        const grid = document.getElementById('product-list');
+        grid.innerHTML = '';
+        list.forEach(p => {
+            grid.innerHTML += `
+                <div class="p-card">
+                    <div class="p-img" style="background-image:url('${p.image}')"></div>
+                    <div class="p-title">${p.name}</div>
+                    <div class="p-rating">⭐⭐⭐⭐☆ 4.5</div>
+                    <div class="p-price">₹${p.price}</div>
+                    <button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button>
+                </div>`;
+        });
+    }
 
-        document.getElementById('order-form').onsubmit = (e) => {
-            e.preventDefault();
-            const name = document.getElementById('c-name').value;
-            const addr = document.getElementById('c-address').value;
-            const ph = document.getElementById('c-phone').value;
-            
-            let msg = `*🛍️ NEW ORDER: Ayursiddhit Naturals*\n\n`;
-            cart.forEach(i => msg += `- ${i.name}: ₹${i.price}\n`);
-            msg += `\n*Subtotal:* ₹${document.getElementById('sub-total').innerText}\n*Shipping:* ₹50\n*Grand Total:* ₹${document.getElementById('final-total').innerText}\n\n*Delivery Address:*\nName: ${name}\nWhatsApp: ${ph}\nAddress: ${addr}`;
-            
-            window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
-        };
+    window.addToCart = (id) => {
+        cart[id] = (cart[id] || 0) + 1;
+        updateBadge();
+        alert("Added to Cart!");
+    };
 
-        getProducts();
-    </script>
+    window.updateQty = (id, delta) => {
+        cart[id] += delta;
+        if(cart[id] <= 0) delete cart[id];
+        renderCart();
+        updateBadge();
+    };
+
+    function updateBadge() {
+        let count = Object.values(cart).reduce((a, b) => a + b, 0);
+        document.getElementById('cart-badge').innerText = count;
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cart-items-list');
+        list.innerHTML = '';
+        let total = 0;
+        for(let id in cart) {
+            const p = allProducts.find(x => x.id === id);
+            if(p) {
+                total += (p.price * cart[id]);
+                list.innerHTML += `
+                    <div style="background:white; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd; display:flex; gap:10px;">
+                        <img src="${p.image}" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
+                        <div style="flex:1;">
+                            <div style="font-size:0.9rem; font-weight:bold;">${p.name}</div>
+                            <div style="color:var(--price-red); font-weight:bold;">₹${p.price}</div>
+                            <div class="counter">
+                                <button onclick="updateQty('${id}', -1)">-</button>
+                                <span>${cart[id]}</span>
+                                <button onclick="updateQty('${id}', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+        document.getElementById('cart-subtotal').innerText = total;
+    }
+
+    window.checkoutWA = () => {
+        const addr = document.getElementById('order-address').value;
+        if(!addr) return alert("Please enter your address!");
+        localStorage.setItem('ayur_addr', addr);
+        let msg = `*🛒 New Order - Ayursiddhit Naturals*\n\n`;
+        for(let id in cart) {
+            const p = allProducts.find(x => x.id === id);
+            msg += `- ${p.name} (Qty: ${cart[id]}) - ₹${p.price * cart[id]}\n`;
+        }
+        msg += `\n*Total:* ₹${document.getElementById('cart-subtotal').innerText}\n\n*Address:* ${addr}\n*City:* ${document.getElementById('user-city').innerText}`;
+        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+    };
+
+    window.search = () => {
+        const q = document.getElementById('search-bar').value.toLowerCase();
+        render(allProducts.filter(p => p.name.toLowerCase().includes(q)));
+    };
+
+    load();
+</script>
 </body>
 </html>
