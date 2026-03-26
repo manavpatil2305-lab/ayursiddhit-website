@@ -91,7 +91,8 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    // ONLY THIS IMPORT WAS CHANGED (signInWithPopup added)
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
@@ -107,9 +108,21 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    window.login = () => signInWithRedirect(auth, provider);
-    getRedirectResult(auth).catch((e) => console.log(e));
-    onAuthStateChanged(auth, (user) => { if(user) document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; });
+    // NEW SIGN IN METHOD WITH POPUP AND ERROR ALERTS
+    window.login = () => {
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            document.getElementById('user-name').innerText = "Hi, " + result.user.displayName.split(' ')[0];
+        })
+        .catch((error) => {
+            alert("Login Error: " + error.message);
+            console.error("Auth Error:", error);
+        });
+    };
+
+    onAuthStateChanged(auth, (user) => { 
+        if(user) document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
+    });
 
     let products = [];
     let cart = {};
@@ -162,4 +175,3 @@
 </script>
 </body>
 </html>
-
