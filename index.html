@@ -53,6 +53,10 @@
     </div>
 </header>
 
+<div style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">
+    🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚
+</div>
+
 <main id="main-view" class="product-grid"></main>
 
 <div id="cart-view" class="hidden cart-view">
@@ -91,9 +95,9 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    // ✅ INCLUDES PERSISTENCE TOOLS FOR LOGIN MEMORY
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // ✅ EXACT COPIED KEY INCLUDED HERE ✅
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
       authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
@@ -108,8 +112,12 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    // ✅ FORCE SAVE LOGIN MEMORY
     window.login = () => {
-        signInWithPopup(auth, provider)
+        setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+            return signInWithPopup(auth, provider);
+        })
         .then((result) => {
             document.getElementById('user-name').innerText = "Hi, " + result.user.displayName.split(' ')[0];
         })
@@ -174,4 +182,3 @@
 </script>
 </body>
 </html>
-
