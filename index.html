@@ -19,6 +19,21 @@
         body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); padding-bottom: 20px; overflow-x: hidden; }
         .hidden { display: none !important; }
 
+        /* --- SMART INSTALL BANNER --- */
+        #install-banner {
+            background: #fff;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            z-index: 2500;
+        }
+        .inst-logo { width: 40px; height: 40px; border-radius: 8px; margin-right: 10px; }
+        .inst-text { flex-grow: 1; font-size: 0.85rem; font-weight: 600; color: #333; }
+        .btn-install-now { background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; font-size: 0.8rem; }
+
         /* HEADER */
         header { 
             background: var(--amazon-navy); 
@@ -72,41 +87,22 @@
         .p-price { font-size: 1rem; font-weight: bold; color: var(--price-red); }
         .btn-prime { background: var(--brand-gold); color: #111; border: none; padding: 8px; width: 100%; border-radius: 6px; font-weight: bold; margin-top: 6px; font-size: 0.75rem; }
 
-        /* FLOATING WHATSAPP ICON */
-        .floating-wa {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: white;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            z-index: 3000;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .floating-wa:active { transform: scale(0.9); }
+        /* FLOATING WHATSAPP */
+        .floating-wa { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 3000; text-decoration: none; }
 
-        /* FOUNDER SECTION */
-        .founder-box { background: white; margin: 20px 10px; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #ddd; }
-        .founder-box img { width: 85px; height: 85px; border-radius: 50%; border: 2.5px solid var(--brand-green); margin-bottom: 10px; }
-        .founder-box h3 { margin: 5px 0; color: var(--brand-green); font-size: 1.1rem; }
-        .founder-box p { font-size: 0.8rem; color: #555; line-height: 1.4; margin-bottom: 15px; }
-        .btn-consult { background: var(--brand-green); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
-
-        /* CART VIEW */
+        /* CART & FORM */
         .free-ship-alert { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; border: 1px solid #c8e6c9; text-align: center; }
         .modal-content { background: white; padding: 20px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
         input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 8px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
+
+<div id="install-banner" class="hidden">
+    <img src="logo.png" class="inst-logo">
+    <div class="inst-text">Install Ayursiddhit App<br><small>Shop faster & save data</small></div>
+    <button class="btn-install-now" onclick="triggerInstall()">Install</button>
+</div>
 
 <header>
     <div class="h-top-row">
@@ -139,51 +135,11 @@
 
 <main class="main-container" id="main-view">
     <div class="product-grid" id="product-list"></div>
-    
-    <div class="founder-box">
-        <img src="logo.png" alt="Founder">
-        <h3>Dr. Prasiddhi Patil (BAMS)</h3>
-        <p>Expert Ayurvedic Formulations handcrafted with medical precision. Chemical-free beauty for your skin.</p>
-        <a href="https://wa.me/918080926195?text=Hello%20Dr.%20Prasiddhi%2C%20I%20need%20a%20skin%20consultation" class="btn-consult">Consult Dr. Prasiddhi</a>
-    </div>
 </main>
 
-<a href="https://wa.me/918080926195?text=Hi%20Ayursiddhit%20Naturals%2C%20I%20have%20a%20question%21" class="floating-wa" target="_blank">
+<a href="https://wa.me/918080926195?text=Hi%20Ayursiddhit%20Naturals%21" class="floating-wa" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
 </a>
-
-<div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-        <img src="logo.png" style="height:50px; border-radius:50%; margin-bottom:10px;">
-        <h3>Sign In</h3>
-        <button class="btn-prime" onclick="handleGoogleLogin()" style="background:#fff; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16"> Continue with Google
-        </button>
-        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:15px; font-size:0.8rem;">Close</button>
-    </div>
-</div>
-
-<div id="cart-view" class="hidden" style="padding:15px; max-width:500px; margin:auto;">
-    <h2>Review Order</h2>
-    <div id="cart-items-list"></div>
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
-        <div id="ship-promo" class="free-ship-alert hidden">🎉 You unlocked FREE SHIPPING!</div>
-        <form id="checkout-form">
-            <input type="text" id="f-name" placeholder="Full Name" required>
-            <input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><input type="text" id="f-house" placeholder="House No." required><input type="text" id="f-building" placeholder="Building" required></div>
-            <textarea id="f-address" placeholder="Address & Landmark" rows="3" required></textarea>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><input type="text" id="f-city" placeholder="City" required><input type="number" id="f-pin" placeholder="Pincode" required></div>
-            <div style="border-top:1px solid #eee; padding-top:15px; margin-top:10px;">
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>Items:</span> <span>₹<span id="sub-total">0</span></span></div>
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>Delivery:</span> <span id="ship-cost-text">₹50</span></div>
-                <div style="display:flex; justify-content:space-between; font-size:1.1rem; font-weight:bold; color:var(--price-red); margin-top:10px;"><span>Total:</span> <span>₹<span id="final-total">0</span></span></div>
-                <button type="submit" class="btn-prime" style="background:#25D366; color:white; border:none; margin-top:15px; font-size:0.9rem;">Order on WhatsApp</button>
-            </div>
-        </form>
-        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px; font-size:0.8rem;">Continue Shopping</button>
-    </div>
-</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -204,6 +160,27 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    // --- INSTALL LOGIC ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBanner.classList.remove('hidden'); // Show the banner if installable
+    });
+
+    window.triggerInstall = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') installBanner.classList.add('hidden');
+            deferredPrompt = null;
+        }
+    };
+
+    // ... REST OF YOUR PRODUCTS/CART/LOGIN LOGIC ...
+    // (Ensure you copy the render, addToCart, and checkout functions from previous steps)
     let allProducts = [];
     let cart = {};
 
@@ -225,68 +202,8 @@
     window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); };
     window.updateQty = (id, delta) => { cart[id] += delta; if(cart[id] <= 0) delete cart[id]; renderCart(); updateBadge(); };
     function updateBadge() { document.getElementById('cart-badge').innerText = Object.values(cart).reduce((a, b) => a + b, 0); }
-    
-    window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
-    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
-    window.handleGoogleLogin = async () => { try { await signInWithPopup(auth, provider); closeLogin(); } catch (e) { alert("Try again!"); } };
-
-    onAuthStateChanged(auth, (user) => {
-        const welcome = document.getElementById('welcome-text');
-        if(user) {
-            welcome.innerText = user.displayName.split(' ')[0];
-            document.getElementById('auth-btn').onclick = () => { if(confirm("Logout?")) signOut(auth); };
-        } else {
-            welcome.innerText = "Sign in";
-            document.getElementById('auth-btn').onclick = openLogin;
-        }
-    });
-
-    window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
-    window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
-
-    function renderCart() {
-        const list = document.getElementById('cart-items-list');
-        list.innerHTML = '';
-        let subtotal = 0;
-        let totalItems = 0;
-        for(let id in cart) {
-            const p = allProducts.find(x => x.id === id);
-            if(p) {
-                subtotal += (p.price * cart[id]);
-                totalItems += cart[id];
-                list.innerHTML += `<div style="background:white; padding:10px; margin-bottom:10px; border-radius:8px; display:flex; gap:10px; border:1px solid #ddd;">
-                    <img src="${p.image}" style="width:40px; height:40px; object-fit:cover;"><div style="flex:1;"><div style="font-size:0.75rem; font-weight:bold;">${p.name}</div><div style="color:red; font-size:0.75rem;">₹${p.price} x ${cart[id]}</div><div style="display:flex; gap:10px; margin-top:3px;"><button onclick="updateQty('${id}',-1)">-</button> <span>${cart[id]}</span> <button onclick="updateQty('${id}',1)">+</button></div></div>
-                </div>`;
-            }
-        }
-        const isFree = (subtotal >= 800 || totalItems >= 5);
-        const shipping = isFree ? 0 : 50;
-        document.getElementById('sub-total').innerText = subtotal;
-        document.getElementById('ship-cost-text').innerText = isFree ? "FREE" : "₹50";
-        document.getElementById('ship-cost-text').style.color = isFree ? "green" : "black";
-        document.getElementById('final-total').innerText = subtotal + shipping;
-        if(isFree && totalItems > 0) document.getElementById('ship-promo').classList.remove('hidden');
-        else document.getElementById('ship-promo').classList.add('hidden');
-    }
-
-    document.getElementById('checkout-form').onsubmit = (e) => {
-        e.preventDefault();
-        let msg = `🛍️ *ORDER: AYURSIDDHIT*\n\n`;
-        for(let id in cart) {
-            const p = allProducts.find(x => x.id === id);
-            msg += `- ${p.name} (x${cart[id]})\n`;
-        }
-        msg += `\n*TOTAL:* ₹${document.getElementById('final-total').innerText}\n\n*Customer Info:* ${document.getElementById('f-name').value}\n${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-address').value}, ${document.getElementById('f-city').value} - ${document.getElementById('f-pin').value}`;
-        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
-    };
-
-    window.search = () => {
-        const q = document.getElementById('search-bar').value.toLowerCase();
-        render(allProducts.filter(p => p.name.toLowerCase().includes(q)));
-    };
 
     load();
 </script>
 </body>
 </html>
-  
