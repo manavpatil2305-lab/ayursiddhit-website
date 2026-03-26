@@ -16,48 +16,53 @@
             --price-red: #B12704;
         }
 
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-gray); }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-gray); padding-bottom: 20px; }
         .hidden { display: none !important; }
 
-        /* HEADER */
-        header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 1000; }
-        .h-top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        /* AMAZON-STYLE PRO HEADER */
+        header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; }
         
+        .h-top-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        
+        /* LOGO & BRAND (Left) */
         .h-logo-section { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--brand-gold); object-fit: cover; }
         .h-brand-text { font-size: 1rem; font-weight: bold; line-height: 1.1; }
         .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.75rem; }
 
-        /* ENQUIRY NUMBER (Opposite Logo) */
-        .h-enquiry { text-align: right; font-size: 0.75rem; color: #ccc; }
-        .h-enquiry b { display: block; color: var(--brand-gold); font-size: 0.85rem; }
+        /* ACTIONS & ENQUIRY (Right - New Amazon Layout) */
+        .h-pro-actions { display: flex; align-items: center; gap: 15px; }
+        
+        .h-action-item { text-align: right; background: none; border: none; color: white; cursor: pointer; padding: 0; position: relative; }
+        .h-action-item span { display: block; font-size: 0.75rem; color: #ccc; }
+        .h-action-item b { font-size: 0.9rem; color: white; }
 
-        .h-search-box { flex-grow: 1; display: flex; position: relative; margin: 5px 0; }
-        .h-search-input { width: 100%; padding: 10px 45px 10px 15px; border-radius: 6px; border: none; font-size: 0.95rem; outline: none; }
-        .h-search-btn { position: absolute; right: 0; top: 0; bottom: 0; background: var(--brand-gold); width: 45px; border-radius: 0 6px 6px 0; border: none; display: flex; align-items: center; justify-content: center; color: #333; font-size: 1.1rem; }
+        /* ENQUIRY NUMBER (Styled like Account) */
+        .h-enquiry-pro { text-align: right; }
+        .h-enquiry-pro span { display: block; font-size: 0.75rem; color: #ccc; }
+        .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.9rem; }
 
-        .h-actions-row { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; border-top: 1px solid #3a4553; padding-top: 8px; }
-        .h-action-item { text-align: left; background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        .h-action-item span { font-size: 0.8rem; }
+        /* SEARCH ROW (Lower Header) */
+        .h-search-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #3a4553; }
+        .h-search-box { flex-grow: 1; display: flex; position: relative; }
+        .h-search-input { width: 100%; padding: 11px 45px 11px 15px; border-radius: 6px; border: none; font-size: 0.95rem; outline: none; }
+        .h-search-btn { position: absolute; right: 0; top: 0; bottom: 0; background: var(--brand-gold); width: 45px; border-radius: 0 6px 6px 0; border: none; display: flex; align-items: center; justify-content: center; color: #333; font-size: 1.2rem; cursor: pointer; }
 
-        /* PRODUCT LIST */
+        /* PRODUCT LIST & UI */
         .main-container { padding: 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .p-card { background: white; border-radius: 6px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .p-card { background: white; border-radius: 6px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #eee; }
         .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 4px; }
-        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 8px 0; color: #222; }
-        .p-price { font-size: 1.1rem; font-weight: bold; color: var(--price-red); }
+        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 8px 0; color: #222; font-weight: 500; }
+        .p-price { font-size: 1.15rem; font-weight: bold; color: var(--price-red); }
 
-        /* FORM STYLING */
-        .form-group { margin-bottom: 12px; text-align: left; }
-        .form-group label { display: block; font-size: 0.75rem; color: #666; margin-bottom: 4px; font-weight: bold; }
+        .btn-prime { background: #f0c14b; border: 1px solid #a88734; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; margin-top: 10px; color: #111; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
+        
+        /* CHECKOUT FORM */
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem; }
-        input:focus { border-color: var(--brand-green); outline: none; }
-
-        .btn-prime { background: #f0c14b; border: 1px solid #a88734; padding: 14px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .counter { display: flex; align-items: center; gap: 12px; margin: 10px 0; background: #f0f0f0; width: fit-content; border-radius: 20px; padding: 2px 12px; }
-        .counter button { border: none; background: none; font-size: 1.3rem; padding: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -69,24 +74,29 @@
             <div class="h-brand-text">Ayursiddhit<span>Naturals.in</span></div>
         </div>
 
-        <div class="h-enquiry">
-            Enquiry Call
-            <b>+91 8080926195</b>
+        <div class="h-pro-actions">
+            <div class="h-enquiry-pro">
+                <span>Enquiry</span>
+                <b>8080926195</b>
+            </div>
+            
+            <button class="h-action-item" id="auth-btn" onclick="openLogin()">
+                <span>Hello, <span id="welcome-text">Sign in</span></span>
+                <b>Account</b>
+            </button>
+            
+            <button class="h-action-item" onclick="showCart()">
+                <span>Cart</span>
+                <b>🛒 <span id="cart-badge">0</span></b>
+            </button>
         </div>
     </div>
 
-    <div class="h-search-box">
-        <input type="text" id="search-bar" class="h-search-input" placeholder="Search products..." onkeyup="search()">
-        <button class="h-search-btn">🔍</button>
-    </div>
-
-    <div class="h-actions-row">
-        <button class="h-action-item" id="auth-btn" onclick="openLogin()">
-            <b>👤</b> <span id="welcome-text">Sign in</span>
-        </button>
-        <button class="h-action-item" onclick="showCart()">
-            <b>🛒 Cart</b> <span id="cart-badge" style="background:var(--brand-gold); color:#000; padding:1px 6px; border-radius:10px; font-weight:bold; font-size:0.75rem;">0</span>
-        </button>
+    <div class="h-search-row">
+        <div class="h-search-box">
+            <input type="text" id="search-bar" class="h-search-input" placeholder="Search Ayursiddhit Naturals" onkeyup="search()">
+            <button class="h-search-btn">🔍</button>
+        </div>
     </div>
 </header>
 
@@ -96,69 +106,39 @@
     </div>
 </main>
 
-<div id="cart-view" class="hidden" style="padding:15px; max-width:500px; margin:auto;">
-    <h2 style="margin-bottom:20px;">Review Your Order</h2>
-    <div id="cart-items-list"></div>
-
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <h3 style="margin-top:0;">Delivery Details</h3>
-        <form id="checkout-form">
-            <div class="form-group">
-                <label>FULL NAME</label>
-                <input type="text" id="f-name" placeholder="First and Last Name" required>
-            </div>
-            <div class="form-group">
-                <label>MOBILE NUMBER</label>
-                <input type="tel" id="f-phone" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>FLAT / HOUSE NO.</label>
-                    <input type="text" id="f-house" placeholder="e.g. 101" required>
-                </div>
-                <div class="form-group">
-                    <label>FLOOR NO.</label>
-                    <input type="text" id="f-floor" placeholder="e.g. 1st Floor">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>BUILDING / APARTMENT NAME</label>
-                <input type="text" id="f-building" placeholder="Building name or Society" required>
-            </div>
-            <div class="form-group">
-                <label>FULL ADDRESS & LANDMARK</label>
-                <textarea id="f-address" placeholder="Area, Colony, Road Name, Landmark" rows="3" required></textarea>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>CITY</label>
-                    <input type="text" id="f-city" placeholder="e.g. Nashik" required>
-                </div>
-                <div class="form-group">
-                    <label>PINCODE</label>
-                    <input type="number" id="f-pin" placeholder="6 digits" required>
-                </div>
-            </div>
-
-            <div style="border-top:1px solid #eee; padding-top:15px; margin-top:15px;">
-                <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:bold; color:var(--price-red);">
-                    <span>Total Amount:</span>
-                    <span>₹<span id="cart-total-amt">0</span></span>
-                </div>
-                <p style="font-size:0.7rem; color:#777; text-align:center;">Includes GST and Shipping Charges</p>
-                <button type="submit" class="btn-prime" style="background:#25D366; color:white; border:none;">🚀 Complete Order on WhatsApp</button>
-            </div>
-        </form>
-        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:15px;">Continue Shopping</button>
+<div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+        <img src="logo.png" style="height:60px; border-radius:50%; margin-bottom:10px;">
+        <h3>Sign In</h3>
+        <p style="font-size:0.85rem; color:#666; margin-bottom:20px;">Sign in with Google to save your delivery address.</p>
+        <button class="btn-prime" onclick="handleGoogleLogin()" style="background:#fff; border:1px solid #ddd; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
+        </button>
+        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:20px; font-size:0.9rem;">Close</button>
     </div>
 </div>
 
-<div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-        <img src="logo.png" style="height:60px; border-radius:50%;">
-        <h3>Sign In</h3>
-        <button class="btn-google" onclick="handleGoogleLogin()">Continue with Google</button>
-        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:20px;">Later</button>
+<div id="cart-view" class="hidden" style="padding:15px; max-width:500px; margin:auto;">
+    <h2>Shopping Cart</h2>
+    <div id="cart-items-list"></div>
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
+        <h3>Checkout Form</h3>
+        <form id="checkout-form">
+            <input type="text" id="f-name" placeholder="Full Name" required>
+            <input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
+            <div class="form-row">
+                <input type="text" id="f-house" placeholder="House/Flat No." required>
+                <input type="text" id="f-building" placeholder="Building Name" required>
+            </div>
+            <textarea id="f-address" placeholder="Full Address & Landmark" rows="3" required></textarea>
+            <div class="form-row">
+                <input type="text" id="f-city" placeholder="City" required>
+                <input type="number" id="f-pin" placeholder="Pincode" required>
+            </div>
+            <div style="font-size:1.3rem; font-weight:bold; color:var(--price-red); margin:15px 0;">Total Amount: ₹<span id="cart-total-amt">0</span></div>
+            <button type="submit" class="btn-prime" style="background:#25D366; color:white; border:none; font-size:1rem;">🚀 Order via WhatsApp</button>
+        </form>
+        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:15px;">Back to Shopping</button>
     </div>
 </div>
 
@@ -196,21 +176,35 @@
         const grid = document.getElementById('product-list');
         grid.innerHTML = '';
         list.forEach(p => {
-            grid.innerHTML += `
-                <div class="p-card">
-                    <div class="p-img" style="background-image:url('${p.image}')"></div>
-                    <div class="p-title">${p.name}</div>
-                    <div class="p-price">₹${p.price}</div>
-                    <button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button>
-                </div>`;
+            grid.innerHTML += `<div class="p-card"><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><div class="p-price">₹${p.price}</div><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
         });
     }
 
     // CART LOGIC
-    window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); alert("Added!"); };
+    window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); };
     window.updateQty = (id, delta) => { cart[id] += delta; if(cart[id] <= 0) delete cart[id]; renderCart(); updateBadge(); };
     function updateBadge() { document.getElementById('cart-badge').innerText = Object.values(cart).reduce((a, b) => a + b, 0); }
     
+    // LOGIN UI & LOGIC
+    window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
+    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
+
+    window.handleGoogleLogin = async () => {
+        try { await signInWithPopup(auth, provider); closeLogin(); }
+        catch (e) { alert("Please try again!"); }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+        const welcome = document.getElementById('welcome-text');
+        if(user) {
+            welcome.innerText = "Hi, " + user.displayName.split(' ')[0];
+            document.getElementById('auth-btn').onclick = () => { if(confirm("Logout?")) signOut(auth); };
+        } else {
+            welcome.innerText = "Sign in";
+            document.getElementById('auth-btn').onclick = openLogin;
+        }
+    });
+
     window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
     window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
 
@@ -223,43 +217,23 @@
             if(p) {
                 total += (p.price * cart[id]);
                 list.innerHTML += `<div style="background:white; padding:10px; margin-bottom:10px; border-radius:8px; display:flex; gap:10px; border:1px solid #ddd;">
-                    <img src="${p.image}" style="width:60px; height:60px; object-fit:cover; border-radius:4px;">
-                    <div style="flex:1;">
-                        <div style="font-size:0.9rem; font-weight:bold;">${p.name}</div>
-                        <div style="color:var(--price-red);">₹${p.price}</div>
-                        <div class="counter"><button onclick="updateQty('${id}', -1)">-</button><span>${cart[id]}</span><button onclick="updateQty('${id}', 1)">+</button></div>
-                    </div>
+                    <img src="${p.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;">
+                    <div style="flex:1;"><div style="font-size:0.85rem; font-weight:bold;">${p.name}</div><div style="color:red;">₹${p.price} x ${cart[id]}</div></div>
                 </div>`;
             }
         }
         document.getElementById('cart-total-amt').innerText = total;
     }
 
-    // WHATSAPP CHECKOUT WITH ALL DETAILS
+    // WHATSAPP CHECKOUT
     document.getElementById('checkout-form').onsubmit = (e) => {
         e.preventDefault();
-        const details = {
-            name: document.getElementById('f-name').value,
-            phone: document.getElementById('f-phone').value,
-            house: document.getElementById('f-house').value,
-            floor: document.getElementById('f-floor').value,
-            building: document.getElementById('f-building').value,
-            addr: document.getElementById('f-address').value,
-            city: document.getElementById('f-city').value,
-            pin: document.getElementById('f-pin').value
-        };
-        
-        let msg = `*🛍️ NEW ORDER - AYURSIDDHIT NATURALS*\n\n`;
+        let msg = `🛍️ New Order: Ayursiddhit Naturals\n\n`;
         for(let id in cart) {
             const p = allProducts.find(x => x.id === id);
-            msg += `- ${p.name} x ${cart[id]} = ₹${p.price * cart[id]}\n`;
+            msg += `- ${p.name} (x${cart[id]})\n`;
         }
-        msg += `\n*Total Payable:* ₹${document.getElementById('cart-total-amt').innerText}\n\n`;
-        msg += `*Customer Details:*\n`;
-        msg += `Name: ${details.name}\nPhone: ${details.phone}\n`;
-        msg += `Address: ${details.house}, ${details.floor}, ${details.building}\n`;
-        msg += `${details.addr}\nCity: ${details.city} - ${details.pin}`;
-
+        msg += `\nTotal: ₹${document.getElementById('cart-total-amt').innerText}\n\nCustomer: ${document.getElementById('f-name').value}\nAddress: ${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-city').value}\nPhone: ${document.getElementById('f-phone').value}`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
