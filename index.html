@@ -19,61 +19,62 @@
         body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); padding-bottom: 20px; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* HEADER & ACTIONS */
+        /* HEADER */
         header { background: var(--amazon-navy); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury-gold); }
         .h-top-row { display: flex; align-items: center; justify-content: space-between; position: relative; }
-        
-        .h-logo-section { display: flex; align-items: center; gap: 8px; cursor: pointer; flex-shrink: 0; }
-        .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury-gold); object-fit: cover; }
-        .h-brand-text { font-size: 0.95rem; font-weight: 700; line-height: 1; }
+        .h-logo-section { display: flex; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0; }
+        .h-logo { height: 38px; width: 38px; border-radius: 50%; border: 1.5px solid var(--luxury-gold); object-fit: cover; }
+        .h-brand-text { font-size: 0.9rem; font-weight: 700; line-height: 1; }
         .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
 
-        .h-pro-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        
-        /* SPACING FIX FOR SIGN IN */
-        .h-enquiry-pro { text-align: right; padding-right: 10px; border-right: 1px solid #3a4553; }
-        .h-enquiry-pro span { display: block; font-size: 0.5rem; color: #aaa; }
+        .h-pro-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .h-enquiry-pro { text-align: right; padding-right: 8px; border-right: 1px solid #3a4553; }
         .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.72rem; }
 
+        /* SIGN IN FIX */
         .h-action-item { background: none; border: none; color: white; cursor: pointer; text-align: center; padding: 8px; z-index: 2500; min-width: 60px; }
         .h-action-item b { font-size: 0.85rem; display: block; color: white; }
         .h-action-item span { font-size: 0.6rem; color: var(--brand-gold); font-weight: bold; }
 
-        /* SEARCH & ADS */
         .h-search-row { margin-top: 8px; }
         .h-search-box { display: flex; position: relative; width: 100%; }
         .h-search-input { width: 100%; padding: 10px 15px; border-radius: 20px; border: none; outline: none; font-size: 0.9rem; }
         .h-search-btn { position: absolute; right: 4px; top: 4px; bottom: 4px; background: var(--brand-green); width: 35px; border-radius: 50%; border: none; color: white; }
 
-        .ads-wrapper { background: #fff; overflow: hidden; padding: 12px 0; border-bottom: 1px solid #ddd; }
+        /* AUTO-SLIDING ADS */
+        .ads-wrapper { background: #fff; overflow: hidden; padding: 10px 0; border-bottom: 1px solid #ddd; }
         .ads-track { display: flex; width: calc(260px * 4 + 40px); animation: scroll 15s linear infinite; gap: 10px; padding-left: 10px; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-260px * 2 - 10px)); } }
-        .ad-card { flex: 0 0 260px; border-radius: 10px; padding: 10px; color: white; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; text-align: center; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-280px * 2 - 10px)); } }
+        .ad-card { flex: 0 0 260px; border-radius: 10px; padding: 10px; color: white; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
         .ad-1 { background: linear-gradient(45deg, #1b5e20, #388e3c); }
         .ad-2 { background: linear-gradient(45deg, #8d6e35, #c5a059); }
 
-        /* PRODUCTS */
+        /* PRODUCT CARDS */
         .main-container { padding: 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .p-card { background: white; border-radius: 8px; padding: 10px; border: 1px solid #eee; text-align: center; position: relative; }
-        .p-badge { position: absolute; top: 8px; left: 8px; background: rgba(27, 94, 32, 0.9); color: white; font-size: 0.5rem; padding: 2px 5px; border-radius: 3px; font-weight: bold; z-index: 5; }
         .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 6px; }
-        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 10px 0; color: #333; }
+        .p-title { font-size: 0.85rem; height: 2.5em; overflow: hidden; margin: 10px 0; color: #333; font-weight: 500; }
         .p-price { font-size: 1.1rem; font-weight: bold; color: var(--price-red); }
-        .btn-prime { background: var(--brand-gold); border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.8rem; }
 
-        /* MODALS (Login & Install) */
+        /* NEW: PRODUCT QUANTITY CONTROLLER */
+        .p-qty-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 8px 0; background: #f8f8f8; border-radius: 20px; padding: 4px; }
+        .p-qty-controls button { background: var(--brand-green); color: white; border: none; width: 28px; height: 28px; border-radius: 50%; font-weight: bold; font-size: 1.1rem; }
+        .p-qty-count { font-weight: bold; font-size: 0.95rem; }
+
+        /* NEW: DUAL BUTTON ROW */
+        .p-btn-row { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
+        .btn-prime { background: var(--brand-gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem; flex: 1; }
+        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: #111; }
+
+        /* MODALS & CHECKOUT */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 25px; border-radius: 15px; width: 85%; max-width: 320px; text-align: center; }
-        .modal-content img { width: 60px; border-radius: 10px; margin-bottom: 15px; }
-
-        /* CHECKOUT FORM */
-        .cart-view { padding: 15px; max-width: 500px; margin: auto; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; border: 1px solid #c3e6cb; margin-bottom: 15px; font-size: 0.8rem; text-align: center; }
 
-        /* FLOATING WHATSAPP */
+        /* FLOATING WA */
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
     </style>
 </head>
@@ -113,13 +114,12 @@
 </div>
 
 <main class="main-container" id="main-view">
-    <div class="product-grid" id="product-list"><p style="text-align:center; padding:50px;">Loading...</p></div>
+    <div class="product-grid" id="product-list"></div>
 </main>
 
-<div id="cart-view" class="hidden cart-view">
+<div id="cart-view" class="hidden" style="padding:15px; max-width:500px; margin:auto;">
     <h2>Review Your Order</h2>
     <div id="cart-items-list"></div>
-    
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
         <div id="ship-promo" class="ship-alert hidden">🎉 CONGRATS! You unlocked FREE SHIPPING!</div>
         <h3 style="margin-top:0; font-size:1rem;">Delivery Details</h3>
@@ -152,20 +152,18 @@
     <div class="modal-content">
         <img src="logo.png">
         <h3>Install Ayursiddhit App</h3>
-        <p>Add to your home screen for faster shopping!</p>
-        <button onclick="triggerInstall()" style="background:#007bff; color:white; border:none; padding:12px; border-radius:8px; width:100%; font-weight:bold;">INSTALL NOW</button>
-        <button onclick="closeInstall()" style="background:none; border:none; color:blue; margin-top:15px;">Maybe Later</button>
+        <button onclick="triggerInstall()" class="btn-prime">INSTALL NOW</button>
+        <button onclick="closeInstall()" style="background:none; border:none; color:blue; margin-top:10px;">Later</button>
     </div>
 </div>
 
 <div id="login-modal" class="modal hidden">
     <div class="modal-content">
-        <img src="logo.png" style="border-radius:50%;">
         <h3>Sign In</h3>
         <button onclick="handleGoogleLogin()" class="btn-prime" style="background:white; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; gap:8px;">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16"> Continue with Google
         </button>
-        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:15px;">Close</button>
+        <button onclick="closeLogin()" style="background:none; border:none; color:blue; margin-top:10px;">Close</button>
     </div>
 </div>
 
@@ -192,7 +190,6 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // SERVICE WORKER & INSTALL LOGIC
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault(); deferredPrompt = e;
@@ -208,7 +205,6 @@
     };
     window.closeInstall = () => document.getElementById('install-modal').classList.add('hidden');
 
-    // DATA & CART
     let allProducts = [];
     let cart = {};
 
@@ -216,21 +212,53 @@
         const snap = await getDocs(collection(db, "products"));
         allProducts = [];
         snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
-        render(allProducts);
+        render();
     }
 
-    function render(list) {
+    function render() {
         const grid = document.getElementById('product-list');
         grid.innerHTML = '';
-        list.forEach(p => {
-            grid.innerHTML += `<div class="p-card"><div class="p-badge">DR'S PICK</div><div class="p-img" style="background-image:url('${p.image}')"></div><p class="p-title">${p.name}</p><p class="p-price">₹${p.price}</p><button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button></div>`;
+        allProducts.forEach(p => {
+            const count = cart[p.id] || 0;
+            grid.innerHTML += `
+                <div class="p-card">
+                    <img src="${p.image}" class="p-img">
+                    <p class="p-title">${p.name}</p>
+                    <div class="p-price">₹${p.price}</div>
+                    <div class="p-qty-controls">
+                        <button onclick="updateQty('${p.id}', -1)">-</button>
+                        <span class="p-qty-count">${count}</span>
+                        <button onclick="updateQty('${p.id}', 1)">+</button>
+                    </div>
+                    <div class="p-btn-row">
+                        <button class="btn-prime" onclick="addToCart('${p.id}')">Add to Cart</button>
+                        <button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button>
+                    </div>
+                </div>`;
         });
     }
 
-    window.addToCart = (id) => { cart[id] = (cart[id] || 0) + 1; updateBadge(); };
-    window.updateQty = (id, delta) => { cart[id] += delta; if(cart[id] <= 0) delete cart[id]; renderCart(); updateBadge(); };
+    window.updateQty = (id, delta) => {
+        cart[id] = (cart[id] || 0) + delta;
+        if(cart[id] <= 0) delete cart[id];
+        updateBadge();
+        render();
+        renderCart();
+    };
+
+    window.addToCart = (id) => {
+        cart[id] = (cart[id] || 0) + 1;
+        updateBadge();
+        render();
+    };
+
+    window.buyNow = (id) => {
+        if(!cart[id]) cart[id] = 1;
+        updateBadge();
+        showCart();
+    };
+
     function updateBadge() { document.getElementById('cart-badge').innerText = Object.values(cart).reduce((a, b) => a + b, 0); }
-    
     window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
     window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
 
@@ -239,8 +267,11 @@
         let sub = 0; let totalItems = 0;
         for(let id in cart) {
             const p = allProducts.find(x => x.id === id);
-            if(p) { sub += (p.price * cart[id]); totalItems += cart[id];
-                list.innerHTML += `<div style="background:white; padding:10px; margin-bottom:10px; border-radius:8px; display:flex; justify-content:space-between; border:1px solid #eee;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price * cart[id]}</span></div>`;
+            if(p) { 
+                sub += (p.price * cart[id]); totalItems += cart[id];
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; background:white; padding:10px; border-radius:8px; border:1px solid #eee;">
+                    <span>${p.name} (x${cart[id]})</span><span>₹${p.price * cart[id]}</span>
+                </div>`;
             }
         }
         const isFree = (sub >= 800 || totalItems >= 5);
@@ -252,10 +283,9 @@
         else document.getElementById('ship-promo').classList.add('hidden');
     }
 
-    // LOGIN
     window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
     window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
-    window.handleGoogleLogin = async () => { try { await signInWithPopup(auth, provider); closeLogin(); } catch(e) { alert("Please use Chrome browser for login."); } };
+    window.handleGoogleLogin = async () => { try { await signInWithPopup(auth, provider); closeLogin(); } catch(e) { alert("Please use Chrome browser."); } };
 
     onAuthStateChanged(auth, (user) => {
         const welcome = document.getElementById('welcome-text');
@@ -268,7 +298,6 @@
         }
     });
 
-    // WHATSAPP CHECKOUT
     document.getElementById('checkout-form').onsubmit = (e) => {
         e.preventDefault();
         const d = {
@@ -289,7 +318,7 @@
 
     window.search = () => {
         const q = document.getElementById('search-bar').value.toLowerCase();
-        render(allProducts.filter(p => p.name.toLowerCase().includes(q)));
+        render();
     };
 
     load();
