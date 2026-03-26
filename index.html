@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
-    <title>Ayursiddhit Naturals | Official Store</title>
+    <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     <style>
         :root {
             --amazon-navy: #131921;
@@ -19,7 +19,7 @@
         body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); padding-bottom: 20px; overflow-x: hidden; }
         .hidden { display: none !important; }
 
-        /* --- COMPACT ATTRACTIVE HEADER --- */
+        /* HEADER */
         header { 
             background: var(--amazon-navy); 
             color: white; 
@@ -31,72 +31,38 @@
         }
 
         .h-top-row { display: flex; align-items: center; justify-content: space-between; }
-        
         .h-logo-section { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-        .h-logo { height: 35px; width: 35px; border-radius: 50%; border: 1.5px solid var(--luxury-gold); object-fit: cover; }
-        .h-brand-text { font-size: 0.9rem; font-weight: 700; line-height: 1; }
-        .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.6rem; font-weight: 400; }
+        .h-logo { height: 38px; width: 38px; border-radius: 50%; border: 1.5px solid var(--luxury-gold); object-fit: cover; }
+        .h-brand-text { font-size: 0.95rem; font-weight: 700; line-height: 1; }
+        .h-brand-text span { color: var(--brand-gold); display: block; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
 
         .h-pro-actions { display: flex; align-items: center; gap: 10px; }
-        
         .h-enquiry-pro { text-align: right; margin-right: 5px; }
-        .h-enquiry-pro span { display: block; font-size: 0.55rem; color: #aaa; }
+        .h-enquiry-pro span { display: block; font-size: 0.5rem; color: #aaa; text-transform: uppercase; }
         .h-enquiry-pro b { display: block; color: var(--brand-gold); font-size: 0.75rem; animation: pulse 2s infinite; }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
         .h-action-item { background: none; border: none; color: white; cursor: pointer; text-align: center; padding: 0; }
         .h-action-item b { font-size: 1.1rem; display: block; }
         .h-action-item span { font-size: 0.55rem; color: #ccc; }
 
-        /* SLIM SEARCH BAR */
         .h-search-row { margin-top: 8px; }
         .h-search-box { display: flex; position: relative; width: 100%; }
-        .h-search-input { 
-            width: 100%; 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            border: none; 
-            font-size: 0.85rem; 
-            outline: none;
-            background: #fff;
-        }
-        .h-search-btn { 
-            position: absolute; 
-            right: 4px; 
-            top: 4px; 
-            bottom: 4px; 
-            background: var(--brand-green); 
-            width: 32px; 
-            border-radius: 50%; 
-            border: none; 
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
+        .h-search-input { width: 100%; padding: 8px 15px; border-radius: 20px; border: none; font-size: 0.85rem; outline: none; background: #fff; }
+        .h-search-btn { position: absolute; right: 4px; top: 4px; bottom: 4px; background: var(--brand-green); width: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
 
-        /* --- AUTO-MOVING BANNERS --- */
+        /* MOVING BANNERS */
         .ads-wrapper { background: #fff; overflow: hidden; padding: 10px 0; border-bottom: 1px solid #ddd; }
         .ads-track { display: flex; width: calc(260px * 4 + 40px); animation: scroll 18s linear infinite; gap: 10px; padding-left: 10px; }
-        
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-260px * 2 - 10px)); }
-        }
-
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-260px * 2 - 10px)); } }
         .ad-card { flex: 0 0 260px; border-radius: 10px; padding: 10px; color: white; position: relative; display: flex; align-items: center; height: 60px; }
         .ad-1 { background: linear-gradient(45deg, #1b5e20, #388e3c); }
         .ad-2 { background: linear-gradient(45deg, #8d6e35, #c5a059); }
         .ad-text h4 { margin: 0; font-size: 0.85rem; }
         .ad-text p { margin: 2px 0 0; font-size: 0.7rem; }
 
-        /* --- COMPACT PRODUCT CARDS --- */
+        /* PRODUCT CARDS */
         .main-container { padding: 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .p-card { background: white; border-radius: 8px; padding: 8px; position: relative; border: 1px solid #eee; }
@@ -104,9 +70,36 @@
         .p-img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; border-radius: 6px; }
         .p-title { font-size: 0.8rem; font-weight: 600; margin: 8px 0 4px; height: 2.4em; overflow: hidden; color: #333; line-height: 1.2; }
         .p-price { font-size: 1rem; font-weight: bold; color: var(--price-red); }
-
         .btn-prime { background: var(--brand-gold); color: #111; border: none; padding: 8px; width: 100%; border-radius: 6px; font-weight: bold; margin-top: 6px; font-size: 0.75rem; }
-        
+
+        /* FLOATING WHATSAPP ICON */
+        .floating-wa {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 3000;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .floating-wa:active { transform: scale(0.9); }
+
+        /* FOUNDER SECTION */
+        .founder-box { background: white; margin: 20px 10px; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #ddd; }
+        .founder-box img { width: 85px; height: 85px; border-radius: 50%; border: 2.5px solid var(--brand-green); margin-bottom: 10px; }
+        .founder-box h3 { margin: 5px 0; color: var(--brand-green); font-size: 1.1rem; }
+        .founder-box p { font-size: 0.8rem; color: #555; line-height: 1.4; margin-bottom: 15px; }
+        .btn-consult { background: var(--brand-green); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+
         /* CART VIEW */
         .free-ship-alert { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; border: 1px solid #c8e6c9; text-align: center; }
         .modal-content { background: white; padding: 20px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; }
@@ -119,7 +112,7 @@
     <div class="h-top-row">
         <div class="h-logo-section" onclick="location.reload()">
             <img src="logo.png" class="h-logo">
-            <div class="h-brand-text">Ayursiddhit<span>Naturals.in</span></div>
+            <div class="h-brand-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-pro-actions">
             <div class="h-enquiry-pro"><span>Enquiry</span><b>8080926195</b></div>
@@ -129,7 +122,7 @@
     </div>
     <div class="h-search-row">
         <div class="h-search-box">
-            <input type="text" id="search-bar" class="h-search-input" placeholder="Search soaps, oils..." onkeyup="search()">
+            <input type="text" id="search-bar" class="h-search-input" placeholder="Search Handmade Soaps..." onkeyup="search()">
             <button class="h-search-btn">🔍</button>
         </div>
     </div>
@@ -144,7 +137,20 @@
     </div>
 </div>
 
-<main class="main-container" id="main-view"><div class="product-grid" id="product-list"></div></main>
+<main class="main-container" id="main-view">
+    <div class="product-grid" id="product-list"></div>
+    
+    <div class="founder-box">
+        <img src="logo.png" alt="Founder">
+        <h3>Dr. Prasiddhi Patil (BAMS)</h3>
+        <p>Expert Ayurvedic Formulations handcrafted with medical precision. Chemical-free beauty for your skin.</p>
+        <a href="https://wa.me/918080926195?text=Hello%20Dr.%20Prasiddhi%2C%20I%20need%20a%20skin%20consultation" class="btn-consult">Consult Dr. Prasiddhi</a>
+    </div>
+</main>
+
+<a href="https://wa.me/918080926195?text=Hi%20Ayursiddhit%20Naturals%2C%20I%20have%20a%20question%21" class="floating-wa" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
+</a>
 
 <div id="login-modal" class="modal hidden">
     <div class="modal-content">
@@ -270,7 +276,7 @@
             const p = allProducts.find(x => x.id === id);
             msg += `- ${p.name} (x${cart[id]})\n`;
         }
-        msg += `\n*TOTAL:* ₹${document.getElementById('final-total').innerText}\n\n*Customer Details:* ${document.getElementById('f-name').value}\n${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-address').value}, ${document.getElementById('f-city').value} - ${document.getElementById('f-pin').value}`;
+        msg += `\n*TOTAL:* ₹${document.getElementById('final-total').innerText}\n\n*Customer Info:* ${document.getElementById('f-name').value}\n${document.getElementById('f-house').value}, ${document.getElementById('f-building').value}, ${document.getElementById('f-address').value}, ${document.getElementById('f-city').value} - ${document.getElementById('f-pin').value}`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
@@ -283,3 +289,4 @@
 </script>
 </body>
 </html>
+  
