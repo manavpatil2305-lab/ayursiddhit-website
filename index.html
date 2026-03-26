@@ -8,71 +8,81 @@
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow-x: hidden; }
         .hidden { display: none !important; }
-        header { background: var(--amazon); color: white; padding: 10px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--luxury); }
+        header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); }
         .h-row { display: flex; align-items: center; justify-content: space-between; }
-        .h-brand { display: flex; align-items: center; gap: 8px; }
         .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury); }
-        .h-text { font-size: 0.9rem; font-weight: bold; line-height: 1.1; }
+        .h-text { font-size: 0.95rem; font-weight: bold; line-height: 1.1; margin-left: 8px; }
         .h-text span { color: var(--gold); font-size: 0.6rem; display: block; }
         .h-actions { display: flex; align-items: center; gap: 10px; }
         .enquiry { text-align: right; border-right: 1px solid #444; padding-right: 10px; }
         .enquiry b { color: var(--gold); font-size: 0.75rem; display: block; }
-        .signin-btn { background: none; border: none; color: white; cursor: pointer; text-align: center; }
-        .search-box { background: white; border-radius: 20px; padding: 8px 15px; margin-top: 10px; display: flex; }
-        .search-box input { border: none; outline: none; width: 100%; font-size: 0.9rem; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-        .p-card { background: white; border-radius: 8px; padding: 10px; border: 1px solid #ddd; text-align: center; }
+        .signin-btn { background: none; border: none; color: white; cursor: pointer; text-align: center; min-width: 60px; }
+        
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
+        .p-card { background: white; border-radius: 8px; padding: 10px; border: 1px solid #eee; text-align: center; }
         .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; }
-        .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #eee; border-radius: 15px; }
+        .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
         .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; }
-        .btn-cart { background: var(--gold); border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; margin-bottom: 5px; cursor: pointer; }
-        .btn-buy { background: #ffa41c; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 85%; max-width: 350px; text-align: center; }
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1500; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; box-sizing: border-box; }
+        .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
+        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
+
+        /* CHECKOUT FORM - AMAZON STYLE */
+        .cart-view { padding: 15px; max-width: 500px; margin: auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
+        .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
+
+        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="h-row">
-        <div class="h-brand">
+        <div style="display:flex; align-items:center;">
             <img src="logo.png" class="h-logo">
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-actions">
-            <div class="enquiry"><span style="font-size: 0.5rem; color:#aaa;">Enquiry</span><b>8080926195</b></div>
-            <button class="signin-btn" onclick="openLogin()"><span id="user-name" style="font-size: 0.6rem; color:var(--gold);">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
-            <button onclick="showCart()" style="background:none; border:none; position:relative; font-size: 1.2rem;">🛒<span id="badge" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:0.6rem;">0</span></button>
+            <div class="enquiry"><span>Enquiry</span><b>8080926195</b></div>
+            <button class="signin-btn" onclick="login()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
+            <button onclick="showCart()" style="background:none; border:none; position:relative; font-size: 1.3rem;">🛒<span id="badge" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:0.6rem;">0</span></button>
         </div>
     </div>
-    <div class="search-box"><input type="text" placeholder="Search Handmade Soaps..." onkeyup="search(this.value)"></div>
 </header>
 
 <main id="main-view" class="product-grid"></main>
 
-<div id="cart-view" class="hidden" style="padding:15px;">
-    <h2>Review Order</h2>
+<div id="cart-view" class="hidden cart-view">
+    <h2>Review Your Order</h2>
     <div id="cart-list"></div>
-    <div style="background:white; padding:15px; border-radius:10px; margin-top:15px;">
-        <input type="text" id="cust-name" placeholder="Full Name">
-        <textarea id="cust-addr" placeholder="Full Address with Pincode" rows="3"></textarea>
-        <p>Subtotal: ₹<span id="subtotal">0</span></p>
-        <p>Shipping: <span id="ship-fee">₹50</span></p>
-        <h3 style="color:var(--red);">Total: ₹<span id="total">0</span></h3>
-        <button onclick="orderWA()" class="btn-cart" style="background:#25D366; color:white;">Order on WhatsApp</button>
-        <button onclick="closeCart()" style="width:100%; background:none; border:none; color:blue; margin-top:10px;">Back</button>
-    </div>
-</div>
-
-<div id="login-modal" class="modal hidden">
-    <div class="modal-content">
-        <h3>Sign In</h3>
-        <button onclick="login()" class="btn-cart">Google Login</button>
-        <button onclick="closeLogin()" style="border:none; background:none; color:blue; margin-top:10px;">Cancel</button>
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
+        <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
+        <h3 style="margin-top:0;">Delivery Address</h3>
+        <form id="order-form">
+            <input type="text" id="f-name" placeholder="Full Name" required>
+            <input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
+            <div class="form-grid">
+                <input type="text" id="f-house" placeholder="House/Flat No." required>
+                <input type="text" id="f-floor" placeholder="Floor No.">
+            </div>
+            <input type="text" id="f-building" placeholder="Building/Society Name" required>
+            <textarea id="f-address" placeholder="Full Address & Landmark" rows="3" required></textarea>
+            <div class="form-grid">
+                <input type="text" id="f-city" placeholder="City" required>
+                <input type="number" id="f-pin" placeholder="Pincode" required>
+            </div>
+            
+            <div style="border-top:1px solid #eee; padding-top:15px; margin-top:10px;">
+                <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
+                <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
+                <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
+                <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">🚀 Order on WhatsApp</button>
+            </div>
+        </form>
+        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px;">Back to Shop</button>
     </div>
 </div>
 
@@ -81,7 +91,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
@@ -98,9 +108,7 @@
     const provider = new GoogleAuthProvider();
 
     window.login = () => signInWithRedirect(auth, provider);
-    window.openLogin = () => document.getElementById('login-modal').classList.remove('hidden');
-    window.closeLogin = () => document.getElementById('login-modal').classList.add('hidden');
-
+    getRedirectResult(auth).catch((e) => console.log(e));
     onAuthStateChanged(auth, (user) => { if(user) document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; });
 
     let products = [];
@@ -112,35 +120,17 @@
         render();
     }
 
-    function render(data = products) {
-        const grid = document.getElementById('main-view');
-        grid.innerHTML = '';
-        data.forEach(p => {
+    function render() {
+        const grid = document.getElementById('main-view'); grid.innerHTML = '';
+        products.forEach(p => {
             const q = cart[p.id] || 0;
-            grid.innerHTML += `
-                <div class="p-card">
-                    <img src="${p.image}" class="p-img">
-                    <h4 style="margin:8px 0; font-size:0.8rem;">${p.name}</h4>
-                    <div style="color:var(--red); font-weight:bold;">₹${p.price}</div>
-                    <div class="p-qty">
-                        <button onclick="updateQty('${p.id}',-1)">-</button>
-                        <span style="font-weight:bold; min-width:20px;">${q}</span>
-                        <button onclick="updateQty('${p.id}',1)">+</button>
-                    </div>
-                    <button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button>
-                    <button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button>
-                </div>`;
+            grid.innerHTML += `<div class="p-card"><img src="${p.image}" class="p-img"><h4 style="margin:8px 0; font-size:0.85rem;">${p.name}</h4><div style="color:var(--red); font-weight:bold;">₹${p.price}</div><div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button><button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button></div>`;
         });
     }
 
-    window.updateQty = (id, d) => {
-        cart[id] = (cart[id] || 0) + d;
-        if(cart[id] <= 0) delete cart[id];
-        render(); updateBadge();
-    };
-
+    window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); };
     window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; showCart(); };
-    window.updateBadge = () => { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); };
+    function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
     window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
     window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
 
@@ -149,23 +139,27 @@
         let sub = 0; let count = 0;
         for(let id in cart) {
             const p = products.find(x => x.id === id);
-            if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; }
+            if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; }
         }
         const free = (sub >= 800 || count >= 5);
         document.getElementById('subtotal').innerText = sub;
         document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50";
         document.getElementById('total').innerText = sub + (free ? 0 : 50);
+        if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden');
+        else document.getElementById('ship-promo').classList.add('hidden');
     }
 
-    window.orderWA = () => {
-        let msg = `🛍️ *Order: Ayursiddhit*\n\n`;
+    document.getElementById('order-form').onsubmit = (e) => {
+        e.preventDefault();
+        const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, house: document.getElementById('f-house').value, floor: document.getElementById('f-floor').value, bld: document.getElementById('f-building').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
+        let msg = `🛍️ *NEW ORDER: AYURSIDDHIT*\n\n`;
         for(let id in cart) { const p = products.find(x => x.id === id); msg += `- ${p.name} x ${cart[id]}\n`; }
-        msg += `\nTotal: ₹${document.getElementById('total').innerText}\nAddress: ${document.getElementById('cust-name').value}, ${document.getElementById('cust-addr').value}`;
+        msg += `\n*Total:* ₹${document.getElementById('total').innerText}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
-    window.search = (q) => render(products.filter(p => p.name.toLowerCase().includes(q.toLowerCase())));
     load();
 </script>
 </body>
 </html>
+
