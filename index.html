@@ -30,7 +30,7 @@
         .p-card { background: white; border-radius: 8px; padding: 10px; border: 1px solid #eee; text-align: center; }
         .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; }
         .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
-        .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; }
+        .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; cursor: pointer; }
         .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
         .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
 
@@ -98,7 +98,20 @@
                 <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
                 <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
                 <p id="modal-desc" style="font-size:1rem; color:#444; line-height: 1.5; margin-bottom: 20px;"></p>
-                <button id="modal-add-btn" class="btn-buy" style="font-size: 1.1rem; padding: 15px;">🛒 Add to Cart</button>
+                
+                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+                    <span style="font-weight:bold;">Quantity:</span>
+                    <div class="p-qty" style="margin:0; background:#f0f0f0; padding:5px 10px; border-radius:20px;">
+                        <button onclick="updateModalQty(-1)" style="width:35px; height:35px; font-size:1.2rem;">-</button>
+                        <span id="modal-qty" style="font-weight:bold; font-size:1.2rem; min-width:25px; text-align:center;">1</span>
+                        <button onclick="updateModalQty(1)" style="width:35px; height:35px; font-size:1.2rem;">+</button>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <button id="modal-add-btn" class="btn-cart" style="font-size: 1.1rem; padding: 15px; margin:0; flex:1;">🛒 Add to Cart</button>
+                    <button id="modal-buy-btn" class="btn-buy" style="font-size: 1.1rem; padding: 15px; margin:0; flex:1;">⚡ Buy Now</button>
+                </div>
             </div>
         </div>
 
@@ -117,6 +130,10 @@
                 <option value="1">⭐ (Terrible)</option>
             </select>
             <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
+            
+            <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:#444;">📸 Add a Photo (Optional)</label>
+            <input type="file" id="review-image" accept="image/*" style="padding:10px; background:white; cursor:pointer;">
+
             <button onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem;">Submit Review</button>
         </div>
     </div>
@@ -185,6 +202,8 @@
       appId: "1:704398728935:web:6330cb27578d80ce15cc42"
     };
 
+    const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
+
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const db = getFirestore(app);
@@ -207,6 +226,7 @@
     let activePromo = null; 
     let appliedDiscount = 0;
     let currentModalProductId = null; 
+    let modalCurrentQty = 1; // NEW: Tracks quantity on the product page
 
     async function load() {
         const snap = await getDocs(collection(db, "products"));
@@ -248,23 +268,41 @@
         });
     }
 
+    // NEW: Function to change quantity inside the product page
+    window.updateModalQty = (d) => {
+        modalCurrentQty += d;
+        if(modalCurrentQty < 1) modalCurrentQty = 1;
+        document.getElementById('modal-qty').innerText = modalCurrentQty;
+    };
+
     // 🛍️ FULL PAGE PRODUCT LOGIC
     window.openProduct = (id) => {
         const p = products.find(x => x.id === id);
         if(!p) return;
         currentModalProductId = id;
+        modalCurrentQty = 1; // Reset to 1 every time they open a product
+        document.getElementById('modal-qty').innerText = modalCurrentQty;
         
-        // Hide Main Grid & Search Bar, Show Product View
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('product-view').classList.remove('hidden');
-        window.scrollTo(0, 0); // Scroll to top like a real page
+        window.scrollTo(0, 0); 
 
         document.getElementById('modal-img').src = p.image;
         document.getElementById('modal-name').innerText = p.name;
         document.getElementById('modal-price').innerText = `₹${p.price}`;
         document.getElementById('modal-desc').innerText = p.desc || "A premium Ayurvedic product.";
-        document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); alert("Added to cart!"); };
+        
+        // NEW: Wiring up the new buttons
+        document.getElementById('modal-add-btn').onclick = () => { 
+            updateQty(id, modalCurrentQty); 
+            alert(`Added ${modalCurrentQty} item(s) to cart! 🛒`); 
+        };
+        document.getElementById('modal-buy-btn').onclick = () => { 
+            updateQty(id, modalCurrentQty); 
+            closeProduct();
+            showCart(); 
+        };
         
         renderReviews(p.reviews || []);
     };
@@ -286,7 +324,8 @@
             <div style="border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:15px;">
                 <b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br>
                 <span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span>
-                <p style="margin:8px 0 0 0; color:#333; line-height:1.4;">${r.text}</p>
+                <p style="margin:8px 0; color:#333; line-height:1.4;">${r.text}</p>
+                ${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid #ccc;">` : ''}
             </div>
         `).join('');
     }
@@ -300,16 +339,37 @@
         
         const text = document.getElementById('review-text').value.trim();
         const rating = document.getElementById('review-rating').value;
+        const fileInput = document.getElementById('review-image');
+        const file = fileInput.files[0];
+
         if(!text) { alert("Please write a review before submitting."); return; }
 
         const btn = event.target;
-        btn.innerText = "Submitting...";
+        btn.innerText = "⏳ Uploading Review...";
         btn.disabled = true;
+
+        let imageUrl = null;
+        
+        // NEW: Upload photo if the user selected one
+        if(file) {
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                    method: 'POST', body: formData
+                });
+                const data = await response.json();
+                if(data.success) { imageUrl = data.data.url; }
+            } catch (error) {
+                console.error("Image upload failed", error);
+            }
+        }
 
         const newReview = {
             name: user.displayName.split(' ')[0],
             text: text,
             rating: rating,
+            image: imageUrl, // Saves the photo link if it exists
             date: new Date().toISOString()
         };
 
@@ -323,6 +383,8 @@
             p.reviews.push(newReview);
             
             document.getElementById('review-text').value = '';
+            fileInput.value = ''; // clear the file box
+            
             renderReviews(p.reviews);
             render(); 
             alert("Review submitted successfully! 🎉");
