@@ -6,12 +6,18 @@
     <title>Admin | Ayursiddhit Naturals</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; padding: 20px; }
-        .admin-card { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h2 { color: #1b5e20; text-align: center; }
+        .admin-card { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: 0 auto 20px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { color: #1b5e20; text-align: center; margin-top: 0; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         input[type="file"] { background: #f9f9f9; padding: 10px; cursor: pointer; }
         .btn-add { background: #1b5e20; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .btn-add:disabled { background: #888; cursor: not-allowed; }
+        
+        /* PROMO SECTION STYLES */
+        .btn-promo { background: #B12704; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .promo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .help-text { font-size: 0.75rem; color: #666; margin-bottom: 5px; display: block; }
+
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
         .btn-del { background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
         .logout-btn { background: #d32f2f; color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; margin-top: 20px; font-weight: bold; cursor: pointer; }
@@ -19,13 +25,36 @@
 </head>
 <body>
 
+<div class="admin-card" style="border-top: 5px solid #B12704;">
+    <h2 style="color: #B12704;">📢 Live Promo & Banner</h2>
+    
+    <label class="help-text">Promo Code (e.g. DIWALI50)</label>
+    <input type="text" id="pr-code" placeholder="Enter Secret Code" style="text-transform: uppercase;">
+    
+    <div class="promo-grid">
+        <div>
+            <label class="help-text">Discount (₹)</label>
+            <input type="number" id="pr-discount" placeholder="e.g. 50">
+        </div>
+        <div>
+            <label class="help-text">Min. Shopping (₹)</label>
+            <input type="number" id="pr-min" placeholder="e.g. 500">
+        </div>
+    </div>
+
+    <label class="help-text">Scrolling Ad Text (Shows on top of website)</label>
+    <input type="text" id="pr-text" placeholder="e.g. 🎉 Diwali Special! Use code DIWALI50 on orders above ₹500">
+    
+    <button id="promo-btn" class="btn-promo" onclick="savePromo()">Publish Live Promo</button>
+</div>
+
 <div class="admin-card">
     <h2>Manage Products</h2>
 
     <input type="text" id="p-name" placeholder="Product Name (e.g. Neem Soap)">
     <input type="number" id="p-price" placeholder="Price (e.g. 99)">
     
-    <label style="font-size: 0.8rem; color: #555; margin-bottom: 5px; display: block;">Select Image from Gallery:</label>
+    <label class="help-text">Select Image from Gallery:</label>
     <input type="file" id="p-image-file" accept="image/*">
     
     <textarea id="p-desc" placeholder="Product Description" rows="3"></textarea>
@@ -39,13 +68,14 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    // ✅ ADDED setDoc and getDoc to manage the single live promo settings
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // 🚨 SECURITY PASSWORD LOCK 🚨
     const adminPassword = prompt("Enter Admin Password:");
-    if (adminPassword !== "230501") {
+    if (adminPassword !== "Ayur123") {
         alert("Access Denied! Redirecting to store...");
-        window.location.href = "/"; // Kicks them out to the main website
+        window.location.href = "/"; 
     }
 
     const firebaseConfig = {
@@ -61,6 +91,54 @@
     const db = getFirestore(app);
 
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d"; 
+
+    // ✅ LOAD EXISTING PROMO WHEN ADMIN OPENS
+    window.loadPromo = async () => {
+        try {
+            const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
+            if (promoSnap.exists()) {
+                const data = promoSnap.data();
+                document.getElementById('pr-code').value = data.code || '';
+                document.getElementById('pr-discount').value = data.discount || '';
+                document.getElementById('pr-min').value = data.minOrder || '';
+                document.getElementById('pr-text').value = data.adText || '';
+            }
+        } catch(e) {
+            console.log("No promo set yet.");
+        }
+    };
+
+    // ✅ SAVE NEW PROMO AND BANNER TO DATABASE
+    window.savePromo = async () => {
+        const code = document.getElementById('pr-code').value.toUpperCase();
+        const discount = Number(document.getElementById('pr-discount').value);
+        const minOrder = Number(document.getElementById('pr-min').value);
+        const adText = document.getElementById('pr-text').value;
+
+        if(!code || !discount || !minOrder || !adText) {
+            alert("Please fill out all Promo fields!");
+            return;
+        }
+
+        const btn = document.getElementById('promo-btn');
+        btn.innerText = "⏳ Publishing...";
+        
+        try {
+            await setDoc(doc(db, "settings", "live_promo"), {
+                code: code,
+                discount: discount,
+                minOrder: minOrder,
+                adText: adText,
+                isActive: true
+            });
+            alert("Promo Code & Banner are now LIVE on the website!");
+        } catch (error) {
+            alert("Error saving promo.");
+            console.error(error);
+        } finally {
+            btn.innerText = "Publish Live Promo";
+        }
+    };
 
     window.addProduct = async () => {
         const name = document.getElementById('p-name').value;
@@ -105,7 +183,7 @@
                 fileInput.value = '';
                 
                 alert("Product Added Successfully!");
-                window.loadInventory(); // FIXED
+                window.loadInventory(); 
             } else {
                 alert("Image upload failed. Check API key.");
             }
@@ -141,7 +219,7 @@
     window.deleteItem = async (id) => {
         if(confirm("Are you sure you want to delete this product?")) {
             await deleteDoc(doc(db, "products", id));
-            window.loadInventory(); // FIXED
+            window.loadInventory(); 
         }
     };
 
@@ -149,9 +227,9 @@
         window.location.href = "/";
     };
 
-    // FIXED TYPO HERE
-    if (adminPassword === "230501") {
+    if (adminPassword === "Ayur123") {
         window.loadInventory();
+        window.loadPromo(); // Loads any existing promo code
     }
 </script>
 </body>
