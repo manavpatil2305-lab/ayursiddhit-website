@@ -10,6 +10,12 @@
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow-x: hidden; }
         .hidden { display: none !important; }
+        
+        /* 📢 SCROLLING BANNER CSS */
+        .promo-banner { background: var(--luxury); color: black; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; border-bottom: 1px solid #b3932b; }
+        .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
+        @keyframes scrollLeft { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
         header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); }
         .h-row { display: flex; align-items: center; justify-content: space-between; }
         .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury); }
@@ -28,7 +34,6 @@
         .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
         .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
 
-        /* CHECKOUT FORM - AMAZON STYLE */
         .cart-view { padding: 15px; max-width: 500px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
@@ -38,6 +43,10 @@
     </style>
 </head>
 <body>
+
+<div id="promo-banner" class="promo-banner hidden">
+    <div class="scrolling-text" id="promo-text"></div>
+</div>
 
 <header>
     <div class="h-row">
@@ -64,6 +73,15 @@
     <div id="cart-list"></div>
     <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
         <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
+        
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
+            <div style="display:flex; gap:10px; margin-bottom:5px;">
+                <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
+                <button onclick="applyPromo()" style="background:var(--amazon); color:white; border:none; border-radius:6px; padding:0 15px; cursor:pointer; font-weight:bold;">Apply</button>
+            </div>
+            <div id="promo-msg" style="font-size:0.8rem; font-weight:bold; height:15px;"></div>
+        </div>
+
         <h3 style="margin-top:0;">Delivery Address</h3>
         <form id="order-form">
             <input type="text" id="f-name" placeholder="Full Name" required>
@@ -81,6 +99,7 @@
             
             <div style="border-top:1px solid #eee; padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
+                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Discount: <span>-₹<span id="discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
                 <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
                 <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">🚀 Order on WhatsApp</button>
@@ -94,9 +113,8 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    // ✅ ANALYTICS ADDED HERE
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
     const firebaseConfig = {
@@ -109,25 +127,16 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    // ✅ ENGINE TURNED ON HERE
     const analytics = getAnalytics(app);
-
     const db = getFirestore(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
     window.login = () => {
         setPersistence(auth, browserLocalPersistence)
-        .then(() => {
-            return signInWithPopup(auth, provider);
-        })
-        .then((result) => {
-            document.getElementById('user-name').innerText = "Hi, " + result.user.displayName.split(' ')[0];
-        })
-        .catch((error) => {
-            alert("Login Error: " + error.message);
-            console.error("Auth Error:", error);
-        });
+        .then(() => signInWithPopup(auth, provider))
+        .then((result) => { document.getElementById('user-name').innerText = "Hi, " + result.user.displayName.split(' ')[0]; })
+        .catch((error) => console.error("Auth Error:", error));
     };
 
     onAuthStateChanged(auth, (user) => { 
@@ -136,11 +145,24 @@
 
     let products = [];
     let cart = {};
+    let activePromo = null; 
+    let appliedDiscount = 0;
 
     async function load() {
+        // Fetch Products
         const snap = await getDocs(collection(db, "products"));
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
+
+        // Fetch Live Promo Banner
+        try {
+            const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
+            if(promoSnap.exists() && promoSnap.data().isActive) {
+                activePromo = promoSnap.data();
+                document.getElementById('promo-text').innerText = activePromo.adText;
+                document.getElementById('promo-banner').classList.remove('hidden');
+            }
+        } catch(e) { console.log("No promo running."); }
     }
 
     function render() {
@@ -152,10 +174,26 @@
     }
 
     window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); };
-    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; showCart(); };
+    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); showCart(); };
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
     window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
     window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
+
+    // 🎟️ PROMO LOGIC
+    window.applyPromo = () => {
+        const input = document.getElementById('cart-promo-input').value.trim().toUpperCase();
+        const msg = document.getElementById('promo-msg');
+        let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
+
+        if (!activePromo || input !== activePromo.code) {
+            msg.style.color = "red"; msg.innerText = "❌ Invalid Promo Code"; appliedDiscount = 0;
+        } else if (sub < activePromo.minOrder) {
+            msg.style.color = "red"; msg.innerText = `⚠️ Add ₹${activePromo.minOrder - sub} more to unlock this code.`; appliedDiscount = 0;
+        } else {
+            msg.style.color = "green"; msg.innerText = `🎉 Code Applied! ₹${activePromo.discount} Off`; appliedDiscount = activePromo.discount;
+        }
+        renderCart();
+    };
 
     function renderCart() {
         const list = document.getElementById('cart-list'); list.innerHTML = '';
@@ -164,10 +202,28 @@
             const p = products.find(x => x.id === id);
             if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; }
         }
+
+        // Auto-remove promo if they delete items and fall below minimum
+        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder) {
+            appliedDiscount = 0;
+            document.getElementById('promo-msg').style.color = "red";
+            document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`;
+        }
+
         const free = (sub >= 800 || count >= 5);
         document.getElementById('subtotal').innerText = sub;
+        
+        // Show/Hide Discount Row
+        if(appliedDiscount > 0) {
+            document.getElementById('discount-row').classList.remove('hidden');
+            document.getElementById('discount-amt').innerText = appliedDiscount;
+        } else {
+            document.getElementById('discount-row').classList.add('hidden');
+        }
+
         document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50";
-        document.getElementById('total').innerText = sub + (free ? 0 : 50);
+        document.getElementById('total').innerText = sub - appliedDiscount + (free ? 0 : 50);
+        
         if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden');
         else document.getElementById('ship-promo').classList.add('hidden');
     }
@@ -177,13 +233,15 @@
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, house: document.getElementById('f-house').value, floor: document.getElementById('f-floor').value, bld: document.getElementById('f-building').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
         let msg = `🛍️ *NEW ORDER: AYURSIDDHIT*\n\n`;
         for(let id in cart) { const p = products.find(x => x.id === id); msg += `- ${p.name} x ${cart[id]}\n`; }
-        msg += `\n*Total:* ₹${document.getElementById('total').innerText}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
+        
+        if (appliedDiscount > 0) { msg += `\n🎁 *Promo Code:* ${activePromo.code}\n📉 *Discount:* -₹${appliedDiscount}`; }
+        
+        msg += `\n\n*Total:* ₹${document.getElementById('total').innerText}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
     load();
 
-    // ✅ PWA APP INSTALLER KEPT SAFE HERE
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js');
     }
