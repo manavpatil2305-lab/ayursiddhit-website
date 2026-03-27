@@ -41,8 +41,15 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+    // 🚨 SECURITY PASSWORD LOCK 🚨
+    const adminPassword = prompt("Enter Admin Password:");
+    if (adminPassword !== "230501") {
+        alert("Access Denied! Redirecting to store...");
+        window.location.href = "/"; // Kicks them out to the main website
+    }
+
     const firebaseConfig = {
-        apiKey: "AIzaSyAOBW9PjetBbmROBV2GEMft7QM0HaGpdB0",
+        apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
         authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
         projectId: "ayursiddhitnaturals-d2ecb",
         storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
@@ -53,7 +60,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ✅ YOUR API KEY IS PLACED HERE ✅
+    // ✅ YOUR IMGBB API KEY IS PLACED HERE ✅
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d"; 
 
     window.addProduct = async () => {
@@ -141,7 +148,10 @@
         window.location.href = "/";
     };
 
-    loadInventory();
+    // Only load inventory if the password was correct
+    if (adminPassword === "Ayur123") {
+        loadInventory();
+    }
 </script>
 </body>
 </html>
