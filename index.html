@@ -34,9 +34,9 @@
         .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
         .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
 
-        .cart-view { padding: 15px; max-width: 500px; margin: auto; }
+        .cart-view, .product-view { padding: 15px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
 
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
@@ -46,6 +46,9 @@
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
             .h-row { max-width: 1200px; margin: 0 auto; }
             .search-container { max-width: 1200px; margin: 0 auto; }
+            .product-layout { display: flex; gap: 30px; }
+            .product-image-section { flex: 1; }
+            .product-details-section { flex: 1; }
         }
     </style>
 </head>
@@ -73,13 +76,51 @@
     🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚
 </div>
 
-<div style="background: white; padding: 10px 15px; border-bottom: 1px solid #eee;">
+<div id="search-section" style="background: white; padding: 10px 15px; border-bottom: 1px solid #eee;">
     <div class="search-container">
         <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
     </div>
 </div>
 
 <main id="main-view" class="product-grid"></main>
+
+<div id="product-view" class="hidden product-view">
+    <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
+        ⬅ Back to Shop
+    </button>
+    
+    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd;">
+        <div class="product-layout">
+            <div class="product-image-section">
+                <img id="modal-img" src="" style="width:100%; border-radius:8px; object-fit:contain; max-height:400px;">
+            </div>
+            <div class="product-details-section">
+                <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
+                <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
+                <p id="modal-desc" style="font-size:1rem; color:#444; line-height: 1.5; margin-bottom: 20px;"></p>
+                <button id="modal-add-btn" class="btn-buy" style="font-size: 1.1rem; padding: 15px;">🛒 Add to Cart</button>
+            </div>
+        </div>
+
+        <hr style="border:0; border-top:1px solid #ddd; margin:30px 0;">
+        
+        <h3 style="margin-top:0; color: var(--amazon); font-size: 1.3rem;">Customer Reviews ⭐</h3>
+        <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
+        
+        <div style="background:#f9f9f9; padding:20px; border-radius:8px; border:1px solid #eee;">
+            <b style="font-size:1rem; display:block; margin-bottom:10px;">Write a Review</b>
+            <select id="review-rating" style="padding:12px; margin-bottom:10px; font-size: 1rem;">
+                <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                <option value="4">⭐⭐⭐⭐ (Very Good)</option>
+                <option value="3">⭐⭐⭐ (Average)</option>
+                <option value="2">⭐⭐ (Poor)</option>
+                <option value="1">⭐ (Terrible)</option>
+            </select>
+            <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
+            <button onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem;">Submit Review</button>
+        </div>
+    </div>
+</div>
 
 <div id="cart-view" class="hidden cart-view">
     <h2>Review Your Order</h2>
@@ -122,11 +163,16 @@
     </div>
 </div>
 
+<div id="install-banner" class="hidden" style="position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:var(--green); color:white; padding:12px 20px; border-radius:30px; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.3); display:flex; align-items:center; gap:10px; width:85%; max-width:320px; justify-content:space-between;">
+    <span style="font-size:0.85rem; font-weight:bold;">📲 Install Ayursiddhit App</span>
+    <button onclick="installApp()" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; font-weight:bold; cursor:pointer; color:black;">Install</button>
+</div>
+
 <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" class="floating-wa"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35"></a>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
@@ -160,6 +206,7 @@
     let cart = {};
     let activePromo = null; 
     let appliedDiscount = 0;
+    let currentModalProductId = null; 
 
     async function load() {
         const snap = await getDocs(collection(db, "products"));
@@ -180,15 +227,133 @@
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
             const q = cart[p.id] || 0;
-            grid.innerHTML += `<div class="p-card"><img src="${p.image}" class="p-img"><h4 style="margin:8px 0; font-size:0.85rem;">${p.name}</h4><div style="color:var(--red); font-weight:bold;">₹${p.price}</div><div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button><button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button></div>`;
+            
+            let avg = "5.0"; let revCount = 0;
+            if(p.reviews && p.reviews.length > 0) {
+                revCount = p.reviews.length;
+                avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1);
+            }
+
+            grid.innerHTML += `<div class="p-card">
+                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
+                <h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>
+                <div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')">
+                    <span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span>
+                </div>
+                <div style="color:var(--red); font-weight:bold;">₹${p.price}</div>
+                <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
+                <button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button>
+                <button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button>
+            </div>`;
         });
     }
+
+    // 🛍️ FULL PAGE PRODUCT LOGIC
+    window.openProduct = (id) => {
+        const p = products.find(x => x.id === id);
+        if(!p) return;
+        currentModalProductId = id;
+        
+        // Hide Main Grid & Search Bar, Show Product View
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('product-view').classList.remove('hidden');
+        window.scrollTo(0, 0); // Scroll to top like a real page
+
+        document.getElementById('modal-img').src = p.image;
+        document.getElementById('modal-name').innerText = p.name;
+        document.getElementById('modal-price').innerText = `₹${p.price}`;
+        document.getElementById('modal-desc').innerText = p.desc || "A premium Ayurvedic product.";
+        document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); alert("Added to cart!"); };
+        
+        renderReviews(p.reviews || []);
+    };
+
+    window.closeProduct = () => {
+        document.getElementById('product-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
+        document.getElementById('search-section').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    };
+
+    function renderReviews(reviews) {
+        const list = document.getElementById('modal-reviews-list');
+        if(reviews.length === 0) {
+            list.innerHTML = "<p style='color:#888; margin-top:0;'>No reviews yet. Be the first to review!</p>";
+            return;
+        }
+        list.innerHTML = reviews.map(r => `
+            <div style="border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:15px;">
+                <b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br>
+                <span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span>
+                <p style="margin:8px 0 0 0; color:#333; line-height:1.4;">${r.text}</p>
+            </div>
+        `).join('');
+    }
+
+    window.submitReview = async () => {
+        const user = auth.currentUser;
+        if(!user) {
+            alert("⚠️ Please tap 'Sign In / Account' at the top of the website to leave a review!");
+            return;
+        }
+        
+        const text = document.getElementById('review-text').value.trim();
+        const rating = document.getElementById('review-rating').value;
+        if(!text) { alert("Please write a review before submitting."); return; }
+
+        const btn = event.target;
+        btn.innerText = "Submitting...";
+        btn.disabled = true;
+
+        const newReview = {
+            name: user.displayName.split(' ')[0],
+            text: text,
+            rating: rating,
+            date: new Date().toISOString()
+        };
+
+        try {
+            await updateDoc(doc(db, "products", currentModalProductId), {
+                reviews: arrayUnion(newReview)
+            });
+            
+            const p = products.find(x => x.id === currentModalProductId);
+            if(!p.reviews) p.reviews = [];
+            p.reviews.push(newReview);
+            
+            document.getElementById('review-text').value = '';
+            renderReviews(p.reviews);
+            render(); 
+            alert("Review submitted successfully! 🎉");
+        } catch (error) {
+            console.error(error);
+            alert("Error submitting review. Please try again.");
+        } finally {
+            btn.innerText = "Submit Review";
+            btn.disabled = false;
+        }
+    };
 
     window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); };
     window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); showCart(); };
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
-    window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
-    window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
+    
+    window.showCart = () => { 
+        document.getElementById('main-view').classList.add('hidden'); 
+        document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('product-view').classList.add('hidden'); 
+        document.getElementById('cart-view').classList.remove('hidden'); 
+        window.scrollTo(0, 0);
+        renderCart(); 
+    };
+    
+    window.closeCart = () => { 
+        document.getElementById('cart-view').classList.add('hidden'); 
+        document.getElementById('main-view').classList.remove('hidden'); 
+        document.getElementById('search-section').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    };
 
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase();
@@ -261,6 +426,27 @@
                 card.style.display = 'none';  
             }
         });
+    };
+
+    // 📲 4-SECOND INSTALL POPUP LOGIC
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        setTimeout(() => {
+            document.getElementById('install-banner').classList.remove('hidden');
+        }, 4000);
+    });
+
+    window.installApp = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                document.getElementById('install-banner').classList.add('hidden');
+            }
+            deferredPrompt = null;
+        }
     };
 
     load();
