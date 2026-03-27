@@ -40,6 +40,13 @@
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
 
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+
+        /* 🖥️ DESKTOP / LAPTOP VIEW FIX (AMAZON STYLE) */
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
+            .h-row { max-width: 1200px; margin: 0 auto; }
+            .search-container { max-width: 1200px; margin: 0 auto; }
+        }
     </style>
 </head>
 <body>
@@ -67,7 +74,9 @@
 </div>
 
 <div style="background: white; padding: 10px 15px; border-bottom: 1px solid #eee;">
-    <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 15px; font-size: 0.95rem; outline: none;">
+    <div class="search-container">
+        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+    </div>
 </div>
 
 <main id="main-view" class="product-grid"></main>
