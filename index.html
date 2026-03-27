@@ -66,6 +66,10 @@
     🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚
 </div>
 
+<div style="background: white; padding: 10px 15px; border-bottom: 1px solid #eee;">
+    <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 15px; font-size: 0.95rem; outline: none;">
+</div>
+
 <main id="main-view" class="product-grid"></main>
 
 <div id="cart-view" class="hidden cart-view">
@@ -149,12 +153,10 @@
     let appliedDiscount = 0;
 
     async function load() {
-        // Fetch Products
         const snap = await getDocs(collection(db, "products"));
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
 
-        // Fetch Live Promo Banner
         try {
             const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
             if(promoSnap.exists() && promoSnap.data().isActive) {
@@ -179,7 +181,6 @@
     window.showCart = () => { document.getElementById('main-view').classList.add('hidden'); document.getElementById('cart-view').classList.remove('hidden'); renderCart(); };
     window.closeCart = () => { document.getElementById('main-view').classList.remove('hidden'); document.getElementById('cart-view').classList.add('hidden'); };
 
-    // 🎟️ PROMO LOGIC
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase();
         const msg = document.getElementById('promo-msg');
@@ -203,7 +204,6 @@
             if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; }
         }
 
-        // Auto-remove promo if they delete items and fall below minimum
         if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder) {
             appliedDiscount = 0;
             document.getElementById('promo-msg').style.color = "red";
@@ -213,7 +213,6 @@
         const free = (sub >= 800 || count >= 5);
         document.getElementById('subtotal').innerText = sub;
         
-        // Show/Hide Discount Row
         if(appliedDiscount > 0) {
             document.getElementById('discount-row').classList.remove('hidden');
             document.getElementById('discount-amt').innerText = appliedDiscount;
@@ -238,6 +237,21 @@
         
         msg += `\n\n*Total:* ₹${document.getElementById('total').innerText}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+    };
+
+    // 🔍 SMART SEARCH ENGINE LOGIC
+    window.searchProducts = () => {
+        const query = document.getElementById('search-box').value.toLowerCase();
+        const cards = document.querySelectorAll('.p-card');
+        
+        cards.forEach(card => {
+            const productName = card.querySelector('h4').innerText.toLowerCase();
+            if (productName.includes(query)) {
+                card.style.display = 'block'; 
+            } else {
+                card.style.display = 'none';  
+            }
+        });
     };
 
     load();
