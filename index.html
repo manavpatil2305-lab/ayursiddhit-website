@@ -94,6 +94,19 @@
 
 <main id="main-view" class="product-grid"></main>
 
+<div id="social-section" style="background: white; padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid #eee;">
+    <h3 style="margin: 0 0 10px 0; color: var(--amazon); font-size: 1.2rem;">Join Our Ayurvedic Community 🌱</h3>
+    <p style="font-size: 0.95rem; color: #555; margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="https://www.instagram.com/dr.prasiddhi_?igsh=MTA1dWt5cHUycThreQ==" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
+            📸 Instagram
+        </a>
+        <a href="https://youtube.com/@drprasiddhipatil?si=1wuB5U9rTbfCiZUA" target="_blank" style="background: #FF0000; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
+            ▶️ YouTube
+        </a>
+    </div>
+</div>
+
 <div id="policy-view" class="hidden policy-view" style="background:white; border-radius:12px; border:1px solid #ddd; padding:25px; margin-top:20px;">
     <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
         ⬅ Back to Shop
@@ -245,7 +258,7 @@
     </div>
 </div>
 
-<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
+<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px; margin-top: 0; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
     <p style="margin: 0 0 15px 0; font-weight: bold; font-size: 1rem;">Ayursiddhit Naturals</p>
     <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
         <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
@@ -361,6 +374,7 @@
         document.getElementById('cart-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('policy-view').classList.remove('hidden');
         window.scrollTo(0, 0);
@@ -384,6 +398,7 @@
         document.getElementById('policy-view').classList.add('hidden');
         document.getElementById('main-view').classList.remove('hidden');
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('social-section').classList.remove('hidden');
         document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
@@ -394,6 +409,7 @@
         document.getElementById('cart-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('policy-view').classList.add('hidden');
+        document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('wholesale-view').classList.remove('hidden');
         window.scrollTo(0, 0);
@@ -403,6 +419,7 @@
         document.getElementById('wholesale-view').classList.add('hidden');
         document.getElementById('main-view').classList.remove('hidden');
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('social-section').classList.remove('hidden');
         document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
@@ -425,7 +442,6 @@
         });
     };
 
-    // 🧾 UPDATED: CALCULATE WITH CUSTOM MARGIN INPUT
     window.calculateWholesale = () => {
         let totalMrp = 0;
         
@@ -437,7 +453,6 @@
 
         document.getElementById('w-mrp-display').value = `Total MRP: ₹${totalMrp.toFixed(2)}`;
 
-        // Reads exactly what they typed (e.g. 19, 22.5)
         let margin = parseFloat(document.getElementById('w-margin').value) || 0;
         
         if (totalMrp > 0 && margin > 0) {
@@ -516,6 +531,7 @@
         
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
         document.getElementById('product-view').classList.remove('hidden');
@@ -546,6 +562,7 @@
         document.getElementById('product-view').classList.add('hidden');
         document.getElementById('main-view').classList.remove('hidden');
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('social-section').classList.remove('hidden');
         document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
@@ -639,6 +656,7 @@
         document.getElementById('product-view').classList.add('hidden'); 
         document.getElementById('policy-view').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('cart-view').classList.remove('hidden'); 
         window.scrollTo(0, 0);
@@ -649,6 +667,7 @@
         document.getElementById('cart-view').classList.add('hidden'); 
         document.getElementById('main-view').classList.remove('hidden'); 
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('social-section').classList.remove('hidden');
         document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
