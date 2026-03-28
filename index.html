@@ -107,23 +107,32 @@
         ⬅ Back to Shop
     </button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
-    <p style="font-size:0.95rem; color:#444; line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Fill out your shop details below to get special B2B pricing and margins.</p>
+    <p style="font-size:0.95rem; color:#444; line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your margin bracket to see your live discounted pricing.</p>
     
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop / Business Name" required>
         <input type="text" id="w-name" placeholder="Contact Person Name" required>
         <input type="tel" id="w-phone" placeholder="WhatsApp / Mobile Number" required pattern="[0-9]{10}">
         
-        <textarea id="w-products" placeholder="Which products are you interested in?" rows="2" required></textarea>
+        <textarea id="w-products" placeholder="Which products are you interested in? (e.g. 50 Neem Soaps, 20 Face Packs)" rows="2" required></textarea>
         
         <div class="form-grid">
-            <input type="number" id="w-qty" placeholder="Total Quantity Needed" required>
-            <select id="w-margin" required style="padding:12px; font-size:0.9rem; color:#333;">
-                <option value="" disabled selected>Expected Margin Bracket</option>
-                <option value="10% - 20%">10% - 20% Margin</option>
-                <option value="20% - 30%">20% - 30% Margin</option>
-                <option value="30%+">30%+ Margin (High Volume)</option>
-            </select>
+            <input type="number" id="w-qty" placeholder="Total Quantity" required>
+            <input type="number" id="w-mrp" placeholder="Estimated Total MRP (₹)" required oninput="calculateWholesale()">
+        </div>
+
+        <select id="w-margin" required onchange="calculateWholesale()" style="width:100%; padding:12px; font-size:0.9rem; color:#333; margin-bottom:5px;">
+            <option value="" disabled selected>Select Expected Margin Bracket</option>
+            <option value="15">15% Margin (Starter Wholesale)</option>
+            <option value="25">25% Margin (Medium Retailer)</option>
+            <option value="35">35% Margin (Bulk Distributor)</option>
+        </select>
+
+        <div id="wholesale-bill" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc;">
+            <p style="display:flex; justify-content:space-between; margin:5px 0; color:#555;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
+            <p style="display:flex; justify-content:space-between; margin:5px 0; color:green; font-weight:bold;">Your Margin Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
+            <hr style="border:0; border-top:1px solid #ddd; margin:10px 0;">
+            <h3 style="display:flex; justify-content:space-between; margin:0; color:var(--red);">Final Payable Amount: <span>₹<span id="w-bill-total">0</span></span></h3>
         </div>
 
         <h3 style="margin-top:15px; margin-bottom:10px; font-size:1.1rem; color:var(--amazon);">Shop Location</h3>
@@ -337,7 +346,6 @@
         });
     }
 
-    // 🔄 INSTANT SYNC QUANTITY LOGIC
     window.updateQty = (id, d) => { 
         cart[id] = (cart[id] || 0) + d; 
         if(cart[id] <= 0) delete cart[id]; 
@@ -350,7 +358,6 @@
         }
     };
 
-    // 📜 POLICY VIEW LOGIC
     window.showPolicy = (type) => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -384,7 +391,7 @@
         window.scrollTo(0, 0);
     };
 
-    // 📦 NEW: WHOLESALE VIEW LOGIC
+    // 📦 WHOLESALE VIEW LOGIC WITH LIVE BILL CALCULATION
     window.showWholesale = () => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -404,6 +411,25 @@
         window.scrollTo(0, 0);
     };
 
+    // 🧾 LIVE CALCULATION ENGINE
+    window.calculateWholesale = () => {
+        let mrp = parseFloat(document.getElementById('w-mrp').value) || 0;
+        let margin = parseFloat(document.getElementById('w-margin').value) || 0;
+        
+        if (mrp > 0 && margin > 0) {
+            let discount = (mrp * margin) / 100;
+            let final = mrp - discount;
+            
+            document.getElementById('w-bill-mrp').innerText = mrp.toFixed(2);
+            document.getElementById('w-bill-discount').innerText = discount.toFixed(2);
+            document.getElementById('w-bill-total').innerText = final.toFixed(2);
+            
+            document.getElementById('wholesale-bill').classList.remove('hidden');
+        } else {
+            document.getElementById('wholesale-bill').classList.add('hidden');
+        }
+    };
+
     document.getElementById('wholesale-form').onsubmit = (e) => {
         e.preventDefault();
         const d = { 
@@ -412,24 +438,34 @@
             phone: document.getElementById('w-phone').value, 
             prods: document.getElementById('w-products').value, 
             qty: document.getElementById('w-qty').value, 
-            margin: document.getElementById('w-margin').value, 
+            marginText: document.getElementById('w-margin').options[document.getElementById('w-margin').selectedIndex].text, 
             addr: document.getElementById('w-address').value, 
             city: document.getElementById('w-city').value, 
             pin: document.getElementById('w-pin').value 
         };
         
+        // Grab the live billed numbers
+        const mrpAmt = document.getElementById('w-bill-mrp').innerText;
+        const discAmt = document.getElementById('w-bill-discount').innerText;
+        const totalAmt = document.getElementById('w-bill-total').innerText;
+
         let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n`;
         msg += `*Shop Name:* ${d.shop}\n`;
         msg += `*Contact:* ${d.name} (${d.phone})\n\n`;
         msg += `*Products Wanted:* ${d.prods}\n`;
         msg += `*Quantity Required:* ${d.qty}\n`;
-        msg += `*Margin Bracket:* ${d.margin}\n\n`;
+        msg += `*Margin Bracket:* ${d.marginText}\n\n`;
+        
+        msg += `🧾 *ESTIMATED BILLING:*\n`;
+        msg += `Total MRP: ₹${mrpAmt}\n`;
+        msg += `Margin Discount: -₹${discAmt}\n`;
+        msg += `*Payable Amount:* ₹${totalAmt}\n\n`;
+
         msg += `*Address:* ${d.addr}, ${d.city} - ${d.pin}`;
         
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
-    // 🛍️ FULL PAGE PRODUCT LOGIC
     window.openProduct = (id) => {
         const p = products.find(x => x.id === id);
         if(!p) return;
@@ -489,7 +525,6 @@
         `).join('');
     }
 
-    // ⭐ REVIEW SYSTEM
     window.submitReview = async () => {
         const btn = document.getElementById('submit-rev-btn');
         const user = auth.currentUser;
@@ -635,7 +670,6 @@
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
-    // 🔍 SMART SEARCH ENGINE LOGIC
     window.searchProducts = () => {
         const query = document.getElementById('search-box').value.toLowerCase();
         const cards = document.querySelectorAll('.p-card');
@@ -650,7 +684,6 @@
         });
     };
 
-    // 📲 4-SECOND INSTALL POPUP LOGIC
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
