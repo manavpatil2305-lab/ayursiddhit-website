@@ -41,13 +41,13 @@
 
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
 
-        /* ⭐ NEW: INTERACTIVE STAR RATING CSS */
+        /* ⭐ INTERACTIVE STAR RATING CSS */
         .rating-box { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
         .rating-box input { display: none; }
         .rating-box label { font-size: 2.5rem; color: #ddd; cursor: pointer; transition: 0.2s; }
         .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: #ffa41c; }
 
-        /* 🖥️ DESKTOP / LAPTOP VIEW FIX (AMAZON STYLE) */
+        /* 🖥️ DESKTOP / LAPTOP VIEW FIX */
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
             .h-row { max-width: 1200px; margin: 0 auto; }
@@ -107,28 +107,29 @@
         ⬅ Back to Shop
     </button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
-    <p style="font-size:0.95rem; color:#444; line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your margin bracket to see your live discounted pricing.</p>
+    <p style="font-size:0.95rem; color:#444; line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
     
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop / Business Name" required>
         <input type="text" id="w-name" placeholder="Contact Person Name" required>
         <input type="tel" id="w-phone" placeholder="WhatsApp / Mobile Number" required pattern="[0-9]{10}">
         
-        <textarea id="w-products" placeholder="Which products are you interested in? (e.g. 50 Neem Soaps, 20 Face Packs)" rows="2" required></textarea>
+        <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; margin-top:10px; display:block; color:#444;">Select Products & Quantities</label>
+        <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 15px; background: #fbfbfb;">
+            </div>
         
         <div class="form-grid">
-            <input type="number" id="w-qty" placeholder="Total Quantity" required>
-            <input type="number" id="w-mrp" placeholder="Estimated Total MRP (₹)" required oninput="calculateWholesale()">
+            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:#e9ecef; font-weight:bold; color:var(--red); text-align:center;">
+            
+            <select id="w-margin" required onchange="calculateWholesale()" style="padding:12px; font-size:0.9rem; color:#333; margin-bottom:5px;">
+                <option value="" disabled selected>Select Margin Bracket</option>
+                <option value="15">15% Margin (Starter Wholesale)</option>
+                <option value="25">25% Margin (Medium Retailer)</option>
+                <option value="35">35% Margin (Bulk Distributor)</option>
+            </select>
         </div>
 
-        <select id="w-margin" required onchange="calculateWholesale()" style="width:100%; padding:12px; font-size:0.9rem; color:#333; margin-bottom:5px;">
-            <option value="" disabled selected>Select Expected Margin Bracket</option>
-            <option value="15">15% Margin (Starter Wholesale)</option>
-            <option value="25">25% Margin (Medium Retailer)</option>
-            <option value="35">35% Margin (Bulk Distributor)</option>
-        </select>
-
-        <div id="wholesale-bill" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc;">
+        <div id="wholesale-bill" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
             <p style="display:flex; justify-content:space-between; margin:5px 0; color:#555;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
             <p style="display:flex; justify-content:space-between; margin:5px 0; color:green; font-weight:bold;">Your Margin Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
             <hr style="border:0; border-top:1px solid #ddd; margin:10px 0;">
@@ -310,6 +311,7 @@
         const snap = await getDocs(collection(db, "products"));
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
+        renderWholesaleList(); // Auto-loads the products into the wholesale form
 
         try {
             const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
@@ -346,6 +348,7 @@
         });
     }
 
+    // 🔄 INSTANT SYNC QUANTITY LOGIC
     window.updateQty = (id, d) => { 
         cart[id] = (cart[id] || 0) + d; 
         if(cart[id] <= 0) delete cart[id]; 
@@ -358,6 +361,7 @@
         }
     };
 
+    // 📜 POLICY VIEW LOGIC
     window.showPolicy = (type) => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -391,7 +395,7 @@
         window.scrollTo(0, 0);
     };
 
-    // 📦 WHOLESALE VIEW LOGIC WITH LIVE BILL CALCULATION
+    // 📦 WHOLESALE LOGIC
     window.showWholesale = () => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -411,16 +415,46 @@
         window.scrollTo(0, 0);
     };
 
+    // 🧾 AUTO-GENERATES THE CATALOG FOR BULK BUYERS
+    window.renderWholesaleList = () => {
+        const list = document.getElementById('w-product-list');
+        list.innerHTML = '';
+        products.forEach(p => {
+            list.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:8px;">
+                    <div style="flex:1;">
+                        <b style="font-size:0.95rem;">${p.name}</b><br>
+                        <span style="color:var(--red); font-size:0.85rem; font-weight:bold;">MRP: ₹${p.price}</span>
+                    </div>
+                    <div>
+                        <input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:70px; padding:8px; margin:0; text-align:center; font-weight:bold;">
+                    </div>
+                </div>
+            `;
+        });
+    };
+
     // 🧾 LIVE CALCULATION ENGINE
     window.calculateWholesale = () => {
-        let mrp = parseFloat(document.getElementById('w-mrp').value) || 0;
+        let totalMrp = 0;
+        
+        // Loop through every product input to calculate the exact MRP
+        document.querySelectorAll('.w-item-qty').forEach(input => {
+            let qty = parseInt(input.value) || 0;
+            let price = parseFloat(input.getAttribute('data-price')) || 0;
+            totalMrp += (qty * price);
+        });
+
+        // Display the total MRP in the locked box
+        document.getElementById('w-mrp-display').value = `Total MRP: ₹${totalMrp.toFixed(2)}`;
+
         let margin = parseFloat(document.getElementById('w-margin').value) || 0;
         
-        if (mrp > 0 && margin > 0) {
-            let discount = (mrp * margin) / 100;
-            let final = mrp - discount;
+        if (totalMrp > 0 && margin > 0) {
+            let discount = (totalMrp * margin) / 100;
+            let final = totalMrp - discount;
             
-            document.getElementById('w-bill-mrp').innerText = mrp.toFixed(2);
+            document.getElementById('w-bill-mrp').innerText = totalMrp.toFixed(2);
             document.getElementById('w-bill-discount').innerText = discount.toFixed(2);
             document.getElementById('w-bill-total').innerText = final.toFixed(2);
             
@@ -432,19 +466,34 @@
 
     document.getElementById('wholesale-form').onsubmit = (e) => {
         e.preventDefault();
+        
+        let prodsList = "";
+        let totalQtyCount = 0;
+
+        // Gather all products where quantity is greater than 0
+        document.querySelectorAll('.w-item-qty').forEach(input => {
+            let q = parseInt(input.value) || 0;
+            if(q > 0) {
+                prodsList += `- ${input.getAttribute('data-name')} x ${q}\n`;
+                totalQtyCount += q;
+            }
+        });
+
+        if(totalQtyCount === 0) {
+            alert("⚠️ Please add at least one product quantity before submitting.");
+            return;
+        }
+
         const d = { 
             shop: document.getElementById('w-shop').value, 
             name: document.getElementById('w-name').value, 
             phone: document.getElementById('w-phone').value, 
-            prods: document.getElementById('w-products').value, 
-            qty: document.getElementById('w-qty').value, 
             marginText: document.getElementById('w-margin').options[document.getElementById('w-margin').selectedIndex].text, 
             addr: document.getElementById('w-address').value, 
             city: document.getElementById('w-city').value, 
             pin: document.getElementById('w-pin').value 
         };
         
-        // Grab the live billed numbers
         const mrpAmt = document.getElementById('w-bill-mrp').innerText;
         const discAmt = document.getElementById('w-bill-discount').innerText;
         const totalAmt = document.getElementById('w-bill-total').innerText;
@@ -452,8 +501,9 @@
         let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n`;
         msg += `*Shop Name:* ${d.shop}\n`;
         msg += `*Contact:* ${d.name} (${d.phone})\n\n`;
-        msg += `*Products Wanted:* ${d.prods}\n`;
-        msg += `*Quantity Required:* ${d.qty}\n`;
+        
+        msg += `*Products Selected:*\n${prodsList}\n`;
+        msg += `*Total Items:* ${totalQtyCount}\n`;
         msg += `*Margin Bracket:* ${d.marginText}\n\n`;
         
         msg += `🧾 *ESTIMATED BILLING:*\n`;
