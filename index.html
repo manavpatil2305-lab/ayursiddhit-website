@@ -34,12 +34,18 @@
         .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; }
         .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
 
-        .cart-view, .product-view { padding: 15px; max-width: 800px; margin: auto; }
+        .cart-view, .product-view, .policy-view { padding: 15px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
 
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+
+        /* ⭐ NEW: INTERACTIVE STAR RATING CSS */
+        .rating-box { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
+        .rating-box input { display: none; }
+        .rating-box label { font-size: 2.5rem; color: #ddd; cursor: pointer; transition: 0.2s; }
+        .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: #ffa41c; }
 
         /* 🖥️ DESKTOP / LAPTOP VIEW FIX (AMAZON STYLE) */
         @media (min-width: 768px) {
@@ -84,6 +90,14 @@
 
 <main id="main-view" class="product-grid"></main>
 
+<div id="policy-view" class="hidden policy-view" style="background:white; border-radius:12px; border:1px solid #ddd; padding:25px; margin-top:20px;">
+    <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
+        ⬅ Back to Shop
+    </button>
+    <h2 id="policy-title" style="color: var(--amazon); margin-top:0;"></h2>
+    <div id="policy-content" style="line-height: 1.6; color: #444; font-size: 0.95rem;"></div>
+</div>
+
 <div id="product-view" class="hidden product-view">
     <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
         ⬅ Back to Shop
@@ -121,14 +135,21 @@
         <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
         
         <div style="background:#f9f9f9; padding:20px; border-radius:8px; border:1px solid #eee;">
-            <b style="font-size:1rem; display:block; margin-bottom:10px;">Write a Review</b>
-            <select id="review-rating" style="padding:12px; margin-bottom:10px; font-size: 1rem;">
-                <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
-                <option value="4">⭐⭐⭐⭐ (Very Good)</option>
-                <option value="3">⭐⭐⭐ (Average)</option>
-                <option value="2">⭐⭐ (Poor)</option>
-                <option value="1">⭐ (Terrible)</option>
-            </select>
+            <b style="font-size:1rem; display:block; margin-bottom:5px;">Write a Review</b>
+            
+            <div class="rating-box">
+                <input type="radio" id="star5" name="rating" value="5" checked>
+                <label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">★</label>
+            </div>
+
             <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
             
             <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:#444;">📸 Add a Photo (Optional)</label>
@@ -179,6 +200,16 @@
         <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px;">Back to Shop</button>
     </div>
 </div>
+
+<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
+    <p style="margin: 0 0 15px 0; font-weight: bold; font-size: 1rem;">Ayursiddhit Naturals</p>
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
+        <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
+        <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
+        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;">Terms & Conditions</a>
+    </div>
+    <p style="margin: 0; color: #aaa;">&copy; 2026 Ayursiddhit Naturals. All rights reserved.</p>
+</footer>
 
 <div id="install-banner" class="hidden" style="position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:var(--green); color:white; padding:12px 20px; border-radius:30px; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.3); display:flex; align-items:center; gap:10px; width:85%; max-width:320px; justify-content:space-between;">
     <span style="font-size:0.85rem; font-weight:bold;">📲 Install Ayursiddhit App</span>
@@ -275,10 +306,42 @@
         updateBadge(); 
         renderCart(); 
         
-        // If the full page is currently open, instantly sync the quantity box to match the cart!
         if (currentModalProductId === id) {
             document.getElementById('modal-qty').innerText = cart[id] || 0;
         }
+    };
+
+    // 📜 NEW: POLICY VIEW LOGIC
+    window.showPolicy = (type) => {
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('product-view').classList.add('hidden');
+        document.getElementById('cart-view').classList.add('hidden');
+        document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('site-footer').classList.add('hidden');
+        document.getElementById('policy-view').classList.remove('hidden');
+        window.scrollTo(0, 0);
+
+        const title = document.getElementById('policy-title');
+        const content = document.getElementById('policy-content');
+
+        if (type === 'contact') {
+            title.innerText = "Contact Us";
+            content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p><p>We are available from 10:00 AM to 6:00 PM (Monday to Saturday) to assist you with any inquiries regarding your Ayurvedic skincare products.</p>";
+        } else if (type === 'refund') {
+            title.innerText = "Refund & Cancellation Policy";
+            content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged or Defective Items:</b> If you receive a damaged product or the wrong item, please contact us on WhatsApp (+91 8080926195) within 48 hours of delivery along with a photograph of the package. We will issue a free replacement or a full refund.</p><p><b>Cancellations:</b> Orders can be cancelled before they are shipped. Once a package has been dispatched, cancellations are no longer permitted.</p>";
+        } else if (type === 'terms') {
+            title.innerText = "Terms & Conditions";
+            content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale unless explicitly approved via a wholesale agreement with Dr. Prasiddhi Patil.</p><p>Prices and availability of products are subject to change without prior notice. All content, product names, logos, and images are the intellectual property of Ayursiddhit Naturals.</p>";
+        }
+    };
+
+    window.closePolicy = () => {
+        document.getElementById('policy-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
+        document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('site-footer').classList.remove('hidden');
+        window.scrollTo(0, 0);
     };
 
     // 🛍️ FULL PAGE PRODUCT LOGIC
@@ -287,11 +350,11 @@
         if(!p) return;
         currentModalProductId = id;
         
-        // Show the true cart quantity immediately when opening
         document.getElementById('modal-qty').innerText = cart[id] || 0;
         
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('product-view').classList.remove('hidden');
         window.scrollTo(0, 0); 
 
@@ -300,7 +363,6 @@
         document.getElementById('modal-price').innerText = `₹${p.price}`;
         document.getElementById('modal-desc').innerText = p.desc || "A premium Ayurvedic product.";
         
-        // "Add to Cart" button simply adds 1 and changes text (NO POPUP)
         document.getElementById('modal-add-btn').onclick = () => { 
             updateQty(id, 1); 
             const btn = document.getElementById('modal-add-btn');
@@ -308,7 +370,6 @@
             setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500);
         };
         
-        // "Buy Now" button ensures at least 1 is in cart, then jumps to checkout
         document.getElementById('modal-buy-btn').onclick = () => { 
             if (!cart[id]) updateQty(id, 1); 
             closeProduct();
@@ -322,6 +383,7 @@
         document.getElementById('product-view').classList.add('hidden');
         document.getElementById('main-view').classList.remove('hidden');
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
 
@@ -341,7 +403,7 @@
         `).join('');
     }
 
-    // REVIEW SYSTEM (NO POPUPS)
+    // ⭐ REVIEW SYSTEM WITH INTERACTIVE STARS
     window.submitReview = async () => {
         const btn = document.getElementById('submit-rev-btn');
         const user = auth.currentUser;
@@ -353,7 +415,8 @@
         }
         
         const text = document.getElementById('review-text').value.trim();
-        const rating = document.getElementById('review-rating').value;
+        // GRAB RATING FROM THE TAPPED STAR
+        const rating = document.querySelector('input[name="rating"]:checked').value;
         const fileInput = document.getElementById('review-image');
         const file = fileInput.files[0];
 
@@ -393,6 +456,7 @@
             
             document.getElementById('review-text').value = '';
             fileInput.value = ''; 
+            document.getElementById('star5').checked = true; // Resets stars back to 5
             
             renderReviews(p.reviews);
             render(); 
@@ -412,6 +476,8 @@
         document.getElementById('main-view').classList.add('hidden'); 
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden'); 
+        document.getElementById('policy-view').classList.add('hidden');
+        document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('cart-view').classList.remove('hidden'); 
         window.scrollTo(0, 0);
         renderCart(); 
@@ -421,6 +487,7 @@
         document.getElementById('cart-view').classList.add('hidden'); 
         document.getElementById('main-view').classList.remove('hidden'); 
         document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('site-footer').classList.remove('hidden');
         window.scrollTo(0, 0);
     };
 
