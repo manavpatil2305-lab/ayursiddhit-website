@@ -121,12 +121,7 @@
         <div class="form-grid">
             <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:#e9ecef; font-weight:bold; color:var(--red); text-align:center;">
             
-            <select id="w-margin" required onchange="calculateWholesale()" style="padding:12px; font-size:0.9rem; color:#333; margin-bottom:5px;">
-                <option value="" disabled selected>Select Margin Bracket</option>
-                <option value="15">15% Margin (Starter Wholesale)</option>
-                <option value="25">25% Margin (Medium Retailer)</option>
-                <option value="35">35% Margin (Bulk Distributor)</option>
-            </select>
+            <input type="number" id="w-margin" placeholder="Expected Margin % (e.g. 19)" required min="1" max="100" oninput="calculateWholesale()" style="font-size:0.9rem; color:#333;">
         </div>
 
         <div id="wholesale-bill" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
@@ -311,7 +306,7 @@
         const snap = await getDocs(collection(db, "products"));
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
-        renderWholesaleList(); // Auto-loads the products into the wholesale form
+        renderWholesaleList(); 
 
         try {
             const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
@@ -348,7 +343,6 @@
         });
     }
 
-    // 🔄 INSTANT SYNC QUANTITY LOGIC
     window.updateQty = (id, d) => { 
         cart[id] = (cart[id] || 0) + d; 
         if(cart[id] <= 0) delete cart[id]; 
@@ -361,7 +355,6 @@
         }
     };
 
-    // 📜 POLICY VIEW LOGIC
     window.showPolicy = (type) => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -395,7 +388,6 @@
         window.scrollTo(0, 0);
     };
 
-    // 📦 WHOLESALE LOGIC
     window.showWholesale = () => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -415,7 +407,6 @@
         window.scrollTo(0, 0);
     };
 
-    // 🧾 AUTO-GENERATES THE CATALOG FOR BULK BUYERS
     window.renderWholesaleList = () => {
         const list = document.getElementById('w-product-list');
         list.innerHTML = '';
@@ -434,20 +425,19 @@
         });
     };
 
-    // 🧾 LIVE CALCULATION ENGINE
+    // 🧾 UPDATED: CALCULATE WITH CUSTOM MARGIN INPUT
     window.calculateWholesale = () => {
         let totalMrp = 0;
         
-        // Loop through every product input to calculate the exact MRP
         document.querySelectorAll('.w-item-qty').forEach(input => {
             let qty = parseInt(input.value) || 0;
             let price = parseFloat(input.getAttribute('data-price')) || 0;
             totalMrp += (qty * price);
         });
 
-        // Display the total MRP in the locked box
         document.getElementById('w-mrp-display').value = `Total MRP: ₹${totalMrp.toFixed(2)}`;
 
+        // Reads exactly what they typed (e.g. 19, 22.5)
         let margin = parseFloat(document.getElementById('w-margin').value) || 0;
         
         if (totalMrp > 0 && margin > 0) {
@@ -470,7 +460,6 @@
         let prodsList = "";
         let totalQtyCount = 0;
 
-        // Gather all products where quantity is greater than 0
         document.querySelectorAll('.w-item-qty').forEach(input => {
             let q = parseInt(input.value) || 0;
             if(q > 0) {
@@ -484,11 +473,13 @@
             return;
         }
 
+        const customMargin = document.getElementById('w-margin').value;
+
         const d = { 
             shop: document.getElementById('w-shop').value, 
             name: document.getElementById('w-name').value, 
             phone: document.getElementById('w-phone').value, 
-            marginText: document.getElementById('w-margin').options[document.getElementById('w-margin').selectedIndex].text, 
+            marginText: customMargin + "%", 
             addr: document.getElementById('w-address').value, 
             city: document.getElementById('w-city').value, 
             pin: document.getElementById('w-pin').value 
@@ -504,7 +495,7 @@
         
         msg += `*Products Selected:*\n${prodsList}\n`;
         msg += `*Total Items:* ${totalQtyCount}\n`;
-        msg += `*Margin Bracket:* ${d.marginText}\n\n`;
+        msg += `*Requested Margin:* ${d.marginText}\n\n`;
         
         msg += `🧾 *ESTIMATED BILLING:*\n`;
         msg += `Total MRP: ₹${mrpAmt}\n`;
@@ -762,3 +753,4 @@
 </script>
 </body>
 </html>
+p.id
