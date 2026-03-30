@@ -52,7 +52,7 @@
         .rating-box label { font-size: 2.5rem; color: #ddd; cursor: pointer; transition: 0.2s; }
         .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: #ffa41c; }
 
-        /* ⚡ SPRINT 3: FOMO POPUP ANIMATION */
+        /* ⚡ FOMO POPUP ANIMATION */
         .fomo-popup { position: fixed; bottom: -100px; left: 15px; background: var(--card-bg); color: var(--text); padding: 10px 15px; border-radius: 25px; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 0.85rem; font-weight: bold; z-index: 3500; display: flex; align-items: center; gap: 8px; transition: bottom 0.5s ease-in-out; }
         .fomo-popup.show { bottom: 80px; }
 
@@ -141,10 +141,10 @@
     <h2 style="color:var(--green); margin-top:0;">🩺 Ayurvedic Consultation</h2>
     
     <div id="quiz-step-1">
-        <h3>What is your main concern?</h3>
-        <button onclick="nextQuiz('Acne')" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🔴 Pimples & Acne</button>
-        <button onclick="nextQuiz('Hairfall')" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🍂 Hairfall & Dandruff</button>
-        <button onclick="nextQuiz('Glow')" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🌟 Dull Skin / Tanning</button>
+        <h3 id="dyn-quiz-title">What is your main concern?</h3>
+        <button id="dyn-quiz-opt1" onclick="nextQuiz(quizKeys.opt1)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🔴 Pimples & Acne</button>
+        <button id="dyn-quiz-opt2" onclick="nextQuiz(quizKeys.opt2)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🍂 Hairfall & Dandruff</button>
+        <button id="dyn-quiz-opt3" onclick="nextQuiz(quizKeys.opt3)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🌟 Dull Skin / Tanning</button>
     </div>
 
     <div id="quiz-step-2" class="hidden">
@@ -401,8 +401,10 @@
     let activePromo = null; 
     let appliedDiscount = 0;
     window.currentModalProductId = null; 
+    
+    // Global variable to store dynamic quiz keys
+    window.quizKeys = { opt1: 'Acne', opt2: 'Hairfall', opt3: 'Glow' };
 
-    // 🗣️ SPRINT 3: LANGUAGE SWITCHER LOGIC
     let currentLang = 'EN';
     const dict = {
         'EN': { wholesale: '📦 Wholesale / Bulk Orders', all: '✨ All', soap: '🌿 Soaps', oil: '💆‍♀️ Oils', face: '✨ Face Packs', acne: '🔴 Acne', hair: '🍂 Hairfall', cart: 'Review Your Order', quizT: 'Not sure what to buy? 🤔', quizD: 'Take Dr. Prasiddhi\'s 30-second Ayurvedic skin & hair quiz.', quizB: '🩺 Find My Routine', soc: 'Join Our Ayurvedic Community 🌱' },
@@ -430,20 +432,18 @@
         document.getElementById('t-social-title').innerText = dict[currentLang].soc;
     };
 
-    // ⚡ SPRINT 3: LIVE FOMO POPUPS
     const fomoNames = ["Rahul from Mumbai", "Sneha from Pune", "Aman from Delhi", "Priya from Nashik", "Neha from Bangalore"];
     const fomoItems = ["Neem Soap!", "Detan Face Pack!", "Hair Oil!", "5+ items!"];
     setInterval(() => {
-        if(document.getElementById('main-view').classList.contains('hidden')) return; // Only show on home page
+        if(document.getElementById('main-view').classList.contains('hidden')) return; 
         const name = fomoNames[Math.floor(Math.random() * fomoNames.length)];
         const item = fomoItems[Math.floor(Math.random() * fomoItems.length)];
         document.getElementById('fomo-text').innerText = `${name} just ordered ${item}`;
         const box = document.getElementById('fomo-box');
         box.classList.add('show');
-        setTimeout(() => { box.classList.remove('show'); }, 4000); // Hide after 4 seconds
-    }, 15000); // Shows up every 15 seconds
+        setTimeout(() => { box.classList.remove('show'); }, 4000); 
+    }, 15000); 
 
-    // 🧠 SPRINT 3: AI QUIZ LOGIC
     window.startQuiz = () => {
         resetViews();
         document.getElementById('quiz-view').classList.remove('hidden');
@@ -458,9 +458,7 @@
         document.getElementById('quiz-step-1').classList.add('hidden');
         document.getElementById('quiz-step-2').classList.remove('hidden');
         
-        // Simple filter based on concern
         const match = products.find(p => p.desc && p.desc.toLowerCase().includes(concern.toLowerCase())) || products[0];
-        
         const card = document.getElementById('quiz-result-card');
         if(match) {
             card.innerHTML = `
@@ -474,7 +472,6 @@
         }
     };
 
-    // 🎁 MYSTERY GIFT POPUP LOGIC
     if(!sessionStorage.getItem('giftShown')) {
         setTimeout(() => { document.getElementById('mystery-box').classList.remove('hidden'); }, 3000);
         sessionStorage.setItem('giftShown', 'true');
@@ -489,7 +486,6 @@
     };
     window.closeMystery = () => { document.getElementById('mystery-box').classList.add('hidden'); };
 
-    // 📍 PINCODE PREDICTOR LOGIC
     window.checkPincode = () => {
         const pin = document.getElementById('pin-check').value;
         const msg = document.getElementById('pin-msg');
@@ -524,6 +520,21 @@
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
         renderWholesaleList(); 
+
+        // 🔥 DYNAMIC QUIZ DATA FETCH
+        try {
+            const qSnap = await getDoc(doc(db, "settings", "quiz"));
+            if(qSnap.exists()) {
+                const qData = qSnap.data();
+                document.getElementById('dyn-quiz-title').innerText = qData.title || "What is your main concern?";
+                document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label || "🔴 Pimples & Acne";
+                document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label || "🍂 Hairfall & Dandruff";
+                document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label || "🌟 Dull Skin / Tanning";
+                window.quizKeys.opt1 = qData.opt1Key || "Acne";
+                window.quizKeys.opt2 = qData.opt2Key || "Hairfall";
+                window.quizKeys.opt3 = qData.opt3Key || "Glow";
+            }
+        } catch(e) { console.log("No custom quiz found. Using defaults."); }
 
         try {
             const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
@@ -627,7 +638,6 @@
         rec.start();
     };
 
-    // HIDE ALL VIEWS EXCEPT ONE
     function resetViews() {
         document.getElementById('quiz-banner').classList.add('hidden');
         document.getElementById('main-view').classList.add('hidden');
@@ -660,10 +670,8 @@
         resetViews();
         document.getElementById('policy-view').classList.remove('hidden');
         window.scrollTo(0, 0);
-
         const title = document.getElementById('policy-title');
         const content = document.getElementById('policy-content');
-
         if (type === 'contact') {
             title.innerText = "Contact Us";
             content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p>";
@@ -765,7 +773,6 @@
         document.getElementById('pin-check').value = '';
         document.getElementById('pin-msg').innerText = '';
         
-        // 🎁 SPRINT 3: UPSELL LOGIC
         const otherProds = products.filter(x => x.id !== id);
         if(otherProds.length > 0) {
             const upsellProd = otherProds[Math.floor(Math.random() * otherProds.length)];
