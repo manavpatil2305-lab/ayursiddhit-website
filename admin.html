@@ -95,12 +95,12 @@
 
     <div id="reels" class="tab-content">
         <div class="card" style="border-left: 5px solid #E1306C;">
-            <h3>🎬 Launch AyurReel (Plan B)</h3>
-            <p style="font-size:0.9rem; color:#555;">Upload your video to Google Drive. Change access to "Anyone with link can view". Paste the link below!</p>
+            <h3>🎬 Launch AyurReel</h3>
+            <p style="font-size:0.9rem; color:#555;">Upload your video to <b>Dropbox</b> and copy the link. Our system will auto-convert it into a raw stream!</p>
             <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">1. Select Product to Link:</label>
             <select id="r-product" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;"></select>
-            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Paste Google Drive Video Link:</label>
-            <input type="text" id="r-video-link" placeholder="Paste link here..." style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
+            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Paste Dropbox Video Link:</label>
+            <input type="text" id="r-video-link" placeholder="e.g. https://www.dropbox.com/s/..." style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
             <button id="upload-reel-btn" onclick="saveReelLink()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Launch Reel</button>
         </div>
         <div class="card">
@@ -286,7 +286,7 @@
         });
     }
 
-    // 🚀 PLAN B: LINK BYPASS SYSTEM
+    // 🚀 THE BULLETPROOF DROPBOX CONVERTER
     window.saveReelLink = async () => {
         const btn = document.getElementById('upload-reel-btn');
         const prodId = document.getElementById('r-product').value;
@@ -296,8 +296,12 @@
         
         btn.innerText = "⏳ Saving Reel..."; btn.disabled = true;
 
-        // Auto-Converter for Google Drive links!
-        if(videoUrl.includes('drive.google.com/file/d/')) {
+        // Auto-Converter for Dropbox links (Bulletproof MP4 streaming)
+        if(videoUrl.includes('dropbox.com')) {
+            videoUrl = videoUrl.replace('?dl=0', '').split('?')[0] + '?raw=1';
+        }
+        // Auto-Converter for Google Drive (Kept just in case, but Dropbox is better)
+        else if(videoUrl.includes('drive.google.com/file/d/')) {
             const match = videoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
             if(match && match[1]) {
                 videoUrl = `https://drive.google.com/uc?export=download&id=${match[1]}`;
