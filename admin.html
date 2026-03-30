@@ -47,7 +47,7 @@
 
     <div class="card" style="border-left: 5px solid #2196F3;">
         <h3>🩺 Manage Doctor's AI Quiz</h3>
-        <p style="font-size: 0.9rem; color: #555;">Customize the question and the 3 options your customers see. The "Product Keyword" is what the AI searches for in your product descriptions to make a match!</p>
+        <p style="font-size: 0.9rem; color: #555;">Customize the question and the 3 options your customers see.</p>
         <input type="text" id="q-title" placeholder="Quiz Question (e.g. What is your main concern today?)">
         
         <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:10px; border-radius:6px;">
@@ -79,7 +79,11 @@
     </div>
 
     <div class="card">
-        <h3>🎟️ Manage Promo Code</h3>
+        <h3>🎟️ Manage Promo Code & Scrolling Ads</h3>
+        <p style="font-size: 0.9rem; color: #555;">The "Scrolling Banner Text" is the ad that scrolls across the very top of your app.</p>
+        
+        <input type="text" id="promo-ad" placeholder="Scrolling Banner Text (e.g. 🎉 Special Offer: Use code AYUR20 for flat ₹20 OFF!)">
+        
         <div class="grid-2">
             <input type="text" id="promo-code" placeholder="Promo Code (e.g. WELCOME50)" style="text-transform: uppercase;">
             <input type="number" id="promo-discount" placeholder="Discount Amount (₹)">
@@ -155,7 +159,6 @@
     });
 
     async function loadSettings() {
-        // Load Flash Sale
         const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
         if(fsSnap.exists() && fsSnap.data().isActive) {
             document.getElementById('fs-status').innerText = "🟢 Flash Sale is currently LIVE!";
@@ -167,18 +170,18 @@
             document.getElementById('fs-status').innerText = "🔴 No Flash Sale active.";
         }
 
-        // Load Promo Code
+        // 🎟️ LOAD PROMO & AD TEXT
         const pSnap = await getDoc(doc(db, "settings", "live_promo"));
         if(pSnap.exists() && pSnap.data().isActive) {
             document.getElementById('promo-status').innerText = `🟢 Code ${pSnap.data().code} is LIVE!`;
             document.getElementById('promo-code').value = pSnap.data().code;
             document.getElementById('promo-discount').value = pSnap.data().discount;
             document.getElementById('promo-min').value = pSnap.data().minOrder;
+            document.getElementById('promo-ad').value = pSnap.data().adText || ""; // Restored this
         } else {
             document.getElementById('promo-status').innerText = "🔴 No Promo Code active.";
         }
 
-        // Load Quiz Data
         const qSnap = await getDoc(doc(db, "settings", "quiz"));
         if(qSnap.exists()) {
             const qData = qSnap.data();
@@ -192,7 +195,6 @@
         }
     }
 
-    // 🩺 SAVE QUIZ LOGIC
     window.saveQuiz = async () => {
         await setDoc(doc(db, "settings", "quiz"), {
             title: document.getElementById('q-title').value || "What is your main concern?",
@@ -229,20 +231,23 @@
         loadSettings();
     };
 
+    // 🎟️ SAVE PROMO & CUSTOM AD TEXT
     window.savePromo = async () => {
         const code = document.getElementById('promo-code').value.trim().toUpperCase();
         const disc = Number(document.getElementById('promo-discount').value);
         const min = Number(document.getElementById('promo-min').value);
-        if(!code || !disc || !min) { alert("Please fill all promo fields"); return; }
+        const adText = document.getElementById('promo-ad').value.trim(); // Captures your custom ad text
+        
+        if(!code || !disc || !min || !adText) { alert("Please fill all promo fields, including the Ad Text!"); return; }
 
         await setDoc(doc(db, "settings", "live_promo"), {
             isActive: true,
             code: code,
             discount: disc,
             minOrder: min,
-            adText: `🎉 USE CODE: ${code} FOR ₹${disc} OFF ON ORDERS ABOVE ₹${min}! 🎉`
+            adText: adText // Sends it straight to the scrolling banner!
         });
-        alert("Promo Code is now LIVE!");
+        alert("Promo Code and Scrolling Banner are now LIVE!");
         loadSettings();
     };
 
@@ -252,6 +257,7 @@
         document.getElementById('promo-code').value = "";
         document.getElementById('promo-discount').value = "";
         document.getElementById('promo-min').value = "";
+        document.getElementById('promo-ad').value = "";
         loadSettings();
     };
 
@@ -331,3 +337,4 @@
 </script>
 </body>
 </html>
+
