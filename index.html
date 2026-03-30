@@ -57,15 +57,6 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
-        .reel-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 5000; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
-        .reel-container::-webkit-scrollbar { display: none; }
-        .reel-item { height: 100vh; width: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #111; }
-        .reel-video { height: 100%; width: 100%; object-fit: cover; }
-        .reel-overlay { position: absolute; bottom: 90px; left: 15px; right: 15px; z-index: 5001; }
-        .reel-product-card { background: rgba(255,255,255,0.9); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .reel-close { position: absolute; top: 20px; right: 20px; z-index: 5002; background: rgba(0,0,0,0.6); color: white; border: 1px solid #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
-        .mute-btn { position: absolute; top: 20px; left: 20px; z-index: 5002; background: rgba(0,0,0,0.6); color: white; border: 1px solid #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; cursor: pointer; }
-
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
             .h-row { max-width: 1200px; margin: 0 auto; }
@@ -73,17 +64,10 @@
             .product-layout { display: flex; gap: 30px; }
             .product-image-section { flex: 1; }
             .product-details-section { flex: 1; }
-            .reel-video { width: 400px; border-radius: 15px; } 
         }
     </style>
 </head>
 <body>
-
-<div id="reels-view" class="hidden reel-container">
-    <button class="reel-close" onclick="closeReels()">✖</button>
-    <button class="mute-btn" id="global-mute-btn" onclick="toggleMute()">🔇 Unmute</button>
-    <div id="reels-feed"></div>
-</div>
 
 <div id="fomo-box" class="fomo-popup"><span style="font-size: 1.2rem;">🛍️</span> <span id="fomo-text">Someone just ordered!</span></div>
 
@@ -109,7 +93,6 @@
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-actions">
-            <button onclick="showReels()" style="background:none; border:none; font-size:1.4rem; cursor:pointer; padding:0; margin-right:5px; animation: pulse 2s infinite;">🎬</button>
             <button onclick="toggleLanguage()" id="lang-btn" style="background:none; border:none; font-size:1.2rem; cursor:pointer; margin-right:5px;">🌐 EN</button>
             <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
             <button class="signin-btn" onclick="handleAccountClick()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
@@ -246,6 +229,7 @@
 <div id="wholesale-view" class="hidden wholesale-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
+    <p style="font-size:0.95rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop Name" required><input type="tel" id="w-phone" placeholder="WhatsApp Number" required>
         <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.02);"></div>
@@ -402,7 +386,6 @@
     let currentUser = null;
     let products = []; let cart = {}; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null; 
     window.quizKeys = { opt1: 'Acne', opt2: 'Hairfall', opt3: 'Glow' };
-    let isMuted = true;
 
     const ingData = { 'neem': 'Deeply cleanses and fights acne.', 'tulsi': 'Reduces inflammation and soothes skin.', 'sandalwood': 'Cools skin and naturally evens tan lines.', 'ashwagandha': 'Boosts skin collagen and fights aging.', 'aloe vera': 'Intensely hydrates damaged skin.', 'turmeric': 'Natural glow-booster.', 'rosemary': 'Stimulates scalp for faster growth.' };
     function highlightIngredients(text) { if(!text) return ""; let res = text; Object.keys(ingData).forEach(ing => { const regex = new RegExp(`\\b(${ing})\\b`, 'gi'); res = res.replace(regex, `<span class="golden-ing" onclick="alert('🌿 ${ing.toUpperCase()}:\\n${ingData[ing]}')">$1</span>`); }); return res; }
@@ -453,7 +436,7 @@
         try { 
             const snap = await getDocs(collection(db, "products")); 
             products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            render(); populateHamperSelects(); renderWholesaleList(); loadAyurReels();
+            render(); populateHamperSelects(); renderWholesaleList();
         } catch(e) {}
         
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
@@ -501,33 +484,13 @@
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
     function resetViews() { 
-        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view', 'reels-view'].forEach(id => hideSafe(id)); 
+        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
     }
     
     function restoreHome() { 
-        document.querySelectorAll('.reel-video').forEach(v => v.pause());
         ['hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
         window.scrollTo(0, 0); 
     }
-
-    async function loadAyurReels() {
-        try {
-            const snap = await getDocs(collection(db, "reels"));
-            const feed = document.getElementById('reels-feed'); feed.innerHTML = '';
-            if(snap.empty) { feed.innerHTML = "<h3 style='color:white; text-align:center; padding-top:50vh;'>More Reels Coming Soon!</h3>"; return; }
-            snap.forEach(doc => {
-                const r = doc.data();
-                feed.innerHTML += `<div class="reel-item"><video class="reel-video" src="${r.videoUrl}" loop playsinline muted onclick="toggleMute()"></video><div class="reel-overlay"><div class="reel-product-card"><img src="${r.productImage}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;"><div style="flex:1;"><b style="color:var(--amazon); font-size:0.9rem;">${r.productName}</b><br><span style="color:var(--red); font-weight:bold; font-size:0.9rem;">₹${r.productPrice}</span></div><button onclick="addReelToCart('${r.productId}')" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add</button></div></div></div>`;
-            });
-            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { const vid = entry.target; if(entry.isIntersecting) { vid.play().catch(()=>{}); } else { vid.pause(); } }); }, { threshold: 0.6 });
-            document.querySelectorAll('.reel-video').forEach(v => observer.observe(v));
-        } catch(e) {}
-    }
-
-    window.showReels = () => { resetViews(); showSafe('reels-view'); const firstVid = document.querySelector('.reel-video'); if(firstVid) firstVid.play().catch(()=>{}); };
-    window.closeReels = () => { resetViews(); restoreHome(); };
-    window.toggleMute = () => { isMuted = !isMuted; document.querySelectorAll('.reel-video').forEach(v => v.muted = isMuted); document.getElementById('global-mute-btn').innerText = isMuted ? "🔇 Unmute" : "🔊 Mute"; };
-    window.addReelToCart = (prodId) => { updateQty(prodId, 1); alert("✅ Added to Cart!"); };
 
     window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
     window.closeProfile = () => { resetViews(); restoreHome(); };
