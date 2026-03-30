@@ -55,7 +55,6 @@
         .golden-ing { color: var(--luxury); font-weight: bold; border-bottom: 1px dashed var(--luxury); cursor: pointer; transition: 0.2s; }
         .golden-ing:hover { background: rgba(212, 175, 55, 0.1); }
         
-        /* 🔥 NEW: SCARCITY BADGE */
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
@@ -197,6 +196,15 @@
     </p>
 </div>
 
+<div id="social-section" style="background: var(--card-bg); padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid var(--border);">
+    <h3 style="margin: 0 0 10px 0; color: var(--amazon); font-size: 1.2rem;" id="t-social-title">Join Our Ayurvedic Community 🌱</h3>
+    <p style="font-size: 0.95rem; color: var(--text); margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <a href="https://www.instagram.com/dr.prasiddhi_?igsh=MTA1dWt5cHUycThreQ==" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">📸 Instagram</a>
+        <a href="https://youtube.com/@drprasiddhipatil?si=1wuB5U9rTbfCiZUA" target="_blank" style="background: #FF0000; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">▶️ YouTube</a>
+    </div>
+</div>
+
 <div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 id="policy-title" style="color: var(--amazon); margin-top:0;"></h2>
@@ -222,8 +230,8 @@
         <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
         <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
         <div id="modal-stock-warn" class="low-stock hidden">🔥 Hurry, low stock!</div>
-        
         <p id="modal-desc" style="font-size:1rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;"></p>
+        
         <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex;">
             <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
         </div>
@@ -240,7 +248,6 @@
                 <button id="upsell-btn" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add Both</button>
             </div>
         </div>
-
         <h3 style="margin-top:0; color: var(--amazon);">Customer Reviews ⭐</h3>
         <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
     </div>
@@ -251,7 +258,6 @@
     <div id="cart-list"></div>
     <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border); margin-top:15px;">
         <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
-        
         <div id="coin-section" class="hidden" style="background:#e8f5e9; border:1px solid var(--green); padding:15px; border-radius:8px; margin-bottom:15px;">
             <b style="color:var(--green); display:block; margin-bottom:5px;">🪙 Use AyurCoins</b>
             <div style="display:flex; align-items:center; gap:10px;">
@@ -259,7 +265,6 @@
                 <span style="font-size:0.9rem; font-weight:bold; color:black;">Redeem my <span id="cart-coin-bal">0</span> Coins for instant discount!</span>
             </div>
         </div>
-
         <div style="background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
             <div style="display:flex; gap:10px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
@@ -269,7 +274,7 @@
         </div>
         <form id="order-form">
             <input type="text" id="f-name" placeholder="Full Name" required><input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
-            <textarea id="f-address" placeholder="Full Address & Landmark" rows="3" required></textarea>
+            <textarea id="f-address" placeholder="Full Address" rows="3" required></textarea>
             <div class="form-grid"><input type="text" id="f-city" placeholder="City" required><input type="number" id="f-pin" placeholder="Pincode" required></div>
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
@@ -329,54 +334,34 @@
     window.logoutUser = () => { auth.signOut().then(() => { closeProfile(); document.getElementById('user-name').innerText = "Sign In"; }); };
     window.handleAccountClick = () => { if(currentUser) { showProfile(); } else { login(); } };
 
-    // 👤 SYNC USER TO ADMIN PANEL DATABASE
     onAuthStateChanged(auth, async (user) => { 
         currentUser = user;
         if(user) { 
             document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
-            
-            // Save to Firestore so Admin can see
             let c = Number(localStorage.getItem('coins_' + user.uid));
             if(!c) { c = 50; localStorage.setItem('coins_' + user.uid, '50'); }
-            
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, coins: c, lastLogin: new Date().toISOString() }, { merge: true });
-
             document.getElementById('prof-name-display').innerText = user.displayName;
             document.getElementById('prof-email-display').innerText = user.email;
             document.getElementById('prof-coins-display').innerText = c;
             document.getElementById('cart-coin-bal').innerText = c;
             if(c > 0) { document.getElementById('coin-section').classList.remove('hidden'); }
-
             loadUserOrdersFromDB(user.uid);
         } 
     });
 
-    // 📦 FETCH ORDERS FROM DB FOR USER PROFILE
     async function loadUserOrdersFromDB(uid) {
-        const list = document.getElementById('prof-orders-list');
-        list.innerHTML = "Loading...";
+        const list = document.getElementById('prof-orders-list'); list.innerHTML = "Loading...";
         try {
             const q = query(collection(db, "orders"), where("uid", "==", uid));
             const snap = await getDocs(q);
             if(snap.empty) { list.innerHTML = "<p style='color:#888;'>You haven't placed any orders yet.</p>"; return; }
-            
-            let ordersHtml = "";
-            let ordersArray = [];
+            let ordersHtml = ""; let ordersArray = [];
             snap.forEach(doc => ordersArray.push(doc.data()));
             ordersArray.sort((a,b) => new Date(b.date) - new Date(a.date));
-
             ordersArray.forEach(o => {
                 let statusColor = o.status === 'Delivered' ? 'green' : (o.status === 'Shipped' ? 'blue' : 'orange');
-                ordersHtml += `
-                    <div style="background:#f9f9f9; padding:10px; border:1px solid var(--border); border-radius:6px; margin-bottom:10px;">
-                        <div style="display:flex; justify-content:space-between;">
-                            <b style="color:var(--amazon);">${new Date(o.date).toLocaleDateString()}</b>
-                            <b style="color:${statusColor};">${o.status}</b>
-                        </div>
-                        <span style="font-size:0.85rem; color:#555;">${o.items}</span><br>
-                        <b style="color:var(--red);">Total: ₹${o.total}</b>
-                    </div>
-                `;
+                ordersHtml += `<div style="background:#f9f9f9; padding:10px; border:1px solid var(--border); border-radius:6px; margin-bottom:10px;"><div style="display:flex; justify-content:space-between;"><b style="color:var(--amazon);">${new Date(o.date).toLocaleDateString()}</b><b style="color:${statusColor};">${o.status}</b></div><span style="font-size:0.85rem; color:#555;">${o.items}</span><br><b style="color:var(--red);">Total: ₹${o.total}</b></div>`;
             });
             list.innerHTML = ordersHtml;
         } catch(e) { list.innerHTML = "Error loading orders."; }
@@ -386,24 +371,10 @@
     if(localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('dark-btn').innerText = '☀️'; }
 
     async function load() {
-        try {
-            const snap = await getDocs(collection(db, "products"));
-            products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            render(); populateHamperSelects(); 
-        } catch(e) { console.error(e); }
-
-        try {
-            const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner"));
-            if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; }
-        } catch(e) {}
-        try {
-            const qSnap = await getDoc(doc(db, "settings", "quiz"));
-            if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('dyn-quiz-title').innerText = qData.title; document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label; document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label; document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label; window.quizKeys.opt1 = qData.opt1Key; window.quizKeys.opt2 = qData.opt2Key; window.quizKeys.opt3 = qData.opt3Key; }
-        } catch(e) {}
-        try {
-            const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
-            if(promoSnap.exists() && promoSnap.data().isActive) { activePromo = promoSnap.data(); }
-        } catch(e) {}
+        try { const snap = await getDocs(collection(db, "products")); products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); render(); populateHamperSelects(); } catch(e) {}
+        try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
+        try { const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('dyn-quiz-title').innerText = qData.title; document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label; document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label; document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label; window.quizKeys.opt1 = qData.opt1Key; window.quizKeys.opt2 = qData.opt2Key; window.quizKeys.opt3 = qData.opt3Key; } } catch(e) {}
+        try { const promoSnap = await getDoc(doc(db, "settings", "live_promo")); if(promoSnap.exists() && promoSnap.data().isActive) { activePromo = promoSnap.data(); } } catch(e) {}
         try {
             const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
             if(fsSnap.exists() && fsSnap.data().isActive) {
@@ -420,20 +391,8 @@
         products.forEach(p => {
             const q = cart[p.id] || 0; let avg = "5.0"; let revCount = 0;
             if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
-            
-            // 🔥 SPRINT 4: DYNAMIC LOW STOCK WARNING ON HOMEPAGE
-            let stockBadge = "";
-            if (p.stock > 0 && p.stock <= 5) { stockBadge = `<div class="low-stock">🔥 Only ${p.stock} left!</div>`; }
-
-            grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}">
-                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
-                <h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>
-                ${stockBadge}
-                <div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')"><span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span></div>
-                <div style="color:var(--red); font-weight:bold;">₹${p.price}</div>
-                <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
-                <button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button>
-            </div>`;
+            let stockBadge = ""; if (p.stock > 0 && p.stock <= 5) { stockBadge = `<div class="low-stock">🔥 Only ${p.stock} left!</div>`; }
+            grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}"><img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;"><h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>${stockBadge}<div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')"><span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span></div><div style="color:var(--red); font-weight:bold;">₹${p.price}</div><div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button></div>`;
         });
     }
 
@@ -446,11 +405,31 @@
         cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); const productDesc = card.getAttribute('data-desc'); if (cat === 'All' || productName.includes(searchCat) || productDesc.includes(searchCat)) { card.style.display = 'block'; } else { card.style.display = 'none'; } });
     };
 
-    function resetViews() { document.getElementById('hamper-banner').classList.add('hidden'); document.getElementById('quiz-banner').classList.add('hidden'); document.getElementById('main-view').classList.add('hidden'); document.getElementById('product-view').classList.add('hidden'); document.getElementById('cart-view').classList.add('hidden'); document.getElementById('search-section').classList.add('hidden'); document.getElementById('wholesale-view').classList.add('hidden'); document.getElementById('policy-view').classList.add('hidden'); document.getElementById('social-section').classList.add('hidden'); document.getElementById('site-footer').classList.add('hidden'); document.getElementById('about-view').classList.add('hidden'); document.getElementById('results-section').classList.add('hidden'); document.getElementById('quiz-view').classList.add('hidden'); document.getElementById('profile-view').classList.add('hidden'); document.getElementById('hamper-view').classList.add('hidden'); }
-    function restoreHome() { document.getElementById('hamper-banner').classList.remove('hidden'); document.getElementById('quiz-banner').classList.remove('hidden'); document.getElementById('main-view').classList.remove('hidden'); document.getElementById('search-section').classList.remove('hidden'); document.getElementById('social-section').classList.remove('hidden'); document.getElementById('site-footer').classList.remove('hidden'); document.getElementById('results-section').classList.remove('hidden'); window.scrollTo(0, 0); }
+    window.startVoiceSearch = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) { alert("⚠️ Voice search is not supported in this browser."); return; }
+        const rec = new SpeechRecognition(); document.getElementById('search-box').placeholder = "Listening... 🎙️";
+        rec.onresult = (e) => { document.getElementById('search-box').value = e.results[0][0].transcript; window.searchProducts(); document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; };
+        rec.onerror = () => { document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; }; rec.start();
+    };
 
-    window.showProfile = () => { resetViews(); document.getElementById('profile-view').classList.remove('hidden'); window.scrollTo(0,0); }; window.closeProfile = () => { resetViews(); restoreHome(); };
-    window.showHamper = () => { resetViews(); document.getElementById('hamper-view').classList.remove('hidden'); window.scrollTo(0,0); }; window.closeHamper = () => { resetViews(); restoreHome(); };
+    // 🛡️ BULLETPROOF VIEW SWITCHING (NEVER CRASHES)
+    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
+    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
+
+    function resetViews() { 
+        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'social-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
+    }
+    
+    function restoreHome() { 
+        ['hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'social-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
+        window.scrollTo(0, 0); 
+    }
+
+    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
+    window.closeProfile = () => { resetViews(); restoreHome(); };
+    window.showHamper = () => { resetViews(); showSafe('hamper-view'); window.scrollTo(0,0); }; 
+    window.closeHamper = () => { resetViews(); restoreHome(); };
     
     function populateHamperSelects() {
         const soapSelect = document.getElementById('hamper-soap'); const oilSelect = document.getElementById('hamper-oil'); const faceSelect = document.getElementById('hamper-face');
@@ -461,29 +440,56 @@
         });
     }
 
+    // 🛑 POPUP FIX 2: Silently opens cart
     window.addHamperToCart = () => {
         const sid = document.getElementById('hamper-soap').value; const oid = document.getElementById('hamper-oil').value; const fid = document.getElementById('hamper-face').value;
         if(sid) updateQty(sid, 1); if(oid) updateQty(oid, 1); if(fid) updateQty(fid, 1);
         document.getElementById('cart-promo-input').value = "HAMPER10"; closeHamper(); showCart();
     };
 
-    window.startQuiz = () => { resetViews(); document.getElementById('quiz-view').classList.remove('hidden'); document.getElementById('quiz-step-1').classList.remove('hidden'); document.getElementById('quiz-step-2').classList.add('hidden'); window.scrollTo(0,0); };
-    window.closeQuiz = () => { resetViews(); restoreHome(); };
-    window.nextQuiz = (concern) => {
-        document.getElementById('quiz-step-1').classList.add('hidden'); document.getElementById('quiz-step-2').classList.remove('hidden');
-        const match = products.find(p => p.desc && p.desc.toLowerCase().includes(concern.toLowerCase())) || products[0];
-        const card = document.getElementById('quiz-result-card');
-        if(match) { card.innerHTML = `<div style="background:var(--bg); border:2px solid var(--gold); border-radius:12px; padding:15px; display:inline-block; text-align:center;"><img src="${match.image}" style="width:100px; height:100px; border-radius:8px; object-fit:cover;"><h3 style="margin:10px 0 5px 0; color:var(--amazon);">${match.name}</h3><p style="color:var(--red); font-weight:bold; margin:0 0 15px 0;">₹${match.price}</p><button onclick="updateQty('${match.id}', 1); closeQuiz(); showCart();" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Add to Cart</button></div>`; }
+    window.showAbout = () => { resetViews(); showSafe('about-view'); window.scrollTo(0, 0); }; 
+    window.closeAbout = () => { resetViews(); restoreHome(); };
+
+    window.showPolicy = (type) => {
+        resetViews(); showSafe('policy-view'); window.scrollTo(0, 0);
+        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
+        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p>"; } 
+        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
+        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale unless explicitly approved via a wholesale agreement with Dr. Prasiddhi Patil.</p><p>Prices and availability of products are subject to change without prior notice. All content, product names, logos, and images are the intellectual property of Ayursiddhit Naturals.</p>"; }
+    };
+    window.closePolicy = () => { resetViews(); restoreHome(); };
+    window.showWholesale = () => { resetViews(); showSafe('wholesale-view'); window.scrollTo(0, 0); }; 
+    window.closeWholesale = () => { resetViews(); restoreHome(); };
+
+    window.renderWholesaleList = () => {
+        const list = document.getElementById('w-product-list'); list.innerHTML = '';
+        products.forEach(p => { list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:8px;"><div style="flex:1;"><b style="font-size:0.95rem; color:var(--text);">${p.name}</b><br><span style="color:var(--red); font-size:0.85rem; font-weight:bold;">MRP: ₹${p.price}</span></div><div><input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:70px; padding:8px; margin:0; text-align:center; font-weight:bold; background:var(--card-bg); color:var(--text); border:1px solid var(--border);"></div></div>`; });
+    };
+
+    window.calculateWholesale = () => {
+        let totalMrp = 0; document.querySelectorAll('.w-item-qty').forEach(input => { let qty = parseInt(input.value) || 0; let price = parseFloat(input.getAttribute('data-price')) || 0; totalMrp += (qty * price); });
+        document.getElementById('w-mrp-display').value = `Total MRP: ₹${totalMrp.toFixed(2)}`;
+        let margin = parseFloat(document.getElementById('w-margin').value) || 0;
+        if (totalMrp > 0 && margin > 0) { let discount = (totalMrp * margin) / 100; let final = totalMrp - discount; document.getElementById('w-bill-mrp').innerText = totalMrp.toFixed(2); document.getElementById('w-bill-discount').innerText = discount.toFixed(2); document.getElementById('w-bill-total').innerText = final.toFixed(2); document.getElementById('wholesale-bill').classList.remove('hidden'); } else { document.getElementById('wholesale-bill').classList.add('hidden'); }
+    };
+
+    document.getElementById('wholesale-form').onsubmit = (e) => {
+        e.preventDefault(); let prodsList = ""; let totalQtyCount = 0;
+        document.querySelectorAll('.w-item-qty').forEach(input => { let q = parseInt(input.value) || 0; if(q > 0) { prodsList += `- ${input.getAttribute('data-name')} x ${q}\n`; totalQtyCount += q; } });
+        if(totalQtyCount === 0) { alert("⚠️ Please add at least one product quantity before submitting."); return; }
+        const customMargin = document.getElementById('w-margin').value; const d = { shop: document.getElementById('w-shop').value, name: document.getElementById('w-name').value, phone: document.getElementById('w-phone').value, marginText: customMargin + "%", addr: document.getElementById('w-address').value, city: document.getElementById('w-city').value, pin: document.getElementById('w-pin').value };
+        const mrpAmt = document.getElementById('w-bill-mrp').innerText; const discAmt = document.getElementById('w-bill-discount').innerText; const totalAmt = document.getElementById('w-bill-total').innerText;
+        let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n*Shop Name:* ${d.shop}\n*Contact:* ${d.name} (${d.phone})\n\n*Products Selected:*\n${prodsList}\n*Total Items:* ${totalQtyCount}\n*Requested Margin:* ${d.marginText}\n\n🧾 *ESTIMATED BILLING:*\nTotal MRP: ₹${mrpAmt}\nMargin Discount: -₹${discAmt}\n*Payable Amount:* ₹${totalAmt}\n\n*Address:* ${d.addr}, ${d.city} - ${d.pin}`;
+        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
     window.openProduct = (id) => {
         const p = products.find(x => x.id === id); if(!p) return;
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0;
-        resetViews(); document.getElementById('product-view').classList.remove('hidden'); window.scrollTo(0, 0); 
+        resetViews(); showSafe('product-view'); window.scrollTo(0, 0); 
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`;
         document.getElementById('modal-desc').innerHTML = highlightIngredients(p.desc || "");
         
-        // 🔥 SPRINT 4: MODAL STOCK WARNING
         const warn = document.getElementById('modal-stock-warn');
         if(p.stock > 0 && p.stock <= 5) { warn.classList.remove('hidden'); warn.innerText = `🔥 Hurry, only ${p.stock} left in stock!`; } else { warn.classList.add('hidden'); }
 
@@ -491,7 +497,13 @@
         if(otherProds.length > 0) {
             const upsellProd = otherProds[Math.floor(Math.random() * otherProds.length)];
             document.getElementById('upsell-img').src = upsellProd.image; document.getElementById('upsell-name').innerText = upsellProd.name; document.getElementById('upsell-price').innerText = `₹${upsellProd.price}`;
-            document.getElementById('upsell-btn').onclick = () => { updateQty(id, 1); updateQty(upsellProd.id, 1); const btn = document.getElementById('upsell-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "Add Both"; showCart(); }, 1000); };
+            
+            // 🛑 POPUP FIX 3: Smooth text change
+            document.getElementById('upsell-btn').onclick = () => { 
+                updateQty(id, 1); updateQty(upsellProd.id, 1); 
+                const btn = document.getElementById('upsell-btn'); btn.innerText = "Added! ✅"; 
+                setTimeout(() => { btn.innerText = "Add Both"; showCart(); }, 1000); 
+            };
             document.getElementById('upsell-section').classList.remove('hidden');
         } else { document.getElementById('upsell-section').classList.add('hidden'); }
         
@@ -500,14 +512,71 @@
     };
 
     window.closeProduct = () => { resetViews(); restoreHome(); };
-    window.showAbout = () => { resetViews(); document.getElementById('about-view').classList.remove('hidden'); window.scrollTo(0, 0); }; window.closeAbout = () => { resetViews(); restoreHome(); };
-    window.showPolicy = (type) => { resetViews(); document.getElementById('policy-view').classList.remove('hidden'); window.scrollTo(0, 0); const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content'); if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p>"; } else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale unless explicitly approved via a wholesale agreement with Dr. Prasiddhi Patil.</p><p>Prices and availability of products are subject to change without prior notice. All content, product names, logos, and images are the intellectual property of Ayursiddhit Naturals.</p>"; } };
-    window.closePolicy = () => { resetViews(); restoreHome(); };
-    window.showWholesale = () => { resetViews(); document.getElementById('wholesale-view').classList.remove('hidden'); window.scrollTo(0, 0); }; window.closeWholesale = () => { resetViews(); restoreHome(); };
+
+    let currentLang = 'EN';
+    const dict = {
+        'EN': { wholesale: '📦 Wholesale / Bulk Orders', all: '✨ All', soap: '🌿 Soaps', oil: '💆‍♀️ Oils', face: '✨ Face Packs', acne: '🔴 Acne', hair: '🍂 Hairfall', cart: 'Review Your Order', quizT: 'Not sure what to buy? 🤔', quizD: 'Take Dr. Prasiddhi\'s 30-second Ayurvedic skin & hair quiz.', quizB: '🩺 Find My Routine', soc: 'Join Our Ayurvedic Community 🌱' },
+        'MR': { wholesale: '📦 घाऊक / मोठ्या प्रमाणात ऑर्डर', all: '✨ सर्व', soap: '🌿 साबण', oil: '💆‍♀️ तेल', face: '✨ फेस पॅक', acne: '🔴 मुरुमे', hair: '🍂 केस गळणे', cart: 'तुमची ऑर्डर तपासा', quizT: 'काय घ्यावे समजत नाही? 🤔', quizD: 'डॉ. प्रसिद्धी यांची ३०-सेकंदांची आयुर्वेदिक क्विझ सोडवा.', quizB: '🩺 माझी रुटीन शोधा', soc: 'आमच्या आयुर्वेदिक कुटुंबात सामील व्हा 🌱' },
+        'HI': { wholesale: '📦 थोक / बल्क ऑर्डर', all: '✨ सभी', soap: '🌿 साबुन', oil: '💆‍♀️ तेल', face: '✨ फेस पैक', acne: '🔴 मुँहासे', hair: '🍂 बालों का झड़ना', cart: 'अपना ऑर्डर जांचें', quizT: 'समझ नहीं आ रहा क्या खरीदें? 🤔', quizD: 'डॉ. प्रसिद्धि की 30-सेकंड की आयुर्वेदिक क्विज़ लें।', quizB: '🩺 मेरा रूटीन खोजें', soc: 'हमारे आयुर्वेदिक समुदाय से जुड़ें 🌱' }
+    };
+    
+    // 🛡️ BULLETPROOF LANGUAGE TOGGLE
+    window.toggleLanguage = () => {
+        const btn = document.getElementById('lang-btn');
+        if(currentLang === 'EN') { currentLang = 'MR'; btn.innerText = '🌐 MR'; }
+        else if(currentLang === 'MR') { currentLang = 'HI'; btn.innerText = '🌐 HI'; }
+        else { currentLang = 'EN'; btn.innerText = '🌐 EN'; }
+        
+        const safeSet = (id, text) => { let el = document.getElementById(id); if(el) el.innerText = text; };
+        safeSet('t-wholesale-btn', dict[currentLang].wholesale); 
+        let tAll = document.querySelector('.t-all'); if(tAll) tAll.innerText = dict[currentLang].all;
+        let tSoaps = document.querySelector('.t-soaps'); if(tSoaps) tSoaps.innerText = dict[currentLang].soap;
+        let tOils = document.querySelector('.t-oils'); if(tOils) tOils.innerText = dict[currentLang].oil;
+        let tFace = document.querySelector('.t-face'); if(tFace) tFace.innerText = dict[currentLang].face;
+        let tAcne = document.querySelector('.t-acne'); if(tAcne) tAcne.innerText = dict[currentLang].acne;
+        let tHair = document.querySelector('.t-hair'); if(tHair) tHair.innerText = dict[currentLang].hair;
+        
+        safeSet('t-cart-title', dict[currentLang].cart); safeSet('t-quiz-title', dict[currentLang].quizT); safeSet('t-quiz-desc', dict[currentLang].quizD); safeSet('t-quiz-btn', dict[currentLang].quizB); safeSet('t-social-title', dict[currentLang].soc);
+    };
+
+    window.startQuiz = () => { resetViews(); showSafe('quiz-view'); showSafe('quiz-step-1'); hideSafe('quiz-step-2'); window.scrollTo(0,0); };
+    window.closeQuiz = () => { resetViews(); restoreHome(); };
+
+    // 🛑 POPUP FIX 1: Silently opens cart
+    window.nextQuiz = (concern) => {
+        hideSafe('quiz-step-1'); showSafe('quiz-step-2');
+        const match = products.find(p => p.desc && p.desc.toLowerCase().includes(concern.toLowerCase())) || products[0];
+        const card = document.getElementById('quiz-result-card');
+        if(match) {
+            card.innerHTML = `<div style="background:var(--bg); border:2px solid var(--gold); border-radius:12px; padding:15px; display:inline-block; text-align:center;"><img src="${match.image}" style="width:100px; height:100px; border-radius:8px; object-fit:cover;"><h3 style="margin:10px 0 5px 0; color:var(--amazon);">${match.name}</h3><p style="color:var(--red); font-weight:bold; margin:0 0 15px 0;">₹${match.price}</p><button onclick="updateQty('${match.id}', 1); closeQuiz(); showCart();" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Add to Cart</button></div>`;
+        }
+    };
+
+    function renderReviews(reviews) {
+        const list = document.getElementById('modal-reviews-list');
+        if(reviews.length === 0) { list.innerHTML = "<p style='color:#888; margin-top:0;'>No reviews yet. Be the first to review!</p>"; return; }
+        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:15px;"><b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br><span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span><p style="margin:8px 0; color:var(--text); line-height:1.4;">${r.text}</p>${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid var(--border);">` : ''}</div>`).join('');
+    }
+
+    window.submitReview = async () => {
+        const btn = document.getElementById('submit-rev-btn'); const user = auth.currentUser;
+        if(!user) { btn.innerText = "⚠️ Please Sign In First!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2500); return; }
+        const text = document.getElementById('review-text').value.trim(); const rating = document.querySelector('input[name="rating"]:checked').value; const fileInput = document.getElementById('review-image'); const file = fileInput.files[0];
+        if(!text) { btn.innerText = "⚠️ Write a review first!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2000); return; }
+
+        btn.innerText = "⏳ Uploading Review..."; btn.disabled = true; let imageUrl = null;
+        if(file) { try { const formData = new FormData(); formData.append('image', file); const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData }); const data = await response.json(); if(data.success) { imageUrl = data.data.url; } } catch (error) { console.error("Image upload failed"); } }
+        const newReview = { name: user.displayName.split(' ')[0], text: text, rating: rating, image: imageUrl, date: new Date().toISOString() };
+        try {
+            await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview);
+            document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Success! 🎉"; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000);
+            if(currentUser) { let c = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, c + 20); }
+        } catch (error) { btn.innerText = "Error! Try Again."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
+    };
 
     window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); showCart(); };
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
-    window.showCart = () => { resetViews(); document.getElementById('cart-view').classList.remove('hidden'); window.scrollTo(0, 0); renderCart(); };
+    window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
     window.closeCart = () => { resetViews(); restoreHome(); };
 
     window.applyPromo = () => {
@@ -529,9 +598,9 @@
         const free = (sub >= 800 || count >= 5); document.getElementById('subtotal').innerText = sub;
         if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
         document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50"; document.getElementById('total').innerText = sub - appliedDiscount - coinDiscount + (free ? 0 : 50);
+        if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden'); else document.getElementById('ship-promo').classList.add('hidden');
     }
 
-    // 📦 SPRINT 4: SAVE ORDERS DIRECTLY TO ADMIN DATABASE
     document.getElementById('order-form').onsubmit = async (e) => {
         e.preventDefault(); 
         const btn = document.querySelector('#order-form .btn-buy');
@@ -544,40 +613,32 @@
             const p = products.find(x => x.id === id); 
             msg += `- ${p.name} x ${cart[id]}\n`; 
             orderSummary += `${p.name} (x${cart[id]}), `; 
-            
-            // Auto deduct stock in database if it exists
-            if(p.stock && p.stock > 0) {
-                try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){}
-            }
+            if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} }
         }
         
         if (appliedDiscount > 0) { msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; }
         let coinDiscount = 0; if(document.getElementById('use-coins-check') && document.getElementById('use-coins-check').checked && currentUser) { coinDiscount = Number(document.getElementById('coin-discount-amt').innerText); if(coinDiscount > 0) { msg += `\n🪙 *AyurCoins Used:* -₹${coinDiscount}`; let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount); } }
         const finalTotal = document.getElementById('total').innerText; msg += `\n\n*Total:* ₹${finalTotal}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
         
-        // PUSH TO ADMIN FIREBASE DB
         try {
-            await addDoc(collection(db, "orders"), {
-                uid: currentUser ? currentUser.uid : 'guest',
-                name: d.name,
-                phone: d.phone,
-                items: orderSummary,
-                total: finalTotal,
-                status: 'Processing',
-                date: new Date().toISOString(),
-                address: `${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}`
-            });
+            await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', date: new Date().toISOString(), address: `${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}` });
         } catch(err) { console.error("Could not save to DB, proceeding to WhatsApp anyway."); }
 
         if(currentUser) { let newBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, newBal + 10); }
-        
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
         cart = {}; updateBadge(); closeCart();
         btn.innerText = "🚀 Order on WhatsApp"; btn.disabled = false;
     };
 
-    load(); 
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } }); }
+    window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); };
+    
+    let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
+    window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
+
+    load();
+    if ('serviceWorker' in navigator) { 
+        navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } });
+    }
 </script>
 </body>
 </html>
