@@ -13,9 +13,10 @@
         
         body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
         body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
-        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view, body.dark-mode #home-top-section, body.dark-mode #insta-section { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
         body.dark-mode .p-qty { background: #2c2c2c; }
+        body.dark-mode .sticky-buy-bar { background: var(--card-bg) !important; border-top: 1px solid var(--border) !important; }
         
         .promo-banner { background: var(--luxury); color: black; padding: 8px 0; font-weight: bold; font-size: 0.95rem; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #b3932b; width: 100%; display: none; }
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
@@ -57,6 +58,14 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
+        /* 🌟 NEW: HERO SLIDER CSS */
+        .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
+        .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
+
+        /* 💳 NEW: STICKY BUY BAR CSS */
+        .sticky-buy-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 800px; background: white; padding: 12px 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 2500; box-sizing: border-box; border-top: 1px solid var(--border); }
+
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
             .h-row { max-width: 1200px; margin: 0 auto; }
@@ -64,6 +73,7 @@
             .product-layout { display: flex; gap: 30px; }
             .product-image-section { flex: 1; }
             .product-details-section { flex: 1; }
+            .hero-slider { max-width: 1200px; margin: 20px auto; height: 300px; }
         }
     </style>
 </head>
@@ -121,6 +131,31 @@
     </div>
 </div>
 
+<div id="home-top-section">
+    <div class="hero-slider">
+        <div class="slides" id="slide-track">
+            <div class="slide-card" style="background: linear-gradient(135deg, #1b5e20, #4caf50);">
+                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Pure Ayurvedic Healing</h2>
+                <p style="margin:5px 0 0 0; font-weight:bold;">Formulated by Dr. Prasiddhi Patil</p>
+            </div>
+            <div class="slide-card" style="background: linear-gradient(135deg, #d4af37, #febd69); color:black;">
+                <h2 style="margin:0; font-size:1.8rem; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">Luxury Combos</h2>
+                <p style="margin:5px 0 0 0; font-weight:bold;">Flat 10% Off on Custom Hampers</p>
+            </div>
+            <div class="slide-card" style="background: linear-gradient(135deg, #8b4513, #a0522d);">
+                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Stop Hairfall Naturally</h2>
+                <p style="margin:5px 0 0 0; font-weight:bold;">Try our Bestselling Oils</p>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 15px; background: var(--card-bg); margin: 0 15px 15px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-size: 0.75rem; font-weight: bold; color: var(--amazon); border: 1px solid var(--border);">
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🌿</span>100% Natural</div>
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">👩‍⚕️</span>Dr. Formulated</div>
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🐇</span>Cruelty Free</div>
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🇮🇳</span>Made in India</div>
+    </div>
+</div>
+
 <div id="hamper-banner" style="background: linear-gradient(135deg, var(--gold) 0%, var(--luxury) 100%); margin: 15px; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.15); cursor:pointer;" onclick="showHamper()">
     <h3 style="margin:0 0 5px 0; color:black; font-size:1.3rem;">🎁 Build a Custom Gift Hamper</h3>
     <p style="font-size:0.95rem; color:#222; margin-bottom:10px; font-weight:bold;">Pick 3 items and get a flat 10% Combo Discount!</p>
@@ -134,6 +169,13 @@
 </div>
 
 <main id="main-view" class="product-grid"></main>
+
+<div id="insta-section" class="hidden" style="padding: 25px 15px; background: var(--card-bg); border-top: 2px solid var(--border); margin-top:20px; text-align:center;">
+    <h3 style="color:var(--amazon); margin-top:0; font-size:1.3rem;">📸 Dr. Prasiddhi on Instagram</h3>
+    <p style="font-size:0.9rem; color:var(--text); margin-bottom:15px;">Follow us for daily Ayurvedic tips and real customer results!</p>
+    <div id="insta-embed-container" style="max-width: 400px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        </div>
+</div>
 
 <div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeProfile()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
@@ -248,9 +290,10 @@
     </form>
 </div>
 
-<div id="product-view" class="hidden product-view">
+<div id="product-view" class="hidden product-view" style="position: relative;">
     <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border);">
+    
+    <div style="background:var(--card-bg); padding:20px; padding-bottom: 90px; border-radius:12px; border:1px solid var(--border); min-height: 80vh;">
         <img id="modal-img" src="" style="width:100%; border-radius:8px; object-fit:contain; max-height:400px;">
         <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
         <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
@@ -269,10 +312,6 @@
         
         <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex;">
             <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
-        </div>
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
-            <button id="modal-add-btn" class="btn-cart" style="flex:1;">🛒 Add to Cart</button>
-            <button id="modal-buy-btn" class="btn-buy" style="flex:1;">⚡ Buy Now</button>
         </div>
         
         <div id="upsell-section" class="hidden" style="background:#fff8e1; border:1px solid var(--gold); border-radius:8px; padding:15px; margin-bottom:20px; text-align:center;">
@@ -302,6 +341,11 @@
             <input type="file" id="review-image" accept="image/*" style="padding:10px; background:var(--card-bg); cursor:pointer;">
             <button id="submit-rev-btn" onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem; margin-top:10px;">Submit Review</button>
         </div>
+    </div>
+    
+    <div class="sticky-buy-bar">
+        <button id="modal-add-btn" class="btn-cart" style="flex:1; margin:0;">🛒 Add to Cart</button>
+        <button id="modal-buy-btn" class="btn-buy" style="flex:1; margin:0;">⚡ Buy Now</button>
     </div>
 </div>
 
@@ -400,9 +444,7 @@
             document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
             let c = Number(localStorage.getItem('coins_' + user.uid));
             if(!c) { c = 50; localStorage.setItem('coins_' + user.uid, '50'); }
-            
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, coins: c, lastLogin: new Date().toISOString() }, { merge: true });
-
             document.getElementById('prof-name-display').innerText = user.displayName;
             document.getElementById('prof-email-display').innerText = user.email;
             document.getElementById('prof-coins-display').innerText = c;
@@ -450,6 +492,18 @@
                 setInterval(() => { const distance = endTime - new Date().getTime(); if (distance <= 0) { document.getElementById('flash-sale').classList.add('hidden'); return; } let h = Math.floor(distance / (1000 * 60 * 60)); let m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); let s = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`; }, 1000);
             }
         } catch(e) {}
+        
+        // 📸 LOAD INSTAGRAM REEL
+        try {
+            const iSnap = await getDoc(doc(db, "settings", "insta_reel"));
+            if(iSnap.exists() && iSnap.data().isActive && iSnap.data().link) {
+                const link = iSnap.data().link;
+                const container = document.getElementById('insta-embed-container');
+                const embedUrl = link.endsWith('/') ? link + 'embed' : link + '/embed';
+                container.innerHTML = `<iframe src="${embedUrl}" width="100%" height="550" frameborder="0" scrolling="no" allowtransparency="true" style="background:white;"></iframe>`;
+                document.getElementById('insta-section').classList.remove('hidden');
+            }
+        } catch(e) {}
     }
 
     function render() {
@@ -458,8 +512,15 @@
         products.forEach(p => {
             const q = cart[p.id] || 0; let avg = "5.0"; let revCount = 0;
             if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
+            
             let stockBadge = ""; if (p.stock > 0 && p.stock <= 5) { stockBadge = `<div class="low-stock">🔥 Only ${p.stock} left!</div>`; }
-            grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}"><img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;"><h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>${stockBadge}<div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')"><span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span></div><div style="color:var(--red); font-weight:bold;">₹${p.price}</div><div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button></div>`;
+            
+            // 🔥 NEW: Premium Ribbons
+            let tagBadge = "";
+            if(p.tag === "Bestseller") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, var(--gold), var(--luxury)); color:black; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">🔥 Bestseller</div>`;
+            else if(p.tag === "New") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, #2196F3, #00BCD4); color:white; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">✨ New</div>`;
+
+            grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}">${tagBadge}<img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;"><h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>${stockBadge}<div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')"><span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span></div><div style="color:var(--red); font-weight:bold;">₹${p.price}</div><div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add Cart</button></div>`;
         });
     }
 
@@ -484,11 +545,13 @@
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
     function resetViews() { 
-        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
+        ['home-top-section', 'insta-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
     }
     
     function restoreHome() { 
-        ['hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
+        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
+        // Only show insta section if it has an iframe loaded
+        if(document.getElementById('insta-embed-container').innerHTML.includes('iframe')) { showSafe('insta-section'); }
         window.scrollTo(0, 0); 
     }
 
@@ -691,6 +754,17 @@
 
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
     window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
+
+    // 🌟 IMAGE SLIDER LOGIC
+    let slideIndex = 0;
+    setInterval(() => {
+        const track = document.getElementById('slide-track');
+        if(track) {
+            slideIndex++;
+            if(slideIndex >= 3) slideIndex = 0;
+            track.style.transform = `translateX(-${slideIndex * 33.333}%)`;
+        }
+    }, 3500);
 
     load(); 
     
