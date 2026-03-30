@@ -67,8 +67,8 @@
 </head>
 <body>
 
-<div id="flash-sale" style="background: #111; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #333; letter-spacing: 0.5px;">
-    ⚡ FLASH SALE ends in <span id="countdown" style="color:var(--gold); font-size: 1rem; margin-left: 5px;">02:45:30</span> ⏳
+<div id="flash-sale" class="hidden" style="background: #111; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #333; letter-spacing: 0.5px;">
+    <span id="fs-text">⚡ FLASH SALE</span> ends in <span id="countdown" style="color:var(--gold); font-size: 1rem; margin-left: 5px;">00:00:00</span> ⏳
 </div>
 
 <div id="promo-banner" class="promo-banner hidden">
@@ -320,18 +320,7 @@
     let appliedDiscount = 0;
     window.currentModalProductId = null; 
 
-    // ⏱️ SPRINT 1: LIVE FLASH SALE TIMER LOGIC
-    let time = 2 * 3600 + 45 * 60 + 30; // Starts at 02:45:30
-    setInterval(() => {
-        if(time <= 0) time = 3600 * 5; // Resets if hits 0 to create continuous FOMO
-        time--;
-        let h = Math.floor(time / 3600);
-        let m = Math.floor((time % 3600) / 60);
-        let s = time % 60;
-        document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }, 1000);
-
-    // 🌓 SPRINT 1: DARK MODE LOGIC
+    // 🌓 DARK MODE LOGIC
     window.toggleDarkMode = () => {
         document.body.classList.toggle('dark-mode');
         const btn = document.getElementById('dark-btn');
@@ -343,8 +332,6 @@
             localStorage.setItem('theme', 'light');
         }
     };
-
-    // Load saved theme
     if(localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
         document.getElementById('dark-btn').innerText = '☀️';
@@ -364,9 +351,33 @@
                 document.getElementById('promo-banner').classList.remove('hidden');
             }
         } catch(e) { console.log("No promo running."); }
+
+        // ⏱️ FIREBASE FLASH SALE SYNC
+        try {
+            const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
+            if(fsSnap.exists() && fsSnap.data().isActive) {
+                const fsData = fsSnap.data();
+                const endTime = new Date(fsData.endTime).getTime();
+                
+                document.getElementById('fs-text').innerText = fsData.text || "⚡ FLASH SALE";
+                document.getElementById('flash-sale').classList.remove('hidden');
+                
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = endTime - now;
+                    if (distance <= 0) {
+                        document.getElementById('flash-sale').classList.add('hidden');
+                        return;
+                    }
+                    let h = Math.floor(distance / (1000 * 60 * 60));
+                    let m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    let s = Math.floor((distance % (1000 * 60)) / 1000);
+                    document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        } catch(e) { console.log("No flash sale running."); }
     }
 
-    // 🎯 SPRINT 1: RENDER UPDATED TO ADD "DATA-DESC" FOR CONCERN FILTERS
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
@@ -376,8 +387,7 @@
                 revCount = p.reviews.length;
                 avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1);
             }
-            
-            // Note the data-desc attribute added below so filterCategory can read it
+
             grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}">
                 <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
                 <h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>
@@ -398,20 +408,15 @@
         render(); 
         updateBadge(); 
         renderCart(); 
-        
-        if (currentModalProductId === id) {
-            document.getElementById('modal-qty').innerText = cart[id] || 0;
-        }
+        if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; }
     };
 
-    // 🎯 SPRINT 1: UPGRADED FILTER FUNCTION TO CHECK DESCRIPTION CONCERNS
     window.filterCategory = (cat) => {
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.style.background = '#e9ecef';
             btn.style.color = '#333';
             btn.style.border = '1px solid #ccc';
         });
-        
         event.target.style.background = 'var(--amazon)';
         event.target.style.color = 'white';
         event.target.style.border = '1px solid var(--amazon)';
@@ -421,7 +426,7 @@
         
         cards.forEach(card => {
             const productName = card.querySelector('h4').innerText.toLowerCase();
-            const productDesc = card.getAttribute('data-desc'); // Grabs description for medical concerns
+            const productDesc = card.getAttribute('data-desc');
             
             if (cat === 'All' || productName.includes(searchCat) || productDesc.includes(searchCat)) {
                 card.style.display = 'block'; 
@@ -431,13 +436,9 @@
         });
     };
 
-    // 🎙️ SPRINT 1: SMART VOICE SEARCH LOGIC
     window.startVoiceSearch = () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            alert("⚠️ Voice search is not supported in this browser.");
-            return;
-        }
+        if (!SpeechRecognition) { alert("⚠️ Voice search is not supported in this browser."); return; }
         const rec = new SpeechRecognition();
         document.getElementById('search-box').placeholder = "Listening... 🎙️";
         rec.onresult = (e) => {
@@ -445,9 +446,7 @@
             window.searchProducts();
             document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil...";
         };
-        rec.onerror = () => {
-            document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil...";
-        };
+        rec.onerror = () => { document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; };
         rec.start();
     };
 
@@ -581,26 +580,15 @@
 
         document.querySelectorAll('.w-item-qty').forEach(input => {
             let q = parseInt(input.value) || 0;
-            if(q > 0) {
-                prodsList += `- ${input.getAttribute('data-name')} x ${q}\n`;
-                totalQtyCount += q;
-            }
+            if(q > 0) { prodsList += `- ${input.getAttribute('data-name')} x ${q}\n`; totalQtyCount += q; }
         });
 
-        if(totalQtyCount === 0) {
-            alert("⚠️ Please add at least one product quantity before submitting.");
-            return;
-        }
+        if(totalQtyCount === 0) { alert("⚠️ Please add at least one product quantity before submitting."); return; }
 
         const customMargin = document.getElementById('w-margin').value;
         const d = { 
-            shop: document.getElementById('w-shop').value, 
-            name: document.getElementById('w-name').value, 
-            phone: document.getElementById('w-phone').value, 
-            marginText: customMargin + "%", 
-            addr: document.getElementById('w-address').value, 
-            city: document.getElementById('w-city').value, 
-            pin: document.getElementById('w-pin').value 
+            shop: document.getElementById('w-shop').value, name: document.getElementById('w-name').value, phone: document.getElementById('w-phone').value, 
+            marginText: customMargin + "%", addr: document.getElementById('w-address').value, city: document.getElementById('w-city').value, pin: document.getElementById('w-pin').value 
         };
         
         const mrpAmt = document.getElementById('w-bill-mrp').innerText;
@@ -615,7 +603,6 @@
         const p = products.find(x => x.id === id);
         if(!p) return;
         currentModalProductId = id;
-        
         document.getElementById('modal-qty').innerText = cart[id] || 0;
         
         document.getElementById('main-view').classList.add('hidden');
@@ -708,13 +695,7 @@
             } catch (error) { console.error("Image upload failed"); }
         }
 
-        const newReview = {
-            name: user.displayName.split(' ')[0],
-            text: text,
-            rating: rating,
-            image: imageUrl,
-            date: new Date().toISOString()
-        };
+        const newReview = { name: user.displayName.split(' ')[0], text: text, rating: rating, image: imageUrl, date: new Date().toISOString() };
 
         try {
             await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) });
@@ -824,14 +805,9 @@
     window.searchProducts = () => {
         const query = document.getElementById('search-box').value.toLowerCase();
         const cards = document.querySelectorAll('.p-card');
-        
         cards.forEach(card => {
             const productName = card.querySelector('h4').innerText.toLowerCase();
-            if (productName.includes(query)) {
-                card.style.display = 'block'; 
-            } else {
-                card.style.display = 'none';  
-            }
+            if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; }
         });
     };
 
@@ -839,18 +815,14 @@
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        setTimeout(() => {
-            document.getElementById('install-banner').classList.remove('hidden');
-        }, 4000);
+        setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000);
     });
 
     window.installApp = async () => {
         if (deferredPrompt) {
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                document.getElementById('install-banner').classList.add('hidden');
-            }
+            if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); }
             deferredPrompt = null;
         }
     };
