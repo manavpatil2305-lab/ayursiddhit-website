@@ -95,14 +95,13 @@
 
     <div id="reels" class="tab-content">
         <div class="card" style="border-left: 5px solid #E1306C;">
-            <h3>🎬 Upload AyurReel</h3>
-            <p style="font-size:0.9rem; color:#555;">Tap "Choose File" to open your phone's Video Gallery. Select an MP4 to attach to a product.</p>
+            <h3>🎬 Launch AyurReel (Plan B)</h3>
+            <p style="font-size:0.9rem; color:#555;">Upload your video to Google Drive. Change access to "Anyone with link can view". Paste the link below!</p>
             <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">1. Select Product to Link:</label>
             <select id="r-product" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;"></select>
-            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Upload Video File (Gallery):</label>
-            <input type="file" id="r-video" accept="video/mp4,video/x-m4v,video/*" style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
-            <button id="upload-reel-btn" onclick="uploadReel()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Force Upload Video</button>
-            <p id="upload-progress" style="margin-top: 15px; font-weight: bold; color: var(--amazon); text-align: center; font-size: 1rem;"></p>
+            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Paste Google Drive Video Link:</label>
+            <input type="text" id="r-video-link" placeholder="Paste link here..." style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
+            <button id="upload-reel-btn" onclick="saveReelLink()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Launch Reel</button>
         </div>
         <div class="card">
             <h3>📋 Manage Live Reels</h3>
@@ -187,15 +186,11 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    
-    // 🛡️ FIX: Switched from 'uploadBytesResumable' to raw aggressive 'uploadBytes' to prevent mobile freezing
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
       authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
       projectId: "ayursiddhitnaturals-d2ecb",
-      storageBucket: "ayursiddhitnaturals-d2ecb.appspot.com", // 🛡️ FIX: Standardized bucket name to prevent routing errors
       messagingSenderId: "704398728935",
       appId: "1:704398728935:web:6330cb27578d80ce15cc42"
     };
@@ -204,7 +199,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
-    const storage = getStorage(app);
     const provider = new GoogleAuthProvider();
 
     let allProducts = [];
@@ -292,25 +286,25 @@
         });
     }
 
-    // 🚀 THE BULLETPROOF AGGRESSIVE UPLOAD
-    window.uploadReel = async () => {
+    // 🚀 PLAN B: LINK BYPASS SYSTEM
+    window.saveReelLink = async () => {
         const btn = document.getElementById('upload-reel-btn');
-        const progressText = document.getElementById('upload-progress');
         const prodId = document.getElementById('r-product').value;
-        const file = document.getElementById('r-video').files[0];
+        let videoUrl = document.getElementById('r-video-link').value.trim();
         
-        if(!file || !prodId) { alert("Please select a product and a video file!"); return; }
+        if(!videoUrl || !prodId) { alert("Please paste a link and select a product!"); return; }
         
-        btn.innerText = "⏳ Uploading... Do NOT close window"; btn.disabled = true;
-        progressText.innerText = "🚀 Forcing Upload... Please wait 5-20 seconds.";
+        btn.innerText = "⏳ Saving Reel..."; btn.disabled = true;
+
+        // Auto-Converter for Google Drive links!
+        if(videoUrl.includes('drive.google.com/file/d/')) {
+            const match = videoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if(match && match[1]) {
+                videoUrl = `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+        }
 
         try {
-            const storageRef = ref(storage, 'reels/' + Date.now() + '_' + file.name);
-            
-            // This is the fix. It pushes the whole file at once instead of letting the mobile network freeze it.
-            await uploadBytes(storageRef, file);
-            const videoUrl = await getDownloadURL(storageRef);
-            
             const linkedProd = allProducts.find(p => p.id === prodId);
             
             await addDoc(collection(db, "reels"), {
@@ -322,25 +316,18 @@
                 timestamp: new Date().toISOString()
             });
 
-            alert("🎬 Reel Uploaded Successfully!");
-            document.getElementById('r-video').value = '';
-            progressText.innerText = '✅ Upload Complete!';
-            setTimeout(() => { progressText.innerText = ''; }, 3000);
-            btn.innerText = "🚀 Force Upload Video"; btn.disabled = false;
+            alert("🎬 Reel Launched Successfully!");
+            document.getElementById('r-video-link').value = '';
             loadReels();
-            
         } catch(e) {
-            console.error("UPLOAD ERROR:", e);
-            alert("UPLOAD BLOCKED! Error: " + e.message + "\n\nDid you forget to change your Firebase Storage Rules? Please check the previous instructions!");
-            btn.innerText = "🚀 Force Upload Video"; btn.disabled = false;
-            progressText.innerText = '❌ Upload Failed. Check Storage Rules.';
-        }
+            console.error(e); alert("Error saving Reel link.");
+        } finally { btn.innerText = "🚀 Launch Reel"; btn.disabled = false; }
     };
 
     async function loadReels() {
         const snap = await getDocs(collection(db, "reels"));
         const list = document.getElementById('reels-list'); list.innerHTML = '';
-        if(snap.empty) { list.innerHTML = "<p>No Reels uploaded yet.</p>"; }
+        if(snap.empty) { list.innerHTML = "<p>No Reels active yet.</p>"; }
         snap.forEach(doc => {
             const r = doc.data();
             list.innerHTML += `
