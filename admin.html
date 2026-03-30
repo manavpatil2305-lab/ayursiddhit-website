@@ -101,8 +101,8 @@
             <select id="r-product" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;"></select>
             <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Upload Video File (Gallery):</label>
             <input type="file" id="r-video" accept="video/mp4,video/x-m4v,video/*" style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
-            <button id="upload-reel-btn" onclick="uploadReel()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Upload Reel</button>
-            <p id="upload-progress" style="margin-top: 15px; font-weight: bold; color: var(--amazon); text-align: center; font-size: 1.1rem;"></p>
+            <button id="upload-reel-btn" onclick="uploadReel()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Force Upload Video</button>
+            <p id="upload-progress" style="margin-top: 15px; font-weight: bold; color: var(--amazon); text-align: center; font-size: 1rem;"></p>
         </div>
         <div class="card">
             <h3>📋 Manage Live Reels</h3>
@@ -187,14 +187,15 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    // 🚀 NEW: imported 'uploadBytesResumable' to track live progress!
-    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    
+    // 🛡️ FIX: Switched from 'uploadBytesResumable' to raw aggressive 'uploadBytes' to prevent mobile freezing
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
       authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
       projectId: "ayursiddhitnaturals-d2ecb",
-      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
+      storageBucket: "ayursiddhitnaturals-d2ecb.appspot.com", // 🛡️ FIX: Standardized bucket name to prevent routing errors
       messagingSenderId: "704398728935",
       appId: "1:704398728935:web:6330cb27578d80ce15cc42"
     };
@@ -291,7 +292,7 @@
         });
     }
 
-    // 🚀 NEW PROGRESS TRACKER FOR UPLOADING REELS
+    // 🚀 THE BULLETPROOF AGGRESSIVE UPLOAD
     window.uploadReel = async () => {
         const btn = document.getElementById('upload-reel-btn');
         const progressText = document.getElementById('upload-progress');
@@ -300,48 +301,39 @@
         
         if(!file || !prodId) { alert("Please select a product and a video file!"); return; }
         
-        btn.innerText = "⏳ Uploading..."; btn.disabled = true;
+        btn.innerText = "⏳ Uploading... Do NOT close window"; btn.disabled = true;
+        progressText.innerText = "🚀 Forcing Upload... Please wait 5-20 seconds.";
 
         try {
             const storageRef = ref(storage, 'reels/' + Date.now() + '_' + file.name);
             
-            // This is the Magic Function that tracks upload size
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            // This is the fix. It pushes the whole file at once instead of letting the mobile network freeze it.
+            await uploadBytes(storageRef, file);
+            const videoUrl = await getDownloadURL(storageRef);
+            
+            const linkedProd = allProducts.find(p => p.id === prodId);
+            
+            await addDoc(collection(db, "reels"), {
+                videoUrl: videoUrl,
+                productId: prodId,
+                productName: linkedProd.name,
+                productPrice: linkedProd.price,
+                productImage: linkedProd.image,
+                timestamp: new Date().toISOString()
+            });
 
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    progressText.innerText = '🚀 Uploading: ' + Math.round(progress) + '%';
-                },
-                (error) => {
-                    console.error(error); alert("Upload failed! Check Storage Rules.");
-                    btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
-                    progressText.innerText = '';
-                },
-                async () => {
-                    const videoUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                    const linkedProd = allProducts.find(p => p.id === prodId);
-                    
-                    await addDoc(collection(db, "reels"), {
-                        videoUrl: videoUrl,
-                        productId: prodId,
-                        productName: linkedProd.name,
-                        productPrice: linkedProd.price,
-                        productImage: linkedProd.image,
-                        timestamp: new Date().toISOString()
-                    });
-
-                    alert("🎬 Reel Uploaded Successfully!");
-                    document.getElementById('r-video').value = '';
-                    progressText.innerText = '✅ Upload Complete!';
-                    setTimeout(() => { progressText.innerText = ''; }, 3000);
-                    btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
-                    loadReels();
-                }
-            );
+            alert("🎬 Reel Uploaded Successfully!");
+            document.getElementById('r-video').value = '';
+            progressText.innerText = '✅ Upload Complete!';
+            setTimeout(() => { progressText.innerText = ''; }, 3000);
+            btn.innerText = "🚀 Force Upload Video"; btn.disabled = false;
+            loadReels();
+            
         } catch(e) {
-            console.error(e); alert("Network Error.");
-            btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
+            console.error("UPLOAD ERROR:", e);
+            alert("UPLOAD BLOCKED! Error: " + e.message + "\n\nDid you forget to change your Firebase Storage Rules? Please check the previous instructions!");
+            btn.innerText = "🚀 Force Upload Video"; btn.disabled = false;
+            progressText.innerText = '❌ Upload Failed. Check Storage Rules.';
         }
     };
 
