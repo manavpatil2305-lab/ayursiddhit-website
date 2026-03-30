@@ -13,7 +13,7 @@
         
         body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
         body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
-        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #social-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
         body.dark-mode .p-qty { background: #2c2c2c; }
         
@@ -117,6 +117,8 @@
         <button class="cat-btn t-soaps" onclick="filterCategory('Soap')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🌿 Soaps</button>
         <button class="cat-btn t-oils" onclick="filterCategory('Oil')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">💆‍♀️ Oils</button>
         <button class="cat-btn t-face" onclick="filterCategory('Face')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">✨ Face Packs</button>
+        <button class="cat-btn t-acne" onclick="filterCategory('Acne')" style="background: #eef2f5; color: var(--red); border: 1px solid var(--red); padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🔴 Acne</button>
+        <button class="cat-btn t-hair" onclick="filterCategory('Hairfall')" style="background: #eef2f5; color: #8b4513; border: 1px solid #8b4513; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🍂 Hairfall</button>
     </div>
 </div>
 
@@ -128,6 +130,7 @@
 
 <div id="quiz-banner" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); margin: 15px; padding: 20px; border-radius: 12px; border: 1px solid var(--gold); text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
     <h3 style="margin:0 0 5px 0; color:var(--amazon);" id="t-quiz-title">Not sure what to buy? 🤔</h3>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:15px;" id="t-quiz-desc">Take Dr. Prasiddhi's 30-second Ayurvedic skin & hair quiz to find your perfect match.</p>
     <button onclick="startQuiz()" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:1rem;" id="t-quiz-btn">🩺 Find My Routine</button>
 </div>
 
@@ -138,11 +141,12 @@
     <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
     <p style="font-size:1.1rem; color:var(--text); font-weight:bold;" id="prof-name-display"></p>
     <p style="color:#555; margin-top:-10px;" id="prof-email-display"></p>
-    <div style="background:linear-gradient(45deg, var(--gold), var(--luxury)); padding:20px; border-radius:12px; text-align:center; color:black; margin:20px 0;">
+    <div style="background:linear-gradient(45deg, var(--gold), var(--luxury)); padding:20px; border-radius:12px; text-align:center; color:black; margin:20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         <h3 style="margin:0; font-size:1.2rem;">🪙 AyurCoins Balance</h3>
         <h1 style="margin:5px 0 0 0; font-size:2.5rem;" id="prof-coins-display">0</h1>
+        <p style="margin:5px 0 0 0; font-size:0.9rem; font-weight:bold;">Use coins for real cash discounts at checkout!</p>
     </div>
-    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px;">📦 My Orders</h3>
+    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px;">📦 My Past Orders</h3>
     <div id="prof-orders-list" style="font-size:0.95rem; color:var(--text);">Loading orders...</div>
     <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
 </div>
@@ -150,11 +154,20 @@
 <div id="hamper-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeHamper()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 style="color:var(--amazon); margin-top:0;">🎁 Build Gift Hamper</h2>
-    <p style="color:var(--text); font-size:0.95rem;">Select 1 Soap, 1 Oil, and 1 Face Pack for a 10% discount!</p>
-    <div style="margin-bottom:15px;"><select id="hamper-soap" style="width:100%; padding:12px;"></select></div>
-    <div style="margin-bottom:15px;"><select id="hamper-oil" style="width:100%; padding:12px;"></select></div>
-    <div style="margin-bottom:20px;"><select id="hamper-face" style="width:100%; padding:12px;"></select></div>
-    <button onclick="addHamperToCart()" style="background:var(--gold); color:black; border:none; width:100%; padding:15px; border-radius:6px; font-weight:bold; font-size:1.1rem; cursor:pointer;">🛒 Add Hamper to Cart</button>
+    <p style="color:var(--text); font-size:0.95rem;">Select 1 Soap, 1 Oil, and 1 Face Pack to create a luxury combo. A 10% discount will be applied automatically at checkout!</p>
+    <div style="margin-bottom:15px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">1. Select Soap 🌿</label>
+        <select id="hamper-soap" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+    <div style="margin-bottom:15px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">2. Select Hair Care 💆‍♀️</label>
+        <select id="hamper-oil" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+    <div style="margin-bottom:20px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">3. Select Face Pack ✨</label>
+        <select id="hamper-face" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+    <button onclick="addHamperToCart()" style="background:var(--gold); color:black; border:none; width:100%; padding:15px; border-radius:6px; font-weight:bold; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.1);">🛒 Add Hamper to Cart</button>
 </div>
 
 <div id="quiz-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); text-align:center; padding:30px 15px;">
@@ -174,12 +187,13 @@
 
 <div id="results-section" style="padding: 25px 15px; background: var(--card-bg); border-top: 2px solid var(--border); margin-top:20px;">
     <h3 style="color:var(--amazon); text-align:center; margin-top:0; font-size:1.3rem;">📸 Real Ayurvedic Results</h3>
+    <p style="text-align:center; font-size:0.9rem; color:var(--text); margin-bottom:20px;">Healing takes time, but the glow is forever.</p>
     <div style="display:flex; gap:15px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none;">
-        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center;">
+        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
             <div style="display:flex; gap:5px;"><div style="flex:1; background:#ccc; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">Before</div><div style="flex:1; background:var(--green); height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">After 4 Wks</div></div>
             <p style="margin:10px 0 0 0; font-size:0.9rem; font-weight:bold; color:var(--text);">Acne totally cleared! ✨</p>
         </div>
-        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center;">
+        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
             <div style="display:flex; gap:5px;"><div style="flex:1; background:#ccc; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">Before</div><div style="flex:1; background:var(--gold); height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:black; font-weight:bold;">After 6 Wks</div></div>
             <p style="margin:10px 0 0 0; font-size:0.9rem; font-weight:bold; color:var(--text);">Hairfall stopped! 🌿</p>
         </div>
@@ -188,15 +202,17 @@
 
 <div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px; text-align: center;">
     <button onclick="closeAbout()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--luxury); margin-bottom: 15px; object-fit: cover;">
+    <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--luxury); margin-bottom: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
     <h2 style="color: var(--amazon); margin-top:0; margin-bottom: 5px; font-size: 1.8rem;">Dr. Prasiddhi Patil</h2>
     <h4 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">BAMS, Ahilyanagar</h4>
     <p style="font-size:1.05rem; color:var(--text); line-height: 1.7; text-align: left; margin-top: 25px; background: rgba(0,0,0,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--gold);">
-        Welcome to Ayursiddhit Naturals. As an Ayurvedic doctor, I believe true wellness comes from pure, natural ingredients. Every product is crafted with medical knowledge to heal your skin and hair naturally.
+        Welcome to <b>Ayursiddhit Naturals</b>. As an Ayurvedic doctor, I believe that true beauty and wellness come from pure, natural ingredients rather than harsh chemicals. <br><br>
+        After completing my extensive medical education (BAMS) in Ahilyanagar, I saw a deep need for genuine, healing personal care products. That is exactly why I started crafting these company-grade formulations right here at home, strictly adhering to authentic Ayurvedic principles. <br><br>
+        Every soap, oil, and face pack we sell is made with profound care, medical knowledge, and raw natural ingredients to ensure it is perfectly suited for your skin and hair. Thank you for trusting our brand and joining our beautiful journey to natural healing!
     </p>
 </div>
 
-<div id="social-section" style="background: var(--card-bg); padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid var(--border);">
+<div id="community-section" style="background: var(--card-bg); padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid var(--border);">
     <h3 style="margin: 0 0 10px 0; color: var(--amazon); font-size: 1.2rem;" id="t-social-title">Join Our Ayurvedic Community 🌱</h3>
     <p style="font-size: 0.95rem; color: var(--text); margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
     <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
@@ -214,11 +230,21 @@
 <div id="wholesale-view" class="hidden wholesale-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
+    <p style="font-size:0.95rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop Name" required><input type="tel" id="w-phone" placeholder="WhatsApp Number" required>
         <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.02);"></div>
-        <input type="number" id="w-margin" placeholder="Expected Margin %" required oninput="calculateWholesale()">
-        <textarea id="w-address" placeholder="Full Address" required></textarea>
+        <div class="form-grid">
+            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:rgba(0,0,0,0.05); font-weight:bold; color:var(--red); text-align:center;">
+            <input type="number" id="w-margin" placeholder="Expected Margin %" required oninput="calculateWholesale()">
+        </div>
+        <div id="wholesale-bill" class="hidden" style="background:rgba(0,0,0,0.03); padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
+            <p style="display:flex; justify-content:space-between; margin:5px 0;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
+            <p style="display:flex; justify-content:space-between; margin:5px 0; color:green; font-weight:bold;">Your Margin Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
+            <hr style="border:0; border-top:1px solid var(--border); margin:10px 0;">
+            <h3 style="display:flex; justify-content:space-between; margin:0; color:var(--red);">Final Payable Amount: <span>₹<span id="w-bill-total">0</span></span></h3>
+        </div>
+        <textarea id="w-address" placeholder="Full Address & Landmark" rows="2" required></textarea>
         <button type="submit" class="btn-buy" style="background:#25D366; color:white;">🚀 Send WhatsApp Enquiry</button>
     </form>
 </div>
@@ -230,6 +256,16 @@
         <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
         <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
         <div id="modal-stock-warn" class="low-stock hidden">🔥 Hurry, low stock!</div>
+        
+        <div style="background:rgba(0,0,0,0.03); padding:12px; border-radius:8px; margin-bottom:15px; border: 1px solid var(--border);">
+            <span style="font-size:0.85rem; font-weight:bold; color:var(--text); display:block; margin-bottom:5px;">🚚 Check Delivery Details</span>
+            <div style="display:flex; gap:10px;">
+                <input type="number" id="pin-check" placeholder="Enter Pincode" style="margin:0; flex:1; padding:10px;">
+                <button onclick="checkPincode()" style="background:var(--amazon); color:white; border:none; border-radius:6px; font-weight:bold; padding:0 15px; cursor:pointer;">Check</button>
+            </div>
+            <p id="pin-msg" style="margin:8px 0 0 0; font-size:0.85rem; font-weight:bold;"></p>
+        </div>
+
         <p id="modal-desc" style="font-size:1rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;"></p>
         
         <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex;">
@@ -248,8 +284,26 @@
                 <button id="upsell-btn" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add Both</button>
             </div>
         </div>
-        <h3 style="margin-top:0; color: var(--amazon);">Customer Reviews ⭐</h3>
+
+        <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
+        <h3 style="margin-top:0; color: var(--amazon); font-size: 1.3rem;">Customer Reviews ⭐</h3>
         <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
+        
+        <div style="background:rgba(0,0,0,0.03); padding:20px; border-radius:8px; border:1px solid var(--border);">
+            <b style="font-size:1rem; display:block; margin-bottom:5px;">Write a Review</b>
+            <div class="rating-box">
+                <input type="radio" id="star5" name="rating" value="5" checked><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            </div>
+            <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
+            <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:var(--text);">📸 Add a Photo (Optional)</label>
+            <input type="file" id="review-image" accept="image/*" style="padding:10px; background:var(--card-bg); cursor:pointer;">
+            <button id="submit-rev-btn" onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem; margin-top:10px;">Submit Review</button>
+        </div>
+
     </div>
 </div>
 
@@ -300,8 +354,17 @@
     <p style="margin: 0; color: #aaa;">&copy; 2026 Ayursiddhit Naturals.</p>
 </footer>
 
+<div id="install-banner" class="hidden" style="position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:var(--green); color:white; padding:12px 20px; border-radius:30px; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.3); display:flex; align-items:center; gap:10px; width:85%; max-width:320px; justify-content:space-between;">
+    <span style="font-size:0.85rem; font-weight:bold;">📲 Install Ayursiddhit App</span>
+    <button onclick="installApp()" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; font-weight:bold; cursor:pointer; color:black;">Install</button>
+</div>
+
 <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi,%20I%20need%20an%20Ayurvedic%20consultation!" target="_blank" style="position: fixed; bottom: 20px; left: 20px; background: white; border: 2px solid var(--green); color: var(--green); padding: 8px 15px; border-radius: 25px; font-weight: bold; display: flex; align-items: center; gap: 8px; z-index: 3000; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
     <img src="logo.png" style="width:25px; height:25px; border-radius:50%; object-fit: cover;"> Consult Doctor
+</a>
+
+<a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" class="floating-wa" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
 </a>
 
 <script type="module">
@@ -340,7 +403,9 @@
             document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
             let c = Number(localStorage.getItem('coins_' + user.uid));
             if(!c) { c = 50; localStorage.setItem('coins_' + user.uid, '50'); }
+            
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, coins: c, lastLogin: new Date().toISOString() }, { merge: true });
+
             document.getElementById('prof-name-display').innerText = user.displayName;
             document.getElementById('prof-email-display').innerText = user.email;
             document.getElementById('prof-coins-display').innerText = c;
@@ -413,16 +478,15 @@
         rec.onerror = () => { document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; }; rec.start();
     };
 
-    // 🛡️ BULLETPROOF VIEW SWITCHING (NEVER CRASHES)
     function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
     function resetViews() { 
-        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'social-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
+        ['hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
     }
     
     function restoreHome() { 
-        ['hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'social-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
+        ['hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
         window.scrollTo(0, 0); 
     }
 
@@ -440,7 +504,6 @@
         });
     }
 
-    // 🛑 POPUP FIX 2: Silently opens cart
     window.addHamperToCart = () => {
         const sid = document.getElementById('hamper-soap').value; const oid = document.getElementById('hamper-oil').value; const fid = document.getElementById('hamper-face').value;
         if(sid) updateQty(sid, 1); if(oid) updateQty(oid, 1); if(fid) updateQty(fid, 1);
@@ -497,8 +560,6 @@
         if(otherProds.length > 0) {
             const upsellProd = otherProds[Math.floor(Math.random() * otherProds.length)];
             document.getElementById('upsell-img').src = upsellProd.image; document.getElementById('upsell-name').innerText = upsellProd.name; document.getElementById('upsell-price').innerText = `₹${upsellProd.price}`;
-            
-            // 🛑 POPUP FIX 3: Smooth text change
             document.getElementById('upsell-btn').onclick = () => { 
                 updateQty(id, 1); updateQty(upsellProd.id, 1); 
                 const btn = document.getElementById('upsell-btn'); btn.innerText = "Added! ✅"; 
@@ -509,6 +570,8 @@
         
         document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); };
         document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) updateQty(id, 1); closeProduct(); showCart(); };
+        
+        renderReviews(p.reviews || []);
     };
 
     window.closeProduct = () => { resetViews(); restoreHome(); };
@@ -520,7 +583,6 @@
         'HI': { wholesale: '📦 थोक / बल्क ऑर्डर', all: '✨ सभी', soap: '🌿 साबुन', oil: '💆‍♀️ तेल', face: '✨ फेस पैक', acne: '🔴 मुँहासे', hair: '🍂 बालों का झड़ना', cart: 'अपना ऑर्डर जांचें', quizT: 'समझ नहीं आ रहा क्या खरीदें? 🤔', quizD: 'डॉ. प्रसिद्धि की 30-सेकंड की आयुर्वेदिक क्विज़ लें।', quizB: '🩺 मेरा रूटीन खोजें', soc: 'हमारे आयुर्वेदिक समुदाय से जुड़ें 🌱' }
     };
     
-    // 🛡️ BULLETPROOF LANGUAGE TOGGLE
     window.toggleLanguage = () => {
         const btn = document.getElementById('lang-btn');
         if(currentLang === 'EN') { currentLang = 'MR'; btn.innerText = '🌐 MR'; }
@@ -542,7 +604,6 @@
     window.startQuiz = () => { resetViews(); showSafe('quiz-view'); showSafe('quiz-step-1'); hideSafe('quiz-step-2'); window.scrollTo(0,0); };
     window.closeQuiz = () => { resetViews(); restoreHome(); };
 
-    // 🛑 POPUP FIX 1: Silently opens cart
     window.nextQuiz = (concern) => {
         hideSafe('quiz-step-1'); showSafe('quiz-step-2');
         const match = products.find(p => p.desc && p.desc.toLowerCase().includes(concern.toLowerCase())) || products[0];
@@ -558,6 +619,7 @@
         list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:15px;"><b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br><span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span><p style="margin:8px 0; color:var(--text); line-height:1.4;">${r.text}</p>${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid var(--border);">` : ''}</div>`).join('');
     }
 
+    const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     window.submitReview = async () => {
         const btn = document.getElementById('submit-rev-btn'); const user = auth.currentUser;
         if(!user) { btn.innerText = "⚠️ Please Sign In First!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2500); return; }
@@ -593,6 +655,7 @@
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
         for(let id in cart) { const p = products.find(x => x.id === id); if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; } }
         if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && appliedDiscount !== 50 && document.getElementById('cart-promo-input').value !== "HAMPER10") { appliedDiscount = 0; document.getElementById('promo-msg').style.color = "red"; document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`; }
+
         let coinDiscount = 0; const useCoinsCheck = document.getElementById('use-coins-check');
         if(useCoinsCheck && useCoinsCheck.checked && currentUser) { let bal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; coinDiscount = Math.min(bal, sub - appliedDiscount); document.getElementById('coin-discount-row').classList.remove('hidden'); document.getElementById('coin-discount-amt').innerText = coinDiscount; } else { document.getElementById('coin-discount-row').classList.add('hidden'); }
         const free = (sub >= 800 || count >= 5); document.getElementById('subtotal').innerText = sub;
@@ -620,24 +683,25 @@
         let coinDiscount = 0; if(document.getElementById('use-coins-check') && document.getElementById('use-coins-check').checked && currentUser) { coinDiscount = Number(document.getElementById('coin-discount-amt').innerText); if(coinDiscount > 0) { msg += `\n🪙 *AyurCoins Used:* -₹${coinDiscount}`; let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount); } }
         const finalTotal = document.getElementById('total').innerText; msg += `\n\n*Total:* ₹${finalTotal}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
         
-        try {
-            await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', date: new Date().toISOString(), address: `${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}` });
-        } catch(err) { console.error("Could not save to DB, proceeding to WhatsApp anyway."); }
-
+        try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', date: new Date().toISOString(), address: `${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}` }); } catch(err) { }
         if(currentUser) { let newBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, newBal + 10); }
+        
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
         cart = {}; updateBadge(); closeCart();
         btn.innerText = "🚀 Order on WhatsApp"; btn.disabled = false;
     };
 
-    window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); };
-    
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
     window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
 
-    load();
+    load(); 
+    
+    // ⚙️ THE PWA INSTALL FIX: We unregister stuck caches, then immediately re-register!
     if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } });
+        navigator.serviceWorker.getRegistrations().then(function(registrations) { 
+            for(let registration of registrations) { registration.unregister(); } 
+        });
+        navigator.serviceWorker.register('/sw.js'); 
     }
 </script>
 </body>
