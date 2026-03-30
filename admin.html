@@ -31,9 +31,19 @@
 
 <div class="container" id="admin-content" style="display:none;">
     
+    <div class="card" style="border-left: 5px solid #9c27b0;">
+        <h3>📢 Manage Scrolling Banner</h3>
+        <p style="font-size: 0.9rem; color: #555;">Update the scrolling announcement at the very top of your app.</p>
+        <input type="text" id="scrolling-ad" placeholder="Banner Text (e.g. 🎉 Special Offer: FREE Delivery today!)">
+        <div style="display: flex; gap: 10px;">
+            <button onclick="saveScrollingBanner()" style="flex: 1; background: #9c27b0;">💾 Show Banner</button>
+            <button onclick="stopScrollingBanner()" class="btn-danger" style="flex: 1;">⏹️ Hide Banner</button>
+        </div>
+        <p id="scrolling-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
+    </div>
+
     <div class="card" style="border-left: 5px solid var(--gold);">
         <h3>⚡ Live Flash Sale Manager</h3>
-        <p style="font-size: 0.9rem; color: #555;">Turn on a ticking countdown timer on the customer app to drive immediate sales.</p>
         <div class="grid-2">
             <input type="text" id="fs-text" placeholder="Banner Text (e.g., ⚡ DIWALI SALE - 20% OFF FACE PACKS)">
             <input type="datetime-local" id="fs-time">
@@ -47,7 +57,6 @@
 
     <div class="card" style="border-left: 5px solid #2196F3;">
         <h3>🩺 Manage Doctor's AI Quiz</h3>
-        <p style="font-size: 0.9rem; color: #555;">Customize the question and the 3 options your customers see.</p>
         <input type="text" id="q-title" placeholder="Quiz Question (e.g. What is your main concern today?)">
         
         <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:10px; border-radius:6px;">
@@ -57,7 +66,6 @@
                 <input type="text" id="q-opt1-key" placeholder="Product Keyword (e.g. Acne)" style="margin-bottom:0;">
             </div>
         </div>
-        
         <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:10px; border-radius:6px;">
             <b style="color:#0d47a1;">Option 2</b>
             <div class="grid-2" style="margin-top:10px;">
@@ -65,7 +73,6 @@
                 <input type="text" id="q-opt2-key" placeholder="Product Keyword (e.g. Hairfall)" style="margin-bottom:0;">
             </div>
         </div>
-
         <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:15px; border-radius:6px;">
             <b style="color:#0d47a1;">Option 3</b>
             <div class="grid-2" style="margin-top:10px;">
@@ -79,11 +86,7 @@
     </div>
 
     <div class="card">
-        <h3>🎟️ Manage Promo Code & Scrolling Ads</h3>
-        <p style="font-size: 0.9rem; color: #555;">The "Scrolling Banner Text" is the ad that scrolls across the very top of your app.</p>
-        
-        <input type="text" id="promo-ad" placeholder="Scrolling Banner Text (e.g. 🎉 Special Offer: Use code AYUR20 for flat ₹20 OFF!)">
-        
+        <h3>🎟️ Manage Cart Promo Code</h3>
         <div class="grid-2">
             <input type="text" id="promo-code" placeholder="Promo Code (e.g. WELCOME50)" style="text-transform: uppercase;">
             <input type="number" id="promo-discount" placeholder="Discount Amount (₹)">
@@ -142,9 +145,7 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    window.login = () => {
-        signInWithPopup(auth, provider).catch(e => console.error(e));
-    };
+    window.login = () => { signInWithPopup(auth, provider).catch(e => console.error(e)); };
 
     onAuthStateChanged(auth, (user) => {
         if(user) {
@@ -159,9 +160,18 @@
     });
 
     async function loadSettings() {
+        // Load Scrolling Banner
+        const sSnap = await getDoc(doc(db, "settings", "scrolling_banner"));
+        if(sSnap.exists() && sSnap.data().isActive) {
+            document.getElementById('scrolling-status').innerText = "🟢 Scrolling Banner is LIVE!";
+            document.getElementById('scrolling-ad').value = sSnap.data().text;
+        } else {
+            document.getElementById('scrolling-status').innerText = "🔴 No Scrolling Banner active.";
+        }
+
         const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
         if(fsSnap.exists() && fsSnap.data().isActive) {
-            document.getElementById('fs-status').innerText = "🟢 Flash Sale is currently LIVE!";
+            document.getElementById('fs-status').innerText = "🟢 Flash Sale is LIVE!";
             document.getElementById('fs-text').value = fsSnap.data().text;
             const dt = new Date(fsSnap.data().endTime);
             dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
@@ -170,14 +180,12 @@
             document.getElementById('fs-status').innerText = "🔴 No Flash Sale active.";
         }
 
-        // 🎟️ LOAD PROMO & AD TEXT
         const pSnap = await getDoc(doc(db, "settings", "live_promo"));
         if(pSnap.exists() && pSnap.data().isActive) {
             document.getElementById('promo-status').innerText = `🟢 Code ${pSnap.data().code} is LIVE!`;
             document.getElementById('promo-code').value = pSnap.data().code;
             document.getElementById('promo-discount').value = pSnap.data().discount;
             document.getElementById('promo-min').value = pSnap.data().minOrder;
-            document.getElementById('promo-ad').value = pSnap.data().adText || ""; // Restored this
         } else {
             document.getElementById('promo-status').innerText = "🔴 No Promo Code active.";
         }
@@ -194,6 +202,22 @@
             document.getElementById('q-opt3-key').value = qData.opt3Key || "Glow";
         }
     }
+
+    // 📢 SCROLLING BANNER LOGIC
+    window.saveScrollingBanner = async () => {
+        const adText = document.getElementById('scrolling-ad').value.trim();
+        if(!adText) { alert("Please enter text for the banner!"); return; }
+        await setDoc(doc(db, "settings", "scrolling_banner"), { isActive: true, text: adText });
+        alert("Scrolling Banner is now LIVE!");
+        loadSettings();
+    };
+
+    window.stopScrollingBanner = async () => {
+        await setDoc(doc(db, "settings", "scrolling_banner"), { isActive: false });
+        alert("Scrolling Banner hidden.");
+        document.getElementById('scrolling-ad').value = "";
+        loadSettings();
+    };
 
     window.saveQuiz = async () => {
         await setDoc(doc(db, "settings", "quiz"), {
@@ -213,12 +237,7 @@
         const text = document.getElementById('fs-text').value.trim();
         const time = document.getElementById('fs-time').value;
         if(!text || !time) { alert("Please enter text and select an end time!"); return; }
-
-        await setDoc(doc(db, "settings", "flash_sale"), {
-            isActive: true,
-            text: text,
-            endTime: new Date(time).toISOString()
-        });
+        await setDoc(doc(db, "settings", "flash_sale"), { isActive: true, text: text, endTime: new Date(time).toISOString() });
         alert("⚡ Flash Sale is now LIVE on the Customer App!");
         loadSettings();
     };
@@ -231,23 +250,13 @@
         loadSettings();
     };
 
-    // 🎟️ SAVE PROMO & CUSTOM AD TEXT
     window.savePromo = async () => {
         const code = document.getElementById('promo-code').value.trim().toUpperCase();
         const disc = Number(document.getElementById('promo-discount').value);
         const min = Number(document.getElementById('promo-min').value);
-        const adText = document.getElementById('promo-ad').value.trim(); // Captures your custom ad text
-        
-        if(!code || !disc || !min || !adText) { alert("Please fill all promo fields, including the Ad Text!"); return; }
-
-        await setDoc(doc(db, "settings", "live_promo"), {
-            isActive: true,
-            code: code,
-            discount: disc,
-            minOrder: min,
-            adText: adText // Sends it straight to the scrolling banner!
-        });
-        alert("Promo Code and Scrolling Banner are now LIVE!");
+        if(!code || !disc || !min) { alert("Please fill all promo fields!"); return; }
+        await setDoc(doc(db, "settings", "live_promo"), { isActive: true, code: code, discount: disc, minOrder: min });
+        alert("Promo Code is now LIVE!");
         loadSettings();
     };
 
@@ -257,7 +266,6 @@
         document.getElementById('promo-code').value = "";
         document.getElementById('promo-discount').value = "";
         document.getElementById('promo-min').value = "";
-        document.getElementById('promo-ad').value = "";
         loadSettings();
     };
 
@@ -268,12 +276,10 @@
         const cat = document.getElementById('p-category').value;
         const desc = document.getElementById('p-desc').value.trim();
         const file = document.getElementById('p-image').files[0];
-
         if(!name || !price || !file) { alert("Name, Price, and Image are required!"); return; }
 
         btn.innerText = "⏳ Uploading Image...";
         btn.disabled = true;
-
         try {
             const formData = new FormData();
             formData.append('image', file);
@@ -282,28 +288,13 @@
             const imageUrl = data.data.url;
 
             btn.innerText = "💾 Saving to Database...";
-            await addDoc(collection(db, "products"), {
-                name: name,
-                price: price,
-                category: cat,
-                desc: desc,
-                image: imageUrl,
-                reviews: [] 
-            });
-
+            await addDoc(collection(db, "products"), { name: name, price: price, category: cat, desc: desc, image: imageUrl, reviews: [] });
             alert("✅ Product Added Successfully!");
-            document.getElementById('p-name').value = '';
-            document.getElementById('p-price').value = '';
-            document.getElementById('p-desc').value = '';
-            document.getElementById('p-image').value = '';
+            document.getElementById('p-name').value = ''; document.getElementById('p-price').value = ''; document.getElementById('p-desc').value = ''; document.getElementById('p-image').value = '';
             loadProducts();
         } catch (error) {
-            console.error(error);
-            alert("Error adding product.");
-        } finally {
-            btn.innerText = "➕ Add Product to Database";
-            btn.disabled = false;
-        }
+            console.error(error); alert("Error adding product.");
+        } finally { btn.innerText = "➕ Add Product to Database"; btn.disabled = false; }
     };
 
     async function loadProducts() {
@@ -316,10 +307,7 @@
                 <div class="product-item">
                     <div style="display:flex; align-items:center;">
                         <img src="${p.image}">
-                        <div>
-                            <b>${p.name}</b><br>
-                            <span style="color:var(--red); font-size:0.85rem;">₹${p.price} | Cat: ${p.category || 'N/A'}</span>
-                        </div>
+                        <div><b>${p.name}</b><br><span style="color:var(--red); font-size:0.85rem;">₹${p.price} | Cat: ${p.category || 'N/A'}</span></div>
                     </div>
                     <button class="btn-danger" onclick="deleteProduct('${doc.id}')">🗑️ Delete</button>
                 </div>
@@ -333,8 +321,6 @@
             loadProducts();
         }
     };
-
 </script>
 </body>
 </html>
-
