@@ -7,16 +7,23 @@
     <link rel="icon" type="image/png" href="logo.png">
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     <style>
-        :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); overflow-x: hidden; }
+        :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .hidden { display: none !important; }
+        
+        /* 🌓 SPRINT 1: DARK MODE VARIABLES */
+        body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
+        body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
+        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #social-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
+        body.dark-mode .p-qty { background: #2c2c2c; }
         
         /* 📢 SCROLLING BANNER CSS */
         .promo-banner { background: var(--luxury); color: black; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; border-bottom: 1px solid #b3932b; }
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); }
+        header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); transition: background 0.3s; }
         .h-row { display: flex; align-items: center; justify-content: space-between; }
         .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury); }
         .h-text { font-size: 0.95rem; font-weight: bold; line-height: 1.1; margin-left: 8px; }
@@ -27,19 +34,19 @@
         .signin-btn { background: none; border: none; color: white; cursor: pointer; text-align: center; min-width: 60px; }
         
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
-        .p-card { background: white; border-radius: 8px; padding: 10px; border: 1px solid #eee; text-align: center; }
+        .p-card { background: var(--card-bg); border-radius: 8px; padding: 10px; border: 1px solid var(--border); text-align: center; transition: background 0.3s, border 0.3s; }
         .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; }
         .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
         .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; cursor: pointer; }
-        .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; }
-        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; }
+        .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; color: black; }
+        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; color: black; }
 
-        .cart-view, .product-view, .policy-view, .wholesale-view { padding: 15px; max-width: 800px; margin: auto; }
+        .cart-view, .product-view, .policy-view, .wholesale-view, .about-view { padding: 15px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
 
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         /* ⭐ INTERACTIVE STAR RATING CSS */
         .rating-box { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
@@ -60,6 +67,10 @@
 </head>
 <body>
 
+<div id="flash-sale" style="background: #111; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #333; letter-spacing: 0.5px;">
+    ⚡ FLASH SALE ends in <span id="countdown" style="color:var(--gold); font-size: 1rem; margin-left: 5px;">02:45:30</span> ⏳
+</div>
+
 <div id="promo-banner" class="promo-banner hidden">
     <div class="scrolling-text" id="promo-text"></div>
 </div>
@@ -71,7 +82,7 @@
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-actions">
-            <div class="enquiry"><span>Enquiry</span><b>8080926195</b></div>
+            <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
             <button class="signin-btn" onclick="login()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
             <button onclick="showCart()" style="background:none; border:none; position:relative; font-size: 1.3rem;">🛒<span id="badge" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:0.6rem;">0</span></button>
         </div>
@@ -86,81 +97,87 @@
     🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚
 </div>
 
-<div id="search-section" style="background: white; padding: 10px 15px; border-bottom: 1px solid #eee;">
-    <div class="search-container">
-        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+<div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border); transition: background 0.3s;">
+    <div class="search-container" style="position: relative; display: flex; align-items: center;">
+        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 45px 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+        <button onclick="startVoiceSearch()" style="position: absolute; right: 10px; background: none; border: none; font-size: 1.3rem; cursor: pointer;">🎙️</button>
+    </div>
+    
+    <div style="display: flex; gap: 10px; overflow-x: auto; margin-top: 15px; padding-bottom: 5px; scrollbar-width: none;">
+        <button class="cat-btn" onclick="filterCategory('All')" style="background: var(--amazon); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer; border: 1px solid var(--amazon);">✨ All Products</button>
+        <button class="cat-btn" onclick="filterCategory('Soap')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🌿 Soaps</button>
+        <button class="cat-btn" onclick="filterCategory('Oil')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">💆‍♀️ Hair Care</button>
+        <button class="cat-btn" onclick="filterCategory('Face')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">✨ Face Packs</button>
+        <button class="cat-btn" onclick="filterCategory('Acne')" style="background: #eef2f5; color: var(--red); border: 1px solid var(--red); padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🔴 Acne & Pimple</button>
+        <button class="cat-btn" onclick="filterCategory('Hairfall')" style="background: #eef2f5; color: #8b4513; border: 1px solid #8b4513; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🍂 Hairfall</button>
+        <button class="cat-btn" onclick="filterCategory('Glow')" style="background: #fff8e1; color: #b8860b; border: 1px solid #b8860b; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🌟 Glowing Skin</button>
     </div>
 </div>
 
 <main id="main-view" class="product-grid"></main>
 
-<div id="social-section" style="background: white; padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid #eee;">
+<div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px; text-align: center;">
+    <button onclick="closeAbout()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
+        ⬅ Back to Shop
+    </button>
+    <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--luxury); margin-bottom: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h2 style="color: var(--amazon); margin-top:0; margin-bottom: 5px; font-size: 1.8rem;">Dr. Prasiddhi Patil</h2>
+    <h4 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">BAMS, Ahilyanagar</h4>
+    <p style="font-size:1.05rem; color:var(--text); line-height: 1.7; text-align: left; margin-top: 25px; background: rgba(0,0,0,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--gold);">
+        Welcome to <b>Ayursiddhit Naturals</b>. As an Ayurvedic doctor, I believe that true beauty and wellness come from pure, natural ingredients rather than harsh chemicals. <br><br>
+        After completing my extensive medical education (BAMS) in Ahilyanagar, I saw a deep need for genuine, healing personal care products. That is exactly why I started crafting these company-grade formulations right here at home, strictly adhering to authentic Ayurvedic principles. <br><br>
+        Every soap, oil, and face pack we sell is made with profound care, medical knowledge, and raw natural ingredients to ensure it is perfectly suited for your skin and hair. Thank you for trusting our brand and joining our beautiful journey to natural healing!
+    </p>
+</div>
+
+<div id="social-section" style="background: var(--card-bg); padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid var(--border);">
     <h3 style="margin: 0 0 10px 0; color: var(--amazon); font-size: 1.2rem;">Join Our Ayurvedic Community 🌱</h3>
-    <p style="font-size: 0.95rem; color: #555; margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
+    <p style="font-size: 0.95rem; color: var(--text); margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
     <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="https://www.instagram.com/dr.prasiddhi_?igsh=MTA1dWt5cHUycThreQ==" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
-            📸 Instagram
-        </a>
-        <a href="https://youtube.com/@drprasiddhipatil?si=1wuB5U9rTbfCiZUA" target="_blank" style="background: #FF0000; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">
-            ▶️ YouTube
-        </a>
+        <a href="https://www.instagram.com/dr.prasiddhi_?igsh=MTA1dWt5cHUycThreQ==" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">📸 Instagram</a>
+        <a href="https://youtube.com/@drprasiddhipatil?si=1wuB5U9rTbfCiZUA" target="_blank" style="background: #FF0000; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">▶️ YouTube</a>
     </div>
 </div>
 
-<div id="policy-view" class="hidden policy-view" style="background:white; border-radius:12px; border:1px solid #ddd; padding:25px; margin-top:20px;">
-    <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
-        ⬅ Back to Shop
-    </button>
+<div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
+    <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 id="policy-title" style="color: var(--amazon); margin-top:0;"></h2>
-    <div id="policy-content" style="line-height: 1.6; color: #444; font-size: 0.95rem;"></div>
+    <div id="policy-content" style="line-height: 1.6; color: var(--text); font-size: 0.95rem;"></div>
 </div>
 
-<div id="wholesale-view" class="hidden wholesale-view" style="background:white; border-radius:12px; border:1px solid #ddd; padding:25px; margin-top:20px;">
-    <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
-        ⬅ Back to Shop
-    </button>
+<div id="wholesale-view" class="hidden wholesale-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
+    <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
-    <p style="font-size:0.95rem; color:#444; line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
-    
+    <p style="font-size:0.95rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop / Business Name" required>
         <input type="text" id="w-name" placeholder="Contact Person Name" required>
         <input type="tel" id="w-phone" placeholder="WhatsApp / Mobile Number" required pattern="[0-9]{10}">
-        
-        <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; margin-top:10px; display:block; color:#444;">Select Products & Quantities</label>
-        <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 15px; background: #fbfbfb;">
-            </div>
-        
+        <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; margin-top:10px; display:block; color:var(--text);">Select Products & Quantities</label>
+        <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.02);"></div>
         <div class="form-grid">
-            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:#e9ecef; font-weight:bold; color:var(--red); text-align:center;">
-            
-            <input type="number" id="w-margin" placeholder="Expected Margin % (e.g. 19)" required min="1" max="100" oninput="calculateWholesale()" style="font-size:0.9rem; color:#333;">
+            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:rgba(0,0,0,0.05); font-weight:bold; color:var(--red); text-align:center;">
+            <input type="number" id="w-margin" placeholder="Expected Margin % (e.g. 19)" required min="1" max="100" oninput="calculateWholesale()" style="font-size:0.9rem;">
         </div>
-
-        <div id="wholesale-bill" class="hidden" style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
-            <p style="display:flex; justify-content:space-between; margin:5px 0; color:#555;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
+        <div id="wholesale-bill" class="hidden" style="background:rgba(0,0,0,0.03); padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
+            <p style="display:flex; justify-content:space-between; margin:5px 0;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
             <p style="display:flex; justify-content:space-between; margin:5px 0; color:green; font-weight:bold;">Your Margin Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
-            <hr style="border:0; border-top:1px solid #ddd; margin:10px 0;">
+            <hr style="border:0; border-top:1px solid var(--border); margin:10px 0;">
             <h3 style="display:flex; justify-content:space-between; margin:0; color:var(--red);">Final Payable Amount: <span>₹<span id="w-bill-total">0</span></span></h3>
         </div>
-
         <h3 style="margin-top:15px; margin-bottom:10px; font-size:1.1rem; color:var(--amazon);">Shop Location</h3>
         <textarea id="w-address" placeholder="Shop Full Address & Landmark" rows="2" required></textarea>
         <div class="form-grid">
             <input type="text" id="w-city" placeholder="City" required>
             <input type="number" id="w-pin" placeholder="Pincode" required>
         </div>
-
         <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1.1rem; margin-top:15px;">🚀 Send Wholesale Enquiry on WhatsApp</button>
     </form>
 </div>
 
 <div id="product-view" class="hidden product-view">
-    <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">
-        ⬅ Back to Shop
-    </button>
-    
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd;">
+    <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
+    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border);">
         <div class="product-layout">
             <div class="product-image-section">
                 <img id="modal-img" src="" style="width:100%; border-radius:8px; object-fit:contain; max-height:400px;">
@@ -168,50 +185,36 @@
             <div class="product-details-section">
                 <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
                 <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
-                <p id="modal-desc" style="font-size:1rem; color:#444; line-height: 1.5; margin-bottom: 20px;"></p>
-                
+                <p id="modal-desc" style="font-size:1rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;"></p>
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
                     <span style="font-weight:bold;">Quantity:</span>
-                    <div class="p-qty" style="margin:0; background:#f0f0f0; padding:5px 10px; border-radius:20px;">
+                    <div class="p-qty" style="margin:0; padding:5px 10px; border-radius:20px;">
                         <button onclick="updateQty(currentModalProductId, -1)" style="width:35px; height:35px; font-size:1.2rem;">-</button>
                         <span id="modal-qty" style="font-weight:bold; font-size:1.2rem; min-width:25px; text-align:center;">0</span>
                         <button onclick="updateQty(currentModalProductId, 1)" style="width:35px; height:35px; font-size:1.2rem;">+</button>
                     </div>
                 </div>
-
                 <div style="display:flex; gap:10px; margin-bottom:20px;">
                     <button id="modal-add-btn" class="btn-cart" style="font-size: 1.1rem; padding: 15px; margin:0; flex:1;">🛒 Add to Cart</button>
                     <button id="modal-buy-btn" class="btn-buy" style="font-size: 1.1rem; padding: 15px; margin:0; flex:1;">⚡ Buy Now</button>
                 </div>
             </div>
         </div>
-
-        <hr style="border:0; border-top:1px solid #ddd; margin:30px 0;">
-        
+        <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
         <h3 style="margin-top:0; color: var(--amazon); font-size: 1.3rem;">Customer Reviews ⭐</h3>
         <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
-        
-        <div style="background:#f9f9f9; padding:20px; border-radius:8px; border:1px solid #eee;">
+        <div style="background:rgba(0,0,0,0.03); padding:20px; border-radius:8px; border:1px solid var(--border);">
             <b style="font-size:1rem; display:block; margin-bottom:5px;">Write a Review</b>
-            
             <div class="rating-box">
-                <input type="radio" id="star5" name="rating" value="5" checked>
-                <label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4">
-                <label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3">
-                <label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2">
-                <label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1">
-                <label for="star1">★</label>
+                <input type="radio" id="star5" name="rating" value="5" checked><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
             </div>
-
             <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
-            
-            <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:#444;">📸 Add a Photo (Optional)</label>
-            <input type="file" id="review-image" accept="image/*" style="padding:10px; background:white; cursor:pointer;">
-
+            <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:var(--text);">📸 Add a Photo (Optional)</label>
+            <input type="file" id="review-image" accept="image/*" style="padding:10px; background:var(--card-bg); cursor:pointer;">
             <button id="submit-rev-btn" onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem;">Submit Review</button>
         </div>
     </div>
@@ -220,17 +223,15 @@
 <div id="cart-view" class="hidden cart-view">
     <h2>Review Your Order</h2>
     <div id="cart-list"></div>
-    <div style="background:white; padding:20px; border-radius:12px; border:1px solid #ddd; margin-top:15px;">
+    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border); margin-top:15px;">
         <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
-        
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
+        <div style="background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
             <div style="display:flex; gap:10px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
                 <button onclick="applyPromo()" style="background:var(--amazon); color:white; border:none; border-radius:6px; padding:0 15px; cursor:pointer; font-weight:bold;">Apply</button>
             </div>
             <div id="promo-msg" style="font-size:0.8rem; font-weight:bold; height:15px;"></div>
         </div>
-
         <h3 style="margin-top:0;">Delivery Address</h3>
         <form id="order-form">
             <input type="text" id="f-name" placeholder="Full Name" required>
@@ -245,8 +246,7 @@
                 <input type="text" id="f-city" placeholder="City" required>
                 <input type="number" id="f-pin" placeholder="Pincode" required>
             </div>
-            
-            <div style="border-top:1px solid #eee; padding-top:15px; margin-top:10px;">
+            <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
                 <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Discount: <span>-₹<span id="discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
@@ -261,6 +261,7 @@
 <footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px; margin-top: 0; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
     <p style="margin: 0 0 15px 0; font-weight: bold; font-size: 1rem;">Ayursiddhit Naturals</p>
     <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
+        <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;">👩‍⚕️ Our Story</a>
         <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
         <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
         <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;">Terms & Conditions</a>
@@ -272,6 +273,10 @@
     <span style="font-size:0.85rem; font-weight:bold;">📲 Install Ayursiddhit App</span>
     <button onclick="installApp()" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; font-weight:bold; cursor:pointer; color:black;">Install</button>
 </div>
+
+<a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi,%20I%20need%20an%20Ayurvedic%20consultation!" target="_blank" style="position: fixed; bottom: 20px; left: 20px; background: white; border: 2px solid var(--green); color: var(--green); padding: 8px 15px; border-radius: 25px; font-weight: bold; display: flex; align-items: center; gap: 8px; z-index: 3000; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+    <img src="logo.png" style="width:25px; height:25px; border-radius:50%; object-fit: cover;"> Consult Doctor
+</a>
 
 <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" class="floating-wa"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35"></a>
 
@@ -315,6 +320,36 @@
     let appliedDiscount = 0;
     window.currentModalProductId = null; 
 
+    // ⏱️ SPRINT 1: LIVE FLASH SALE TIMER LOGIC
+    let time = 2 * 3600 + 45 * 60 + 30; // Starts at 02:45:30
+    setInterval(() => {
+        if(time <= 0) time = 3600 * 5; // Resets if hits 0 to create continuous FOMO
+        time--;
+        let h = Math.floor(time / 3600);
+        let m = Math.floor((time % 3600) / 60);
+        let s = time % 60;
+        document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }, 1000);
+
+    // 🌓 SPRINT 1: DARK MODE LOGIC
+    window.toggleDarkMode = () => {
+        document.body.classList.toggle('dark-mode');
+        const btn = document.getElementById('dark-btn');
+        if(document.body.classList.contains('dark-mode')) {
+            btn.innerText = '☀️';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            btn.innerText = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+    };
+
+    // Load saved theme
+    if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('dark-btn').innerText = '☀️';
+    }
+
     async function load() {
         const snap = await getDocs(collection(db, "products"));
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -331,18 +366,19 @@
         } catch(e) { console.log("No promo running."); }
     }
 
+    // 🎯 SPRINT 1: RENDER UPDATED TO ADD "DATA-DESC" FOR CONCERN FILTERS
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
             const q = cart[p.id] || 0;
-            
             let avg = "5.0"; let revCount = 0;
             if(p.reviews && p.reviews.length > 0) {
                 revCount = p.reviews.length;
                 avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1);
             }
-
-            grid.innerHTML += `<div class="p-card">
+            
+            // Note the data-desc attribute added below so filterCategory can read it
+            grid.innerHTML += `<div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}">
                 <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
                 <h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>
                 <div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')">
@@ -368,12 +404,82 @@
         }
     };
 
+    // 🎯 SPRINT 1: UPGRADED FILTER FUNCTION TO CHECK DESCRIPTION CONCERNS
+    window.filterCategory = (cat) => {
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.style.background = '#e9ecef';
+            btn.style.color = '#333';
+            btn.style.border = '1px solid #ccc';
+        });
+        
+        event.target.style.background = 'var(--amazon)';
+        event.target.style.color = 'white';
+        event.target.style.border = '1px solid var(--amazon)';
+
+        const cards = document.querySelectorAll('.p-card');
+        const searchCat = cat.toLowerCase();
+        
+        cards.forEach(card => {
+            const productName = card.querySelector('h4').innerText.toLowerCase();
+            const productDesc = card.getAttribute('data-desc'); // Grabs description for medical concerns
+            
+            if (cat === 'All' || productName.includes(searchCat) || productDesc.includes(searchCat)) {
+                card.style.display = 'block'; 
+            } else {
+                card.style.display = 'none';  
+            }
+        });
+    };
+
+    // 🎙️ SPRINT 1: SMART VOICE SEARCH LOGIC
+    window.startVoiceSearch = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("⚠️ Voice search is not supported in this browser.");
+            return;
+        }
+        const rec = new SpeechRecognition();
+        document.getElementById('search-box').placeholder = "Listening... 🎙️";
+        rec.onresult = (e) => {
+            document.getElementById('search-box').value = e.results[0][0].transcript;
+            window.searchProducts();
+            document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil...";
+        };
+        rec.onerror = () => {
+            document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil...";
+        };
+        rec.start();
+    };
+
+    window.showAbout = () => {
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('product-view').classList.add('hidden');
+        document.getElementById('cart-view').classList.add('hidden');
+        document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('policy-view').classList.add('hidden');
+        document.getElementById('social-section').classList.add('hidden');
+        document.getElementById('site-footer').classList.add('hidden');
+        document.getElementById('about-view').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    };
+
+    window.closeAbout = () => {
+        document.getElementById('about-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
+        document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('social-section').classList.remove('hidden');
+        document.getElementById('site-footer').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    };
+
     window.showPolicy = (type) => {
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
         document.getElementById('cart-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('about-view').classList.add('hidden');
         document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('policy-view').classList.remove('hidden');
@@ -409,6 +515,7 @@
         document.getElementById('cart-view').classList.add('hidden');
         document.getElementById('search-section').classList.add('hidden');
         document.getElementById('policy-view').classList.add('hidden');
+        document.getElementById('about-view').classList.add('hidden');
         document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('wholesale-view').classList.remove('hidden');
@@ -429,13 +536,13 @@
         list.innerHTML = '';
         products.forEach(p => {
             list.innerHTML += `
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:8px;">
                     <div style="flex:1;">
-                        <b style="font-size:0.95rem;">${p.name}</b><br>
+                        <b style="font-size:0.95rem; color:var(--text);">${p.name}</b><br>
                         <span style="color:var(--red); font-size:0.85rem; font-weight:bold;">MRP: ₹${p.price}</span>
                     </div>
                     <div>
-                        <input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:70px; padding:8px; margin:0; text-align:center; font-weight:bold;">
+                        <input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:70px; padding:8px; margin:0; text-align:center; font-weight:bold; background:var(--card-bg); color:var(--text); border:1px solid var(--border);">
                     </div>
                 </div>
             `;
@@ -444,7 +551,6 @@
 
     window.calculateWholesale = () => {
         let totalMrp = 0;
-        
         document.querySelectorAll('.w-item-qty').forEach(input => {
             let qty = parseInt(input.value) || 0;
             let price = parseFloat(input.getAttribute('data-price')) || 0;
@@ -452,7 +558,6 @@
         });
 
         document.getElementById('w-mrp-display').value = `Total MRP: ₹${totalMrp.toFixed(2)}`;
-
         let margin = parseFloat(document.getElementById('w-margin').value) || 0;
         
         if (totalMrp > 0 && margin > 0) {
@@ -471,7 +576,6 @@
 
     document.getElementById('wholesale-form').onsubmit = (e) => {
         e.preventDefault();
-        
         let prodsList = "";
         let totalQtyCount = 0;
 
@@ -489,7 +593,6 @@
         }
 
         const customMargin = document.getElementById('w-margin').value;
-
         const d = { 
             shop: document.getElementById('w-shop').value, 
             name: document.getElementById('w-name').value, 
@@ -504,21 +607,7 @@
         const discAmt = document.getElementById('w-bill-discount').innerText;
         const totalAmt = document.getElementById('w-bill-total').innerText;
 
-        let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n`;
-        msg += `*Shop Name:* ${d.shop}\n`;
-        msg += `*Contact:* ${d.name} (${d.phone})\n\n`;
-        
-        msg += `*Products Selected:*\n${prodsList}\n`;
-        msg += `*Total Items:* ${totalQtyCount}\n`;
-        msg += `*Requested Margin:* ${d.marginText}\n\n`;
-        
-        msg += `🧾 *ESTIMATED BILLING:*\n`;
-        msg += `Total MRP: ₹${mrpAmt}\n`;
-        msg += `Margin Discount: -₹${discAmt}\n`;
-        msg += `*Payable Amount:* ₹${totalAmt}\n\n`;
-
-        msg += `*Address:* ${d.addr}, ${d.city} - ${d.pin}`;
-        
+        let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n*Shop Name:* ${d.shop}\n*Contact:* ${d.name} (${d.phone})\n\n*Products Selected:*\n${prodsList}\n*Total Items:* ${totalQtyCount}\n*Requested Margin:* ${d.marginText}\n\n🧾 *ESTIMATED BILLING:*\nTotal MRP: ₹${mrpAmt}\nMargin Discount: -₹${discAmt}\n*Payable Amount:* ₹${totalAmt}\n\n*Address:* ${d.addr}, ${d.city} - ${d.pin}`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
@@ -534,6 +623,7 @@
         document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('about-view').classList.add('hidden');
         document.getElementById('product-view').classList.remove('hidden');
         window.scrollTo(0, 0); 
 
@@ -574,11 +664,11 @@
             return;
         }
         list.innerHTML = reviews.map(r => `
-            <div style="border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:15px;">
+            <div style="border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:15px;">
                 <b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br>
                 <span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span>
-                <p style="margin:8px 0; color:#333; line-height:1.4;">${r.text}</p>
-                ${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid #ccc;">` : ''}
+                <p style="margin:8px 0; color:var(--text); line-height:1.4;">${r.text}</p>
+                ${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid var(--border);">` : ''}
             </div>
         `).join('');
     }
@@ -656,6 +746,7 @@
         document.getElementById('product-view').classList.add('hidden'); 
         document.getElementById('policy-view').classList.add('hidden');
         document.getElementById('wholesale-view').classList.add('hidden');
+        document.getElementById('about-view').classList.add('hidden');
         document.getElementById('social-section').classList.add('hidden');
         document.getElementById('site-footer').classList.add('hidden');
         document.getElementById('cart-view').classList.remove('hidden'); 
