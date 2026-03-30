@@ -102,6 +102,7 @@
             <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">2. Upload Video File (Gallery):</label>
             <input type="file" id="r-video" accept="video/mp4,video/x-m4v,video/*" style="margin-bottom:15px; width:100%; padding:10px; background:#fff; border:1px solid #ccc;">
             <button id="upload-reel-btn" onclick="uploadReel()" style="width: 100%; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">🚀 Upload Reel</button>
+            <p id="upload-progress" style="margin-top: 15px; font-weight: bold; color: var(--amazon); text-align: center; font-size: 1.1rem;"></p>
         </div>
         <div class="card">
             <h3>📋 Manage Live Reels</h3>
@@ -186,7 +187,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    // 🚀 NEW: imported 'uploadBytesResumable' to track live progress!
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
@@ -289,36 +291,58 @@
         });
     }
 
+    // 🚀 NEW PROGRESS TRACKER FOR UPLOADING REELS
     window.uploadReel = async () => {
         const btn = document.getElementById('upload-reel-btn');
+        const progressText = document.getElementById('upload-progress');
         const prodId = document.getElementById('r-product').value;
         const file = document.getElementById('r-video').files[0];
         
         if(!file || !prodId) { alert("Please select a product and a video file!"); return; }
         
-        btn.innerText = "⏳ Uploading Video (Please Wait)..."; btn.disabled = true;
+        btn.innerText = "⏳ Uploading..."; btn.disabled = true;
+
         try {
             const storageRef = ref(storage, 'reels/' + Date.now() + '_' + file.name);
-            await uploadBytes(storageRef, file);
-            const videoUrl = await getDownloadURL(storageRef);
             
-            const linkedProd = allProducts.find(p => p.id === prodId);
-            
-            await addDoc(collection(db, "reels"), {
-                videoUrl: videoUrl,
-                productId: prodId,
-                productName: linkedProd.name,
-                productPrice: linkedProd.price,
-                productImage: linkedProd.image,
-                timestamp: new Date().toISOString()
-            });
+            // This is the Magic Function that tracks upload size
+            const uploadTask = uploadBytesResumable(storageRef, file);
 
-            alert("🎬 Reel Uploaded Successfully!");
-            document.getElementById('r-video').value = '';
-            loadReels();
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressText.innerText = '🚀 Uploading: ' + Math.round(progress) + '%';
+                },
+                (error) => {
+                    console.error(error); alert("Upload failed! Check Storage Rules.");
+                    btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
+                    progressText.innerText = '';
+                },
+                async () => {
+                    const videoUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                    const linkedProd = allProducts.find(p => p.id === prodId);
+                    
+                    await addDoc(collection(db, "reels"), {
+                        videoUrl: videoUrl,
+                        productId: prodId,
+                        productName: linkedProd.name,
+                        productPrice: linkedProd.price,
+                        productImage: linkedProd.image,
+                        timestamp: new Date().toISOString()
+                    });
+
+                    alert("🎬 Reel Uploaded Successfully!");
+                    document.getElementById('r-video').value = '';
+                    progressText.innerText = '✅ Upload Complete!';
+                    setTimeout(() => { progressText.innerText = ''; }, 3000);
+                    btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
+                    loadReels();
+                }
+            );
         } catch(e) {
-            console.error(e); alert("Upload failed! Make sure your Firebase Storage Rules are set to allow read/write.");
-        } finally { btn.innerText = "🚀 Upload Reel"; btn.disabled = false; }
+            console.error(e); alert("Network Error.");
+            btn.innerText = "🚀 Upload Reel"; btn.disabled = false;
+        }
     };
 
     async function loadReels() {
