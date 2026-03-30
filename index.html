@@ -11,14 +11,12 @@
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .hidden { display: none !important; }
         
-        /* 🌓 DARK MODE VARIABLES */
         body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
         body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
         body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #social-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
         body.dark-mode .p-qty { background: #2c2c2c; }
         
-        /* 📢 SCROLLING BANNER CSS */
         .promo-banner { background: var(--luxury); color: black; padding: 8px 0; font-weight: bold; font-size: 0.95rem; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #b3932b; width: 100%; display: none; }
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -415,7 +413,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
@@ -428,7 +425,6 @@
 
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const db = getFirestore(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -772,11 +768,18 @@
 
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); };
     
-    // 💥 THE CACHE KILLER FIX
+    let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
+    window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
+
+    // 💥 THIS IS THE ENGINE BUTTON I ACCIDENTALLY DELETED!
+    load(); 
+
     if ('serviceWorker' in navigator) { 
+        // This aggressively clears any broken files stuck in your phone's memory
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            for(let registration of registrations) { registration.unregister(); } // Destroys the stuck cache
+            for(let registration of registrations) { registration.unregister(); } 
         });
+        navigator.serviceWorker.register('/sw.js'); 
     }
 </script>
 </body>
