@@ -45,6 +45,39 @@
         <p id="fs-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
     </div>
 
+    <div class="card" style="border-left: 5px solid #2196F3;">
+        <h3>🩺 Manage Doctor's AI Quiz</h3>
+        <p style="font-size: 0.9rem; color: #555;">Customize the question and the 3 options your customers see. The "Product Keyword" is what the AI searches for in your product descriptions to make a match!</p>
+        <input type="text" id="q-title" placeholder="Quiz Question (e.g. What is your main concern today?)">
+        
+        <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:10px; border-radius:6px;">
+            <b style="color:#0d47a1;">Option 1</b>
+            <div class="grid-2" style="margin-top:10px;">
+                <input type="text" id="q-opt1-label" placeholder="Button Text (e.g. 🔴 Pimples & Acne)" style="margin-bottom:0;">
+                <input type="text" id="q-opt1-key" placeholder="Product Keyword (e.g. Acne)" style="margin-bottom:0;">
+            </div>
+        </div>
+        
+        <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:10px; border-radius:6px;">
+            <b style="color:#0d47a1;">Option 2</b>
+            <div class="grid-2" style="margin-top:10px;">
+                <input type="text" id="q-opt2-label" placeholder="Button Text (e.g. 🍂 Hairfall & Dandruff)" style="margin-bottom:0;">
+                <input type="text" id="q-opt2-key" placeholder="Product Keyword (e.g. Hairfall)" style="margin-bottom:0;">
+            </div>
+        </div>
+
+        <div style="background:#f0f8ff; padding:15px; border:1px solid #bbdefb; margin-bottom:15px; border-radius:6px;">
+            <b style="color:#0d47a1;">Option 3</b>
+            <div class="grid-2" style="margin-top:10px;">
+                <input type="text" id="q-opt3-label" placeholder="Button Text (e.g. 🌟 Dull Skin / Tanning)" style="margin-bottom:0;">
+                <input type="text" id="q-opt3-key" placeholder="Product Keyword (e.g. Glow)" style="margin-bottom:0;">
+            </div>
+        </div>
+
+        <button onclick="saveQuiz()" style="width: 100%; background: #2196F3;">💾 Save Quiz Settings Live</button>
+        <p id="quiz-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
+    </div>
+
     <div class="card">
         <h3>🎟️ Manage Promo Code</h3>
         <div class="grid-2">
@@ -105,14 +138,12 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Security: Only allow login
     window.login = () => {
         signInWithPopup(auth, provider).catch(e => console.error(e));
     };
 
     onAuthStateChanged(auth, (user) => {
         if(user) {
-            // Hardcoded security: Ensure only you can see the admin panel
             document.getElementById('admin-content').style.display = 'block';
             document.getElementById('login-btn').innerText = "Sign Out";
             document.getElementById('login-btn').onclick = () => auth.signOut().then(()=> location.reload());
@@ -129,7 +160,6 @@
         if(fsSnap.exists() && fsSnap.data().isActive) {
             document.getElementById('fs-status').innerText = "🟢 Flash Sale is currently LIVE!";
             document.getElementById('fs-text').value = fsSnap.data().text;
-            // Format datetime for input box
             const dt = new Date(fsSnap.data().endTime);
             dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
             document.getElementById('fs-time').value = dt.toISOString().slice(0,16);
@@ -147,9 +177,36 @@
         } else {
             document.getElementById('promo-status').innerText = "🔴 No Promo Code active.";
         }
+
+        // Load Quiz Data
+        const qSnap = await getDoc(doc(db, "settings", "quiz"));
+        if(qSnap.exists()) {
+            const qData = qSnap.data();
+            document.getElementById('q-title').value = qData.title || "What is your main concern?";
+            document.getElementById('q-opt1-label').value = qData.opt1Label || "🔴 Pimples & Acne";
+            document.getElementById('q-opt1-key').value = qData.opt1Key || "Acne";
+            document.getElementById('q-opt2-label').value = qData.opt2Label || "🍂 Hairfall & Dandruff";
+            document.getElementById('q-opt2-key').value = qData.opt2Key || "Hairfall";
+            document.getElementById('q-opt3-label').value = qData.opt3Label || "🌟 Dull Skin / Tanning";
+            document.getElementById('q-opt3-key').value = qData.opt3Key || "Glow";
+        }
     }
 
-    // ⚡ FLASH SALE LOGIC
+    // 🩺 SAVE QUIZ LOGIC
+    window.saveQuiz = async () => {
+        await setDoc(doc(db, "settings", "quiz"), {
+            title: document.getElementById('q-title').value || "What is your main concern?",
+            opt1Label: document.getElementById('q-opt1-label').value || "🔴 Pimples & Acne",
+            opt1Key: document.getElementById('q-opt1-key').value || "Acne",
+            opt2Label: document.getElementById('q-opt2-label').value || "🍂 Hairfall & Dandruff",
+            opt2Key: document.getElementById('q-opt2-key').value || "Hairfall",
+            opt3Label: document.getElementById('q-opt3-label').value || "🌟 Dull Skin / Tanning",
+            opt3Key: document.getElementById('q-opt3-key').value || "Glow"
+        });
+        document.getElementById('quiz-status').innerText = "✅ Quiz settings updated globally!";
+        setTimeout(() => { document.getElementById('quiz-status').innerText = ""; }, 4000);
+    };
+
     window.startFlashSale = async () => {
         const text = document.getElementById('fs-text').value.trim();
         const time = document.getElementById('fs-time').value;
@@ -172,7 +229,6 @@
         loadSettings();
     };
 
-    // 🎟️ PROMO CODE LOGIC
     window.savePromo = async () => {
         const code = document.getElementById('promo-code').value.trim().toUpperCase();
         const disc = Number(document.getElementById('promo-discount').value);
@@ -199,7 +255,6 @@
         loadSettings();
     };
 
-    // 📦 PRODUCT UPLOAD LOGIC
     window.addProduct = async () => {
         const btn = document.getElementById('add-btn');
         const name = document.getElementById('p-name').value.trim();
@@ -227,7 +282,7 @@
                 category: cat,
                 desc: desc,
                 image: imageUrl,
-                reviews: [] // Initialize empty reviews array
+                reviews: [] 
             });
 
             alert("✅ Product Added Successfully!");
@@ -245,7 +300,6 @@
         }
     };
 
-    // 📋 LOAD & DELETE PRODUCTS
     async function loadProducts() {
         const snap = await getDocs(collection(db, "products"));
         const list = document.getElementById('product-list');
