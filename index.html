@@ -57,7 +57,6 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
-        /* 🎬 AYURREELS CSS */
         .reel-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 5000; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
         .reel-container::-webkit-scrollbar { display: none; }
         .reel-item { height: 100vh; width: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #111; }
@@ -247,7 +246,6 @@
 <div id="wholesale-view" class="hidden wholesale-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
     <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
-    <p style="font-size:0.95rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
     <form id="wholesale-form">
         <input type="text" id="w-shop" placeholder="Shop Name" required><input type="tel" id="w-phone" placeholder="WhatsApp Number" required>
         <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.02);"></div>
@@ -320,7 +318,6 @@
             <input type="file" id="review-image" accept="image/*" style="padding:10px; background:var(--card-bg); cursor:pointer;">
             <button id="submit-rev-btn" onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem; margin-top:10px;">Submit Review</button>
         </div>
-
     </div>
 </div>
 
@@ -393,7 +390,6 @@
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
       authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com",
       projectId: "ayursiddhitnaturals-d2ecb",
-      storageBucket: "ayursiddhitnaturals-d2ecb.firebasestorage.app",
       messagingSenderId: "704398728935",
       appId: "1:704398728935:web:6330cb27578d80ce15cc42"
     };
@@ -730,8 +726,6 @@
         btn.innerText = "🚀 Order on WhatsApp"; btn.disabled = false;
     };
 
-    window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); };
-    
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
     window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
 
