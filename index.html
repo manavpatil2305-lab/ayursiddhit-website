@@ -14,7 +14,7 @@
         /* 🌓 DARK MODE VARIABLES */
         body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
         body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
-        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #social-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #social-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
         body.dark-mode .p-qty { background: #2c2c2c; }
         
@@ -39,7 +39,7 @@
         .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; color: black; }
         .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; color: black; }
 
-        .cart-view, .product-view, .policy-view, .wholesale-view, .about-view, #quiz-view { padding: 15px; max-width: 800px; margin: auto; }
+        .cart-view, .product-view, .policy-view, .wholesale-view, .about-view, #quiz-view, #profile-view, #hamper-view { padding: 15px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
         .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
@@ -55,6 +55,10 @@
         /* ⚡ FOMO POPUP ANIMATION */
         .fomo-popup { position: fixed; bottom: -100px; left: 15px; background: var(--card-bg); color: var(--text); padding: 10px 15px; border-radius: 25px; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 0.85rem; font-weight: bold; z-index: 3500; display: flex; align-items: center; gap: 8px; transition: bottom 0.5s ease-in-out; }
         .fomo-popup.show { bottom: 80px; }
+
+        /* 🌿 GOLDEN INGREDIENTS */
+        .golden-ing { color: var(--luxury); font-weight: bold; border-bottom: 1px dashed var(--luxury); cursor: pointer; transition: 0.2s; }
+        .golden-ing:hover { background: rgba(212, 175, 55, 0.1); }
 
         /* 🖥️ DESKTOP / LAPTOP VIEW FIX */
         @media (min-width: 768px) {
@@ -98,7 +102,7 @@
         <div class="h-actions">
             <button onclick="toggleLanguage()" id="lang-btn" style="background:none; border:none; font-size:1.2rem; cursor:pointer; margin-right:5px;">🌐 EN</button>
             <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
-            <button class="signin-btn" onclick="login()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
+            <button class="signin-btn" onclick="handleAccountClick()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
             <button onclick="showCart()" style="background:none; border:none; position:relative; font-size: 1.3rem;">🛒<span id="badge" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:0.6rem;">0</span></button>
         </div>
     </div>
@@ -128,6 +132,12 @@
     </div>
 </div>
 
+<div id="hamper-banner" style="background: linear-gradient(135deg, var(--gold) 0%, var(--luxury) 100%); margin: 15px; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.15); cursor:pointer;" onclick="showHamper()">
+    <h3 style="margin:0 0 5px 0; color:black; font-size:1.3rem;">🎁 Build a Custom Gift Hamper</h3>
+    <p style="font-size:0.95rem; color:#222; margin-bottom:10px; font-weight:bold;">Pick 3 items and get a flat 10% Combo Discount!</p>
+    <button style="background:black; color:var(--gold); border:none; padding:8px 20px; border-radius:25px; font-weight:bold; font-size:1rem;">Build Now</button>
+</div>
+
 <div id="quiz-banner" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); margin: 15px; padding: 20px; border-radius: 12px; border: 1px solid var(--gold); text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
     <h3 style="margin:0 0 5px 0; color:var(--amazon);" id="t-quiz-title">Not sure what to buy? 🤔</h3>
     <p style="font-size:0.9rem; color:#555; margin-bottom:15px;" id="t-quiz-desc">Take Dr. Prasiddhi's 30-second Ayurvedic skin & hair quiz to find your perfect match.</p>
@@ -136,17 +146,54 @@
 
 <main id="main-view" class="product-grid"></main>
 
+<div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
+    <button onclick="closeProfile()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
+    <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
+    <p style="font-size:1.1rem; color:var(--text); font-weight:bold;" id="prof-name-display"></p>
+    <p style="color:#555; margin-top:-10px;" id="prof-email-display"></p>
+
+    <div style="background:linear-gradient(45deg, var(--gold), var(--luxury)); padding:20px; border-radius:12px; text-align:center; color:black; margin:20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h3 style="margin:0; font-size:1.2rem;">🪙 AyurCoins Balance</h3>
+        <h1 style="margin:5px 0 0 0; font-size:2.5rem;" id="prof-coins-display">0</h1>
+        <p style="margin:5px 0 0 0; font-size:0.9rem; font-weight:bold;">Use coins for real cash discounts at checkout!</p>
+    </div>
+
+    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px;">📦 My Past Orders</h3>
+    <div id="prof-orders-list" style="font-size:0.95rem; color:var(--text);"></div>
+    
+    <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
+</div>
+
+<div id="hamper-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
+    <button onclick="closeHamper()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
+    <h2 style="color:var(--amazon); margin-top:0;">🎁 Build Gift Hamper</h2>
+    <p style="color:var(--text); font-size:0.95rem;">Select 1 Soap, 1 Oil, and 1 Face Pack to create a luxury combo. A 10% discount will be applied automatically at checkout!</p>
+    
+    <div style="margin-bottom:15px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">1. Select Soap 🌿</label>
+        <select id="hamper-soap" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+    <div style="margin-bottom:15px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">2. Select Hair Care 💆‍♀️</label>
+        <select id="hamper-oil" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+    <div style="margin-bottom:20px;">
+        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">3. Select Face Pack ✨</label>
+        <select id="hamper-face" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
+    </div>
+
+    <button onclick="addHamperToCart()" style="background:var(--gold); color:black; border:none; width:100%; padding:15px; border-radius:6px; font-weight:bold; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.1);">🛒 Add Hamper to Cart</button>
+</div>
+
 <div id="quiz-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); text-align:center; padding:30px 15px;">
     <button onclick="closeQuiz()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back</button>
     <h2 style="color:var(--green); margin-top:0;">🩺 Ayurvedic Consultation</h2>
-    
     <div id="quiz-step-1">
         <h3 id="dyn-quiz-title">What is your main concern?</h3>
         <button id="dyn-quiz-opt1" onclick="nextQuiz(quizKeys.opt1)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🔴 Pimples & Acne</button>
         <button id="dyn-quiz-opt2" onclick="nextQuiz(quizKeys.opt2)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🍂 Hairfall & Dandruff</button>
         <button id="dyn-quiz-opt3" onclick="nextQuiz(quizKeys.opt3)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🌟 Dull Skin / Tanning</button>
     </div>
-
     <div id="quiz-step-2" class="hidden">
         <h3>Analyzing your needs...</h3>
         <p>Dr. Prasiddhi recommends this specifically for you:</p>
@@ -256,6 +303,7 @@
                 </div>
 
                 <p id="modal-desc" style="font-size:1rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;"></p>
+                
                 <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
                     <span style="font-weight:bold;">Quantity:</span>
                     <div class="p-qty" style="margin:0; padding:5px 10px; border-radius:20px;">
@@ -308,6 +356,15 @@
     <div id="cart-list"></div>
     <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border); margin-top:15px;">
         <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
+        
+        <div id="coin-section" class="hidden" style="background:#e8f5e9; border:1px solid var(--green); padding:15px; border-radius:8px; margin-bottom:15px;">
+            <b style="color:var(--green); display:block; margin-bottom:5px;">🪙 Use AyurCoins</b>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="use-coins-check" onchange="renderCart()" style="width:20px; height:20px; margin:0;">
+                <span style="font-size:0.9rem; font-weight:bold; color:black;">Redeem my <span id="cart-coin-bal">0</span> Coins for instant discount!</span>
+            </div>
+        </div>
+
         <div style="background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
             <div style="display:flex; gap:10px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
@@ -331,7 +388,8 @@
             </div>
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
-                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Discount: <span>-₹<span id="discount-amt">0</span></span></p>
+                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Promo Discount: <span>-₹<span id="discount-amt">0</span></span></p>
+                <p id="coin-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold;">🪙 Coin Discount: <span>-₹<span id="coin-discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
                 <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
                 <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">🚀 Order on WhatsApp</button>
@@ -347,6 +405,7 @@
         <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;" id="t-f-about">👩‍⚕️ Our Story</a>
         <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;" id="t-f-contact">Contact Us</a>
         <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;" id="t-f-refund">Refund Policy</a>
+        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;" id="t-f-terms">Terms & Conditions</a>
     </div>
     <p style="margin: 0; color: #aaa;">&copy; 2026 Ayursiddhit Naturals. All rights reserved.</p>
 </footer>
@@ -385,15 +444,86 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    let currentUser = null;
+
+    // 🌿 SPRINT 4: GOLDEN INGREDIENTS DICTIONARY
+    const ingData = {
+        'neem': 'Deeply cleanses and fights acne-causing bacteria from the root.',
+        'tulsi': 'Reduces inflammation, tightens pores, and soothes irritated skin.',
+        'sandalwood': 'Cools the skin, reduces redness, and naturally evens out tan lines.',
+        'ashwagandha': 'A powerful adaptogen that boosts skin collagen and fights aging.',
+        'aloe vera': 'Intensely hydrates and repairs a damaged skin barrier instantly.',
+        'turmeric': 'Natural Ayurvedic glow-booster with extreme antiseptic properties.',
+        'rosemary': 'Stimulates scalp circulation and hair follicles for faster growth.'
+    };
+
+    function highlightIngredients(text) {
+        if(!text) return "";
+        let res = text;
+        Object.keys(ingData).forEach(ing => {
+            const regex = new RegExp(`\\b(${ing})\\b`, 'gi');
+            res = res.replace(regex, `<span class="golden-ing" onclick="showIngredient('${ing}')">$1</span>`);
+        });
+        return res;
+    }
+
+    window.showIngredient = (ing) => {
+        alert(`🌿 ${ing.toUpperCase()}:\n\n${ingData[ing.toLowerCase()]}`);
+    };
+
     window.login = () => {
         setPersistence(auth, browserLocalPersistence)
         .then(() => signInWithPopup(auth, provider))
-        .then((result) => { document.getElementById('user-name').innerText = "Hi, " + result.user.displayName.split(' ')[0]; })
         .catch((error) => console.error("Auth Error:", error));
     };
 
+    window.logoutUser = () => {
+        auth.signOut().then(() => {
+            closeProfile();
+            document.getElementById('user-name').innerText = "Sign In";
+        });
+    };
+
+    // 👤 SPRINT 4: ACCOUNT CLICK HANDLER & AYURCOINS
+    window.handleAccountClick = () => {
+        if(currentUser) { showProfile(); } else { login(); }
+    };
+
     onAuthStateChanged(auth, (user) => { 
-        if(user) document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
+        currentUser = user;
+        if(user) { 
+            document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
+            
+            // Check AyurCoins
+            if(!localStorage.getItem('coins_' + user.uid)) {
+                localStorage.setItem('coins_' + user.uid, '50'); // 50 Free coins on signup!
+            }
+            
+            document.getElementById('prof-name-display').innerText = user.displayName;
+            document.getElementById('prof-email-display').innerText = user.email;
+            document.getElementById('prof-coins-display').innerText = localStorage.getItem('coins_' + user.uid) || 0;
+            document.getElementById('cart-coin-bal').innerText = localStorage.getItem('coins_' + user.uid) || 0;
+            
+            // Show coin section in cart if they have coins
+            if(Number(localStorage.getItem('coins_' + user.uid)) > 0) {
+                document.getElementById('coin-section').classList.remove('hidden');
+            }
+
+            // Load Orders
+            const orders = JSON.parse(localStorage.getItem('orders_' + user.uid) || '[]');
+            const list = document.getElementById('prof-orders-list');
+            if(orders.length === 0) {
+                list.innerHTML = "<p style='color:#888;'>You haven't placed any orders yet.</p>";
+            } else {
+                list.innerHTML = orders.reverse().map(o => `
+                    <div style="background:#f9f9f9; padding:10px; border:1px solid var(--border); border-radius:6px; margin-bottom:10px;">
+                        <b style="color:var(--amazon);">${o.date}</b><br>
+                        <span style="font-size:0.85rem; color:#555;">${o.items}</span><br>
+                        <b style="color:var(--red);">Total: ₹${o.total}</b>
+                    </div>
+                `).join('');
+            }
+        } 
     });
 
     let products = [];
@@ -401,8 +531,6 @@
     let activePromo = null; 
     let appliedDiscount = 0;
     window.currentModalProductId = null; 
-    
-    // Global variable to store dynamic quiz keys
     window.quizKeys = { opt1: 'Acne', opt2: 'Hairfall', opt3: 'Glow' };
 
     let currentLang = 'EN';
@@ -520,8 +648,8 @@
         products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         render();
         renderWholesaleList(); 
+        populateHamperSelects(); // SPRINT 4
 
-        // 🔥 DYNAMIC QUIZ DATA FETCH
         try {
             const qSnap = await getDoc(doc(db, "settings", "quiz"));
             if(qSnap.exists()) {
@@ -534,7 +662,7 @@
                 window.quizKeys.opt2 = qData.opt2Key || "Hairfall";
                 window.quizKeys.opt3 = qData.opt3Key || "Glow";
             }
-        } catch(e) { console.log("No custom quiz found. Using defaults."); }
+        } catch(e) { console.log("No custom quiz found."); }
 
         try {
             const promoSnap = await getDoc(doc(db, "settings", "live_promo"));
@@ -639,6 +767,7 @@
     };
 
     function resetViews() {
+        document.getElementById('hamper-banner').classList.add('hidden');
         document.getElementById('quiz-banner').classList.add('hidden');
         document.getElementById('main-view').classList.add('hidden');
         document.getElementById('product-view').classList.add('hidden');
@@ -651,9 +780,12 @@
         document.getElementById('about-view').classList.add('hidden');
         document.getElementById('results-section').classList.add('hidden');
         document.getElementById('quiz-view').classList.add('hidden');
+        document.getElementById('profile-view').classList.add('hidden');
+        document.getElementById('hamper-view').classList.add('hidden');
     }
 
     function restoreHome() {
+        document.getElementById('hamper-banner').classList.remove('hidden');
         document.getElementById('quiz-banner').classList.remove('hidden');
         document.getElementById('main-view').classList.remove('hidden');
         document.getElementById('search-section').classList.remove('hidden');
@@ -662,6 +794,43 @@
         document.getElementById('results-section').classList.remove('hidden');
         window.scrollTo(0, 0);
     }
+
+    window.showProfile = () => { resetViews(); document.getElementById('profile-view').classList.remove('hidden'); window.scrollTo(0,0); };
+    window.closeProfile = () => { resetViews(); restoreHome(); };
+
+    // 🎁 SPRINT 4: HAMPER LOGIC
+    window.showHamper = () => { resetViews(); document.getElementById('hamper-view').classList.remove('hidden'); window.scrollTo(0,0); };
+    window.closeHamper = () => { resetViews(); restoreHome(); };
+    
+    function populateHamperSelects() {
+        const soapSelect = document.getElementById('hamper-soap');
+        const oilSelect = document.getElementById('hamper-oil');
+        const faceSelect = document.getElementById('hamper-face');
+        
+        products.forEach(p => {
+            const opt = `<option value="${p.id}">${p.name} - ₹${p.price}</option>`;
+            if(p.category === 'Soap') soapSelect.innerHTML += opt;
+            else if(p.category === 'Oil') oilSelect.innerHTML += opt;
+            else if(p.category === 'Face') faceSelect.innerHTML += opt;
+            // Fallbacks
+            else { soapSelect.innerHTML += opt; oilSelect.innerHTML += opt; faceSelect.innerHTML += opt; }
+        });
+    }
+
+    window.addHamperToCart = () => {
+        const sid = document.getElementById('hamper-soap').value;
+        const oid = document.getElementById('hamper-oil').value;
+        const fid = document.getElementById('hamper-face').value;
+        if(sid) updateQty(sid, 1);
+        if(oid) updateQty(oid, 1);
+        if(fid) updateQty(fid, 1);
+        
+        // Auto apply hamper promo
+        document.getElementById('cart-promo-input').value = "HAMPER10";
+        alert("🎁 Custom Hamper added! 10% Discount applied.");
+        closeHamper();
+        showCart();
+    };
 
     window.showAbout = () => { resetViews(); document.getElementById('about-view').classList.remove('hidden'); window.scrollTo(0, 0); };
     window.closeAbout = () => { resetViews(); restoreHome(); };
@@ -672,6 +841,8 @@
         window.scrollTo(0, 0);
         const title = document.getElementById('policy-title');
         const content = document.getElementById('policy-content');
+        
+        // 📜 RESTORED TERMS AND CONDITIONS EXACTLY AS REQUESTED
         if (type === 'contact') {
             title.innerText = "Contact Us";
             content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p>";
@@ -680,7 +851,7 @@
             content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>";
         } else if (type === 'terms') {
             title.innerText = "Terms & Conditions";
-            content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use.</p>";
+            content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale unless explicitly approved via a wholesale agreement with Dr. Prasiddhi Patil.</p><p>Prices and availability of products are subject to change without prior notice. All content, product names, logos, and images are the intellectual property of Ayursiddhit Naturals.</p>";
         }
     };
 
@@ -769,7 +940,10 @@
         document.getElementById('modal-img').src = p.image;
         document.getElementById('modal-name').innerText = p.name;
         document.getElementById('modal-price').innerText = `₹${p.price}`;
-        document.getElementById('modal-desc').innerText = p.desc || "A premium Ayurvedic product.";
+        
+        // 🌿 SPRINT 4: APPLY GOLDEN HIGHLIGHTS
+        document.getElementById('modal-desc').innerHTML = highlightIngredients(p.desc || "A premium Ayurvedic product.");
+        
         document.getElementById('pin-check').value = '';
         document.getElementById('pin-msg').innerText = '';
         
@@ -826,23 +1000,14 @@
     window.submitReview = async () => {
         const btn = document.getElementById('submit-rev-btn');
         const user = auth.currentUser;
-        
-        if(!user) {
-            btn.innerText = "⚠️ Please Sign In First!";
-            setTimeout(() => { btn.innerText = "Submit Review"; }, 2500);
-            return;
-        }
+        if(!user) { btn.innerText = "⚠️ Please Sign In First!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2500); return; }
         
         const text = document.getElementById('review-text').value.trim();
         const rating = document.querySelector('input[name="rating"]:checked').value;
         const fileInput = document.getElementById('review-image');
         const file = fileInput.files[0];
 
-        if(!text) { 
-            btn.innerText = "⚠️ Write a review first!";
-            setTimeout(() => { btn.innerText = "Submit Review"; }, 2000);
-            return; 
-        }
+        if(!text) { btn.innerText = "⚠️ Write a review first!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2000); return; }
 
         btn.innerText = "⏳ Uploading Review...";
         btn.disabled = true;
@@ -872,9 +1037,15 @@
             
             renderReviews(p.reviews);
             render(); 
-            
             btn.innerText = "Success! 🎉";
             setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000);
+            
+            // 🪙 SPRINT 4: EARN COINS FOR REVIEW
+            if(currentUser) {
+                let c = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0;
+                localStorage.setItem('coins_' + currentUser.uid, c + 20);
+                alert("🪙 You earned 20 AyurCoins for your review!");
+            }
         } catch (error) {
             btn.innerText = "Error! Try Again.";
             setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000);
@@ -898,7 +1069,11 @@
         const msg = document.getElementById('promo-msg');
         let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
 
-        if (!activePromo || input !== activePromo.code) {
+        if(input === "HAMPER10" && sub > 0) {
+            let disc = Math.round(sub * 0.10);
+            msg.style.color = "green"; msg.innerText = `🎉 Hamper Code Applied! ₹${disc} Off`; appliedDiscount = disc;
+        }
+        else if (!activePromo || input !== activePromo.code) {
             if(input === "WELCOME50" && sub > 0) {
                 msg.style.color = "green"; msg.innerText = `🎉 Welcome Code Applied! ₹50 Off`; appliedDiscount = 50;
             } else if (input === "WELCOME50" && sub === 0) {
@@ -922,10 +1097,22 @@
             if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; }
         }
 
-        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && appliedDiscount !== 50) {
+        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && appliedDiscount !== 50 && document.getElementById('cart-promo-input').value !== "HAMPER10") {
             appliedDiscount = 0;
             document.getElementById('promo-msg').style.color = "red";
             document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`;
+        }
+
+        // 🪙 SPRINT 4: AYURCOINS CALCULATION
+        let coinDiscount = 0;
+        const useCoinsCheck = document.getElementById('use-coins-check');
+        if(useCoinsCheck && useCoinsCheck.checked && currentUser) {
+            let bal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0;
+            coinDiscount = Math.min(bal, sub - appliedDiscount); // Max discount is the subtotal
+            document.getElementById('coin-discount-row').classList.remove('hidden');
+            document.getElementById('coin-discount-amt').innerText = coinDiscount;
+        } else {
+            document.getElementById('coin-discount-row').classList.add('hidden');
         }
 
         const free = (sub >= 800 || count >= 5);
@@ -939,7 +1126,7 @@
         }
 
         document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50";
-        document.getElementById('total').innerText = sub - appliedDiscount + (free ? 0 : 50);
+        document.getElementById('total').innerText = sub - appliedDiscount - coinDiscount + (free ? 0 : 50);
         
         if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden');
         else document.getElementById('ship-promo').classList.add('hidden');
@@ -949,14 +1136,46 @@
         e.preventDefault();
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, house: document.getElementById('f-house').value, floor: document.getElementById('f-floor').value, bld: document.getElementById('f-building').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
         let msg = `🛍️ *NEW ORDER: AYURSIDDHIT*\n\n`;
-        for(let id in cart) { const p = products.find(x => x.id === id); msg += `- ${p.name} x ${cart[id]}\n`; }
         
-        if (appliedDiscount > 0) { 
-            msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; 
+        let orderSummary = "";
+        for(let id in cart) { 
+            const p = products.find(x => x.id === id); 
+            msg += `- ${p.name} x ${cart[id]}\n`; 
+            orderSummary += `${p.name} (x${cart[id]}), `;
         }
         
-        msg += `\n\n*Total:* ₹${document.getElementById('total').innerText}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
+        if (appliedDiscount > 0) { msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; }
+        
+        // 🪙 SPRINT 4: DEDUCT COINS AND SAVE PROFILE ORDER
+        let coinDiscount = 0;
+        if(document.getElementById('use-coins-check') && document.getElementById('use-coins-check').checked && currentUser) {
+            coinDiscount = Number(document.getElementById('coin-discount-amt').innerText);
+            if(coinDiscount > 0) {
+                msg += `\n🪙 *AyurCoins Used:* -₹${coinDiscount}`;
+                let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0;
+                localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount);
+            }
+        }
+        
+        const finalTotal = document.getElementById('total').innerText;
+        msg += `\n\n*Total:* ₹${finalTotal}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
+
+        if(currentUser) {
+            const orders = JSON.parse(localStorage.getItem('orders_' + currentUser.uid) || '[]');
+            orders.push({ date: new Date().toLocaleDateString(), items: orderSummary, total: finalTotal });
+            localStorage.setItem('orders_' + currentUser.uid, JSON.stringify(orders));
+            
+            // Give 10 coins for ordering!
+            let newBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0;
+            localStorage.setItem('coins_' + currentUser.uid, newBal + 10);
+        }
+
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+        
+        // Reset Cart
+        cart = {};
+        updateBadge();
+        closeCart();
     };
 
     window.searchProducts = () => {
