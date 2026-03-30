@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Reel | Ayursiddhit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .upload-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .back-btn {
+            align-self: flex-start;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .file-input {
+            margin: 20px 0;
+            width: 100%;
+        }
+        .upload-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .upload-btn:disabled {
+            background-color: #ccc;
+        }
+        #statusMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← Back to Store</a>
+
+    <div class="upload-container">
+        <h2>Upload a New Reel</h2>
+        <p>Select a video (Max 50MB)</p>
+        
+        <input type="file" id="videoPicker" class="file-input" accept="video/*">
+        
+        <button id="uploadButton" class="upload-btn">Upload Video</button>
+        
+        <div id="statusMessage"></div>
+    </div>
+
+    <script>
+        const videoPicker = document.getElementById('videoPicker');
+        const uploadButton = document.getElementById('uploadButton');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        const MAX_FILE_SIZE_MB = 50;
+
+        uploadButton.addEventListener('click', async () => {
+            const file = videoPicker.files[0];
+
+            // 1. Check if a file was selected
+            if (!file) {
+                showMessage("⚠️ Please select a video first.", "red");
+                return;
+            }
+
+            // 2. Check the file size
+            const fileSizeMB = file.size / (1024 * 1024);
+            if (fileSizeMB > MAX_FILE_SIZE_MB) {
+                showMessage(`⚠️ File is too large! Your video is ${fileSizeMB.toFixed(1)}MB. Maximum allowed is ${MAX_FILE_SIZE_MB}MB.`, "red");
+                return;
+            }
+
+            // 3. Prepare for Upload
+            showMessage("⏳ Uploading to server...", "blue");
+            uploadButton.disabled = true;
+
+            const formData = new FormData();
+            formData.append('video', file);
+
+            // 4. Send to Backend
+            try {
+                // IMPORTANT: Replace the URL below with your actual backend server API endpoint later!
+                const response = await fetch('https://your-backend-server.com/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showMessage("✅ Video uploaded successfully!", "green");
+                    videoPicker.value = ""; // Clear the input
+                } else {
+                    showMessage("❌ Upload failed. Please try again.", "red");
+                }
+            } catch (error) {
+                console.error(error);
+                showMessage("❌ Network error. Could not reach the server.", "red");
+            } finally {
+                uploadButton.disabled = false;
+            }
+        });
+
+        function showMessage(text, color) {
+            statusMessage.textContent = text;
+            statusMessage.style.color = color;
+        }
+    </script>
+</body>
+</html>
