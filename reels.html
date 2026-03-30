@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ayursiddhit Reels</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            overflow: hidden; /* Prevents whole-page scrolling */
+        }
+
+        /* The container that handles the vertical snapping */
+        .reels-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory; /* This creates the TikTok snap effect */
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        .reels-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Individual Reel Video Container */
+        .reel {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start; /* Snaps exactly to the top of each video */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Placeholder styles (replace with actual <video> tags later) */
+        .video-placeholder {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Back Button to return to your master index.html */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 15px;
+            border-radius: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← Back to Store</a>
+
+    <div class="reels-container">
+        <div class="reel" style="background-color: #1a1a1a;">
+            <div class="video-placeholder">Video 1: Skincare Routine</div>
+        </div>
+
+        <div class="reel" style="background-color: #2a2a2a;">
+            <div class="video-placeholder">Video 2: Product Demo</div>
+        </div>
+
+        <div class="reel" style="background-color: #1a1a1a;">
+            <div class="video-placeholder">Video 3: Behind the Scenes</div>
+        </div>
+    </div>
+
+</body>
+</html>
