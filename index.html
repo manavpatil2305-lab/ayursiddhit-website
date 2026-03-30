@@ -415,7 +415,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"; // <-- THE FIX IS RIGHT HERE!
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0",
@@ -428,7 +428,7 @@
 
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app); 
+    const analytics = getAnalytics(app);
     const db = getFirestore(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -560,7 +560,6 @@
             if(scrollSnap.exists() && scrollSnap.data().isActive) {
                 document.getElementById('promo-text').innerText = scrollSnap.data().text;
                 document.getElementById('promo-banner').style.display = 'block'; 
-                document.getElementById('promo-banner').classList.remove('hidden');
             } else {
                 document.getElementById('promo-banner').style.display = 'none';
             }
@@ -597,7 +596,7 @@
 
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
-        if(products.length === 0) { grid.innerHTML = "<p style='grid-column: 1 / -1; text-align: center; color: #888;'>No products found. Add products from the Admin Panel.</p>"; return; }
+        if(products.length === 0) { grid.innerHTML = "<p style='grid-column: 1 / -1; text-align: center; color: #888;'>Loading products...</p>"; return; }
         
         products.forEach(p => {
             const q = cart[p.id] || 0; let avg = "5.0"; let revCount = 0;
@@ -773,12 +772,11 @@
 
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (productName.includes(query)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); };
     
-    // CACHE BUSTER
+    // 💥 THE CACHE KILLER FIX
     if ('serviceWorker' in navigator) { 
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            for(let registration of registrations) { registration.update(); }
+            for(let registration of registrations) { registration.unregister(); } // Destroys the stuck cache
         });
-        navigator.serviceWorker.register('/sw.js'); 
     }
 </script>
 </body>
