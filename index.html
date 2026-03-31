@@ -58,22 +58,13 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
+        /* 🌟 HERO SLIDER CSS */
         .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
         .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
 
+        /* 💳 STICKY BUY BAR CSS */
         .sticky-buy-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 800px; background: white; padding: 12px 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 2500; box-sizing: border-box; border-top: 1px solid var(--border); }
-
-        /* 🎬 NEW: DEDICATED REELS SWIPE FEED CSS */
-        .reel-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 5000; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
-        .reel-container::-webkit-scrollbar { display: none; }
-        .reel-item { height: 100vh; width: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #111; }
-        .reel-overlay { position: absolute; bottom: 90px; left: 15px; right: 15px; z-index: 5001; pointer-events: none; }
-        .reel-product-card { background: rgba(255,255,255,0.9); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.5); pointer-events: auto; }
-        .reel-close { position: absolute; top: 20px; right: 20px; z-index: 5002; background: rgba(0,0,0,0.6); color: white; border: 1px solid #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
-        
-        .pulse-btn { animation: pulseBtn 2s infinite; }
-        @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
@@ -87,12 +78,6 @@
     </style>
 </head>
 <body>
-
-<div id="reels-view" class="hidden reel-container">
-    <button class="reel-close" onclick="closeReels()">✖</button>
-    <div id="reels-feed">
-        </div>
-</div>
 
 <div id="fomo-box" class="fomo-popup"><span style="font-size: 1.2rem;">🛍️</span> <span id="fomo-text">Someone just ordered!</span></div>
 
@@ -118,7 +103,6 @@
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-actions">
-            <button onclick="showReels()" class="pulse-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer; padding:0; margin-right:5px;" title="Watch Reels">🎬</button>
             <button onclick="toggleLanguage()" id="lang-btn" style="background:none; border:none; font-size:1.2rem; cursor:pointer; margin-right:5px;">🌐 EN</button>
             <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
             <button class="signin-btn" onclick="handleAccountClick()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
@@ -182,10 +166,6 @@
     <h3 style="margin:0 0 5px 0; color:var(--amazon);" id="t-quiz-title">Not sure what to buy? 🤔</h3>
     <p style="font-size:0.9rem; color:#555; margin-bottom:15px;" id="t-quiz-desc">Take Dr. Prasiddhi's 30-second Ayurvedic skin & hair quiz to find your perfect match.</p>
     <button onclick="startQuiz()" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:1rem;" id="t-quiz-btn">🩺 Find My Routine</button>
-</div>
-
-<div style="text-align:center; padding:10px; font-size:0.8rem; color:#888; font-weight:bold; margin-top:10px;">
-    👆 Swipe Right on screen to watch AyurReels 🎬
 </div>
 
 <main id="main-view" class="product-grid"></main>
@@ -491,7 +471,7 @@
         try { 
             const snap = await getDocs(collection(db, "products")); 
             products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            render(); populateHamperSelects(); renderWholesaleList(); loadAyurReels();
+            render(); populateHamperSelects(); renderWholesaleList();
         } catch(e) {}
         
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
@@ -544,90 +524,13 @@
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
     function resetViews() { 
-        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view', 'reels-view'].forEach(id => hideSafe(id)); 
+        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
     }
     
     function restoreHome() { 
-        document.querySelectorAll('.reel-video').forEach(v => v.pause());
         ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
         window.scrollTo(0, 0); 
     }
-
-    // 🎬 THE NEW SWIPE REELS LOGIC
-    async function loadAyurReels() {
-        try {
-            const snap = await getDocs(collection(db, "reels"));
-            const feed = document.getElementById('reels-feed'); feed.innerHTML = '';
-            if(snap.empty) { feed.innerHTML = "<h3 style='color:white; text-align:center; padding-top:50vh;'>No Reels live yet!</h3>"; return; }
-            
-            snap.forEach(doc => {
-                const r = doc.data();
-                let mediaContent = '';
-                
-                // Handle Instagram Embeds
-                if (r.videoUrl.includes('instagram.com')) {
-                    let embedUrl = r.videoUrl.endsWith('/') ? r.videoUrl + 'embed' : r.videoUrl + '/embed';
-                    mediaContent = `<iframe class="reel-video" src="${embedUrl}" frameborder="0" scrolling="no" allowtransparency="true" style="background:white; border-radius:12px; pointer-events:auto;"></iframe>`;
-                } else {
-                    // Handle direct MP4s (Dropbox/Drive)
-                    mediaContent = `<video class="reel-video" src="${r.videoUrl}" loop playsinline muted></video>`;
-                }
-
-                feed.innerHTML += `
-                    <div class="reel-item">
-                        ${mediaContent}
-                        <div class="reel-overlay">
-                            <div class="reel-product-card">
-                                <img src="${r.productImage}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;">
-                                <div style="flex:1;">
-                                    <b style="color:var(--amazon); font-size:0.9rem;">${r.productName}</b><br>
-                                    <span style="color:var(--red); font-weight:bold; font-size:0.9rem;">₹${r.productPrice}</span>
-                                </div>
-                                <button onclick="addReelToCart('${r.productId}')" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            // Auto-play videos when they snap into view
-            const observer = new IntersectionObserver((entries) => { 
-                entries.forEach(entry => { 
-                    const vid = entry.target; 
-                    if (vid.tagName === 'VIDEO') {
-                        if(entry.isIntersecting) { vid.play().catch(()=>{}); } 
-                        else { vid.pause(); } 
-                    }
-                }); 
-            }, { threshold: 0.6 });
-            document.querySelectorAll('.reel-video').forEach(v => observer.observe(v));
-
-        } catch(e) { console.log(e); }
-    }
-
-    // 👆 SWIPE DETECTOR LOGIC
-    let touchstartX = 0; let touchendX = 0;
-    document.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
-    document.addEventListener('touchend', e => { 
-        touchendX = e.changedTouches[0].screenX; 
-        // If swiped right by more than 100px, and we are not currently dragging a slider
-        if (touchendX > touchstartX + 100 && !e.target.closest('.hero-slider') && !e.target.closest('.search-container')) { 
-            // Make sure reels aren't already open
-            if(document.getElementById('reels-view').classList.contains('hidden')) {
-                showReels();
-            }
-        } 
-    });
-
-    window.showReels = () => { 
-        resetViews(); 
-        showSafe('reels-view'); 
-        const firstVid = document.querySelector('video.reel-video'); 
-        if(firstVid) firstVid.play().catch(()=>{}); 
-    };
-    
-    window.closeReels = () => { resetViews(); restoreHome(); };
-    window.addReelToCart = (prodId) => { updateQty(prodId, 1); alert("✅ Added to Cart!"); };
 
     window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
     window.closeProfile = () => { resetViews(); restoreHome(); };
