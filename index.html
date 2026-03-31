@@ -13,7 +13,7 @@
         
         body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
         body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
-        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view, body.dark-mode #home-top-section, body.dark-mode #insta-section { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
+        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view, body.dark-mode #home-top-section { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
         body.dark-mode .p-qty { background: #2c2c2c; }
         body.dark-mode .sticky-buy-bar { background: var(--card-bg) !important; border-top: 1px solid var(--border) !important; }
@@ -58,13 +58,22 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
-        /* 🌟 NEW: HERO SLIDER CSS */
         .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
         .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
 
-        /* 💳 NEW: STICKY BUY BAR CSS */
         .sticky-buy-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 800px; background: white; padding: 12px 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 2500; box-sizing: border-box; border-top: 1px solid var(--border); }
+
+        /* 🎬 NEW: DEDICATED REELS SWIPE FEED CSS */
+        .reel-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 5000; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
+        .reel-container::-webkit-scrollbar { display: none; }
+        .reel-item { height: 100vh; width: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #111; }
+        .reel-overlay { position: absolute; bottom: 90px; left: 15px; right: 15px; z-index: 5001; pointer-events: none; }
+        .reel-product-card { background: rgba(255,255,255,0.9); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.5); pointer-events: auto; }
+        .reel-close { position: absolute; top: 20px; right: 20px; z-index: 5002; background: rgba(0,0,0,0.6); color: white; border: 1px solid #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+        
+        .pulse-btn { animation: pulseBtn 2s infinite; }
+        @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
@@ -78,6 +87,12 @@
     </style>
 </head>
 <body>
+
+<div id="reels-view" class="hidden reel-container">
+    <button class="reel-close" onclick="closeReels()">✖</button>
+    <div id="reels-feed">
+        </div>
+</div>
 
 <div id="fomo-box" class="fomo-popup"><span style="font-size: 1.2rem;">🛍️</span> <span id="fomo-text">Someone just ordered!</span></div>
 
@@ -103,6 +118,7 @@
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         <div class="h-actions">
+            <button onclick="showReels()" class="pulse-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer; padding:0; margin-right:5px;" title="Watch Reels">🎬</button>
             <button onclick="toggleLanguage()" id="lang-btn" style="background:none; border:none; font-size:1.2rem; cursor:pointer; margin-right:5px;">🌐 EN</button>
             <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
             <button class="signin-btn" onclick="handleAccountClick()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
@@ -168,14 +184,11 @@
     <button onclick="startQuiz()" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:1rem;" id="t-quiz-btn">🩺 Find My Routine</button>
 </div>
 
-<main id="main-view" class="product-grid"></main>
-
-<div id="insta-section" class="hidden" style="padding: 25px 15px; background: var(--card-bg); border-top: 2px solid var(--border); margin-top:20px; text-align:center;">
-    <h3 style="color:var(--amazon); margin-top:0; font-size:1.3rem;">📸 Dr. Prasiddhi on Instagram</h3>
-    <p style="font-size:0.9rem; color:var(--text); margin-bottom:15px;">Follow us for daily Ayurvedic tips and real customer results!</p>
-    <div id="insta-embed-container" style="max-width: 400px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        </div>
+<div style="text-align:center; padding:10px; font-size:0.8rem; color:#888; font-weight:bold; margin-top:10px;">
+    👆 Swipe Right on screen to watch AyurReels 🎬
 </div>
+
+<main id="main-view" class="product-grid"></main>
 
 <div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
     <button onclick="closeProfile()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
@@ -478,7 +491,7 @@
         try { 
             const snap = await getDocs(collection(db, "products")); 
             products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            render(); populateHamperSelects(); renderWholesaleList();
+            render(); populateHamperSelects(); renderWholesaleList(); loadAyurReels();
         } catch(e) {}
         
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
@@ -492,18 +505,6 @@
                 setInterval(() => { const distance = endTime - new Date().getTime(); if (distance <= 0) { document.getElementById('flash-sale').classList.add('hidden'); return; } let h = Math.floor(distance / (1000 * 60 * 60)); let m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); let s = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`; }, 1000);
             }
         } catch(e) {}
-        
-        // 📸 LOAD INSTAGRAM REEL
-        try {
-            const iSnap = await getDoc(doc(db, "settings", "insta_reel"));
-            if(iSnap.exists() && iSnap.data().isActive && iSnap.data().link) {
-                const link = iSnap.data().link;
-                const container = document.getElementById('insta-embed-container');
-                const embedUrl = link.endsWith('/') ? link + 'embed' : link + '/embed';
-                container.innerHTML = `<iframe src="${embedUrl}" width="100%" height="550" frameborder="0" scrolling="no" allowtransparency="true" style="background:white;"></iframe>`;
-                document.getElementById('insta-section').classList.remove('hidden');
-            }
-        } catch(e) {}
     }
 
     function render() {
@@ -512,10 +513,8 @@
         products.forEach(p => {
             const q = cart[p.id] || 0; let avg = "5.0"; let revCount = 0;
             if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
-            
             let stockBadge = ""; if (p.stock > 0 && p.stock <= 5) { stockBadge = `<div class="low-stock">🔥 Only ${p.stock} left!</div>`; }
             
-            // 🔥 NEW: Premium Ribbons
             let tagBadge = "";
             if(p.tag === "Bestseller") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, var(--gold), var(--luxury)); color:black; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">🔥 Bestseller</div>`;
             else if(p.tag === "New") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, #2196F3, #00BCD4); color:white; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">✨ New</div>`;
@@ -545,15 +544,90 @@
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
     function resetViews() { 
-        ['home-top-section', 'insta-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
+        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view', 'reels-view'].forEach(id => hideSafe(id)); 
     }
     
     function restoreHome() { 
+        document.querySelectorAll('.reel-video').forEach(v => v.pause());
         ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
-        // Only show insta section if it has an iframe loaded
-        if(document.getElementById('insta-embed-container').innerHTML.includes('iframe')) { showSafe('insta-section'); }
         window.scrollTo(0, 0); 
     }
+
+    // 🎬 THE NEW SWIPE REELS LOGIC
+    async function loadAyurReels() {
+        try {
+            const snap = await getDocs(collection(db, "reels"));
+            const feed = document.getElementById('reels-feed'); feed.innerHTML = '';
+            if(snap.empty) { feed.innerHTML = "<h3 style='color:white; text-align:center; padding-top:50vh;'>No Reels live yet!</h3>"; return; }
+            
+            snap.forEach(doc => {
+                const r = doc.data();
+                let mediaContent = '';
+                
+                // Handle Instagram Embeds
+                if (r.videoUrl.includes('instagram.com')) {
+                    let embedUrl = r.videoUrl.endsWith('/') ? r.videoUrl + 'embed' : r.videoUrl + '/embed';
+                    mediaContent = `<iframe class="reel-video" src="${embedUrl}" frameborder="0" scrolling="no" allowtransparency="true" style="background:white; border-radius:12px; pointer-events:auto;"></iframe>`;
+                } else {
+                    // Handle direct MP4s (Dropbox/Drive)
+                    mediaContent = `<video class="reel-video" src="${r.videoUrl}" loop playsinline muted></video>`;
+                }
+
+                feed.innerHTML += `
+                    <div class="reel-item">
+                        ${mediaContent}
+                        <div class="reel-overlay">
+                            <div class="reel-product-card">
+                                <img src="${r.productImage}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;">
+                                <div style="flex:1;">
+                                    <b style="color:var(--amazon); font-size:0.9rem;">${r.productName}</b><br>
+                                    <span style="color:var(--red); font-weight:bold; font-size:0.9rem;">₹${r.productPrice}</span>
+                                </div>
+                                <button onclick="addReelToCart('${r.productId}')" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Auto-play videos when they snap into view
+            const observer = new IntersectionObserver((entries) => { 
+                entries.forEach(entry => { 
+                    const vid = entry.target; 
+                    if (vid.tagName === 'VIDEO') {
+                        if(entry.isIntersecting) { vid.play().catch(()=>{}); } 
+                        else { vid.pause(); } 
+                    }
+                }); 
+            }, { threshold: 0.6 });
+            document.querySelectorAll('.reel-video').forEach(v => observer.observe(v));
+
+        } catch(e) { console.log(e); }
+    }
+
+    // 👆 SWIPE DETECTOR LOGIC
+    let touchstartX = 0; let touchendX = 0;
+    document.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+    document.addEventListener('touchend', e => { 
+        touchendX = e.changedTouches[0].screenX; 
+        // If swiped right by more than 100px, and we are not currently dragging a slider
+        if (touchendX > touchstartX + 100 && !e.target.closest('.hero-slider') && !e.target.closest('.search-container')) { 
+            // Make sure reels aren't already open
+            if(document.getElementById('reels-view').classList.contains('hidden')) {
+                showReels();
+            }
+        } 
+    });
+
+    window.showReels = () => { 
+        resetViews(); 
+        showSafe('reels-view'); 
+        const firstVid = document.querySelector('video.reel-video'); 
+        if(firstVid) firstVid.play().catch(()=>{}); 
+    };
+    
+    window.closeReels = () => { resetViews(); restoreHome(); };
+    window.addReelToCart = (prodId) => { updateQty(prodId, 1); alert("✅ Added to Cart!"); };
 
     window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
     window.closeProfile = () => { resetViews(); restoreHome(); };
@@ -755,15 +829,10 @@
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
     window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
 
-    // 🌟 IMAGE SLIDER LOGIC
     let slideIndex = 0;
     setInterval(() => {
         const track = document.getElementById('slide-track');
-        if(track) {
-            slideIndex++;
-            if(slideIndex >= 3) slideIndex = 0;
-            track.style.transform = `translateX(-${slideIndex * 33.333}%)`;
-        }
+        if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; }
     }, 3500);
 
     load(); 
