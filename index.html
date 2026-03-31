@@ -6,6 +6,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
@@ -58,12 +59,10 @@
         .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
-        /* 🌟 HERO SLIDER CSS */
         .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
         .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
 
-        /* 💳 STICKY BUY BAR CSS */
         .sticky-buy-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 800px; background: white; padding: 12px 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; z-index: 2500; box-sizing: border-box; border-top: 1px solid var(--border); }
 
         @media (min-width: 768px) {
@@ -371,7 +370,7 @@
                 <p id="coin-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold;">🪙 Coin Discount: <span>-₹<span id="coin-discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
                 <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
-                <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">🚀 Order on WhatsApp</button>
+                <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">💳 Pay securely via Razorpay</button>
             </div>
         </form>
         <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px;">Back to Shop</button>
@@ -702,31 +701,81 @@
         if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden'); else document.getElementById('ship-promo').classList.add('hidden');
     }
 
+    // 💳 THE RAZORPAY CHECKOUT ENGINE
     document.getElementById('order-form').onsubmit = async (e) => {
         e.preventDefault(); 
         const btn = document.querySelector('#order-form .btn-buy');
-        btn.innerText = "⏳ Processing..."; btn.disabled = true;
+        btn.innerText = "⏳ Opening Secure Checkout..."; btn.disabled = true;
 
-        const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, house: document.getElementById('f-house').value, floor: document.getElementById('f-floor').value, bld: document.getElementById('f-building').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
-        let msg = `🛍️ *NEW ORDER: AYURSIDDHIT*\n\n`; let orderSummary = "";
+        const d = { 
+            name: document.getElementById('f-name').value, 
+            phone: document.getElementById('f-phone').value, 
+            addr: document.getElementById('f-address').value, 
+            city: document.getElementById('f-city').value, 
+            pin: document.getElementById('f-pin').value 
+        };
         
+        let orderSummary = "";
         for(let id in cart) { 
             const p = products.find(x => x.id === id); 
-            msg += `- ${p.name} x ${cart[id]}\n`; 
             orderSummary += `${p.name} (x${cart[id]}), `; 
-            if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} }
         }
         
-        if (appliedDiscount > 0) { msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; }
-        let coinDiscount = 0; if(document.getElementById('use-coins-check') && document.getElementById('use-coins-check').checked && currentUser) { coinDiscount = Number(document.getElementById('coin-discount-amt').innerText); if(coinDiscount > 0) { msg += `\n🪙 *AyurCoins Used:* -₹${coinDiscount}`; let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount); } }
-        const finalTotal = document.getElementById('total').innerText; msg += `\n\n*Total:* ₹${finalTotal}\n\n*Address:* ${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
+        const finalTotal = parseInt(document.getElementById('total').innerText);
+
+        // 🚀 INITIALIZE RAZORPAY
+        var options = {
+            "key": "rzp_live_SXjt9artK2r8K9", // 💳 YOUR LIVE KEY IS NOW ACTIVE!
+            "amount": finalTotal * 100, // Razorpay takes paise, so multiply by 100
+            "currency": "INR",
+            "name": "Ayursiddhit Naturals",
+            "description": "Order Payment",
+            "image": "logo.png",
+            "handler": async function (response) {
+                // This code runs when the customer pays successfully!
+                btn.innerText = "✅ Payment Successful!";
+                
+                let msg = `🛍️ *NEW PAID ORDER: AYURSIDDHIT*\n\n`;
+                msg += `*Payment ID:* ${response.razorpay_payment_id}\n\n`;
+                
+                for(let id in cart) { 
+                    const p = products.find(x => x.id === id); 
+                    msg += `- ${p.name} x ${cart[id]}\n`; 
+                    if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} }
+                }
+                
+                if (appliedDiscount > 0) { msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; }
+                msg += `\n\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
+                
+                try { 
+                    await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: `${d.addr}, ${d.city} - ${d.pin}` }); 
+                } catch(err) { }
+                
+                if(currentUser) { 
+                    let coinDiscount = 0; if(document.getElementById('use-coins-check').checked) { coinDiscount = Number(document.getElementById('coin-discount-amt').innerText); }
+                    let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; 
+                    localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount + 10); 
+                }
+                
+                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
+                cart = {}; updateBadge(); closeCart();
+                btn.innerText = "💳 Pay securely via Razorpay"; btn.disabled = false;
+            },
+            "prefill": {
+                "name": d.name,
+                "contact": d.phone
+            },
+            "theme": {
+                "color": "#1b5e20"
+            }
+        };
         
-        try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', date: new Date().toISOString(), address: `${d.house}, ${d.floor}, ${d.bld}, ${d.addr}, ${d.city} - ${d.pin}` }); } catch(err) { }
-        if(currentUser) { let newBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, newBal + 10); }
-        
-        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
-        cart = {}; updateBadge(); closeCart();
-        btn.innerText = "🚀 Order on WhatsApp"; btn.disabled = false;
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+            alert("Payment Failed. Please try again.");
+            btn.innerText = "💳 Pay securely via Razorpay"; btn.disabled = false;
+        });
+        rzp1.open();
     };
 
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
