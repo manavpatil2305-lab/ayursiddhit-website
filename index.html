@@ -417,7 +417,7 @@
     const provider = new GoogleAuthProvider();
 
     let currentUser = null;
-    let products = []; let cart = {}; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null; 
+    let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null; 
     window.quizKeys = { opt1: 'Acne', opt2: 'Hairfall', opt3: 'Glow' };
 
     const ingData = { 'neem': 'Deeply cleanses and fights acne.', 'tulsi': 'Reduces inflammation and soothes skin.', 'sandalwood': 'Cools skin and naturally evens tan lines.', 'ashwagandha': 'Boosts skin collagen and fights aging.', 'aloe vera': 'Intensely hydrates damaged skin.', 'turmeric': 'Natural glow-booster.', 'rosemary': 'Stimulates scalp for faster growth.' };
@@ -472,7 +472,13 @@
         
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
         try { const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('dyn-quiz-title').innerText = qData.title; document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label; document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label; document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label; window.quizKeys.opt1 = qData.opt1Key; window.quizKeys.opt2 = qData.opt2Key; window.quizKeys.opt3 = qData.opt3Key; } } catch(e) {}
-        try { const promoSnap = await getDoc(doc(db, "settings", "live_promo")); if(promoSnap.exists() && promoSnap.data().isActive) { activePromo = promoSnap.data(); } } catch(e) {}
+        
+        // Load the new Array of Promo Codes
+        try { 
+            const promoSnap = await getDoc(doc(db, "settings", "promos")); 
+            if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } 
+        } catch(e) {}
+
         try {
             const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
             if(fsSnap.exists() && fsSnap.data().isActive) {
@@ -706,20 +712,37 @@
     window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
     window.closeCart = () => { resetViews(); restoreHome(); };
 
+    // 🎟️ FIXED: PROMO CODE CHECKER NOW SEARCHES THE ARRAY
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
         let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
-        if(input === "HAMPER10" && sub > 0) { let disc = Math.round(sub * 0.10); msg.style.color = "green"; msg.innerText = `🎉 Hamper Code Applied! ₹${disc} Off`; appliedDiscount = disc; }
-        else if (!activePromo || input !== activePromo.code) { if(input === "WELCOME50" && sub > 0) { msg.style.color = "green"; msg.innerText = `🎉 Welcome Code Applied! ₹50 Off`; appliedDiscount = 50; } else if (input === "WELCOME50" && sub === 0) { msg.style.color = "red"; msg.innerText = "⚠️ Add items to cart to use code."; appliedDiscount = 0; } else { msg.style.color = "red"; msg.innerText = "❌ Invalid Promo Code"; appliedDiscount = 0; } } 
-        else if (sub < activePromo.minOrder) { msg.style.color = "red"; msg.innerText = `⚠️ Add ₹${activePromo.minOrder - sub} more to unlock this code.`; appliedDiscount = 0; } 
-        else { msg.style.color = "green"; msg.innerText = `🎉 Code Applied! ₹${activePromo.discount} Off`; appliedDiscount = activePromo.discount; }
+        
+        // Search the allPromos array for a match
+        const matchedPromo = allPromos.find(p => p.code === input);
+
+        if(input === "HAMPER10" && sub > 0) { 
+            let disc = Math.round(sub * 0.10); msg.style.color = "green"; msg.innerText = `🎉 Hamper Code Applied! ₹${disc} Off`; appliedDiscount = disc; activePromo = { code: 'HAMPER10', minOrder: 0 };
+        }
+        else if (matchedPromo) { 
+            if (sub < matchedPromo.minOrder) { 
+                msg.style.color = "red"; msg.innerText = `⚠️ Add ₹${matchedPromo.minOrder - sub} more to unlock this code.`; appliedDiscount = 0; activePromo = null; 
+            } else { 
+                msg.style.color = "green"; msg.innerText = `🎉 Code Applied! ₹${matchedPromo.discount} Off`; appliedDiscount = matchedPromo.discount; activePromo = matchedPromo; 
+            } 
+        } 
+        else { 
+            msg.style.color = "red"; msg.innerText = "❌ Invalid Promo Code"; appliedDiscount = 0; activePromo = null; 
+        }
         renderCart();
     };
 
     function renderCart() {
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
         for(let id in cart) { const p = products.find(x => x.id === id); if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; } }
-        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && appliedDiscount !== 50 && document.getElementById('cart-promo-input').value !== "HAMPER10") { appliedDiscount = 0; document.getElementById('promo-msg').style.color = "red"; document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`; }
+        
+        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && activePromo.code !== "HAMPER10") { 
+            appliedDiscount = 0; document.getElementById('promo-msg').style.color = "red"; document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`; 
+        }
 
         let coinDiscount = 0; const useCoinsCheck = document.getElementById('use-coins-check');
         if(useCoinsCheck && useCoinsCheck.checked && currentUser) { let bal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; coinDiscount = Math.min(bal, sub - appliedDiscount); document.getElementById('coin-discount-row').classList.remove('hidden'); document.getElementById('coin-discount-amt').innerText = coinDiscount; } else { document.getElementById('coin-discount-row').classList.add('hidden'); }
@@ -729,7 +752,6 @@
         if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden'); else document.getElementById('ship-promo').classList.add('hidden');
     }
 
-    // 💳 THE RAZORPAY CHECKOUT ENGINE
     document.getElementById('order-form').onsubmit = async (e) => {
         e.preventDefault(); 
         const btn = document.querySelector('#order-form .btn-buy');
@@ -798,3 +820,4 @@
 </script>
 </body>
 </html>
+
