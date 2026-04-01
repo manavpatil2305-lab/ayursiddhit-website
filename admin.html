@@ -36,14 +36,18 @@
 
 <header>
     <div style="font-size: 1.2rem; font-weight: bold;">Ayursiddhit <span>Admin</span></div>
-    <button onclick="login()" id="login-btn" style="background:var(--gold); color:black; padding:8px 15px; font-size:0.9rem;">Sign In</button>
+    <button id="login-btn" style="background:var(--gold); color:black; padding:8px 15px; font-size:0.9rem; border:none; border-radius:6px; font-weight:bold;">System Locked</button>
 </header>
 
-<div id="login-prompt" style="text-align: center; margin-top: 100px; padding: 20px;">
-    <img src="logo.png" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 20px;">
-    <h2 style="color: var(--amazon); margin-top: 0;">Welcome to the CEO Dashboard</h2>
-    <p style="color: #555; font-size: 1.1rem;">Please sign in securely to manage your empire.</p>
-    <button onclick="login()" style="background: var(--amazon); color: white; padding: 15px 30px; font-size: 1.1rem; border-radius: 30px; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🔒 Sign In with Google</button>
+<div id="login-prompt" style="text-align: center; margin-top: 80px; padding: 20px;">
+    <img src="logo.png" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 15px;">
+    <h2 style="color: var(--amazon); margin-top: 0; margin-bottom: 5px;">CEO Dashboard Locked 🔒</h2>
+    <p style="color: #555; font-size: 1rem; margin-bottom: 25px;">Please enter your Master Password to access the control panel.</p>
+    
+    <div style="max-width: 350px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <input type="password" id="master-pass" placeholder="Enter Password" style="text-align: center; font-size: 1.2rem; letter-spacing: 3px; font-weight: bold; margin-bottom: 15px;">
+        <button onclick="unlockDashboard()" style="background: var(--amazon); color: white; width: 100%; padding: 15px; font-size: 1.1rem; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">Unlock Dashboard</button>
+    </div>
 </div>
 
 <div class="container" id="admin-content" style="display:none;">
@@ -189,7 +193,10 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    let activePromos = []; // Array to hold multiple promo codes
+    // 🔒 CHANGE YOUR MASTER PASSWORD HERE
+    const MASTER_PASSWORD = "Ayursiddhit"; 
+    let isUnlocked = false;
+    let activePromos = [];
 
     window.switchTab = (tabId) => {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -198,19 +205,43 @@
         event.target.classList.add('active');
     };
 
-    window.login = () => { signInWithPopup(auth, provider).catch(e => console.error(e)); };
+    // 🔒 THE SECURITY ENGINE
+    window.unlockDashboard = () => {
+        const inputPass = document.getElementById('master-pass').value;
+        if(inputPass === MASTER_PASSWORD) {
+            isUnlocked = true;
+            document.getElementById('login-prompt').style.display = 'none';
+            
+            // Connect to Firebase Database
+            if(auth.currentUser) {
+                activateDashboard();
+            } else {
+                signInWithPopup(auth, provider).catch(e => {
+                    console.error(e);
+                    alert("Google Sign-In failed. Please try again.");
+                });
+            }
+        } else {
+            alert("❌ Unauthorized Access. Incorrect Password.");
+        }
+    };
+
+    function activateDashboard() {
+        document.getElementById('admin-content').style.display = 'block';
+        document.getElementById('login-btn').innerText = "Sign Out";
+        document.getElementById('login-btn').onclick = () => { 
+            auth.signOut().then(()=> location.reload()); 
+        };
+        loadAllData();
+    }
 
     onAuthStateChanged(auth, (user) => {
-        if(user) {
-            document.getElementById('login-prompt').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-            document.getElementById('login-btn').innerText = "Sign Out";
-            document.getElementById('login-btn').onclick = () => auth.signOut().then(()=> location.reload());
-            loadAllData();
-        } else {
+        if(user && isUnlocked) {
+            activateDashboard();
+        } else if (!user) {
             document.getElementById('admin-content').style.display = 'none';
             document.getElementById('login-prompt').style.display = 'block';
-            document.getElementById('login-btn').innerText = "Sign In";
+            document.getElementById('login-btn').innerText = "System Locked";
         }
     });
 
@@ -294,7 +325,6 @@
         const fsSnap = await getDoc(doc(db, "settings", "flash_sale")); if(fsSnap.exists() && fsSnap.data().isActive) { document.getElementById('fs-status').innerText = "🟢 Active"; document.getElementById('fs-text').value = fsSnap.data().text; const dt = new Date(fsSnap.data().endTime); dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset()); document.getElementById('fs-time').value = dt.toISOString().slice(0,16); }
         const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('q-title').value = qData.title || ""; document.getElementById('q-opt1-label').value = qData.opt1Label || ""; document.getElementById('q-opt1-key').value = qData.opt1Key || ""; document.getElementById('q-opt2-label').value = qData.opt2Label || ""; document.getElementById('q-opt2-key').value = qData.opt2Key || ""; document.getElementById('q-opt3-label').value = qData.opt3Label || ""; document.getElementById('q-opt3-key').value = qData.opt3Key || ""; }
         
-        // Load Multiple Promo Codes
         const promoSnap = await getDoc(doc(db, "settings", "promos"));
         if(promoSnap.exists()) { activePromos = promoSnap.data().codes || []; }
         renderPromos();
