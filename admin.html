@@ -107,6 +107,7 @@
             </div>
             <p id="scrolling-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
         </div>
+        
         <div class="card" style="border-left: 5px solid var(--gold);">
             <h3>⚡ Live Flash Sale Manager</h3>
             <div class="grid-2">
@@ -119,19 +120,18 @@
             </div>
             <p id="fs-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
         </div>
+
         <div class="card">
-            <h3>🎟️ Manage Cart Promo Code</h3>
-            <div class="grid-2">
-                <input type="text" id="promo-code" placeholder="Promo Code (e.g. WELCOME50)" style="text-transform: uppercase;">
+            <h3>🎟️ Manage Promo Codes</h3>
+            <div class="grid-3">
+                <input type="text" id="promo-code" placeholder="Promo Code (e.g. DIWALI20)" style="text-transform: uppercase;">
                 <input type="number" id="promo-discount" placeholder="Discount Amount (₹)">
-                <input type="number" id="promo-min" placeholder="Minimum Order Value (₹)">
+                <input type="number" id="promo-min" placeholder="Min Order Value (₹)">
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button onclick="savePromo()" style="flex: 1;">💾 Activate Code</button>
-                <button onclick="stopPromo()" class="btn-danger" style="flex: 1;">⏹️ Deactivate</button>
-            </div>
-            <p id="promo-status" style="margin-top: 10px; font-weight: bold; color: var(--green);"></p>
+            <button onclick="addPromo()" style="width: 100%;">➕ Create Promo Code</button>
+            <div id="promo-list" style="margin-top: 15px;">Loading codes...</div>
         </div>
+
         <div class="card" style="border-left: 5px solid #2196F3;">
             <h3>🩺 Manage Doctor's AI Quiz</h3>
             <input type="text" id="q-title" placeholder="Quiz Question (e.g. What is your main concern today?)">
@@ -188,6 +188,8 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
+
+    let activePromos = []; // Array to hold multiple promo codes
 
     window.switchTab = (tabId) => {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -290,17 +292,59 @@
     async function loadSettings() {
         const sSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(sSnap.exists() && sSnap.data().isActive) { document.getElementById('scrolling-status').innerText = "🟢 Active"; document.getElementById('scrolling-ad').value = sSnap.data().text; }
         const fsSnap = await getDoc(doc(db, "settings", "flash_sale")); if(fsSnap.exists() && fsSnap.data().isActive) { document.getElementById('fs-status').innerText = "🟢 Active"; document.getElementById('fs-text').value = fsSnap.data().text; const dt = new Date(fsSnap.data().endTime); dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset()); document.getElementById('fs-time').value = dt.toISOString().slice(0,16); }
-        const pSnap = await getDoc(doc(db, "settings", "live_promo")); if(pSnap.exists() && pSnap.data().isActive) { document.getElementById('promo-status').innerText = `🟢 Code ${pSnap.data().code} LIVE!`; document.getElementById('promo-code').value = pSnap.data().code; document.getElementById('promo-discount').value = pSnap.data().discount; document.getElementById('promo-min').value = pSnap.data().minOrder; }
         const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('q-title').value = qData.title || ""; document.getElementById('q-opt1-label').value = qData.opt1Label || ""; document.getElementById('q-opt1-key').value = qData.opt1Key || ""; document.getElementById('q-opt2-label').value = qData.opt2Label || ""; document.getElementById('q-opt2-key').value = qData.opt2Key || ""; document.getElementById('q-opt3-label').value = qData.opt3Label || ""; document.getElementById('q-opt3-key').value = qData.opt3Key || ""; }
+        
+        // Load Multiple Promo Codes
+        const promoSnap = await getDoc(doc(db, "settings", "promos"));
+        if(promoSnap.exists()) { activePromos = promoSnap.data().codes || []; }
+        renderPromos();
     }
+
+    window.renderPromos = () => {
+        const list = document.getElementById('promo-list');
+        list.innerHTML = '';
+        if(activePromos.length === 0) { list.innerHTML = "<p style='color:#666;'>No active promo codes.</p>"; }
+        
+        activePromos.forEach((p, index) => {
+            list.innerHTML += `
+            <div style="display:flex; justify-content:space-between; background:#f9f9f9; padding:10px 15px; border:1px solid #ddd; border-radius:6px; margin-bottom:8px; align-items:center;">
+                <div>
+                    <b style="font-size:1.1rem; color:var(--amazon);">${p.code}</b> 
+                    <span style="color:var(--green); font-weight:bold;">(-₹${p.discount})</span><br>
+                    <span style="font-size:0.85rem; color:#666;">Min Order: ₹${p.minOrder}</span>
+                </div>
+                <button class="btn-danger" style="padding:8px; margin:0;" onclick="deletePromo(${index})">🗑️</button>
+            </div>`;
+        });
+    };
+
+    window.addPromo = async () => {
+        const code = document.getElementById('promo-code').value.trim().toUpperCase();
+        const discount = Number(document.getElementById('promo-discount').value);
+        const minOrder = Number(document.getElementById('promo-min').value) || 0;
+        
+        if(!code || !discount) { alert("Please enter both a Code and a Discount amount!"); return; }
+        
+        activePromos.push({ code: code, discount: discount, minOrder: minOrder });
+        await setDoc(doc(db, "settings", "promos"), { codes: activePromos });
+        
+        document.getElementById('promo-code').value = '';
+        document.getElementById('promo-discount').value = '';
+        document.getElementById('promo-min').value = '';
+        renderPromos();
+    };
+
+    window.deletePromo = async (index) => {
+        activePromos.splice(index, 1);
+        await setDoc(doc(db, "settings", "promos"), { codes: activePromos });
+        renderPromos();
+    };
 
     window.saveScrollingBanner = async () => { await setDoc(doc(db, "settings", "scrolling_banner"), { isActive: true, text: document.getElementById('scrolling-ad').value.trim() }); loadSettings(); };
     window.stopScrollingBanner = async () => { await setDoc(doc(db, "settings", "scrolling_banner"), { isActive: false }); document.getElementById('scrolling-ad').value = ""; loadSettings(); };
     window.saveQuiz = async () => { await setDoc(doc(db, "settings", "quiz"), { title: document.getElementById('q-title').value, opt1Label: document.getElementById('q-opt1-label').value, opt1Key: document.getElementById('q-opt1-key').value, opt2Label: document.getElementById('q-opt2-label').value, opt2Key: document.getElementById('q-opt2-key').value, opt3Label: document.getElementById('q-opt3-label').value, opt3Key: document.getElementById('q-opt3-key').value }); alert("Quiz Saved!"); };
     window.startFlashSale = async () => { await setDoc(doc(db, "settings", "flash_sale"), { isActive: true, text: document.getElementById('fs-text').value, endTime: new Date(document.getElementById('fs-time').value).toISOString() }); loadSettings(); };
     window.stopFlashSale = async () => { await setDoc(doc(db, "settings", "flash_sale"), { isActive: false }); document.getElementById('fs-text').value = ""; document.getElementById('fs-time').value = ""; loadSettings(); };
-    window.savePromo = async () => { await setDoc(doc(db, "settings", "live_promo"), { isActive: true, code: document.getElementById('promo-code').value.toUpperCase(), discount: Number(document.getElementById('promo-discount').value), minOrder: Number(document.getElementById('promo-min').value) }); loadSettings(); };
-    window.stopPromo = async () => { await setDoc(doc(db, "settings", "live_promo"), { isActive: false }); document.getElementById('promo-code').value = ""; document.getElementById('promo-discount').value = ""; document.getElementById('promo-min').value = ""; loadSettings(); };
 </script>
 </body>
 </html>
