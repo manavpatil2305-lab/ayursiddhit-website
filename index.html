@@ -77,15 +77,6 @@
 
 <div id="fomo-box" class="fomo-popup"><span style="font-size: 1.2rem;">🛍️</span> <span id="fomo-text">Someone just ordered!</span></div>
 
-<div id="mystery-box" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; display:flex; align-items:center; justify-content:center; backdrop-filter: blur(5px);">
-    <div style="background:var(--card-bg); padding:30px; border-radius:15px; text-align:center; max-width:320px; width:90%; position:relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <button onclick="closeMystery()" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text);">✖</button>
-        <h2 style="margin-top:0; color:var(--amazon);">🎁 Surprise Gift!</h2>
-        <p style="color:var(--text); font-size:0.95rem; margin-bottom:20px;">Tap the magic box to reveal your secret welcome discount code.</p>
-        <div id="scratch-area" onclick="revealGift()" style="background:linear-gradient(45deg, var(--gold), var(--luxury)); padding:40px 20px; border-radius:10px; cursor:pointer; font-weight:bold; color:black; font-size:1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.2); transition:0.3s; user-select:none;">✨ TAP TO REVEAL</div>
-    </div>
-</div>
-
 <div id="promo-banner" class="promo-banner"><div class="scrolling-text" id="promo-text"></div></div>
 
 <div id="flash-sale" class="hidden" style="background: #111; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #333; letter-spacing: 0.5px;">
@@ -171,12 +162,7 @@
     <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
     <p style="font-size:1.1rem; color:var(--text); font-weight:bold;" id="prof-name-display"></p>
     <p style="color:#555; margin-top:-10px;" id="prof-email-display"></p>
-    <div style="background:linear-gradient(45deg, var(--gold), var(--luxury)); padding:20px; border-radius:12px; text-align:center; color:black; margin:20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-        <h3 style="margin:0; font-size:1.2rem;">🪙 AyurCoins Balance</h3>
-        <h1 style="margin:5px 0 0 0; font-size:2.5rem;" id="prof-coins-display">0</h1>
-        <p style="margin:5px 0 0 0; font-size:0.9rem; font-weight:bold;">Use coins for real cash discounts at checkout!</p>
-    </div>
-    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px;">📦 My Past Orders</h3>
+    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px; margin-top:30px;">📦 My Past Orders</h3>
     <div id="prof-orders-list" style="font-size:0.95rem; color:var(--text);">Loading orders...</div>
     <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
 </div>
@@ -342,14 +328,13 @@
     <h2 id="t-cart-title">Review Your Order</h2>
     <div id="cart-list"></div>
     <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border); margin-top:15px;">
-        <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
-        <div id="coin-section" class="hidden" style="background:#e8f5e9; border:1px solid var(--green); padding:15px; border-radius:8px; margin-bottom:15px;">
-            <b style="color:var(--green); display:block; margin-bottom:5px;">🪙 Use AyurCoins</b>
-            <div style="display:flex; align-items:center; gap:10px;">
-                <input type="checkbox" id="use-coins-check" onchange="renderCart()" style="width:20px; height:20px; margin:0;">
-                <span style="font-size:0.9rem; font-weight:bold; color:black;">Redeem my <span id="cart-coin-bal">0</span> Coins for instant discount!</span>
-            </div>
+        
+        <div style="background:#fff3cd; color:#856404; padding:12px; border-radius:8px; font-size:0.9rem; font-weight:bold; margin-bottom:15px; text-align:center; border: 1px solid #ffeeba;">
+            ⏳ Freshly Handcrafted: Please allow 48 hours for order dispatch.
         </div>
+
+        <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
+        
         <div style="background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
             <div style="display:flex; gap:10px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
@@ -357,14 +342,26 @@
             </div>
             <div id="promo-msg" style="font-size:0.8rem; font-weight:bold; height:15px;"></div>
         </div>
+        
         <form id="order-form">
-            <input type="text" id="f-name" placeholder="Full Name" required><input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
-            <textarea id="f-address" placeholder="Full Address" rows="3" required></textarea>
-            <div class="form-grid"><input type="text" id="f-city" placeholder="City" required><input type="number" id="f-pin" placeholder="Pincode" required></div>
+            <input type="text" id="f-name" placeholder="Full Name" required>
+            <input type="tel" id="f-phone" placeholder="Mobile Number (10 Digits)" required pattern="[0-9]{10}">
+            
+            <div class="form-grid">
+                <input type="text" id="f-flat" placeholder="Flat / House No. / Floor" required>
+                <input type="text" id="f-bldg" placeholder="Building / Society Name" required>
+            </div>
+            <textarea id="f-address" placeholder="Street Name & Area" rows="2" required></textarea>
+            <input type="text" id="f-landmark" placeholder="Nearby Landmark (Optional)">
+            
+            <div class="form-grid">
+                <input type="text" id="f-city" placeholder="City" required>
+                <input type="number" id="f-pin" placeholder="Pincode" required>
+            </div>
+            
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
                 <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Promo Discount: <span>-₹<span id="discount-amt">0</span></span></p>
-                <p id="coin-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold;">🪙 Coin Discount: <span>-₹<span id="coin-discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
                 <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
                 <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">💳 Pay securely via Razorpay</button>
@@ -431,14 +428,9 @@
         currentUser = user;
         if(user) { 
             document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
-            let c = Number(localStorage.getItem('coins_' + user.uid));
-            if(!c) { c = 50; localStorage.setItem('coins_' + user.uid, '50'); }
-            await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, coins: c, lastLogin: new Date().toISOString() }, { merge: true });
+            await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, lastLogin: new Date().toISOString() }, { merge: true });
             document.getElementById('prof-name-display').innerText = user.displayName;
             document.getElementById('prof-email-display').innerText = user.email;
-            document.getElementById('prof-coins-display').innerText = c;
-            document.getElementById('cart-coin-bal').innerText = c;
-            if(c > 0) { document.getElementById('coin-section').classList.remove('hidden'); }
             loadUserOrdersFromDB(user.uid);
         } 
     });
@@ -473,11 +465,7 @@
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
         try { const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('dyn-quiz-title').innerText = qData.title; document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label; document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label; document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label; window.quizKeys.opt1 = qData.opt1Key; window.quizKeys.opt2 = qData.opt2Key; window.quizKeys.opt3 = qData.opt3Key; } } catch(e) {}
         
-        // Load the new Array of Promo Codes
-        try { 
-            const promoSnap = await getDoc(doc(db, "settings", "promos")); 
-            if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } 
-        } catch(e) {}
+        try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } } catch(e) {}
 
         try {
             const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
@@ -489,7 +477,6 @@
         } catch(e) {}
     }
 
-    // 📦 FIXED: Added "Buy Now" button to Home Screen Grid
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         if(products.length === 0) { grid.innerHTML = "<p style='grid-column: 1 / -1; text-align: center; color: #888;'>Loading products...</p>"; return; }
@@ -536,30 +523,16 @@
         rec.onerror = () => { document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; }; rec.start();
     };
 
-    // 🚚 FIXED: PINCODE CHECKER FUNCTION
     window.checkPincode = () => {
-        const pin = document.getElementById('pin-check').value;
-        const msg = document.getElementById('pin-msg');
-        if(pin.length === 6) {
-            msg.style.color = "green";
-            msg.innerText = "✅ Delivery available to " + pin + " (Expected in 3-5 Days)";
-        } else {
-            msg.style.color = "red";
-            msg.innerText = "⚠️ Please enter a valid 6-digit Pincode.";
-        }
+        const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg');
+        if(pin.length === 6) { msg.style.color = "green"; msg.innerText = "✅ Delivery available to " + pin + " (Expected in 3-5 Days)"; } else { msg.style.color = "red"; msg.innerText = "⚠️ Please enter a valid 6-digit Pincode."; }
     };
 
     function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
-    function resetViews() { 
-        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); 
-    }
-    
-    function restoreHome() { 
-        ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); 
-        window.scrollTo(0, 0); 
-    }
+    function resetViews() { ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); }
+    function restoreHome() { ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
 
     window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
     window.closeProfile = () => { resetViews(); restoreHome(); };
@@ -568,11 +541,7 @@
     
     function populateHamperSelects() {
         const soapSelect = document.getElementById('hamper-soap'); const oilSelect = document.getElementById('hamper-oil'); const faceSelect = document.getElementById('hamper-face');
-        products.forEach(p => {
-            const opt = `<option value="${p.id}">${p.name} - ₹${p.price}</option>`;
-            if(p.category === 'Soap') soapSelect.innerHTML += opt; else if(p.category === 'Oil') oilSelect.innerHTML += opt; else if(p.category === 'Face') faceSelect.innerHTML += opt;
-            else { soapSelect.innerHTML += opt; oilSelect.innerHTML += opt; faceSelect.innerHTML += opt; }
-        });
+        products.forEach(p => { const opt = `<option value="${p.id}">${p.name} - ₹${p.price}</option>`; if(p.category === 'Soap') soapSelect.innerHTML += opt; else if(p.category === 'Oil') oilSelect.innerHTML += opt; else if(p.category === 'Face') faceSelect.innerHTML += opt; else { soapSelect.innerHTML += opt; oilSelect.innerHTML += opt; faceSelect.innerHTML += opt; } });
     }
 
     window.addHamperToCart = () => {
@@ -624,9 +593,7 @@
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`;
         document.getElementById('modal-desc').innerHTML = highlightIngredients(p.desc || "");
         
-        // Reset pincode check box
-        document.getElementById('pin-check').value = '';
-        document.getElementById('pin-msg').innerText = '';
+        document.getElementById('pin-check').value = ''; document.getElementById('pin-msg').innerText = '';
         
         const warn = document.getElementById('modal-stock-warn');
         if(p.stock > 0 && p.stock <= 5) { warn.classList.remove('hidden'); warn.innerText = `🔥 Hurry, only ${p.stock} left in stock!`; } else { warn.classList.add('hidden'); }
@@ -703,7 +670,6 @@
         try {
             await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview);
             document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Success! 🎉"; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000);
-            if(currentUser) { let c = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, c + 20); }
         } catch (error) { btn.innerText = "Error! Try Again."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
     };
 
@@ -712,12 +678,10 @@
     window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
     window.closeCart = () => { resetViews(); restoreHome(); };
 
-    // 🎟️ FIXED: PROMO CODE CHECKER NOW SEARCHES THE ARRAY
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
         let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
         
-        // Search the allPromos array for a match
         const matchedPromo = allPromos.find(p => p.code === input);
 
         if(input === "HAMPER10" && sub > 0) { 
@@ -744,11 +708,10 @@
             appliedDiscount = 0; document.getElementById('promo-msg').style.color = "red"; document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`; 
         }
 
-        let coinDiscount = 0; const useCoinsCheck = document.getElementById('use-coins-check');
-        if(useCoinsCheck && useCoinsCheck.checked && currentUser) { let bal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; coinDiscount = Math.min(bal, sub - appliedDiscount); document.getElementById('coin-discount-row').classList.remove('hidden'); document.getElementById('coin-discount-amt').innerText = coinDiscount; } else { document.getElementById('coin-discount-row').classList.add('hidden'); }
         const free = (sub >= 800 || count >= 5); document.getElementById('subtotal').innerText = sub;
         if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
-        document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50"; document.getElementById('total').innerText = sub - appliedDiscount - coinDiscount + (free ? 0 : 50);
+        document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50"; 
+        document.getElementById('total').innerText = sub - appliedDiscount + (free ? 0 : 50);
         if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden'); else document.getElementById('ship-promo').classList.add('hidden');
     }
 
@@ -760,12 +723,17 @@
         const d = { 
             name: document.getElementById('f-name').value, 
             phone: document.getElementById('f-phone').value, 
+            flat: document.getElementById('f-flat').value,
+            bldg: document.getElementById('f-bldg').value,
             addr: document.getElementById('f-address').value, 
+            landmark: document.getElementById('f-landmark').value,
             city: document.getElementById('f-city').value, 
             pin: document.getElementById('f-pin').value 
         };
         
         let orderSummary = "";
+        let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, Landmark: ${d.landmark ? d.landmark : 'None'}, ${d.city} - ${d.pin}`;
+
         for(let id in cart) { 
             const p = products.find(x => x.id === id); 
             orderSummary += `${p.name} (x${cart[id]}), `; 
@@ -782,18 +750,33 @@
             "image": "logo.png",
             "handler": async function (response) {
                 btn.innerText = "✅ Payment Successful!";
-                let msg = `🛍️ *NEW PAID ORDER: AYURSIDDHIT*\n\n`;
-                msg += `*Payment ID:* ${response.razorpay_payment_id}\n\n`;
+                
+                let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n`;
+                msg += `*Payment ID:* ${response.razorpay_payment_id}\n`;
+                msg += `*Customer:* ${d.name}\n`;
+                msg += `*Phone:* ${d.phone}\n\n`;
+                
+                msg += `📦 *ITEMS TO PACK:*\n`;
                 for(let id in cart) { 
                     const p = products.find(x => x.id === id); 
-                    msg += `- ${p.name} x ${cart[id]}\n`; 
+                    msg += `👉 ${p.name} (Qty: ${cart[id]})\n`; 
                     if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} }
                 }
-                if (appliedDiscount > 0) { msg += `\n🎁 *Promo Discount:* -₹${appliedDiscount}`; }
-                msg += `\n\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${d.addr}, ${d.city} - ${d.pin}\n*Cust:* ${d.name} (${d.phone})`;
-                try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: `${d.addr}, ${d.city} - ${d.pin}` }); } catch(err) { }
-                if(currentUser) { let coinDiscount = 0; if(document.getElementById('use-coins-check').checked) { coinDiscount = Number(document.getElementById('coin-discount-amt').innerText); } let currentBal = Number(localStorage.getItem('coins_' + currentUser.uid)) || 0; localStorage.setItem('coins_' + currentUser.uid, currentBal - coinDiscount + 10); }
+                
+                if (appliedDiscount > 0) { msg += `\n🎁 *Promo Applied:* -₹${appliedDiscount}`; }
+                msg += `\n*Total Paid:* ₹${finalTotal}\n\n`;
+
+                msg += `📍 *EXACT DELIVERY DETAILS:*\n`;
+                msg += `Flat/House No: ${d.flat}\n`;
+                msg += `Building/Society: ${d.bldg}\n`;
+                msg += `Street/Area: ${d.addr}\n`;
+                if(d.landmark) { msg += `Landmark: ${d.landmark}\n`; }
+                msg += `City & Pin: ${d.city} - ${d.pin}\n`;
+                
+                try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
+                
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
+                
                 cart = {}; updateBadge(); closeCart();
                 btn.innerText = "💳 Pay securely via Razorpay"; btn.disabled = false;
             },
@@ -820,4 +803,3 @@
 </script>
 </body>
 </html>
-
