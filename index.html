@@ -5,399 +5,318 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
-    <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
+    <title>Ayursiddhit Naturals | Luxury Ayurvedic Care</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+        :root { 
+            --forest-green: #082b1a; /* Deeper, richer green */
+            --forest-glass: rgba(8, 43, 26, 0.85); /* Frosted glass green */
+            --gold-foil: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C); /* Real metallic gold */
+            --bg-texture: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+            --bg-cream: #FAF9F6; 
+            --text-dark: #1A1A1A; 
+            --border-soft: #E5E0D8;
+            --white: #FFFFFF;
+        }
+        
+        /* THE HANDMADE PAPER CANVAS */
+        body { 
+            margin: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-cream); 
+            background-image: var(--bg-texture); /* Subtle noise texture */
+            color: var(--text-dark); 
+            overflow-x: hidden; 
+        }
+        
+        h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; font-weight: 600; margin-top: 0; }
         .hidden { display: none !important; }
         
-        body.dark-mode { --bg: #121212; --card-bg: #1e1e1e; --text: #f1f1f1; --amazon: #000000; --border: #333; }
-        body.dark-mode header { background: #000; border-bottom: 2px solid var(--gold); }
-        body.dark-mode .p-card, body.dark-mode #search-section, body.dark-mode #community-section, body.dark-mode .policy-view, body.dark-mode .product-view, body.dark-mode .cart-view, body.dark-mode .wholesale-view, body.dark-mode .about-view, body.dark-mode #results-section, body.dark-mode #quiz-view, body.dark-mode #profile-view, body.dark-mode #hamper-view, body.dark-mode #home-top-section { background: var(--card-bg) !important; color: var(--text) !important; border-color: var(--border) !important; }
-        body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #2c2c2c; color: white; border: 1px solid #444; }
-        body.dark-mode .p-qty { background: #2c2c2c; }
-        
-        .promo-banner { background: var(--luxury); color: black; padding: 8px 0; font-weight: bold; font-size: 0.95rem; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #b3932b; width: 100%; display: none; }
-        .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
-        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); transition: background 0.3s; }
-        .h-row { display: flex; align-items: center; justify-content: space-between; }
-        .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury); }
-        .h-text { font-size: 0.95rem; font-weight: bold; line-height: 1.1; margin-left: 8px; }
-        .h-text span { color: var(--gold); font-size: 0.6rem; display: block; }
-        .h-actions { display: flex; align-items: center; gap: 8px; }
-        .signin-btn { background: none; border: none; color: white; cursor: pointer; text-align: center; min-width: 50px; }
-        
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
-        .p-card { background: var(--card-bg); border-radius: 8px; padding: 10px; border: 1px solid var(--border); text-align: center; transition: background 0.3s, border 0.3s; position:relative; display: flex; flex-direction: column; }
-        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; }
-        .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
-        .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; cursor: pointer; }
-        .btn-cart { background: var(--gold); border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; color: black; }
-        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; color: black; }
-
-        .cart-view, .product-view, .policy-view, .wholesale-view, .about-view, #quiz-view, #profile-view, #hamper-view { padding: 15px; max-width: 800px; margin: auto; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
-        .ship-alert { background: #e8f5e9; color: #1b5e20; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 15px; border: 1px solid #c3e6cb; }
-
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        .rating-box { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 15px; }
-        .rating-box input { display: none; }
-        .rating-box label { font-size: 2.5rem; color: #ddd; cursor: pointer; transition: 0.2s; }
-        .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: #ffa41c; }
-
-        .fomo-popup { position: fixed; bottom: -100px; left: 15px; background: var(--card-bg); color: var(--text); padding: 10px 15px; border-radius: 25px; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-size: 0.85rem; font-weight: bold; z-index: 3500; display: flex; align-items: center; gap: 8px; transition: bottom 0.5s ease-in-out; }
-        .fomo-popup.show { bottom: 80px; }
-
-        .golden-ing { color: var(--luxury); font-weight: bold; border-bottom: 1px dashed var(--luxury); cursor: pointer; transition: 0.2s; }
-        .golden-ing:hover { background: rgba(212, 175, 55, 0.1); }
-        .low-stock { color: var(--red); font-size: 0.8rem; font-weight: bold; background: rgba(177, 39, 4, 0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; border: 1px solid var(--red); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-
-        .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
-        .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
-
-        @media (min-width: 768px) {
-            .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
-            .h-row { max-width: 1200px; margin: 0 auto; }
-            .search-container { max-width: 1200px; margin: 0 auto; }
-            .product-layout { display: flex; gap: 30px; }
-            .product-image-section { flex: 1; }
-            .product-details-section { flex: 1; }
-            .hero-slider { max-width: 1200px; margin: 20px auto; height: 300px; }
+        /* 👑 FROSTED GLASS HEADER */
+        header { 
+            background: var(--forest-glass); 
+            backdrop-filter: blur(12px); /* The Frosted Glass Effect */
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--white); 
+            padding: 15px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 2000; 
+            border-bottom: 1px solid rgba(252, 246, 186, 0.3); 
         }
+        .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+        .h-logo { height: 45px; width: 45px; border-radius: 50%; border: 2px solid transparent; background: var(--gold-foil); padding: 2px; object-fit: cover; }
+        .h-text { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; line-height: 1; margin-left: 12px; letter-spacing: 1px; background: var(--gold-foil); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .h-text span { font-family: 'Montserrat', sans-serif; color: #E0E0E0; font-size: 0.65rem; display: block; letter-spacing: 2.5px; font-weight: 300; margin-top: 4px; text-transform: uppercase; -webkit-text-fill-color: initial; }
+        .h-actions { display: flex; align-items: center; gap: 18px; }
+        .icon-btn { background: none; border: none; color: #FCF6BA; font-size: 1.3rem; cursor: pointer; position: relative; transition: 0.3s; }
+        .icon-btn:hover { transform: scale(1.1); }
+        
+        /* ✨ CINEMATIC HERO SECTION WITH VIGNETTE */
+        .hero-luxury { 
+            background: radial-gradient(circle, rgba(8,43,26,0.6) 0%, rgba(8,43,26,0.95) 100%), url('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover; 
+            padding: 80px 20px; 
+            text-align: center; 
+            color: var(--white); 
+            border-bottom: 2px solid #BF953F; 
+            position: relative;
+        }
+        .hero-luxury::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gold-foil); }
+        .hero-luxury h1 { font-size: 2.5rem; background: var(--gold-foil); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; letter-spacing: 1.5px; }
+        .hero-luxury p { font-size: 1.05rem; max-width: 650px; margin: 0 auto 30px auto; font-weight: 300; line-height: 1.8; color: #F5F5F5; letter-spacing: 0.5px; }
+        
+        .btn-luxury-outline { 
+            border: 1px solid #FCF6BA; 
+            color: #FCF6BA; 
+            background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(5px);
+            padding: 14px 35px; 
+            font-family: 'Montserrat', sans-serif; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: all 0.4s ease; 
+        }
+        .btn-luxury-outline:hover { background: var(--gold-foil); color: var(--forest-green); border-color: transparent; }
+
+        /* 📦 TEXTURED PRODUCT GRID */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .p-card { 
+            background: var(--white); 
+            border-radius: 4px; 
+            padding: 25px; 
+            text-align: center; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            border: 1px solid var(--border-soft); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04); 
+            transition: all 0.4s ease; 
+            background-image: var(--bg-texture); /* Texture on cards too */
+        }
+        .p-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(8, 43, 26, 0.1); border-color: #BF953F; }
+        .p-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 20px; border-radius: 2px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .p-card h4 { font-size: 1.2rem; color: var(--forest-green); margin-bottom: 10px; font-weight: 600; letter-spacing: 0.5px; }
+        .p-price { color: var(--text-dark); font-weight: 500; font-size: 1.15rem; margin-bottom: 18px; font-family: 'Montserrat', sans-serif; }
+        
+        /* METALLIC BUTTONS */
+        .btn-gold { 
+            background: var(--gold-foil); 
+            border: none; 
+            color: var(--forest-green); 
+            padding: 14px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 0.85rem; 
+            letter-spacing: 1.5px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            width: 100%; 
+            border-radius: 2px; 
+            box-shadow: 0 4px 15px rgba(191, 149, 63, 0.2);
+        }
+        .btn-gold:hover { filter: brightness(1.1); box-shadow: 0 6px 20px rgba(191, 149, 63, 0.4); }
+        
+        .btn-dark { background: var(--forest-green); border: none; color: var(--white); padding: 14px; font-family: 'Montserrat', sans-serif; font-weight: 500; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; border-radius: 2px; }
+        .btn-dark:hover { background: #051a10; }
+        
+        .p-qty { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 10px 0; border: 1px solid var(--border-soft); padding: 6px; background: rgba(255,255,255,0.5); }
+        .p-qty button { background: transparent; color: var(--forest-green); border: none; font-size: 1.3rem; cursor: pointer; width: 30px; }
+
+        /* CATEGORY FILTER BAR */
+        .filter-bar { display: flex; gap: 20px; overflow-x: auto; padding: 25px 20px; max-width: 1200px; margin: 0 auto; scrollbar-width: none; border-bottom: 1px solid var(--border-soft); }
+        .cat-btn { background: transparent; color: var(--text-dark); border: none; padding: 8px 0; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; white-space: nowrap; position: relative; opacity: 0.6; transition: 0.3s; }
+        .cat-btn.active, .cat-btn:hover { opacity: 1; color: var(--forest-green); font-weight: 600; }
+        .cat-btn::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--gold-foil); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cat-btn.active::after, .cat-btn:hover::after { width: 100%; }
+        
+        .floating-wa { position: fixed; bottom: 30px; right: 30px; background: #25d366; border-radius: 50%; width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); transition: 0.4s; }
+        .floating-wa:hover { transform: translateY(-5px) scale(1.05); }
+
+        /* VIEWS (Cart, Product, Profile) */
+        .cart-view, .product-view, .policy-view, .wholesale-view, .about-view, #quiz-view, #profile-view, #hamper-view { 
+            padding: 50px 30px; 
+            max-width: 850px; 
+            margin: 40px auto; 
+            background: var(--white); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05); 
+            border: 1px solid var(--border-soft); 
+            background-image: var(--bg-texture);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border-soft); background: rgba(250, 249, 246, 0.7); color: var(--text-dark); font-family: 'Montserrat', sans-serif; box-sizing: border-box; margin-bottom: 20px; font-size: 0.95rem; outline: none; transition: all 0.3s; }
+        input:focus, textarea:focus { border-color: #BF953F; box-shadow: 0 0 0 1px #BF953F; }
+        
+        /* EMBOSSED TRUST BADGES */
+        .trust-badges { display: flex; justify-content: center; gap: 30px; padding: 35px 20px; background: var(--bg-cream); background-image: var(--bg-texture); border-bottom: 1px solid var(--border-soft); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--forest-green); font-weight: 600; text-align: center; flex-wrap: wrap; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); }
     </style>
 </head>
 <body>
 
-<div id="fomo-box" class="fomo-popup"><span style="font-size: 1.2rem;">🛍️</span> <span id="fomo-text">Someone just ordered!</span></div>
-
-<div id="promo-banner" class="promo-banner"><div class="scrolling-text" id="promo-text"></div></div>
-
-<div id="flash-sale" class="hidden" style="background: #111; color: #fff; text-align: center; padding: 6px; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid #333; letter-spacing: 0.5px;">
-    <span id="fs-text">⚡ FLASH SALE</span> ends in <span id="countdown" style="color:var(--gold); font-size: 1rem; margin-left: 5px;">00:00:00</span> ⏳
-</div>
-
 <header>
     <div class="h-row">
         <div style="display:flex; align-items:center;">
-            <img src="logo.png" class="h-logo">
-            <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
+            <img src="logo.png" class="h-logo" onerror="this.src='https://via.placeholder.com/45x45/0b3b24/d4af37?text=AN'">
+            <div class="h-text">Ayursiddhit<br><span>Clinical Ayurveda</span></div>
         </div>
         <div class="h-actions">
-            <button onclick="toggleLanguage()" id="lang-btn" style="background:none; border:none; font-size:1.2rem; cursor:pointer; margin-right:5px;">🌐 EN</button>
-            <button id="dark-btn" onclick="toggleDarkMode()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">🌙</button>
-            <button class="signin-btn" onclick="handleAccountClick()"><span id="user-name" style="color:var(--gold); font-size:0.6rem;">Sign In</span><b style="display:block; font-size:0.8rem;">Account</b></button>
-            <button onclick="showCart()" style="background:none; border:none; position:relative; font-size: 1.3rem;">🛒<span id="badge" style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:0.6rem;">0</span></button>
+            <button class="icon-btn" onclick="handleAccountClick()" title="Client Services">👤</button>
+            <button class="icon-btn" onclick="showCart()" title="Your Regimen">🛒<span id="badge" style="position:absolute; top:-6px; right:-8px; background:var(--forest-green); color:#FCF6BA; border: 1px solid #FCF6BA; border-radius:50%; width:18px; height:18px; font-size:0.65rem; display:flex; align-items:center; justify-content:center; font-weight:bold; font-family:'Montserrat';">0</span></button>
         </div>
-    </div>
-    <div style="margin-top: 12px; text-align: center;">
-        <button onclick="showWholesale()" id="t-wholesale-btn" style="background: var(--green); color: white; border: 1px solid var(--luxury); padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; width: 100%; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">📦 Wholesale / Bulk Orders for Retailers</button>
     </div>
 </header>
 
-<div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚</div>
-
-<div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border); transition: background 0.3s;">
-    <div class="search-container" style="position: relative; display: flex; align-items: center;">
-        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 45px 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
-        <button onclick="startVoiceSearch()" style="position: absolute; right: 10px; background: none; border: none; font-size: 1.3rem; cursor: pointer;">🎙️</button>
-    </div>
-    <div style="display: flex; gap: 10px; overflow-x: auto; margin-top: 15px; padding-bottom: 5px; scrollbar-width: none;">
-        <button class="cat-btn t-all" onclick="filterCategory('All')" style="background: var(--amazon); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer; border: 1px solid var(--amazon);">✨ All</button>
-        <button class="cat-btn t-soaps" onclick="filterCategory('Soap')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🌿 Soaps</button>
-        <button class="cat-btn t-oils" onclick="filterCategory('Oil')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">💆‍♀️ Oils</button>
-        <button class="cat-btn t-face" onclick="filterCategory('Face')" style="background: #e9ecef; color: #333; border: 1px solid #ccc; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">✨ Face Packs</button>
-        <button class="cat-btn t-acne" onclick="filterCategory('Acne')" style="background: #eef2f5; color: var(--red); border: 1px solid var(--red); padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🔴 Acne</button>
-        <button class="cat-btn t-hair" onclick="filterCategory('Hairfall')" style="background: #eef2f5; color: #8b4513; border: 1px solid #8b4513; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer;">🍂 Hairfall</button>
-    </div>
-</div>
-
 <div id="home-top-section">
-    <div class="hero-slider">
-        <div class="slides" id="slide-track">
-            <div class="slide-card" style="background: linear-gradient(135deg, #1b5e20, #4caf50);">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Pure Ayurvedic Healing</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Formulated by Dr. Prasiddhi Patil</p>
-            </div>
-            <div class="slide-card" style="background: linear-gradient(135deg, #d4af37, #febd69); color:black;">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">Luxury Combos</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Flat 10% Off on Custom Hampers</p>
-            </div>
-            <div class="slide-card" style="background: linear-gradient(135deg, #8b4513, #a0522d);">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Stop Hairfall Naturally</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Try our Bestselling Oils</p>
-            </div>
-        </div>
+    <div class="hero-luxury">
+        <h1>Authentic Clinical Purity</h1>
+        <p>Formulated by Dr. Prasiddhi Patil (BAMS). Handcrafted in small batches using ancient Ahilyanagar traditions to restore your skin and hair to their purest state.</p>
+        <button class="btn-luxury-outline" onclick="document.getElementById('main-view').scrollIntoView({behavior: 'smooth'})">Discover the Rituals</button>
     </div>
-    <div style="display: flex; justify-content: space-between; padding: 15px; background: var(--card-bg); margin: 0 15px 15px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-size: 0.75rem; font-weight: bold; color: var(--amazon); border: 1px solid var(--border);">
-        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🌿</span>100% Natural</div>
-        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">👩‍⚕️</span>Dr. Formulated</div>
-        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🐇</span>Cruelty Free</div>
-        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🇮🇳</span>Made in India</div>
+
+    <div class="trust-badges">
+        <div>🌿 100% Botanical</div>
+        <div>👩‍⚕️ Doctor Formulated</div>
+        <div>✨ Clinical Grade</div>
+        <div>🇮🇳 Handcrafted in India</div>
     </div>
-</div>
 
-<div id="hamper-banner" style="background: linear-gradient(135deg, var(--gold) 0%, var(--luxury) 100%); margin: 15px; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.15); cursor:pointer;" onclick="showHamper()">
-    <h3 style="margin:0 0 5px 0; color:black; font-size:1.3rem;">🎁 Build a Custom Gift Hamper</h3>
-    <p style="font-size:0.95rem; color:#222; margin-bottom:10px; font-weight:bold;">Pick 3 items and get a flat 10% Combo Discount!</p>
-    <button style="background:black; color:var(--gold); border:none; padding:8px 20px; border-radius:25px; font-weight:bold; font-size:1rem;">Build Now</button>
-</div>
-
-<div id="quiz-banner" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); margin: 15px; padding: 20px; border-radius: 12px; border: 1px solid var(--gold); text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <h3 style="margin:0 0 5px 0; color:var(--amazon);" id="t-quiz-title">Not sure what to buy? 🤔</h3>
-    <p style="font-size:0.9rem; color:#555; margin-bottom:15px;" id="t-quiz-desc">Take Dr. Prasiddhi's 30-second Ayurvedic skin & hair quiz to find your perfect match.</p>
-    <button onclick="startQuiz()" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:25px; font-weight:bold; cursor:pointer; font-size:1rem;" id="t-quiz-btn">🩺 Find My Routine</button>
+    <div style="max-width: 1200px; margin: 40px auto 0 auto; padding: 0 20px;">
+        <input type="text" id="search-box" placeholder="Search for pure formulations..." onkeyup="searchProducts()" style="border-radius: 40px; padding: 18px 30px; border: 1px solid #BF953F; background: rgba(255,255,255,0.5); box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+    </div>
+    
+    <div class="filter-bar">
+        <button class="cat-btn active" onclick="filterCategory('All'); document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">All Formulations</button>
+        <button class="cat-btn" onclick="filterCategory('Soap'); document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">Cleansing Bars</button>
+        <button class="cat-btn" onclick="filterCategory('Oil'); document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">Therapeutic Oils</button>
+        <button class="cat-btn" onclick="filterCategory('Face'); document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active');">Face Lepas</button>
+        <button class="cat-btn" onclick="showWholesale()" style="color: var(--forest-green); font-weight: bold; opacity: 1;">Spa / B2B Enquiries</button>
+    </div>
 </div>
 
 <main id="main-view" class="product-grid"></main>
 
-<div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
-    <button onclick="closeProfile()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
-    <p style="font-size:1.1rem; color:var(--text); font-weight:bold;" id="prof-name-display"></p>
-    <p style="color:#555; margin-top:-10px;" id="prof-email-display"></p>
-    <h3 style="color:var(--amazon); border-bottom:2px solid var(--border); padding-bottom:5px; margin-top:30px;">📦 My Past Orders</h3>
-    <div id="prof-orders-list" style="font-size:0.95rem; color:var(--text);">Loading orders...</div>
-    <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
+<div id="profile-view" class="hidden">
+    <button onclick="closeProfile()" style="background:none; border:none; color:#BF953F; font-family:'Montserrat'; font-weight:600; cursor:pointer; margin-bottom:25px; padding:0; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem;">⬅ Return to Boutique</button>
+    <h2 style="color:var(--forest-green); font-size: 2.2rem;">Client Profile</h2>
+    <p style="font-size:1.1rem; color:var(--text-dark); font-weight:600; text-transform:capitalize;" id="prof-name-display"></p>
+    <p style="color:#666; font-size:0.95rem;" id="prof-email-display"></p>
+    <h3 style="color:var(--forest-green); border-bottom:1px solid var(--border-soft); padding-bottom:15px; margin-top:40px; font-family:'Playfair Display'; font-size: 1.6rem;">Order Archives</h3>
+    <div id="prof-orders-list" style="font-size:0.95rem; color:var(--text-dark); margin-top:25px;">Loading records...</div>
+    <button onclick="logoutUser()" class="btn-dark" style="margin-top:40px;">Secure Sign Out</button>
 </div>
 
-<div id="hamper-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
-    <button onclick="closeHamper()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <h2 style="color:var(--amazon); margin-top:0;">🎁 Build Gift Hamper</h2>
-    <p style="color:var(--text); font-size:0.95rem;">Select 1 Soap, 1 Oil, and 1 Face Pack to create a luxury combo. A 10% discount will be applied automatically at checkout!</p>
-    <div style="margin-bottom:15px;">
-        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">1. Select Soap 🌿</label>
-        <select id="hamper-soap" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
-    </div>
-    <div style="margin-bottom:15px;">
-        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">2. Select Hair Care 💆‍♀️</label>
-        <select id="hamper-oil" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
-    </div>
-    <div style="margin-bottom:20px;">
-        <label style="font-weight:bold; color:var(--amazon); display:block; margin-bottom:5px;">3. Select Face Pack ✨</label>
-        <select id="hamper-face" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text);"></select>
-    </div>
-    <button onclick="addHamperToCart()" style="background:var(--gold); color:black; border:none; width:100%; padding:15px; border-radius:6px; font-weight:bold; font-size:1.1rem; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.1);">🛒 Add Hamper to Cart</button>
-</div>
-
-<div id="quiz-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); text-align:center; padding:30px 15px;">
-    <button onclick="closeQuiz()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back</button>
-    <h2 style="color:var(--green); margin-top:0;">🩺 Ayurvedic Consultation</h2>
-    <div id="quiz-step-1">
-        <h3 id="dyn-quiz-title">What is your main concern?</h3>
-        <button id="dyn-quiz-opt1" onclick="nextQuiz(quizKeys.opt1)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🔴 Pimples & Acne</button>
-        <button id="dyn-quiz-opt2" onclick="nextQuiz(quizKeys.opt2)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🍂 Hairfall & Dandruff</button>
-        <button id="dyn-quiz-opt3" onclick="nextQuiz(quizKeys.opt3)" style="display:block; width:100%; padding:15px; margin-bottom:10px; background:rgba(0,0,0,0.05); border:1px solid #ccc; border-radius:8px; font-size:1.1rem; font-weight:bold; color:var(--text); cursor:pointer;">🌟 Dull Skin / Tanning</button>
-    </div>
-    <div id="quiz-step-2" class="hidden">
-        <h3>Analyzing your needs...</h3>
-        <div id="quiz-result-card" style="margin-top:20px;"></div>
-    </div>
-</div>
-
-<div id="results-section" style="padding: 25px 15px; background: var(--card-bg); border-top: 2px solid var(--border); margin-top:20px;">
-    <h3 style="color:var(--amazon); text-align:center; margin-top:0; font-size:1.3rem;">📸 Real Ayurvedic Results</h3>
-    <p style="text-align:center; font-size:0.9rem; color:var(--text); margin-bottom:20px;">Healing takes time, but the glow is forever.</p>
-    <div style="display:flex; gap:15px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none;">
-        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-            <div style="display:flex; gap:5px;"><div style="flex:1; background:#ccc; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">Before</div><div style="flex:1; background:var(--green); height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">After 4 Wks</div></div>
-            <p style="margin:10px 0 0 0; font-size:0.9rem; font-weight:bold; color:var(--text);">Acne totally cleared! ✨</p>
-        </div>
-        <div style="min-width:220px; border:1px solid var(--border); border-radius:8px; padding:12px; background:var(--bg); text-align:center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-            <div style="display:flex; gap:5px;"><div style="flex:1; background:#ccc; height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:#333; font-weight:bold;">Before</div><div style="flex:1; background:var(--gold); height:90px; border-radius:4px; display:flex; align-items:center; justify-content:center; color:black; font-weight:bold;">After 6 Wks</div></div>
-            <p style="margin:10px 0 0 0; font-size:0.9rem; font-weight:bold; color:var(--text);">Hairfall stopped! 🌿</p>
-        </div>
-    </div>
-</div>
-
-<div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px; text-align: center;">
-    <button onclick="closeAbout()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--luxury); margin-bottom: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-    <h2 style="color: var(--amazon); margin-top:0; margin-bottom: 5px; font-size: 1.8rem;">Dr. Prasiddhi Patil</h2>
-    <h4 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">BAMS, Ahilyanagar</h4>
-    <p style="font-size:1.05rem; color:var(--text); line-height: 1.7; text-align: left; margin-top: 25px; background: rgba(0,0,0,0.03); padding: 20px; border-radius: 8px; border-left: 4px solid var(--gold);">
-        Welcome to <b>Ayursiddhit Naturals</b>. As an Ayurvedic doctor, I believe that true beauty and wellness come from pure, natural ingredients rather than harsh chemicals. <br><br>
-        After completing my extensive medical education (BAMS) in Ahilyanagar, I saw a deep need for genuine, healing personal care products. That is exactly why I started crafting these company-grade formulations right here at home, strictly adhering to authentic Ayurvedic principles. <br><br>
-        Every soap, oil, and face pack we sell is made with profound care, medical knowledge, and raw natural ingredients to ensure it is perfectly suited for your skin and hair. Thank you for trusting our brand and joining our beautiful journey to natural healing!
-    </p>
-</div>
-
-<div id="community-section" style="background: var(--card-bg); padding: 25px 15px; margin-top: 20px; text-align: center; border-top: 2px solid var(--border);">
-    <h3 style="margin: 0 0 10px 0; color: var(--amazon); font-size: 1.2rem;" id="t-social-title">Join Our Ayurvedic Community 🌱</h3>
-    <p style="font-size: 0.95rem; color: var(--text); margin-bottom: 15px; line-height: 1.4;">Follow Dr. Prasiddhi for daily skincare tips, natural remedies, and behind-the-scenes!</p>
-    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <a href="https://www.instagram.com/dr.prasiddhi_?igsh=MTA1dWt5cHUycThreQ==" target="_blank" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">📸 Instagram</a>
-        <a href="https://youtube.com/@drprasiddhipatil?si=1wuB5U9rTbfCiZUA" target="_blank" style="background: #FF0000; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.15);">▶️ YouTube</a>
-    </div>
-</div>
-
-<div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
-    <button onclick="closePolicy()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <h2 id="policy-title" style="color: var(--amazon); margin-top:0;"></h2>
-    <div id="policy-content" style="line-height: 1.6; color: var(--text); font-size: 0.95rem;"></div>
-</div>
-
-<div id="wholesale-view" class="hidden wholesale-view" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px;">
-    <button onclick="closeWholesale()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
-    <h2 style="color: var(--amazon); margin-top:0;">📦 Wholesale & Bulk Orders</h2>
-    <p style="font-size:0.95rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;">Partner with Ayursiddhit Naturals. Select your quantities below to auto-calculate your special B2B pricing.</p>
-    <form id="wholesale-form">
-        <input type="text" id="w-shop" placeholder="Shop Name" required><input type="tel" id="w-phone" placeholder="WhatsApp Number" required>
-        <div id="w-product-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 15px; background: rgba(0,0,0,0.02);"></div>
-        <div class="form-grid">
-            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:rgba(0,0,0,0.05); font-weight:bold; color:var(--red); text-align:center;">
-            <input type="number" id="w-margin" placeholder="Expected Margin %" required oninput="calculateWholesale()">
-        </div>
-        <div id="wholesale-bill" class="hidden" style="background:rgba(0,0,0,0.03); padding:15px; border-radius:8px; margin-bottom:15px; border:1px dashed #ccc; margin-top:10px;">
-            <p style="display:flex; justify-content:space-between; margin:5px 0;">Total Order MRP: <span>₹<span id="w-bill-mrp">0</span></span></p>
-            <p style="display:flex; justify-content:space-between; margin:5px 0; color:green; font-weight:bold;">Your Margin Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
-            <hr style="border:0; border-top:1px solid var(--border); margin:10px 0;">
-            <h3 style="display:flex; justify-content:space-between; margin:0; color:var(--red);">Final Payable Amount: <span>₹<span id="w-bill-total">0</span></span></h3>
-        </div>
-        <textarea id="w-address" placeholder="Full Address & Landmark" rows="2" required></textarea>
-        <button type="submit" class="btn-buy" style="background:#25D366; color:white;">🚀 Send WhatsApp Enquiry</button>
-    </form>
-</div>
-
-<div id="product-view" class="hidden product-view" style="position: relative;">
-    <button onclick="closeProduct()" style="background:none; border:none; color:var(--amazon); font-weight:bold; font-size:1rem; cursor:pointer; margin-bottom:15px; padding:0; display:flex; align-items:center; gap:5px;">⬅ Back to Shop</button>
+<div id="product-view" class="hidden product-view">
+    <button onclick="closeProduct()" style="background:none; border:none; color:#BF953F; font-family:'Montserrat'; font-weight:600; cursor:pointer; margin-bottom:25px; padding:0; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem;">⬅ Return to Boutique</button>
     
-    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border);">
-        <img id="modal-img" src="" style="width:100%; border-radius:8px; object-fit:contain; max-height:400px;">
-        <h2 id="modal-name" style="margin:15px 0 5px 0; font-size: 1.5rem;"></h2>
-        <h3 id="modal-price" style="color:var(--red); margin:0 0 15px 0; font-size: 1.4rem;"></h3>
-        <div id="modal-stock-warn" class="low-stock hidden">🔥 Hurry, low stock!</div>
-        
-        <div style="background:rgba(0,0,0,0.03); padding:12px; border-radius:8px; margin-bottom:15px; border: 1px solid var(--border);">
-            <span style="font-size:0.85rem; font-weight:bold; color:var(--text); display:block; margin-bottom:5px;">🚚 Check Delivery Details</span>
-            <div style="display:flex; gap:10px;">
-                <input type="number" id="pin-check" placeholder="Enter Pincode" style="margin:0; flex:1; padding:10px;">
-                <button onclick="checkPincode()" style="background:var(--amazon); color:white; border:none; border-radius:6px; font-weight:bold; padding:0 15px; cursor:pointer;">Check</button>
+    <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+        <div style="flex: 1; min-width: 300px;">
+            <img id="modal-img" src="" style="width:100%; object-fit:cover; border-radius:4px; border: 1px solid var(--border-soft); box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        </div>
+        <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+            <h2 id="modal-name" style="color:var(--forest-green); font-size: 2.4rem; margin-bottom: 10px;"></h2>
+            <h3 id="modal-price" style="color:var(--text-dark); font-family:'Montserrat'; font-weight:400; font-size: 1.6rem; margin-top:0;"></h3>
+            
+            <p id="modal-desc" style="font-size:1rem; line-height: 1.9; color:#444; margin: 25px 0;"></p>
+            
+            <div class="p-qty" style="display:inline-flex; width: 130px; border-color: #BF953F; background: var(--white);">
+                <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty" style="font-weight:bold; font-family:'Montserrat'; font-size: 1.1rem;">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
             </div>
-            <p id="pin-msg" style="margin:8px 0 0 0; font-size:0.85rem; font-weight:bold;"></p>
-        </div>
-
-        <p id="modal-desc" style="font-size:1rem; color:var(--text); line-height: 1.5; margin-bottom: 20px;"></p>
-        
-        <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex;">
-            <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
-        </div>
-        
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
-            <button id="modal-add-btn" class="btn-cart" style="flex:1; margin:0; padding:12px; font-size:1rem;">🛒 Add to Cart</button>
-            <button id="modal-buy-btn" class="btn-buy" style="flex:1; margin:0; padding:12px; font-size:1rem;">⚡ Buy Now</button>
-        </div>
-        
-        <div id="upsell-section" class="hidden" style="background:#fff8e1; border:1px solid var(--gold); border-radius:8px; padding:15px; margin-bottom:20px; text-align:center;">
-            <h4 style="margin:0 0 10px 0; color:#b8860b;">✨ Make it a Complete Routine!</h4>
-            <div style="display:flex; align-items:center; justify-content:center; gap:15px;">
-                <img id="upsell-img" src="" style="width:50px; height:50px; border-radius:6px; object-fit:cover;">
-                <div style="text-align:left;"><b id="upsell-name"></b><br><span id="upsell-price" style="color:var(--red); font-weight:bold;"></span></div>
-                <button id="upsell-btn" style="background:var(--amazon); color:white; border:none; padding:8px 15px; border-radius:6px; font-weight:bold; cursor:pointer;">Add Both</button>
-            </div>
-        </div>
-
-        <hr style="border:0; border-top:1px solid var(--border); margin:30px 0;">
-        <h3 style="margin-top:0; color: var(--amazon); font-size: 1.3rem;">Customer Reviews ⭐</h3>
-        <div id="modal-reviews-list" style="margin-bottom:25px; font-size:0.95rem;"></div>
-        
-        <div style="background:rgba(0,0,0,0.03); padding:20px; border-radius:8px; border:1px solid var(--border);">
-            <b style="font-size:1rem; display:block; margin-bottom:5px;">Write a Review</b>
-            <div class="rating-box">
-                <input type="radio" id="star5" name="rating" value="5" checked><label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
-            </div>
-            <textarea id="review-text" placeholder="What did you like about this product?" rows="3" style="font-size: 1rem;"></textarea>
-            <label style="font-size:0.9rem; font-weight:bold; margin-bottom:5px; display:block; color:var(--text);">📸 Add a Photo (Optional)</label>
-            <input type="file" id="review-image" accept="image/*" style="padding:10px; background:var(--card-bg); cursor:pointer;">
-            <button id="submit-rev-btn" onclick="submitReview()" style="background:var(--amazon); color:white; border:none; padding:15px; border-radius:6px; cursor:pointer; width:100%; font-weight: bold; font-size: 1rem; margin-top:10px;">Submit Review</button>
+            
+            <button id="modal-add-btn" class="btn-gold" style="margin-top: 25px; font-size: 0.9rem; padding: 16px;">Add to Ritual</button>
+            <button id="modal-buy-btn" class="btn-dark" style="font-size: 0.9rem; padding: 16px;">Purchase Now</button>
         </div>
     </div>
 </div>
 
 <div id="cart-view" class="hidden cart-view">
-    <h2 id="t-cart-title">Review Your Order</h2>
-    <div id="cart-list"></div>
-    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid var(--border); margin-top:15px;">
+    <button onclick="closeCart()" style="background:none; border:none; color:#BF953F; font-family:'Montserrat'; font-weight:600; cursor:pointer; margin-bottom:25px; padding:0; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem;">⬅ Continue Shopping</button>
+    <h2 style="color:var(--forest-green); text-align:center; font-size: 2.2rem;">Your Regimen</h2>
+    <div id="cart-list" style="margin-bottom: 35px; font-family:'Montserrat';"></div>
+    
+    <div style="background:var(--white); padding:35px; border:1px solid #BF953F; box-shadow: inset 0 0 20px rgba(191, 149, 63, 0.05);">
         
-        <div style="background:#fff3cd; color:#856404; padding:12px; border-radius:8px; font-size:0.9rem; font-weight:bold; margin-bottom:15px; text-align:center; border: 1px solid #ffeeba;">
-            ⏳ Freshly Handcrafted: Please allow 48 hours for order dispatch.
+        <div style="text-align:center; font-family:'Playfair Display'; color:var(--forest-green); font-style:italic; margin-bottom:25px; font-size: 1.1rem;">
+            "Please allow 48 hours for the clinical preparation and dispatch of your formulation."
         </div>
 
-        <div id="ship-promo" class="ship-alert hidden">🎉 मोफत डिलीव्हरी अनलॉक झाली!</div>
-        
-        <div style="background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #ccc;">
-            <div style="display:flex; gap:10px; margin-bottom:5px;">
-                <input type="text" id="cart-promo-input" placeholder="Enter Promo Code" style="margin:0; text-transform:uppercase;">
-                <button onclick="applyPromo()" style="background:var(--amazon); color:white; border:none; border-radius:6px; padding:0 15px; font-weight:bold;">Apply</button>
-            </div>
-            <div id="promo-msg" style="font-size:0.8rem; font-weight:bold; height:15px;"></div>
+        <div style="display:flex; gap:15px; margin-bottom:30px;">
+            <input type="text" id="cart-promo-input" placeholder="Privilege Code" style="margin:0; text-transform:uppercase; background:var(--bg-cream);">
+            <button onclick="applyPromo()" class="btn-gold" style="width:auto; padding:0 30px;">Apply</button>
         </div>
+        <div id="promo-msg" style="font-size:0.85rem; font-weight:bold; height:15px; margin-top:-15px; margin-bottom:20px; text-align:center;"></div>
         
         <form id="order-form">
+            <h4 style="color:var(--forest-green); font-family:'Playfair Display'; margin-bottom:20px; font-size: 1.4rem;">Shipping Details</h4>
             <input type="text" id="f-name" placeholder="Full Name" required>
-            <input type="tel" id="f-phone" placeholder="Mobile Number (10 Digits)" required pattern="[0-9]{10}">
-            
+            <input type="tel" id="f-phone" placeholder="Mobile Number" required pattern="[0-9]{10}">
             <div class="form-grid">
-                <input type="text" id="f-flat" placeholder="Flat / House No. / Floor" required>
-                <input type="text" id="f-bldg" placeholder="Building / Society Name" required>
+                <input type="text" id="f-flat" placeholder="Apt / Suite / Villa No." required>
+                <input type="text" id="f-bldg" placeholder="Building / Estate Name" required>
             </div>
-            <textarea id="f-address" placeholder="Street Name & Area" rows="2" required></textarea>
-            <input type="text" id="f-landmark" placeholder="Nearby Landmark (Optional)">
-            
+            <textarea id="f-address" placeholder="Street Address" rows="2" required></textarea>
             <div class="form-grid">
                 <input type="text" id="f-city" placeholder="City" required>
-                <input type="number" id="f-pin" placeholder="Pincode" required>
+                <input type="number" id="f-pin" placeholder="Postal Code" required>
             </div>
+            <input type="hidden" id="f-landmark">
             
-            <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
-                <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
-                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Promo Discount: <span>-₹<span id="discount-amt">0</span></span></p>
-                <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
-                <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
-                <button type="submit" class="btn-buy" style="background:#25D366; color:white; padding:15px; font-size:1rem;">💳 Pay securely via Razorpay</button>
+            <div style="border-top:1px solid var(--border-soft); padding-top:25px; margin-top:25px; font-family:'Montserrat';">
+                <p style="display:flex; justify-content:space-between; color:#555; font-size: 1.05rem;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
+                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--forest-green); font-weight:bold; font-size: 1.05rem;">Privilege Discount: <span>-₹<span id="discount-amt">0</span></span></p>
+                <p style="display:flex; justify-content:space-between; color:#555; font-size: 1.05rem;">Clinical Dispatch: <span id="ship-fee">₹50</span></p>
+                <h3 style="display:flex; justify-content:space-between; color:var(--forest-green); font-family:'Playfair Display'; font-size:1.8rem; margin-top:20px;">Total: <span>₹<span id="total">0</span></span></h3>
+                <button type="submit" class="btn-dark" style="padding:20px; font-size:1.05rem; margin-top:25px; background:var(--forest-green);">Secure Checkout via Razorpay</button>
             </div>
         </form>
-        <button onclick="closeCart()" style="width:100%; border:none; background:none; color:blue; margin-top:10px;">Back to Shop</button>
     </div>
 </div>
 
-<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px 80px 15px; margin-top: 0; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
-    <p style="margin: 0 0 15px 0; font-weight: bold; font-size: 1rem;">Ayursiddhit Naturals</p>
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
-        <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;" id="t-f-about">👩‍⚕️ Our Story</a>
-        <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;" id="t-f-contact">Contact Us</a>
-        <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;" id="t-f-refund">Refund Policy</a>
-        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;" id="t-f-terms">Terms & Conditions</a>
-    </div>
-    <p style="margin: 0; color: #aaa;">&copy; 2026 Ayursiddhit Naturals.</p>
+<div id="wholesale-view" class="hidden wholesale-view">
+    <button onclick="closeWholesale()" style="background:none; border:none; color:#BF953F; font-family:'Montserrat'; font-weight:600; cursor:pointer; margin-bottom:25px; padding:0; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem;">⬅ Return</button>
+    <h2 style="color:var(--forest-green); text-align:center; font-size: 2.2rem;">Spa & B2B Partnerships</h2>
+    <p style="text-align:center; font-size:1rem; color:#444; line-height: 1.7; margin-bottom: 35px;">Elevate your client experience. Partner directly with Dr. Prasiddhi Patil for authentic, therapeutic-grade Ayurvedic supply.</p>
+    
+    <form id="wholesale-form">
+        <div class="form-grid">
+            <input type="text" id="w-shop" placeholder="Spa / Clinic Name" required>
+            <input type="tel" id="w-phone" placeholder="WhatsApp Contact" required>
+        </div>
+        <div id="w-product-list" style="margin-bottom: 25px;"></div>
+        <div class="form-grid">
+            <input type="text" id="w-mrp-display" placeholder="Total MRP: ₹0" readonly style="background:var(--white); color:var(--forest-green); font-weight:bold; border-color: #BF953F;">
+            <input type="number" id="w-margin" placeholder="Expected Margin %" required oninput="calculateWholesale()">
+        </div>
+        <div id="wholesale-bill" class="hidden" style="border:1px solid #BF953F; padding:25px; margin-bottom:25px; background:var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.02);">
+            <p style="display:flex; justify-content:space-between; margin:5px 0; font-size: 1.05rem;">Retail Value: <span>₹<span id="w-bill-mrp">0</span></span></p>
+            <p style="display:flex; justify-content:space-between; margin:5px 0; color:var(--forest-green); font-weight:bold; font-size: 1.05rem;">Partner Discount: <span>-₹<span id="w-bill-discount">0</span></span></p>
+            <h3 style="display:flex; justify-content:space-between; margin:20px 0 0 0; color:var(--forest-green); font-family:'Playfair Display'; font-size: 1.4rem;">Wholesale Investment: <span>₹<span id="w-bill-total">0</span></span></h3>
+        </div>
+        <textarea id="w-address" placeholder="Delivery Address" rows="2" required></textarea>
+        <button type="submit" class="btn-gold" style="padding:18px; font-size:1.05rem;">Submit Partnership Enquiry</button>
+    </form>
+</div>
+
+<footer style="background: var(--forest-green); background-image: var(--bg-texture); color: var(--light-gold); text-align: center; padding: 50px 20px 80px 20px; margin-top: 60px; font-family: 'Montserrat', sans-serif; border-top: 2px solid #BF953F;">
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; background: var(--gold-foil); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Ayursiddhit Naturals</h3>
+    <p style="font-size: 0.9rem; color: #E0E0E0; max-width: 550px; margin: 0 auto 30px auto; line-height: 1.8; font-weight: 300;">Authentic Ayurvedic formulations crafted with clinical precision in Nashik, India. Formulated exclusively by Dr. Prasiddhi Patil (BAMS).</p>
+    <div style="font-size: 0.8rem; opacity: 0.5; letter-spacing: 1px;">&copy; 2026 Ayursiddhit Naturals. All Rights Reserved.</div>
 </footer>
 
-<div id="install-banner" class="hidden" style="position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:var(--green); color:white; padding:12px 20px; border-radius:30px; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.3); display:flex; align-items:center; gap:10px; width:85%; max-width:320px; justify-content:space-between;">
-    <span style="font-size:0.85rem; font-weight:bold;">📲 Install Ayursiddhit App</span>
-    <button onclick="installApp()" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; font-weight:bold; cursor:pointer; color:black;">Install</button>
-</div>
-
-<a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi,%20I%20need%20an%20Ayurvedic%20consultation!" target="_blank" style="position: fixed; bottom: 20px; left: 20px; background: white; border: 2px solid var(--green); color: var(--green); padding: 8px 15px; border-radius: 25px; font-weight: bold; display: flex; align-items: center; gap: 8px; z-index: 3000; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-    <img src="logo.png" style="width:25px; height:25px; border-radius:50%; object-fit: cover;"> Consult Doctor
-</a>
-
-<a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" class="floating-wa" target="_blank">
+<a href="https://wa.me/918080926195?text=Hi%20Ayursiddhit%20Boutique,%20I%20have%20an%20enquiry." class="floating-wa" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
 </a>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion, addDoc, setDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion, addDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -415,19 +334,14 @@
 
     let currentUser = null;
     let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null; 
-    window.quizKeys = { opt1: 'Acne', opt2: 'Hairfall', opt3: 'Glow' };
-
-    const ingData = { 'neem': 'Deeply cleanses and fights acne.', 'tulsi': 'Reduces inflammation and soothes skin.', 'sandalwood': 'Cools skin and naturally evens tan lines.', 'ashwagandha': 'Boosts skin collagen and fights aging.', 'aloe vera': 'Intensely hydrates damaged skin.', 'turmeric': 'Natural glow-booster.', 'rosemary': 'Stimulates scalp for faster growth.' };
-    function highlightIngredients(text) { if(!text) return ""; let res = text; Object.keys(ingData).forEach(ing => { const regex = new RegExp(`\\b(${ing})\\b`, 'gi'); res = res.replace(regex, `<span class="golden-ing" onclick="alert('🌿 ${ing.toUpperCase()}:\\n${ingData[ing]}')">$1</span>`); }); return res; }
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { closeProfile(); document.getElementById('user-name').innerText = "Sign In"; }); };
+    window.logoutUser = () => { auth.signOut().then(() => { closeProfile(); }); };
     window.handleAccountClick = () => { if(currentUser) { showProfile(); } else { login(); } };
 
     onAuthStateChanged(auth, async (user) => { 
         currentUser = user;
         if(user) { 
-            document.getElementById('user-name').innerText = "Hi, " + user.displayName.split(' ')[0]; 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email, lastLogin: new Date().toISOString() }, { merge: true });
             document.getElementById('prof-name-display').innerText = user.displayName;
             document.getElementById('prof-email-display').innerText = user.email;
@@ -436,72 +350,42 @@
     });
 
     async function loadUserOrdersFromDB(uid) {
-        const list = document.getElementById('prof-orders-list'); list.innerHTML = "Loading...";
+        const list = document.getElementById('prof-orders-list'); list.innerHTML = "Retrieving archives...";
         try {
             const q = query(collection(db, "orders"), where("uid", "==", uid));
             const snap = await getDocs(q);
-            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>You haven't placed any orders yet.</p>"; return; }
+            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>No past rituals found.</p>"; return; }
             let ordersHtml = ""; let ordersArray = [];
             snap.forEach(doc => ordersArray.push(doc.data()));
             ordersArray.sort((a,b) => new Date(b.date) - new Date(a.date));
             ordersArray.forEach(o => {
-                let statusColor = o.status === 'Delivered' ? 'green' : (o.status === 'Shipped' ? 'blue' : 'orange');
-                ordersHtml += `<div style="background:#f9f9f9; padding:10px; border:1px solid var(--border); border-radius:6px; margin-bottom:10px;"><div style="display:flex; justify-content:space-between;"><b style="color:var(--amazon);">${new Date(o.date).toLocaleDateString()}</b><b style="color:${statusColor};">${o.status}</b></div><span style="font-size:0.85rem; color:#555;">${o.items}</span><br><b style="color:var(--red);">Total: ₹${o.total}</b></div>`;
+                ordersHtml += `<div style="border-bottom:1px solid var(--border-soft); padding:15px 0;"><div style="display:flex; justify-content:space-between;"><b style="color:var(--forest-green);">${new Date(o.date).toLocaleDateString()}</b><span style="font-weight:bold; color:#BF953F;">${o.status}</span></div><span style="font-size:0.9rem; color:#555;">${o.items}</span><br><b style="color:var(--text-dark);">Total: ₹${o.total}</b></div>`;
             });
             list.innerHTML = ordersHtml;
-        } catch(e) { list.innerHTML = "Error loading orders."; }
+        } catch(e) { list.innerHTML = "Error loading archives."; }
     }
-
-    window.toggleDarkMode = () => { document.body.classList.toggle('dark-mode'); const btn = document.getElementById('dark-btn'); if(document.body.classList.contains('dark-mode')) { btn.innerText = '☀️'; localStorage.setItem('theme', 'dark'); } else { btn.innerText = '🌙'; localStorage.setItem('theme', 'light'); } };
-    if(localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('dark-btn').innerText = '☀️'; }
 
     async function load() {
         try { 
             const snap = await getDocs(collection(db, "products")); 
             products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            render(); populateHamperSelects(); renderWholesaleList();
+            render(); renderWholesaleList();
         } catch(e) {}
-        
-        try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
-        try { const qSnap = await getDoc(doc(db, "settings", "quiz")); if(qSnap.exists()) { const qData = qSnap.data(); document.getElementById('dyn-quiz-title').innerText = qData.title; document.getElementById('dyn-quiz-opt1').innerText = qData.opt1Label; document.getElementById('dyn-quiz-opt2').innerText = qData.opt2Label; document.getElementById('dyn-quiz-opt3').innerText = qData.opt3Label; window.quizKeys.opt1 = qData.opt1Key; window.quizKeys.opt2 = qData.opt2Key; window.quizKeys.opt3 = qData.opt3Key; } } catch(e) {}
-        
         try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } } catch(e) {}
-
-        try {
-            const fsSnap = await getDoc(doc(db, "settings", "flash_sale"));
-            if(fsSnap.exists() && fsSnap.data().isActive) {
-                const endTime = new Date(fsSnap.data().endTime).getTime();
-                document.getElementById('fs-text').innerText = fsSnap.data().text; document.getElementById('flash-sale').classList.remove('hidden');
-                setInterval(() => { const distance = endTime - new Date().getTime(); if (distance <= 0) { document.getElementById('flash-sale').classList.add('hidden'); return; } let h = Math.floor(distance / (1000 * 60 * 60)); let m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); let s = Math.floor((distance % (1000 * 60)) / 1000); document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`; }, 1000);
-            }
-        } catch(e) {}
     }
 
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
-        if(products.length === 0) { grid.innerHTML = "<p style='grid-column: 1 / -1; text-align: center; color: #888;'>Loading products...</p>"; return; }
+        if(products.length === 0) { grid.innerHTML = "<p style='grid-column: 1 / -1; text-align: center; color: #888;'>Loading collections...</p>"; return; }
         products.forEach(p => {
-            const q = cart[p.id] || 0; let avg = "5.0"; let revCount = 0;
-            if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
-            let stockBadge = ""; if (p.stock > 0 && p.stock <= 5) { stockBadge = `<div class="low-stock">🔥 Only ${p.stock} left!</div>`; }
-            
-            let tagBadge = "";
-            if(p.tag === "Bestseller") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, var(--gold), var(--luxury)); color:black; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">🔥 Bestseller</div>`;
-            else if(p.tag === "New") tagBadge = `<div style="position:absolute; top:10px; left:0; background:linear-gradient(45deg, #2196F3, #00BCD4); color:white; padding:4px 10px; font-weight:bold; font-size:0.7rem; border-top-right-radius:15px; border-bottom-right-radius:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index:10;">✨ New</div>`;
-
+            const q = cart[p.id] || 0;
             grid.innerHTML += `
             <div class="p-card" data-desc="${(p.desc || '').replace(/"/g, '&quot;').toLowerCase()}">
-                ${tagBadge}
-                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
-                <h4 style="margin:8px 0 2px 0; font-size:0.85rem; cursor:pointer;" onclick="openProduct('${p.id}')">${p.name}</h4>
-                ${stockBadge}
-                <div style="margin-bottom:5px; cursor:pointer;" onclick="openProduct('${p.id}')"><span style="color:#ffa41c; font-size:0.8rem;">⭐ ${avg}</span> <span style="font-size:0.7rem; color:#007185;">(${revCount})</span></div>
-                <div style="color:var(--red); font-weight:bold;">₹${p.price}</div>
-                <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
-                <div style="display:flex; gap:8px;">
-                    <button class="btn-cart" style="flex:1; margin-top:0; padding:8px; font-size:0.85rem;" onclick="updateQty('${p.id}',1)">Add Cart</button>
-                    <button class="btn-buy" style="flex:1; margin-top:0; padding:8px; font-size:0.85rem;" onclick="buyNow('${p.id}')">Buy Now</button>
-                </div>
+                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;" onerror="this.src='https://via.placeholder.com/300?text=Ayursiddhit'">
+                <h4 onclick="openProduct('${p.id}')" style="cursor:pointer;">${p.name}</h4>
+                <div class="p-price">₹${p.price}</div>
+                <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span style="font-family:'Montserrat'; font-weight:600;">${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
+                <button class="btn-gold" onclick="updateQty('${p.id}',1)">Add to Regimen</button>
             </div>`;
         });
     }
@@ -509,64 +393,26 @@
     window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; } };
 
     window.filterCategory = (cat) => {
-        document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = '#e9ecef'; btn.style.color = '#333'; btn.style.border = '1px solid #ccc'; });
-        event.target.style.background = 'var(--amazon)'; event.target.style.color = 'white'; event.target.style.border = '1px solid var(--amazon)';
         const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase();
-        cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); const productDesc = card.getAttribute('data-desc'); if (cat === 'All' || productName.includes(searchCat) || productDesc.includes(searchCat)) { card.style.display = 'block'; } else { card.style.display = 'none'; } });
+        cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); const productDesc = card.getAttribute('data-desc'); if (cat === 'All' || productName.includes(searchCat) || productDesc.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } });
     };
 
-    window.startVoiceSearch = () => {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) { alert("⚠️ Voice search is not supported in this browser."); return; }
-        const rec = new SpeechRecognition(); document.getElementById('search-box').placeholder = "Listening... 🎙️";
-        rec.onresult = (e) => { document.getElementById('search-box').value = e.results[0][0].transcript; window.searchProducts(); document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; };
-        rec.onerror = () => { document.getElementById('search-box').placeholder = "🔍 Search for Neem Soap, Hair Oil..."; }; rec.start();
-    };
-
-    window.checkPincode = () => {
-        const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg');
-        if(pin.length === 6) { msg.style.color = "green"; msg.innerText = "✅ Delivery available to " + pin + " (Expected in 3-5 Days)"; } else { msg.style.color = "red"; msg.innerText = "⚠️ Please enter a valid 6-digit Pincode."; }
-    };
+    window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); const desc = card.getAttribute('data-desc'); if (text.includes(query) || desc.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
 
     function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
     function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
 
-    function resetViews() { ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'product-view', 'cart-view', 'search-section', 'wholesale-view', 'policy-view', 'community-section', 'site-footer', 'about-view', 'results-section', 'quiz-view', 'profile-view', 'hamper-view'].forEach(id => hideSafe(id)); }
-    function restoreHome() { ['home-top-section', 'hamper-banner', 'quiz-banner', 'main-view', 'search-section', 'community-section', 'site-footer', 'results-section'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
+    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'wholesale-view', 'profile-view'].forEach(id => hideSafe(id)); }
+    function restoreHome() { ['home-top-section', 'main-view'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
 
     window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
     window.closeProfile = () => { resetViews(); restoreHome(); };
-    window.showHamper = () => { resetViews(); showSafe('hamper-view'); window.scrollTo(0,0); }; 
-    window.closeHamper = () => { resetViews(); restoreHome(); };
-    
-    function populateHamperSelects() {
-        const soapSelect = document.getElementById('hamper-soap'); const oilSelect = document.getElementById('hamper-oil'); const faceSelect = document.getElementById('hamper-face');
-        products.forEach(p => { const opt = `<option value="${p.id}">${p.name} - ₹${p.price}</option>`; if(p.category === 'Soap') soapSelect.innerHTML += opt; else if(p.category === 'Oil') oilSelect.innerHTML += opt; else if(p.category === 'Face') faceSelect.innerHTML += opt; else { soapSelect.innerHTML += opt; oilSelect.innerHTML += opt; faceSelect.innerHTML += opt; } });
-    }
-
-    window.addHamperToCart = () => {
-        const sid = document.getElementById('hamper-soap').value; const oid = document.getElementById('hamper-oil').value; const fid = document.getElementById('hamper-face').value;
-        if(sid) updateQty(sid, 1); if(oid) updateQty(oid, 1); if(fid) updateQty(fid, 1);
-        document.getElementById('cart-promo-input').value = "HAMPER10"; closeHamper(); showCart();
-    };
-
-    window.showAbout = () => { resetViews(); showSafe('about-view'); window.scrollTo(0, 0); }; 
-    window.closeAbout = () => { resetViews(); restoreHome(); };
-
-    window.showPolicy = (type) => {
-        resetViews(); showSafe('policy-view'); window.scrollTo(0, 0);
-        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p><p><b>Address:</b> Nashik, Maharashtra, India.</p>"; } 
-        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
-        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>Welcome to Ayursiddhit Naturals.</p><p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale unless explicitly approved via a wholesale agreement with Dr. Prasiddhi Patil.</p><p>Prices and availability of products are subject to change without prior notice. All content, product names, logos, and images are the intellectual property of Ayursiddhit Naturals.</p>"; }
-    };
-    window.closePolicy = () => { resetViews(); restoreHome(); };
     window.showWholesale = () => { resetViews(); showSafe('wholesale-view'); window.scrollTo(0, 0); }; 
     window.closeWholesale = () => { resetViews(); restoreHome(); };
 
     window.renderWholesaleList = () => {
         const list = document.getElementById('w-product-list'); list.innerHTML = '';
-        products.forEach(p => { list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:8px;"><div style="flex:1;"><b style="font-size:0.95rem; color:var(--text);">${p.name}</b><br><span style="color:var(--red); font-size:0.85rem; font-weight:bold;">MRP: ₹${p.price}</span></div><div><input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:70px; padding:8px; margin:0; text-align:center; font-weight:bold; background:var(--card-bg); color:var(--text); border:1px solid var(--border);"></div></div>`; });
+        products.forEach(p => { list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--border-soft); padding-bottom:10px;"><div style="flex:1;"><b style="font-size:1rem; color:var(--forest-green);">${p.name}</b><br><span style="color:#666; font-size:0.9rem;">Retail: ₹${p.price}</span></div><div><input type="number" class="w-item-qty" data-name="${p.name}" data-price="${p.price}" placeholder="Qty" min="0" oninput="calculateWholesale()" style="width:75px; padding:10px; margin:0; text-align:center;"></div></div>`; });
     };
 
     window.calculateWholesale = () => {
@@ -579,10 +425,10 @@
     document.getElementById('wholesale-form').onsubmit = (e) => {
         e.preventDefault(); let prodsList = ""; let totalQtyCount = 0;
         document.querySelectorAll('.w-item-qty').forEach(input => { let q = parseInt(input.value) || 0; if(q > 0) { prodsList += `- ${input.getAttribute('data-name')} x ${q}\n`; totalQtyCount += q; } });
-        if(totalQtyCount === 0) { alert("⚠️ Please add at least one product quantity before submitting."); return; }
-        const customMargin = document.getElementById('w-margin').value; const d = { shop: document.getElementById('w-shop').value, name: document.getElementById('w-name').value, phone: document.getElementById('w-phone').value, marginText: customMargin + "%", addr: document.getElementById('w-address').value, city: document.getElementById('w-city').value, pin: document.getElementById('w-pin').value };
-        const mrpAmt = document.getElementById('w-bill-mrp').innerText; const discAmt = document.getElementById('w-bill-discount').innerText; const totalAmt = document.getElementById('w-bill-total').innerText;
-        let msg = `📦 *NEW WHOLESALE ENQUIRY*\n\n*Shop Name:* ${d.shop}\n*Contact:* ${d.name} (${d.phone})\n\n*Products Selected:*\n${prodsList}\n*Total Items:* ${totalQtyCount}\n*Requested Margin:* ${d.marginText}\n\n🧾 *ESTIMATED BILLING:*\nTotal MRP: ₹${mrpAmt}\nMargin Discount: -₹${discAmt}\n*Payable Amount:* ₹${totalAmt}\n\n*Address:* ${d.addr}, ${d.city} - ${d.pin}`;
+        if(totalQtyCount === 0) { alert("⚠️ Please select quantities first."); return; }
+        const customMargin = document.getElementById('w-margin').value; const d = { shop: document.getElementById('w-shop').value, name: "Partner", phone: document.getElementById('w-phone').value, marginText: customMargin + "%", addr: document.getElementById('w-address').value };
+        const totalAmt = document.getElementById('w-bill-total').innerText;
+        let msg = `💎 *LUXURY SPA PARTNERSHIP ENQUIRY*\n\n*Center:* ${d.shop}\n*Contact:* ${d.phone}\n\n*Formulations Requested:*\n${prodsList}\n*Proposed Investment:* ₹${totalAmt}\n\n*Delivery:* ${d.addr}`;
         window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
     };
 
@@ -591,87 +437,13 @@
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0;
         resetViews(); showSafe('product-view'); window.scrollTo(0, 0); 
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`;
-        document.getElementById('modal-desc').innerHTML = highlightIngredients(p.desc || "");
+        document.getElementById('modal-desc').innerText = p.desc || "Pure Ayurvedic Formulation.";
         
-        document.getElementById('pin-check').value = ''; document.getElementById('pin-msg').innerText = '';
-        
-        const warn = document.getElementById('modal-stock-warn');
-        if(p.stock > 0 && p.stock <= 5) { warn.classList.remove('hidden'); warn.innerText = `🔥 Hurry, only ${p.stock} left in stock!`; } else { warn.classList.add('hidden'); }
-
-        const otherProds = products.filter(x => x.id !== id);
-        if(otherProds.length > 0) {
-            const upsellProd = otherProds[Math.floor(Math.random() * otherProds.length)];
-            document.getElementById('upsell-img').src = upsellProd.image; document.getElementById('upsell-name').innerText = upsellProd.name; document.getElementById('upsell-price').innerText = `₹${upsellProd.price}`;
-            document.getElementById('upsell-btn').onclick = () => { updateQty(id, 1); updateQty(upsellProd.id, 1); const btn = document.getElementById('upsell-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "Add Both"; showCart(); }, 1000); };
-            document.getElementById('upsell-section').classList.remove('hidden');
-        } else { document.getElementById('upsell-section').classList.add('hidden'); }
-        
-        document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); };
+        document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added to Ritual"; setTimeout(() => { btn.innerText = "Add to Ritual"; }, 1500); };
         document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) updateQty(id, 1); closeProduct(); showCart(); };
-        
-        renderReviews(p.reviews || []);
     };
 
     window.closeProduct = () => { resetViews(); restoreHome(); };
-
-    let currentLang = 'EN';
-    const dict = {
-        'EN': { wholesale: '📦 Wholesale / Bulk Orders', all: '✨ All', soap: '🌿 Soaps', oil: '💆‍♀️ Oils', face: '✨ Face Packs', acne: '🔴 Acne', hair: '🍂 Hairfall', cart: 'Review Your Order', quizT: 'Not sure what to buy? 🤔', quizD: 'Take Dr. Prasiddhi\'s 30-second Ayurvedic skin & hair quiz.', quizB: '🩺 Find My Routine', soc: 'Join Our Ayurvedic Community 🌱' },
-        'MR': { wholesale: '📦 घाऊक / मोठ्या प्रमाणात ऑर्डर', all: '✨ सर्व', soap: '🌿 साबण', oil: '💆‍♀️ तेल', face: '✨ फेस पॅक', acne: '🔴 मुरुमे', hair: '🍂 केस गळणे', cart: 'तुमची ऑर्डर तपासा', quizT: 'काय घ्यावे समजत नाही? 🤔', quizD: 'डॉ. प्रसिद्धी यांची ३०-सेकंदांची आयुर्वेदिक क्विझ सोडवा.', quizB: '🩺 माझी रुटीन शोधा', soc: 'आमच्या आयुर्वेदिक कुटुंबात सामील व्हा 🌱' },
-        'HI': { wholesale: '📦 थोक / बल्क ऑर्डर', all: '✨ सभी', soap: '🌿 साबुन', oil: '💆‍♀️ तेल', face: '✨ फेस पैक', acne: '🔴 मुँहासे', hair: '🍂 बालों का झड़ना', cart: 'अपना ऑर्डर जांचें', quizT: 'समझ नहीं आ रहा क्या खरीदें? 🤔', quizD: 'डॉ. प्रसिद्धि की 30-सेकंड की आयुर्वेदिक क्विज़ लें।', quizB: '🩺 मेरा रूटीन खोजें', soc: 'हमारे आयुर्वेदिक समुदाय से जुड़ें 🌱' }
-    };
-    
-    window.toggleLanguage = () => {
-        const btn = document.getElementById('lang-btn');
-        if(currentLang === 'EN') { currentLang = 'MR'; btn.innerText = '🌐 MR'; }
-        else if(currentLang === 'MR') { currentLang = 'HI'; btn.innerText = '🌐 HI'; }
-        else { currentLang = 'EN'; btn.innerText = '🌐 EN'; }
-        
-        const safeSet = (id, text) => { let el = document.getElementById(id); if(el) el.innerText = text; };
-        safeSet('t-wholesale-btn', dict[currentLang].wholesale); 
-        let tAll = document.querySelector('.t-all'); if(tAll) tAll.innerText = dict[currentLang].all;
-        let tSoaps = document.querySelector('.t-soaps'); if(tSoaps) tSoaps.innerText = dict[currentLang].soap;
-        let tOils = document.querySelector('.t-oils'); if(tOils) tOils.innerText = dict[currentLang].oil;
-        let tFace = document.querySelector('.t-face'); if(tFace) tFace.innerText = dict[currentLang].face;
-        let tAcne = document.querySelector('.t-acne'); if(tAcne) tAcne.innerText = dict[currentLang].acne;
-        let tHair = document.querySelector('.t-hair'); if(tHair) tHair.innerText = dict[currentLang].hair;
-        
-        safeSet('t-cart-title', dict[currentLang].cart); safeSet('t-quiz-title', dict[currentLang].quizT); safeSet('t-quiz-desc', dict[currentLang].quizD); safeSet('t-quiz-btn', dict[currentLang].quizB); safeSet('t-social-title', dict[currentLang].soc);
-    };
-
-    window.startQuiz = () => { resetViews(); showSafe('quiz-view'); showSafe('quiz-step-1'); hideSafe('quiz-step-2'); window.scrollTo(0,0); };
-    window.closeQuiz = () => { resetViews(); restoreHome(); };
-
-    window.nextQuiz = (concern) => {
-        hideSafe('quiz-step-1'); showSafe('quiz-step-2');
-        const match = products.find(p => p.desc && p.desc.toLowerCase().includes(concern.toLowerCase())) || products[0];
-        const card = document.getElementById('quiz-result-card');
-        if(match) {
-            card.innerHTML = `<div style="background:var(--bg); border:2px solid var(--gold); border-radius:12px; padding:15px; display:inline-block; text-align:center;"><img src="${match.image}" style="width:100px; height:100px; border-radius:8px; object-fit:cover;"><h3 style="margin:10px 0 5px 0; color:var(--amazon);">${match.name}</h3><p style="color:var(--red); font-weight:bold; margin:0 0 15px 0;">₹${match.price}</p><button onclick="updateQty('${match.id}', 1); closeQuiz(); showCart();" style="background:var(--amazon); color:white; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Add to Cart</button></div>`;
-        }
-    };
-
-    function renderReviews(reviews) {
-        const list = document.getElementById('modal-reviews-list');
-        if(reviews.length === 0) { list.innerHTML = "<p style='color:#888; margin-top:0;'>No reviews yet. Be the first to review!</p>"; return; }
-        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid var(--border); padding-bottom:15px; margin-bottom:15px;"><b style="color:var(--amazon); font-size:1.05rem;">${r.name}</b> <br><span style="color:#ffa41c;">${'⭐'.repeat(Number(r.rating))}</span><p style="margin:8px 0; color:var(--text); line-height:1.4;">${r.text}</p>${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:6px; margin-top:10px; border: 1px solid var(--border);">` : ''}</div>`).join('');
-    }
-
-    const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
-    window.submitReview = async () => {
-        const btn = document.getElementById('submit-rev-btn'); const user = auth.currentUser;
-        if(!user) { btn.innerText = "⚠️ Please Sign In First!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2500); return; }
-        const text = document.getElementById('review-text').value.trim(); const rating = document.querySelector('input[name="rating"]:checked').value; const fileInput = document.getElementById('review-image'); const file = fileInput.files[0];
-        if(!text) { btn.innerText = "⚠️ Write a review first!"; setTimeout(() => { btn.innerText = "Submit Review"; }, 2000); return; }
-
-        btn.innerText = "⏳ Uploading Review..."; btn.disabled = true; let imageUrl = null;
-        if(file) { try { const formData = new FormData(); formData.append('image', file); const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData }); const data = await response.json(); if(data.success) { imageUrl = data.data.url; } } catch (error) { console.error("Image upload failed"); } }
-        const newReview = { name: user.displayName.split(' ')[0], text: text, rating: rating, image: imageUrl, date: new Date().toISOString() };
-        try {
-            await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview);
-            document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Success! 🎉"; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000);
-        } catch (error) { btn.innerText = "Error! Try Again."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
-    };
 
     window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); showCart(); };
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
@@ -681,64 +453,33 @@
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
         let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
-        
         const matchedPromo = allPromos.find(p => p.code === input);
-
-        if(input === "HAMPER10" && sub > 0) { 
-            let disc = Math.round(sub * 0.10); msg.style.color = "green"; msg.innerText = `🎉 Hamper Code Applied! ₹${disc} Off`; appliedDiscount = disc; activePromo = { code: 'HAMPER10', minOrder: 0 };
-        }
-        else if (matchedPromo) { 
-            if (sub < matchedPromo.minOrder) { 
-                msg.style.color = "red"; msg.innerText = `⚠️ Add ₹${matchedPromo.minOrder - sub} more to unlock this code.`; appliedDiscount = 0; activePromo = null; 
-            } else { 
-                msg.style.color = "green"; msg.innerText = `🎉 Code Applied! ₹${matchedPromo.discount} Off`; appliedDiscount = matchedPromo.discount; activePromo = matchedPromo; 
-            } 
-        } 
-        else { 
-            msg.style.color = "red"; msg.innerText = "❌ Invalid Promo Code"; appliedDiscount = 0; activePromo = null; 
-        }
+        if (matchedPromo) { 
+            if (sub < matchedPromo.minOrder) { msg.style.color = "#B12704"; msg.innerText = `⚠️ Order minimum ₹${matchedPromo.minOrder} required.`; appliedDiscount = 0; activePromo = null; } 
+            else { msg.style.color = "var(--forest-green)"; msg.innerText = `✨ Privilege Code Applied!`; appliedDiscount = matchedPromo.discount; activePromo = matchedPromo; } 
+        } else { msg.style.color = "#B12704"; msg.innerText = "❌ Invalid Privilege Code"; appliedDiscount = 0; activePromo = null; }
         renderCart();
     };
 
     function renderCart() {
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
-        for(let id in cart) { const p = products.find(x => x.id === id); if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>${p.name} (x${cart[id]})</span><span>₹${p.price*cart[id]}</span></div>`; } }
+        for(let id in cart) { const p = products.find(x => x.id === id); if(p) { sub += p.price * cart[id]; count += cart[id]; list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid var(--border-soft); padding-bottom:10px;"><span><b style="color:var(--forest-green);">${p.name}</b> <br><span style="color:#666; font-size:0.85rem;">Qty: ${cart[id]}</span></span><span style="font-weight:600;">₹${p.price*cart[id]}</span></div>`; } }
         
-        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder && activePromo.code !== "HAMPER10") { 
-            appliedDiscount = 0; document.getElementById('promo-msg').style.color = "red"; document.getElementById('promo-msg').innerText = `⚠️ Cart value dropped below ₹${activePromo.minOrder}. Promo removed.`; 
-        }
-
-        const free = (sub >= 800 || count >= 5); document.getElementById('subtotal').innerText = sub;
+        if (appliedDiscount > 0 && activePromo && sub < activePromo.minOrder) { appliedDiscount = 0; document.getElementById('promo-msg').innerText = ``; }
+        const free = (sub >= 1000); document.getElementById('subtotal').innerText = sub;
         if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
-        document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50"; 
+        document.getElementById('ship-fee').innerText = free ? "Complimentary" : "₹50"; 
         document.getElementById('total').innerText = sub - appliedDiscount + (free ? 0 : 50);
-        if(free && count > 0) document.getElementById('ship-promo').classList.remove('hidden'); else document.getElementById('ship-promo').classList.add('hidden');
     }
 
     document.getElementById('order-form').onsubmit = async (e) => {
         e.preventDefault(); 
-        const btn = document.querySelector('#order-form .btn-buy');
-        btn.innerText = "⏳ Opening Secure Checkout..."; btn.disabled = true;
+        const btn = document.querySelector('#order-form .btn-dark');
+        btn.innerText = "⏳ Initiating Secure Gateway..."; btn.disabled = true;
 
-        const d = { 
-            name: document.getElementById('f-name').value, 
-            phone: document.getElementById('f-phone').value, 
-            flat: document.getElementById('f-flat').value,
-            bldg: document.getElementById('f-bldg').value,
-            addr: document.getElementById('f-address').value, 
-            landmark: document.getElementById('f-landmark').value,
-            city: document.getElementById('f-city').value, 
-            pin: document.getElementById('f-pin').value 
-        };
-        
-        let orderSummary = "";
-        let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, Landmark: ${d.landmark ? d.landmark : 'None'}, ${d.city} - ${d.pin}`;
-
-        for(let id in cart) { 
-            const p = products.find(x => x.id === id); 
-            orderSummary += `${p.name} (x${cart[id]}), `; 
-        }
-        
+        const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, flat: document.getElementById('f-flat').value, bldg: document.getElementById('f-bldg').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
+        let orderSummary = ""; let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, ${d.city} - ${d.pin}`;
+        for(let id in cart) { const p = products.find(x => x.id === id); orderSummary += `${p.name} (x${cart[id]}), `; }
         const finalTotal = parseInt(document.getElementById('total').innerText);
 
         var options = {
@@ -746,60 +487,28 @@
             "amount": finalTotal * 100, 
             "currency": "INR",
             "name": "Ayursiddhit Naturals",
-            "description": "Order Payment",
+            "description": "Luxury Clinical Formulations",
             "image": "logo.png",
             "handler": async function (response) {
-                btn.innerText = "✅ Payment Successful!";
-                
-                let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n`;
-                msg += `*Payment ID:* ${response.razorpay_payment_id}\n`;
-                msg += `*Customer:* ${d.name}\n`;
-                msg += `*Phone:* ${d.phone}\n\n`;
-                
-                msg += `📦 *ITEMS TO PACK:*\n`;
-                for(let id in cart) { 
-                    const p = products.find(x => x.id === id); 
-                    msg += `👉 ${p.name} (Qty: ${cart[id]})\n`; 
-                    if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} }
-                }
-                
-                if (appliedDiscount > 0) { msg += `\n🎁 *Promo Applied:* -₹${appliedDiscount}`; }
-                msg += `\n*Total Paid:* ₹${finalTotal}\n\n`;
-
-                msg += `📍 *EXACT DELIVERY DETAILS:*\n`;
-                msg += `Flat/House No: ${d.flat}\n`;
-                msg += `Building/Society: ${d.bldg}\n`;
-                msg += `Street/Area: ${d.addr}\n`;
-                if(d.landmark) { msg += `Landmark: ${d.landmark}\n`; }
-                msg += `City & Pin: ${d.city} - ${d.pin}\n`;
+                btn.innerText = "✨ Payment Verified!";
+                let msg = `💎 *NEW LUXURY ORDER* 💎\n\n*ID:* ${response.razorpay_payment_id}\n*Client:* ${d.name}\n*Contact:* ${d.phone}\n\n*Formulations:*\n`;
+                for(let id in cart) { const p = products.find(x => x.id === id); msg += `👉 ${p.name} (Qty: ${cart[id]})\n`; if(p.stock && p.stock > 0) { try { await updateDoc(doc(db, "products", p.id), { stock: p.stock - cart[id] }); } catch(err){} } }
+                msg += `\n*Total Remitted:* ₹${finalTotal}\n\n*Dispatch Address:*\n${fullAddress}`;
                 
                 try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
                 
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); 
-                
-                cart = {}; updateBadge(); closeCart();
-                btn.innerText = "💳 Pay securely via Razorpay"; btn.disabled = false;
+                cart = {}; updateBadge(); closeCart(); btn.innerText = "Secure Checkout via Razorpay"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone },
-            "theme": { "color": "#1b5e20" }
+            "theme": { "color": "#082b1a" }
         };
         var rzp1 = new Razorpay(options);
-        rzp1.on('payment.failed', function (response){ alert("Payment Failed. Please try again."); btn.innerText = "💳 Pay securely via Razorpay"; btn.disabled = false; });
+        rzp1.on('payment.failed', function (response){ alert("Transaction Declined. Please ensure correct details."); btn.innerText = "Secure Checkout via Razorpay"; btn.disabled = false; });
         rzp1.open();
     };
 
-    let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; setTimeout(() => { document.getElementById('install-banner').classList.remove('hidden'); }, 4000); });
-    window.installApp = async () => { if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('install-banner').classList.add('hidden'); } deferredPrompt = null; } };
-
-    let slideIndex = 0;
-    setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
-
     load(); 
-    
-    if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.getRegistrations().then(function(registrations) { for(let registration of registrations) { registration.unregister(); } });
-        navigator.serviceWorker.register('/sw.js'); 
-    }
 </script>
 </body>
 </html>
