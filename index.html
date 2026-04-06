@@ -32,7 +32,7 @@
         
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
         .p-card { background: var(--card-bg); border-radius: 8px; padding: 10px; border: 1px solid var(--border); text-align: center; transition: background 0.3s, border 0.3s; position:relative; display: flex; flex-direction: column; }
-        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; }
+        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; cursor: pointer; }
         .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
         .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; cursor: pointer; }
         .btn-cart { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; color: black; }
@@ -131,7 +131,7 @@
         <h3 id="up-name" style="margin:0; font-size:1.2rem; color:var(--amazon);"></h3>
         <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
         <button id="up-btn" style="background:var(--amazon); color:white; border:none; padding:12px; font-weight:bold; width:100%; border-radius:6px; font-size:1rem; cursor:pointer;">Add to Order</button>
-        <button class="close-upsell" onclick="skipUpsell()">No thanks, proceed to checkout</button>
+        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#777; text-decoration:underline; font-size:0.85rem; margin-top:15px; font-weight:bold; cursor:pointer;">No thanks, proceed to checkout</button>
     </div>
 </div>
 
@@ -241,9 +241,9 @@
     <div id="policy-content" style="line-height: 1.6; color: var(--text); font-size: 0.95rem;"></div>
 </div>
 
-<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 25px 15px 80px 15px; margin-top: 0; font-size: 0.85rem; border-top: 3px solid var(--luxury);">
-    <p style="margin: 0 0 15px 0; font-weight: bold; font-size: 1rem;">Ayursiddhit Naturals</p>
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap;">
+<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 15px 10px 30px 10px; margin-top: 20px; font-size: 0.8rem; border-top: 3px solid var(--luxury);">
+    <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 0.95rem;">Ayursiddhit Naturals</p>
+    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
         <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;">👩‍⚕️ Our Story</a>
         <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
         <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
@@ -274,6 +274,7 @@
         'HI': { cart: 'अपना ऑर्डर जांचें', all: '✨ सभी', soaps: '🌿 साबुन', oils: '💆‍♀️ तेल', face: '✨ फेस पैक' }
     };
 
+    // --- 1. LANGUAGE & AUTH ---
     window.toggleLanguage = () => {
         const btn = document.getElementById('lang-btn');
         if(currentLang === 'EN') { currentLang = 'MR'; btn.innerText = '🌐 MR'; }
@@ -301,6 +302,7 @@
         } 
     });
 
+    // --- 2. LOAD DATA ---
     async function load() {
         try { 
             const snap = await getDocs(collection(db, "products")); 
@@ -321,6 +323,28 @@
         } catch(e) {}
     }
 
+    // --- 3. UI VIEW CONTROLLERS ---
+    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
+    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
+    
+    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'site-footer', 't-offer-banner'].forEach(id => hideSafe(id)); }
+    function restoreHome() { ['home-top-section', 'main-view', 'search-section', 'site-footer', 't-offer-banner'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
+
+    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
+    window.closeProfile = () => { resetViews(); restoreHome(); };
+    window.showAbout = () => { resetViews(); showSafe('about-view'); showSafe('site-footer'); window.scrollTo(0, 0); }; 
+    window.closeAbout = () => { resetViews(); restoreHome(); };
+    
+    window.showPolicy = (type) => {
+        resetViews(); showSafe('policy-view'); showSafe('site-footer'); window.scrollTo(0, 0);
+        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
+        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
+        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
+        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
+    };
+    window.closePolicy = () => { resetViews(); restoreHome(); };
+
+    // --- 4. ADS & UPSELLS ---
     function startMultiAds() {
         if(multiAds.length === 0) return;
         document.getElementById('top-promo-bar').style.display = 'block';
@@ -354,12 +378,13 @@
 
     window.skipUpsell = () => { hasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); showCart(); };
 
+    // --- 5. PRODUCTS & GRID ---
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
             const q = cart[p.id] || 0; 
             grid.innerHTML += `<div class="p-card">
-                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')" style="cursor:pointer;">
+                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')">
                 <h4 onclick="openProduct('${p.id}')" style="margin:8px 0 2px 0; font-size:0.95rem; cursor:pointer;">${p.name}</h4>
                 <div style="color:var(--red); font-weight:bold; margin-bottom:5px; font-size: 1.1rem;">₹${p.price}</div>
                 <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
@@ -374,24 +399,7 @@
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); if (text.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
     window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; } };
     window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = '#e9ecef'; btn.style.color = '#333'; }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'white'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
-
-    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
-    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
-    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view'].forEach(id => hideSafe(id)); }
-    function restoreHome() { ['home-top-section', 'main-view', 'search-section'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
-
-    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; window.closeProfile = () => { resetViews(); restoreHome(); };
-    window.showAbout = () => { resetViews(); showSafe('about-view'); window.scrollTo(0, 0); }; window.closeAbout = () => { resetViews(); restoreHome(); };
-    
-    window.showPolicy = (type) => {
-        resetViews(); showSafe('policy-view'); window.scrollTo(0, 0);
-        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
-        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
-        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
-    };
-    window.closePolicy = () => { resetViews(); restoreHome(); };
-
+    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); triggerCartFlow(); };
     window.checkPincode = () => { const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg'); if(pin.length === 6) { msg.style.color = "green"; msg.innerText = "✅ Delivery available to " + pin + " (3-5 Days)"; } else { msg.style.color = "red"; msg.innerText = "⚠️ Enter valid 6-digit Pincode."; } };
 
     window.openProduct = (id) => { 
@@ -407,8 +415,8 @@
         renderReviews(p.reviews || []);
     };
     window.closeProduct = () => { resetViews(); restoreHome(); };
-    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); triggerCartFlow(); };
 
+    // --- 6. REVIEWS ---
     function renderReviews(reviews) {
         const list = document.getElementById('modal-reviews-list');
         if(reviews.length === 0) { list.innerHTML = "<p style='color:#888; margin-top:0;'>No reviews yet. Be the first to review!</p>"; return; }
@@ -426,6 +434,7 @@
         try { await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Success! 🎉"; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "Error! Try Again."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
     };
 
+    // --- 7. CART & CHECKOUT ---
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
     window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
     window.closeCart = () => { resetViews(); restoreHome(); };
@@ -478,8 +487,8 @@
         var rzp1 = new Razorpay(options); rzp1.open();
     };
 
+    // --- 8. INIT ---
     let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
-
     load(); 
 </script>
 </body>
