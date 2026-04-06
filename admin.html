@@ -101,6 +101,29 @@
     </div>
 
     <div id="marketing" class="tab-content">
+        
+        <div class="card" style="border-top: 4px solid var(--green);">
+            <h3>✨ Website Ads & Upsell Settings</h3>
+            
+            <label style="font-weight:bold; color:var(--amazon);">1. Multi-Ad Scrolling Banner (Top of Website)</label>
+            <p style="font-size:0.85rem; color:#666; margin-top:0; margin-bottom:5px;">Separate multiple ads with a comma ( , )</p>
+            <input type="text" id="admin-ads" placeholder="E.g. Free Shipping Over ₹1000, 100% Doctor Formulated, Code DIWALI20">
+            
+            <label style="font-weight:bold; color:var(--amazon); display:block; margin-top:15px; margin-bottom:5px;">2. The Pre-Checkout Upsell Popup</label>
+            <div class="grid-3">
+                <select id="admin-upsell-product">
+                    <option value="">-- Select Product --</option>
+                </select>
+                <input type="number" id="admin-upsell-price" placeholder="Special Offer Price (₹)">
+                <select id="admin-upsell-active">
+                    <option value="true">Upsell is ACTIVE ✅</option>
+                    <option value="false">Upsell is OFF ❌</option>
+                </select>
+            </div>
+            
+            <button onclick="saveStoreConfig()" style="width:100%; margin-top:10px;">💾 Save Configurations to Website</button>
+        </div>
+
         <div class="card">
             <h3>🎟️ Manage Promo Codes</h3>
             <div class="grid-3">
@@ -176,7 +199,7 @@
         }
     });
 
-    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); }
+    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); }
 
     async function loadOrdersAndStats() {
         const snap = await getDocs(collection(db, "orders"));
@@ -214,7 +237,21 @@
     }
 
     window.addProduct = async () => { /* Logic remains same */ };
-    async function loadProducts() { /* Logic remains same */ }
+    
+    async function loadProducts() { 
+        const snap = await getDocs(collection(db, "products"));
+        const list = document.getElementById('product-list'); list.innerHTML = '';
+        const upsellSelect = document.getElementById('admin-upsell-product');
+        upsellSelect.innerHTML = '<option value="">-- Select Product --</option>';
+        
+        if(snap.empty) { list.innerHTML = "<p>No products.</p>"; return; }
+        snap.forEach(doc => {
+            const p = doc.data();
+            upsellSelect.innerHTML += `<option value="${doc.id}">${p.name} (₹${p.price})</option>`;
+            list.innerHTML += `<div class="product-item"><div style="display:flex; align-items:center;"><img src="${p.image}"><div><b>${p.name}</b><br><span style="color:var(--red);">₹${p.price}</span></div></div><div><input type="number" value="${p.stock}" onchange="updateStock('${doc.id}', this.value)" style="width:60px; margin:0 10px 0 0; padding:5px;"><button onclick="deleteProduct('${doc.id}')" class="btn-danger" style="padding:5px 10px;">🗑️</button></div></div>`;
+        });
+    }
+
     window.updateStock = async (id, currentStock) => { /* Logic remains same */ };
     window.deleteProduct = async (id) => { /* Logic remains same */ };
     
@@ -223,6 +260,38 @@
         if(promoSnap.exists()) { activePromos = promoSnap.data().codes || []; }
         renderPromos();
     }
+
+    async function loadStoreConfig() {
+        try {
+            const snap = await getDoc(doc(db, "settings", "store_config"));
+            if(snap.exists()) {
+                const data = snap.data();
+                if(data.ads) document.getElementById('admin-ads').value = data.ads.join(", ");
+                if(data.upsell) {
+                    setTimeout(() => { // wait for products to load
+                        document.getElementById('admin-upsell-product').value = data.upsell.productId || "";
+                        document.getElementById('admin-upsell-price').value = data.upsell.specialPrice || "";
+                        document.getElementById('admin-upsell-active').value = data.upsell.isActive ? "true" : "false";
+                    }, 1000);
+                }
+            }
+        } catch(e) {}
+    }
+
+    window.saveStoreConfig = async () => {
+        const adsText = document.getElementById('admin-ads').value;
+        const adsArray = adsText.split(',').map(ad => ad.trim()).filter(ad => ad !== "");
+        const configData = {
+            ads: adsArray,
+            upsell: {
+                isActive: document.getElementById('admin-upsell-active').value === "true",
+                productId: document.getElementById('admin-upsell-product').value,
+                specialPrice: parseInt(document.getElementById('admin-upsell-price').value) || 0
+            }
+        };
+        await setDoc(doc(db, "settings", "store_config"), configData, { merge: true });
+        alert("✅ Ads and Upsell settings saved! They are live on the website right now.");
+    };
     
     window.renderPromos = () => {
         const list = document.getElementById('promo-list'); list.innerHTML = '';
