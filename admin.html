@@ -103,35 +103,42 @@
     <div id="marketing" class="tab-content">
         
         <div class="card" style="border-top: 4px solid var(--green);">
-            <h3>✨ Website Ads & Upsell Settings</h3>
+            <h3>📢 Top Banner Ads Management</h3>
+            <p style="font-size:0.85rem; color:#666; margin-top:0;">Add multiple offers here. They will scroll seamlessly side-by-side at the very top of your website.</p>
             
-            <label style="font-weight:bold; color:var(--amazon);">1. Multi-Ad Scrolling Banner (Top of Website)</label>
-            <p style="font-size:0.85rem; color:#666; margin-top:0; margin-bottom:5px;">Separate multiple ads with a comma ( , )</p>
-            <input type="text" id="admin-ads" placeholder="E.g. Free Shipping Over ₹1000, 100% Doctor Formulated, Code DIWALI20">
-            
-            <label style="font-weight:bold; color:var(--amazon); display:block; margin-top:15px; margin-bottom:5px;">2. The Pre-Checkout Upsell Popup</label>
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <input type="text" id="new-ad-input" placeholder="E.g. 100% Doctor Formulated 👩‍⚕️" style="margin:0; flex:1;">
+                <button onclick="addNewAd()" style="white-space:nowrap; padding: 0 20px;">➕ Add Banner</button>
+            </div>
+
+            <div id="active-ads-list" style="margin-top: 15px;">
+                </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid var(--gold);">
+            <h3>✨ Pre-Checkout Upsell Popup</h3>
+            <p style="font-size:0.85rem; color:#666; margin-top:0;">This product offer pops up when a customer clicks the Cart icon.</p>
             <div class="grid-3">
-                <select id="admin-upsell-product">
-                    <option value="">-- Select Product --</option>
+                <select id="admin-upsell-product" style="margin-bottom:0;">
+                    <option value="">-- Select Product to Upsell --</option>
                 </select>
-                <input type="number" id="admin-upsell-price" placeholder="Special Offer Price (₹)">
-                <select id="admin-upsell-active">
+                <input type="number" id="admin-upsell-price" placeholder="Special Offer Price (₹)" style="margin-bottom:0;">
+                <select id="admin-upsell-active" style="margin-bottom:0;">
                     <option value="true">Upsell is ACTIVE ✅</option>
                     <option value="false">Upsell is OFF ❌</option>
                 </select>
             </div>
-            
-            <button onclick="saveStoreConfig()" style="width:100%; margin-top:10px;">💾 Save Configurations to Website</button>
+            <button onclick="saveUpsellConfig()" style="width:100%; margin-top:15px; background:var(--amazon);">💾 Save Upsell Settings</button>
         </div>
 
         <div class="card">
             <h3>🎟️ Manage Promo Codes</h3>
             <div class="grid-3">
-                <input type="text" id="promo-code" placeholder="Promo Code (e.g. DIWALI20)" style="text-transform: uppercase;">
-                <input type="number" id="promo-discount" placeholder="Discount (₹)">
-                <input type="number" id="promo-min" placeholder="Min Order (₹)">
+                <input type="text" id="promo-code" placeholder="Promo Code (e.g. DIWALI20)" style="text-transform: uppercase; margin-bottom:0;">
+                <input type="number" id="promo-discount" placeholder="Discount (₹)" style="margin-bottom:0;">
+                <input type="number" id="promo-min" placeholder="Min Order (₹)" style="margin-bottom:0;">
             </div>
-            <button onclick="addPromo()" style="width: 100%;">➕ Create Promo Code</button>
+            <button onclick="addPromo()" style="width: 100%; margin-top:15px;">➕ Create Promo Code</button>
             <div id="promo-list" style="margin-top: 15px;">Loading codes...</div>
         </div>
     </div>
@@ -166,6 +173,9 @@
     const MASTER_PASSWORD = "AyurCEO2026"; 
     let isUnlocked = false;
     let activePromos = [];
+    
+    // NEW MULTI-AD STATE
+    let multiAdsArray = [];
 
     window.switchTab = (tabId) => {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -236,7 +246,23 @@
         document.getElementById('stat-users').innerText = userCount;
     }
 
-    window.addProduct = async () => { /* Logic remains same */ };
+    window.addProduct = async () => {
+        const btn = document.getElementById('add-btn'); btn.innerText = "⏳ Uploading..."; btn.disabled = true;
+        const name = document.getElementById('p-name').value; const price = document.getElementById('p-price').value; const stock = document.getElementById('p-stock').value; const cat = document.getElementById('p-category').value; const desc = document.getElementById('p-desc').value; const tag = document.getElementById('p-tag').value; const file = document.getElementById('p-image').files[0];
+        if(!name || !price || !stock || !file) { alert("Please fill all fields and select an image."); btn.innerText = "➕ Add Product"; btn.disabled = false; return; }
+        
+        const formData = new FormData(); formData.append('image', file);
+        try {
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+            const data = await response.json();
+            if(data.success) {
+                await addDoc(collection(db, "products"), { name: name, price: parseInt(price), stock: parseInt(stock), category: cat, desc: desc, tag: tag, image: data.data.url });
+                alert("Product Added Successfully!"); loadProducts();
+                document.getElementById('p-name').value = ''; document.getElementById('p-price').value = ''; document.getElementById('p-stock').value = ''; document.getElementById('p-desc').value = ''; document.getElementById('p-image').value = ''; document.getElementById('p-tag').value = '';
+            }
+        } catch(e) { alert("Error uploading image."); }
+        btn.innerText = "➕ Add Product"; btn.disabled = false;
+    };
     
     async function loadProducts() { 
         const snap = await getDocs(collection(db, "products"));
@@ -252,8 +278,8 @@
         });
     }
 
-    window.updateStock = async (id, currentStock) => { /* Logic remains same */ };
-    window.deleteProduct = async (id) => { /* Logic remains same */ };
+    window.updateStock = async (id, currentStock) => { await updateDoc(doc(db, "products", id), { stock: parseInt(currentStock) }); };
+    window.deleteProduct = async (id) => { if(confirm("Are you sure you want to delete this product?")) { await deleteDoc(doc(db, "products", id)); loadProducts(); } };
     
     async function loadSettings() {
         const promoSnap = await getDoc(doc(db, "settings", "promos"));
@@ -261,28 +287,67 @@
         renderPromos();
     }
 
+    // 🚨 LOAD AND RENDER MULTI-ADS AND UPSELL
     async function loadStoreConfig() {
         try {
             const snap = await getDoc(doc(db, "settings", "store_config"));
             if(snap.exists()) {
                 const data = snap.data();
-                if(data.ads) document.getElementById('admin-ads').value = data.ads.join(", ");
+                if(data.ads) { multiAdsArray = data.ads; }
+                renderAdsList(); // Render the dynamic list
+                
                 if(data.upsell) {
-                    setTimeout(() => { // wait for products to load
+                    setTimeout(() => { // wait for products to load in dropdown
                         document.getElementById('admin-upsell-product').value = data.upsell.productId || "";
                         document.getElementById('admin-upsell-price').value = data.upsell.specialPrice || "";
                         document.getElementById('admin-upsell-active').value = data.upsell.isActive ? "true" : "false";
                     }, 1000);
                 }
-            }
+            } else { renderAdsList(); }
         } catch(e) {}
     }
 
-    window.saveStoreConfig = async () => {
-        const adsText = document.getElementById('admin-ads').value;
-        const adsArray = adsText.split(',').map(ad => ad.trim()).filter(ad => ad !== "");
+    // 🚨 DYNAMIC AD FUNCTIONS
+    window.renderAdsList = () => {
+        const list = document.getElementById('active-ads-list');
+        list.innerHTML = '';
+        if(multiAdsArray.length === 0) { 
+            list.innerHTML = "<p style='color:#888; font-size:0.9rem; margin:0;'>No active banners. Add your first offer above!</p>"; 
+            return; 
+        }
+        multiAdsArray.forEach((ad, index) => {
+            list.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:#f0fdf4; border:1px solid #c8e6c9; border-radius:6px; margin-bottom:8px;">
+                    <b style="color:var(--green); font-size:0.95rem; margin:0;">${ad}</b>
+                    <button onclick="deleteAd(${index})" class="btn-danger" style="padding:5px 12px; margin:0; border-radius:4px; cursor:pointer;">🗑️</button>
+                </div>`;
+        });
+    };
+
+    window.addNewAd = async () => {
+        const input = document.getElementById('new-ad-input');
+        const text = input.value.trim();
+        if(!text) { alert("Please enter banner text first."); return; }
+        
+        multiAdsArray.push(text);
+        input.value = '';
+        renderAdsList();
+        
+        // Save to database instantly
+        await setDoc(doc(db, "settings", "store_config"), { ads: multiAdsArray }, { merge: true });
+    };
+
+    window.deleteAd = async (index) => {
+        if(confirm("Delete this banner?")) {
+            multiAdsArray.splice(index, 1);
+            renderAdsList();
+            await setDoc(doc(db, "settings", "store_config"), { ads: multiAdsArray }, { merge: true });
+        }
+    };
+
+    // 🌿 UPSELL SAVING
+    window.saveUpsellConfig = async () => {
         const configData = {
-            ads: adsArray,
             upsell: {
                 isActive: document.getElementById('admin-upsell-active').value === "true",
                 productId: document.getElementById('admin-upsell-product').value,
@@ -290,7 +355,7 @@
             }
         };
         await setDoc(doc(db, "settings", "store_config"), configData, { merge: true });
-        alert("✅ Ads and Upsell settings saved! They are live on the website right now.");
+        alert("✅ Upsell settings saved and updated live!");
     };
     
     window.renderPromos = () => {
@@ -298,8 +363,20 @@
         if(activePromos.length === 0) list.innerHTML = "<p>No codes.</p>";
         activePromos.forEach((p, i) => { list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border:1px solid #ddd; margin-bottom:5px;"><b>${p.code}</b> <button onclick="deletePromo(${i})" class="btn-danger" style="padding:5px;">🗑️</button></div>`; });
     };
-    window.addPromo = async () => { /* Logic remains same */ };
-    window.deletePromo = async (index) => { /* Logic remains same */ };
+
+    window.addPromo = async () => {
+        const code = document.getElementById('promo-code').value.toUpperCase(); const disc = document.getElementById('promo-discount').value; const min = document.getElementById('promo-min').value;
+        if(!code || !disc || !min) { alert("Fill all promo fields."); return; }
+        activePromos.push({ code: code, discount: parseInt(disc), minOrder: parseInt(min) });
+        await setDoc(doc(db, "settings", "promos"), { codes: activePromos });
+        renderPromos(); document.getElementById('promo-code').value = ''; document.getElementById('promo-discount').value = ''; document.getElementById('promo-min').value = '';
+    };
+
+    window.deletePromo = async (index) => {
+        activePromos.splice(index, 1);
+        await setDoc(doc(db, "settings", "promos"), { codes: activePromos });
+        renderPromos();
+    };
 
 </script>
 </body>
