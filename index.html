@@ -12,12 +12,10 @@
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .hidden { display: none !important; }
         
-        /* 🚨 MULTI-AD SCROLLING BAR */
         #top-promo-bar { background: var(--green); color: white; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; display: none; border-bottom: 1px solid #114015; }
         .scrolling-multi-ads { display: inline-block; padding-left: 100%; animation: scrollLeftAds 25s linear infinite; }
         @keyframes scrollLeftAds { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* GOLD ROLLING BANNER */
         .promo-banner { background: var(--luxury); color: black; padding: 8px 0; font-weight: bold; font-size: 0.95rem; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #b3932b; width: 100%; display: none; }
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -30,13 +28,30 @@
         .h-actions { display: flex; align-items: center; gap: 8px; }
         .signin-btn { background: none; border: none; color: white; cursor: pointer; text-align: center; min-width: 50px; }
         
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
-        .p-card { background: var(--card-bg); border-radius: 8px; padding: 10px; border: 1px solid var(--border); text-align: center; transition: background 0.3s, border 0.3s; position:relative; display: flex; flex-direction: column; }
-        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; cursor: pointer; }
-        .p-qty { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; background: #f0f0f0; border-radius: 15px; padding: 5px; }
-        .p-qty button { background: var(--green); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; font-weight: bold; cursor: pointer; }
-        .btn-cart { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; transition: 0.2s; color: black; }
-        .btn-buy { background: #ffa41c; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 5px; cursor: pointer; color: black; }
+        /* ✨ LUXURY PRODUCT GRID UPGRADE WITH RIBBONS */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; background: #fff; }
+        .p-card { background: white; border-radius: 12px; border: 1px solid #f0f0f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+        .p-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .p-img-container { position: relative; width: 100%; padding-top: 100%; cursor: pointer; background: #fafafa; border-bottom: 1px solid #f9f9f9; }
+        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 🚨 THE FLOATING RIBBON/BADGE CODE */
+        .p-badge { position: absolute; top: 8px; left: 8px; background: rgba(255, 255, 255, 0.9); color: var(--green); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; border: 1px solid rgba(27, 94, 32, 0.1); }
+        
+        .p-details { padding: 12px; display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
+        .p-details h4 { margin: 0 0 6px 0; font-size: 0.9rem; font-weight: 600; color: #222; line-height: 1.3; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .p-price-row { margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .p-price { color: var(--amazon); font-size: 1.1rem; font-weight: 800; }
+        .p-mrp { color: #888; font-size: 0.8rem; text-decoration: line-through; }
+        .p-discount { color: var(--red); font-size: 0.75rem; font-weight: bold; background: #ffeee8; padding: 2px 6px; border-radius: 4px; }
+        .p-actions { margin-top: auto; display: flex; gap: 8px; }
+        .btn-cart { background: white; border: 1.5px solid var(--amazon); color: var(--amazon); padding: 8px 0; border-radius: 6px; font-weight: bold; flex: 1; font-size: 0.85rem; cursor: pointer; transition: 0.2s; text-align: center; }
+        .btn-cart:hover { background: #f9f9f9; }
+        .btn-buy { background: var(--amazon); border: 1.5px solid var(--amazon); color: white; padding: 8px 0; border-radius: 6px; font-weight: bold; flex: 1; font-size: 0.85rem; cursor: pointer; transition: 0.2s; text-align: center; }
+        .p-qty { display: flex; align-items: center; justify-content: space-between; background: #f4f6f8; border-radius: 6px; padding: 4px; width: 100%; border: 1px solid #e0e0e0; box-sizing: border-box;}
+        .p-qty button { background: white; color: var(--amazon); border: 1px solid #dcdcdc; width: 28px; height: 28px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .p-qty span { font-weight: bold; font-size: 0.95rem; color: #333; }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 25px; max-width: 1200px; margin: 0 auto; } }
 
         .back-btn { background: rgba(27, 94, 32, 0.1); color: var(--green); border: 1px solid var(--green); padding: 8px 18px; border-radius: 25px; font-weight: bold; font-size: 0.9rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: 0.3s; }
         .back-btn:hover { background: var(--green); color: white; }
@@ -47,7 +62,6 @@
         
         .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; z-index: 3000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-        /* 🌿 UPSELL POPUP */
         #upsell-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .upsell-box { background: #f9faec; border: 2px solid var(--green); border-radius: 12px; width: 90%; max-width: 380px; text-align: center; padding: 30px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-bottom: 6px solid var(--gold); }
         .upsell-img { width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 15px; }
@@ -57,11 +71,6 @@
         .hero-slider { position: relative; overflow: hidden; height: 180px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .slides { display: flex; width: 300%; transition: transform 0.5s ease-in-out; height: 100%; }
         .slide-card { width: 33.333%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 20px; box-sizing: border-box; }
-
-        @media (min-width: 768px) {
-            .product-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1200px; margin: 0 auto; gap: 20px; }
-            .hero-slider { max-width: 1200px; margin: 20px auto; height: 300px; }
-        }
     </style>
 </head>
 <body>
@@ -163,7 +172,7 @@
 
         <p id="modal-desc" style="font-size:1rem; line-height: 1.5; margin-bottom: 20px;"></p>
         
-        <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex;">
+        <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex; width:auto;">
             <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
         </div>
         
@@ -274,7 +283,6 @@
         'HI': { cart: 'अपना ऑर्डर जांचें', all: '✨ सभी', soaps: '🌿 साबुन', oils: '💆‍♀️ तेल', face: '✨ फेस पैक' }
     };
 
-    // --- 1. LANGUAGE & AUTH ---
     window.toggleLanguage = () => {
         const btn = document.getElementById('lang-btn');
         if(currentLang === 'EN') { currentLang = 'MR'; btn.innerText = '🌐 MR'; }
@@ -302,7 +310,6 @@
         } 
     });
 
-    // --- 2. LOAD DATA ---
     async function load() {
         try { 
             const snap = await getDocs(collection(db, "products")); 
@@ -323,28 +330,6 @@
         } catch(e) {}
     }
 
-    // --- 3. UI VIEW CONTROLLERS ---
-    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
-    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
-    
-    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'site-footer', 't-offer-banner'].forEach(id => hideSafe(id)); }
-    function restoreHome() { ['home-top-section', 'main-view', 'search-section', 'site-footer', 't-offer-banner'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
-
-    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; 
-    window.closeProfile = () => { resetViews(); restoreHome(); };
-    window.showAbout = () => { resetViews(); showSafe('about-view'); showSafe('site-footer'); window.scrollTo(0, 0); }; 
-    window.closeAbout = () => { resetViews(); restoreHome(); };
-    
-    window.showPolicy = (type) => {
-        resetViews(); showSafe('policy-view'); showSafe('site-footer'); window.scrollTo(0, 0);
-        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
-        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
-        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
-    };
-    window.closePolicy = () => { resetViews(); restoreHome(); };
-
-    // --- 4. ADS & UPSELLS ---
     function startMultiAds() {
         if(multiAds.length === 0) return;
         document.getElementById('top-promo-bar').style.display = 'block';
@@ -378,19 +363,37 @@
 
     window.skipUpsell = () => { hasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); showCart(); };
 
-    // --- 5. PRODUCTS & GRID ---
+    // ✨ THE LUXURY RIBBON RENDER
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
             const q = cart[p.id] || 0; 
-            grid.innerHTML += `<div class="p-card">
-                <img src="${p.image}" class="p-img" onclick="openProduct('${p.id}')">
-                <h4 onclick="openProduct('${p.id}')" style="margin:8px 0 2px 0; font-size:0.95rem; cursor:pointer;">${p.name}</h4>
-                <div style="color:var(--red); font-weight:bold; margin-bottom:5px; font-size: 1.1rem;">₹${p.price}</div>
-                <div class="p-qty"><button onclick="updateQty('${p.id}',-1)">-</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>
-                <div style="display:flex; gap:8px;">
-                    <button class="btn-cart" style="flex:1; margin-top:0; padding:8px; font-size:0.85rem;" onclick="updateQty('${p.id}',1)">Add Cart</button>
-                    <button class="btn-buy" style="flex:1; margin-top:0; padding:8px; font-size:0.85rem;" onclick="buyNow('${p.id}')">Buy Now</button>
+            const mrp = Math.round(p.price * 1.2);
+            
+            // THIS ADDS THE FLOATING RIBBON BADGE
+            const badgeHtml = p.tag ? `<div class="p-badge">✨ ${p.tag}</div>` : '';
+
+            let buttonHtml = '';
+            if (q > 0) {
+                buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+            } else {
+                buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button></div>`;
+            }
+
+            grid.innerHTML += `
+            <div class="p-card">
+                ${badgeHtml}
+                <div class="p-img-container" onclick="openProduct('${p.id}')">
+                    <img src="${p.image}" class="p-img" loading="lazy">
+                </div>
+                <div class="p-details">
+                    <h4 onclick="openProduct('${p.id}')">${p.name}</h4>
+                    <div class="p-price-row">
+                        <span class="p-price">₹${p.price}</span>
+                        <span class="p-mrp">₹${mrp}</span>
+                        <span class="p-discount">20% OFF</span>
+                    </div>
+                    ${buttonHtml}
                 </div>
             </div>`;
         });
@@ -399,7 +402,25 @@
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); if (text.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
     window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); renderCart(); if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; } };
     window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = '#e9ecef'; btn.style.color = '#333'; }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'white'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
-    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); triggerCartFlow(); };
+
+    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
+    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
+    
+    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'site-footer', 't-offer-banner'].forEach(id => hideSafe(id)); }
+    function restoreHome() { ['home-top-section', 'main-view', 'search-section', 'site-footer', 't-offer-banner'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
+
+    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; window.closeProfile = () => { resetViews(); restoreHome(); };
+    window.showAbout = () => { resetViews(); showSafe('about-view'); showSafe('site-footer'); window.scrollTo(0, 0); }; window.closeAbout = () => { resetViews(); restoreHome(); };
+    
+    window.showPolicy = (type) => {
+        resetViews(); showSafe('policy-view'); showSafe('site-footer'); window.scrollTo(0, 0);
+        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
+        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
+        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
+        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
+    };
+    window.closePolicy = () => { resetViews(); restoreHome(); };
+
     window.checkPincode = () => { const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg'); if(pin.length === 6) { msg.style.color = "green"; msg.innerText = "✅ Delivery available to " + pin + " (3-5 Days)"; } else { msg.style.color = "red"; msg.innerText = "⚠️ Enter valid 6-digit Pincode."; } };
 
     window.openProduct = (id) => { 
@@ -415,8 +436,8 @@
         renderReviews(p.reviews || []);
     };
     window.closeProduct = () => { resetViews(); restoreHome(); };
+    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); triggerCartFlow(); };
 
-    // --- 6. REVIEWS ---
     function renderReviews(reviews) {
         const list = document.getElementById('modal-reviews-list');
         if(reviews.length === 0) { list.innerHTML = "<p style='color:#888; margin-top:0;'>No reviews yet. Be the first to review!</p>"; return; }
@@ -434,7 +455,6 @@
         try { await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Success! 🎉"; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "Error! Try Again."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
     };
 
-    // --- 7. CART & CHECKOUT ---
     function updateBadge() { document.getElementById('badge').innerText = Object.values(cart).reduce((a,b)=>a+b,0); }
     window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
     window.closeCart = () => { resetViews(); restoreHome(); };
@@ -487,8 +507,8 @@
         var rzp1 = new Razorpay(options); rzp1.open();
     };
 
-    // --- 8. INIT ---
     let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
+
     load(); 
 </script>
 </body>
