@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="manifest" href="admin-manifest.json">
+    <meta name="theme-color" content="#131921">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <title>Ayursiddhit Admin Dashboard</title>
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --bg: #f1f3f6; --red: #B12704; }
@@ -84,11 +89,14 @@
                     <option value="Face">Face Pack</option>
                 </select>
             </div>
+            
             <select id="p-tag" style="margin-bottom: 15px;">
                 <option value="">No Ribbon Tag</option>
                 <option value="Bestseller">🔥 Bestseller</option>
                 <option value="New">✨ New Arrival</option>
+                <option value="Sale">Sale 20% Off</option>
             </select>
+
             <textarea id="p-desc" placeholder="Product Description..." rows="3"></textarea>
             <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">Upload Product Image:</label>
             <input type="file" id="p-image" accept="image/*">
@@ -101,7 +109,6 @@
     </div>
 
     <div id="marketing" class="tab-content">
-        
         <div class="card" style="border-top: 4px solid var(--green);">
             <h3>📢 Top Banner Ads Management</h3>
             <p style="font-size:0.85rem; color:#666; margin-top:0;">Add multiple offers here. They will scroll seamlessly side-by-side at the very top of your website.</p>
@@ -111,8 +118,7 @@
                 <button onclick="addNewAd()" style="white-space:nowrap; padding: 0 20px;">➕ Add Banner</button>
             </div>
 
-            <div id="active-ads-list" style="margin-top: 15px;">
-                </div>
+            <div id="active-ads-list" style="margin-top: 15px;"></div>
         </div>
 
         <div class="card" style="border-top: 4px solid var(--gold);">
@@ -173,8 +179,6 @@
     const MASTER_PASSWORD = "AyurCEO2026"; 
     let isUnlocked = false;
     let activePromos = [];
-    
-    // NEW MULTI-AD STATE
     let multiAdsArray = [];
 
     window.switchTab = (tabId) => {
@@ -287,17 +291,16 @@
         renderPromos();
     }
 
-    // 🚨 LOAD AND RENDER MULTI-ADS AND UPSELL
     async function loadStoreConfig() {
         try {
             const snap = await getDoc(doc(db, "settings", "store_config"));
             if(snap.exists()) {
                 const data = snap.data();
                 if(data.ads) { multiAdsArray = data.ads; }
-                renderAdsList(); // Render the dynamic list
+                renderAdsList(); 
                 
                 if(data.upsell) {
-                    setTimeout(() => { // wait for products to load in dropdown
+                    setTimeout(() => { 
                         document.getElementById('admin-upsell-product').value = data.upsell.productId || "";
                         document.getElementById('admin-upsell-price').value = data.upsell.specialPrice || "";
                         document.getElementById('admin-upsell-active').value = data.upsell.isActive ? "true" : "false";
@@ -307,14 +310,10 @@
         } catch(e) {}
     }
 
-    // 🚨 DYNAMIC AD FUNCTIONS
     window.renderAdsList = () => {
         const list = document.getElementById('active-ads-list');
         list.innerHTML = '';
-        if(multiAdsArray.length === 0) { 
-            list.innerHTML = "<p style='color:#888; font-size:0.9rem; margin:0;'>No active banners. Add your first offer above!</p>"; 
-            return; 
-        }
+        if(multiAdsArray.length === 0) { list.innerHTML = "<p style='color:#888; font-size:0.9rem; margin:0;'>No active banners. Add your first offer above!</p>"; return; }
         multiAdsArray.forEach((ad, index) => {
             list.innerHTML += `
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:#f0fdf4; border:1px solid #c8e6c9; border-radius:6px; margin-bottom:8px;">
@@ -333,7 +332,6 @@
         input.value = '';
         renderAdsList();
         
-        // Save to database instantly
         await setDoc(doc(db, "settings", "store_config"), { ads: multiAdsArray }, { merge: true });
     };
 
@@ -345,7 +343,6 @@
         }
     };
 
-    // 🌿 UPSELL SAVING
     window.saveUpsellConfig = async () => {
         const configData = {
             upsell: {
