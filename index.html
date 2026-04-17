@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
@@ -145,9 +145,9 @@
         <div class="h-actions">
             <div id="google_translate_element"></div>
             
-            <div onclick="openConsult()" style="font-size: 1.5rem; cursor: pointer; margin: 0 5px 0 10px; filter: drop-shadow(0 0 5px var(--gold));" title="VIP Consultation">🩺</div>
+            <div onclick="openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px; filter: drop-shadow(0 0 5px var(--gold));" title="VIP Consultation">🩺</div>
             
-            <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank" style="text-decoration:none; display:flex; align-items:center; margin-left: 5px;">
+            <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank" style="text-decoration:none; display:flex; align-items:center;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="28">
             </a>
         </div>
@@ -353,16 +353,74 @@
         <span style="font-size: 1.3rem; line-height: 24px; margin-bottom: 4px;">🩺</span>
         <span>Consult</span>
     </div>
-    <div class="nav-item" onclick="activateNav(this); handleAccountClick();">
+    <div class="nav-item" onclick="activateNav(this); if(window.handleAccountClick) window.handleAccountClick();">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         <span>Account</span>
     </div>
-    <div class="nav-item" onclick="activateNav(this); triggerCartFlow();">
+    <div class="nav-item" onclick="activateNav(this); if(window.triggerCartFlow) window.triggerCartFlow();">
         <span id="nav-badge" class="nav-badge">0</span>
         <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <span>Cart</span>
     </div>
 </div>
+
+<script>
+    window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
+    window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
+    
+    window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
+    window.openConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.add('show-consult'); };
+    
+    window.resetViews = function() { 
+        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view'].forEach(id => window.hideSafe(id)); 
+        window.closeConsult();
+    };
+    
+    window.restoreHome = function() { 
+        window.resetViews();
+        ['home-top-section', 'main-view', 'search-section', 't-offer-banner'].forEach(id => window.showSafe(id)); 
+        window.scrollTo(0, 0); 
+    };
+
+    window.activateNav = function(el) {
+        if(!el) return;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+    };
+
+    window.showAbout = function() { window.resetViews(); window.showSafe('about-view'); window.scrollTo(0, 0); };
+    window.closeAbout = function() { window.restoreHome(); };
+    
+    window.showPolicy = function(type) {
+        window.resetViews(); window.showSafe('policy-view'); window.scrollTo(0, 0);
+        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
+        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
+        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
+        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
+    };
+    window.closePolicy = function() { window.restoreHome(); };
+    
+    window.closeProduct = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+    window.closeCart = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+    window.closeProfile = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+
+    // ✨ SPLASH SCREEN & 5-SECOND AUTO-POPUP DELAY
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if(splash) {
+                splash.classList.add('splash-hidden');
+                setTimeout(() => splash.style.display = 'none', 600);
+            }
+            
+            // Show the Doctor Consultation popup exactly 5 seconds after the app opens
+            setTimeout(() => {
+                window.openConsult();
+            }, 5000);
+            
+        }, 1200);
+    });
+</script>
 
 <script type="text/javascript">
     function googleTranslateElementInit() {
@@ -384,32 +442,25 @@
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
     let currentUser = null; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
-    let multiAds = []; let activeUpsell = null; let hasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
+    let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { closeProfile(); document.getElementById('user-name').innerText = "Sign In"; }); };
+    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; }); };
     
-    // Account Handler logic
     window.handleAccountClick = () => { 
         if(currentUser) { 
-            showProfile(); 
+            window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0);
         } else { 
-            login(); 
+            window.login(); 
         } 
-    };
-
-    // 📱 BOTTOM NAV LOGIC
-    window.activateNav = (el) => {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
     };
 
     onAuthStateChanged(auth, async (user) => { 
         currentUser = user;
         if(user) { 
-            // We removed the header username to save space, but keeping this logic intact for the profile view
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
-            document.getElementById('prof-name-display').innerText = user.displayName;
+            const profDisplay = document.getElementById('prof-name-display');
+            if(profDisplay) profDisplay.innerText = user.displayName;
         } 
     });
 
@@ -442,7 +493,7 @@
 
     window.triggerCartFlow = () => {
         let count = Object.values(cart).reduce((a,b)=>a+b,0);
-        if(count > 0 && activeUpsell && !hasUpsellShown && !cart[activeUpsell.productId]) {
+        if(count > 0 && activeUpsell && !windowHasUpsellShown && !cart[activeUpsell.productId]) {
             const upProd = products.find(p => p.id === activeUpsell.productId);
             if(upProd) {
                 document.getElementById('up-img').src = upProd.image;
@@ -454,17 +505,19 @@
                 document.getElementById('up-btn').onclick = () => {
                     cart[upProd.id] = 1;
                     appliedDiscount = upProd.price - activeUpsell.specialPrice;
-                    hasUpsellShown = true;
+                    windowHasUpsellShown = true;
                     document.getElementById('upsell-overlay').classList.add('hidden');
-                    updateBadge(); showCart();
+                    updateBadge(); window.showCart();
                 };
                 return;
             }
         }
-        showCart(); 
+        window.showCart(); 
     };
 
-    window.skipUpsell = () => { hasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); showCart(); };
+    window.skipUpsell = () => { windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.showCart(); };
+
+    window.showCart = () => { window.resetViews(); window.showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
 
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
@@ -497,7 +550,6 @@
 
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); if (text.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
     
-    // 📱 SYNC BADGES TO BOTTOM NAV
     window.updateQty = (id, d) => { 
         cart[id] = (cart[id] || 0) + d; 
         if(cart[id] <= 0) delete cart[id]; 
@@ -507,40 +559,22 @@
     
     window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = '#e9ecef'; btn.style.color = '#333'; }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'white'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
 
-    function hideSafe(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); }
-    function showSafe(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); }
-    
-    function resetViews() { ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'site-footer', 't-offer-banner', 'consult-overlay'].forEach(id => { hideSafe(id); if(id === 'consult-overlay') closeConsult(); }); }
-    function restoreHome() { ['home-top-section', 'main-view', 'search-section', 'site-footer', 't-offer-banner'].forEach(id => showSafe(id)); window.scrollTo(0, 0); }
-
-    window.showProfile = () => { resetViews(); showSafe('profile-view'); window.scrollTo(0,0); }; window.closeProfile = () => { resetViews(); restoreHome(); activateNav(document.querySelector('.nav-item')); };
-    window.showAbout = () => { resetViews(); showSafe('about-view'); showSafe('site-footer'); window.scrollTo(0, 0); }; window.closeAbout = () => { resetViews(); restoreHome(); };
-    
-    window.showPolicy = (type) => {
-        resetViews(); showSafe('policy-view'); showSafe('site-footer'); window.scrollTo(0, 0);
-        const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact Us"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>By Dr. Prasiddhi Patil</p><p><b>Email:</b> ayursiddhitnaturals@gmail.com</p><p><b>Phone / WhatsApp:</b> +91 8080926195</p>"; } 
-        else if (type === 'refund') { title.innerText = "Refund & Cancellation Policy"; content.innerHTML = "<p>Due to the personal care and hygienic nature of our Ayurvedic products, we do not accept returns once a product has been opened or used.</p><p><b>Damaged Items:</b> Contact us within 48 hours for a replacement.</p>"; } 
-        else if (type === 'terms') { title.innerText = "Terms & Conditions"; content.innerHTML = "<p>By using this website, you agree to comply with and be bound by the following terms and conditions of use. All products sold are for personal use only and not for commercial resale.</p>"; }
-    };
-    window.closePolicy = () => { resetViews(); restoreHome(); };
-
     window.checkPincode = () => { const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg'); if(pin.length === 6) { msg.style.color = "green"; msg.innerText = "✅ Delivery available to " + pin + " (3-5 Days)"; } else { msg.style.color = "red"; msg.innerText = "⚠️ Enter valid 6-digit Pincode."; } };
 
     window.openProduct = (id) => { 
         const p = products.find(x => x.id === id); if(!p) return; 
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
-        resetViews(); showSafe('product-view'); window.scrollTo(0, 0); 
+        window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`; document.getElementById('modal-desc').innerHTML = p.desc || ""; 
-        document.getElementById('modal-add-btn').onclick = () => { updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); }; 
-        document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) updateQty(id, 1); closeProduct(); triggerCartFlow(); activateNav(document.querySelectorAll('.nav-item')[4]); }; 
+        document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); }; 
+        document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
         
         let avg = "5.0"; let revCount = 0; if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
         document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; document.getElementById('modal-rating-count').innerText = `(Based on ${revCount} Reviews)`;
         renderReviews(p.reviews || []);
     };
-    window.closeProduct = () => { resetViews(); restoreHome(); };
-    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); triggerCartFlow(); activateNav(document.querySelectorAll('.nav-item')[4]); };
+
+    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); };
 
     function renderReviews(reviews) {
         const list = document.getElementById('modal-reviews-list');
@@ -563,9 +597,6 @@
         let total = Object.values(cart).reduce((a,b)=>a+b,0);
         document.getElementById('nav-badge').innerText = total; 
     }
-    
-    window.showCart = () => { resetViews(); showSafe('cart-view'); window.scrollTo(0, 0); renderCart(); };
-    window.closeCart = () => { resetViews(); restoreHome(); activateNav(document.querySelector('.nav-item')); };
 
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
@@ -609,7 +640,7 @@
                 btn.innerText = "✅ Payment Successful!";
                 let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n*ID:* ${response.razorpay_payment_id}\n*Customer:* ${d.name}\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${fullAddress}`;
                 try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
-                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
+                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, "theme": { "color": "#1b5e20" }
         };
@@ -617,27 +648,6 @@
     };
 
     let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
-
-    // 🩺 CONSULTATION LOGIC
-    window.openConsult = () => { document.getElementById('consult-overlay').classList.add('show-consult'); };
-    window.closeConsult = () => { document.getElementById('consult-overlay').classList.remove('show-consult'); activateNav(document.querySelector('.nav-item')); };
-
-    // ✨ SPLASH SCREEN & AUTO-POPUP DELAY
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const splash = document.getElementById('splash-screen');
-            if(splash) {
-                splash.classList.add('splash-hidden');
-                setTimeout(() => splash.style.display = 'none', 600);
-            }
-            
-            // Show the Doctor Consultation popup exactly 5 seconds after the app opens
-            setTimeout(() => {
-                openConsult();
-            }, 5000);
-            
-        }, 1200);
-    });
 
     load(); 
 </script>
