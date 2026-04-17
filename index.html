@@ -18,7 +18,6 @@
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
         
-        /* 📱 ADJUST BODY PADDING FOR NEW BOTTOM NAV */
         body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; top: 0 !important; }
         
         .hidden { display: none !important; }
@@ -63,11 +62,10 @@
         .h-text span { color: var(--gold); font-size: 0.6rem; display: block; }
         .h-actions { display: flex; align-items: center; gap: 8px; }
         
-        /* 🌐 GOOGLE TRANSLATE CUSTOM WHITE STYLES */
         .goog-te-gadget-simple { background-color: var(--amazon) !important; border: 1px solid white !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; }
         .goog-te-gadget-simple span { color: white !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
         .goog-te-gadget-simple img { display: none !important; }
-        .goog-te-banner-frame.skiptranslate { display: none !important; } /* Hides Google Top Bar */
+        .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
         /* ✨ LUXURY PRODUCT GRID */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; background: #fff; }
@@ -114,7 +112,7 @@
         .consult-box { background: var(--amazon); border: 2px solid var(--luxury); border-radius: 15px; width: 90%; max-width: 380px; text-align: center; padding: 30px 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); position: relative; color: white; }
         .consult-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 15px; object-fit: cover; background: white; }
         
-        /* 📱 NEW: FLIPKART STYLE BOTTOM APP BAR */
+        /* 📱 BOTTOM APP BAR */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; z-index: 5000; border-top: 1px solid #eaeaea; padding: 8px 15px 12px 15px; box-sizing: border-box; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #666; text-decoration: none; cursor: pointer; transition: 0.2s; -webkit-tap-highlight-color: transparent; position: relative; }
         .nav-item svg { width: 24px; height: 24px; fill: #666; margin-bottom: 4px; transition: 0.2s; }
@@ -144,9 +142,7 @@
         
         <div class="h-actions">
             <div id="google_translate_element"></div>
-            
             <div onclick="openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px; filter: drop-shadow(0 0 5px var(--gold));" title="VIP Consultation">🩺</div>
-            
             <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank" style="text-decoration:none; display:flex; align-items:center;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="28">
             </a>
@@ -234,11 +230,11 @@
 
         <p id="modal-desc" style="font-size:1rem; line-height: 1.5; margin-bottom: 20px;"></p>
         
-        <div class="p-qty" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex; width:auto;">
+        <div class="p-qty" id="modal-qty-controls" style="margin:0 0 15px 0; padding:5px 10px; border-radius:20px; display:inline-flex; width:auto;">
             <button onclick="updateQty(currentModalProductId, -1)">-</button><span id="modal-qty">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
         </div>
         
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <div style="display:flex; gap:10px; margin-bottom:20px;" id="modal-action-buttons">
             <button id="modal-add-btn" class="btn-cart" style="flex:1; margin:0; padding:12px; font-size:1rem;">🛒 Add to Cart</button>
             <button id="modal-buy-btn" class="btn-buy" style="flex:1; margin:0; padding:12px; font-size:1rem;">⚡ Buy Now</button>
         </div>
@@ -287,7 +283,8 @@
             
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
-                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Discount: <span>-₹<span id="discount-amt">0</span></span></p>
+                <p id="vip-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; background:var(--amazon); padding:5px 8px; border-radius:4px;">👑 VIP Discount (10%): <span>-₹<span id="vip-discount-amt">0</span></span></p>
+                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Promo Code: <span>-₹<span id="discount-amt">0</span></span></p>
                 <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
                 <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
                 
@@ -316,8 +313,14 @@
 <div id="consult-overlay">
     <div class="consult-box">
         <img src="logo.png" class="consult-img">
-        <h2 style="color:var(--gold); margin: 0 0 10px 0;">1-on-1 Consultation</h2>
-        <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.5;">Book a private session with Dr. Prasiddhi Patil (BAMS) for a personalized Ayurvedic skincare & haircare regimen.</p>
+        <h2 style="color:var(--gold); margin: 0 0 10px 0;">👑 VIP Premium</h2>
+        <div style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.6; text-align:left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
+            <b style="color: white; font-size: 1.1rem; display: block; margin-bottom: 10px; text-align: center;">Unlock for ₹800/month:</b>
+            ✨ 1-on-1 Monthly Doctor Consultation<br>
+            🚚 100% FREE Shipping on all orders<br>
+            💸 Flat 10% OFF everything in store<br>
+            🔓 Access to "Members-Only" Vault
+        </div>
         
         <div style="margin-bottom: 15px; min-height: 45px; display: flex; justify-content: center;">
             <form>
@@ -404,7 +407,6 @@
     window.closeCart = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeProfile = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
 
-    // ✨ SPLASH SCREEN & 5-SECOND AUTO-POPUP DELAY
     window.addEventListener('load', () => {
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
@@ -412,12 +414,7 @@
                 splash.classList.add('splash-hidden');
                 setTimeout(() => splash.style.display = 'none', 600);
             }
-            
-            // Show the Doctor Consultation popup exactly 5 seconds after the app opens
-            setTimeout(() => {
-                window.openConsult();
-            }, 5000);
-            
+            setTimeout(() => { window.openConsult(); }, 5000);
         }, 1200);
     });
 </script>
@@ -441,11 +438,11 @@
     const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
-    let currentUser = null; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
+    let currentUser = null; let isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; }); };
+    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; isUserVIP = false; render(); }); };
     
     window.handleAccountClick = () => { 
         if(currentUser) { 
@@ -459,9 +456,23 @@
         currentUser = user;
         if(user) { 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
-            const profDisplay = document.getElementById('prof-name-display');
-            if(profDisplay) profDisplay.innerText = user.displayName;
-        } 
+            
+            // 🔥 SECURE VIP CHECK FROM FIREBASE 🔥
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if(userDoc.exists() && userDoc.data().isPremium) {
+                isUserVIP = true;
+                const profDisplay = document.getElementById('prof-name-display');
+                if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.8rem; background:var(--amazon); padding:2px 6px; border-radius:4px;">👑 VIP</span>`;
+            } else {
+                isUserVIP = false;
+                const profDisplay = document.getElementById('prof-name-display');
+                if(profDisplay) profDisplay.innerText = user.displayName;
+            }
+        } else {
+            isUserVIP = false;
+        }
+        render(); // Re-render the grid to apply or remove locks
+        if(!document.getElementById('cart-view').classList.contains('hidden')) renderCart();
     });
 
     async function load() {
@@ -495,7 +506,8 @@
         let count = Object.values(cart).reduce((a,b)=>a+b,0);
         if(count > 0 && activeUpsell && !windowHasUpsellShown && !cart[activeUpsell.productId]) {
             const upProd = products.find(p => p.id === activeUpsell.productId);
-            if(upProd) {
+            // Dont upsell a VIP product to a free user
+            if(upProd && (!upProd.isVault || isUserVIP)) {
                 document.getElementById('up-img').src = upProd.image;
                 document.getElementById('up-name').innerText = upProd.name;
                 document.getElementById('up-old-price').innerText = "₹" + upProd.price;
@@ -523,12 +535,31 @@
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
             const q = cart[p.id] || 0; 
-            const badgeHtml = p.tag ? `<div class="p-badge">✨ ${p.tag}</div>` : '';
+            let badgeHtml = p.tag ? `<div class="p-badge">✨ ${p.tag}</div>` : '';
             let buttonHtml = '';
-            if (q > 0) {
-                buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+
+            // 🔥 VIP VAULT LOCK ENGINE 🔥
+            if (p.isVault) {
+                badgeHtml = `<div class="p-badge" style="background: linear-gradient(135deg, #d4af37, #febd69); color: black; border: none; font-weight: 900;">👑 VIP EXCLUSIVE</div>`;
+                
+                if (!isUserVIP) {
+                    // LOCKED STATE
+                    buttonHtml = `<div class="p-actions"><button style="background:var(--amazon); color:var(--gold); border:2px solid var(--gold); padding:8px 0; border-radius:6px; font-weight:bold; width:100%; font-size:0.85rem; cursor:pointer;" onclick="openConsult()">🔒 Unlock Premium to Buy</button></div>`;
+                } else {
+                    // UNLOCKED STATE
+                    if (q > 0) {
+                        buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+                    } else {
+                        buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)" style="border-color:var(--gold); color:var(--gold); background:#111;">Add VIP Item</button></div>`;
+                    }
+                }
             } else {
-                buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button></div>`;
+                // NORMAL PRODUCT LOGIC
+                if (q > 0) {
+                    buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+                } else {
+                    buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Buy Now</button></div>`;
+                }
             }
 
             grid.innerHTML += `
@@ -566,9 +597,27 @@
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`; document.getElementById('modal-desc').innerHTML = p.desc || ""; 
-        document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); }; 
-        document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
         
+        // 🔥 VIP MODAL LOCK ENGINE 🔥
+        if(p.isVault && !isUserVIP) {
+            document.getElementById('modal-qty-controls').style.display = "none";
+            document.getElementById('modal-add-btn').onclick = window.openConsult; 
+            document.getElementById('modal-add-btn').innerText = "🔒 Unlock Premium to Buy"; 
+            document.getElementById('modal-add-btn').style.background = "var(--amazon)";
+            document.getElementById('modal-add-btn').style.color = "var(--gold)";
+            document.getElementById('modal-add-btn').style.border = "2px solid var(--gold)";
+            document.getElementById('modal-buy-btn').style.display = "none";
+        } else {
+            document.getElementById('modal-qty-controls').style.display = "inline-flex";
+            document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added! ✅"; setTimeout(() => { btn.innerText = "🛒 Add to Cart"; }, 1500); }; 
+            document.getElementById('modal-add-btn').innerText = "🛒 Add to Cart";
+            document.getElementById('modal-add-btn').style.background = "white";
+            document.getElementById('modal-add-btn').style.color = "var(--amazon)";
+            document.getElementById('modal-add-btn').style.border = "1.5px solid var(--amazon)";
+            document.getElementById('modal-buy-btn').style.display = "block";
+            document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
+        }
+
         let avg = "5.0"; let revCount = 0; if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
         document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; document.getElementById('modal-rating-count').innerText = `(Based on ${revCount} Reviews)`;
         renderReviews(p.reviews || []);
@@ -621,9 +670,27 @@
                 </div>`; 
             } 
         }
-        const free = (sub >= 800 || count >= 5); document.getElementById('subtotal').innerText = sub;
+        
+        // 🔥 VIP DISCOUNT ENGINE 🔥
+        let vipDiscountAmount = 0;
+        if(isUserVIP && sub > 0) {
+            vipDiscountAmount = Math.floor(sub * 0.10); // 10% OFF
+            document.getElementById('vip-discount-row').classList.remove('hidden');
+            document.getElementById('vip-discount-amt').innerText = vipDiscountAmount;
+        } else {
+            document.getElementById('vip-discount-row').classList.add('hidden');
+        }
+
+        const finalSubtotal = sub - vipDiscountAmount - appliedDiscount;
+        const isFreeShipping = (finalSubtotal >= 800 || count >= 5 || isUserVIP); // VIP ALWAYS GETS FREE SHIPPING
+
+        document.getElementById('subtotal').innerText = sub;
+        
         if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
-        document.getElementById('ship-fee').innerText = free ? "FREE" : "₹50"; document.getElementById('total').innerText = sub - appliedDiscount + (free ? 0 : 50);
+        
+        document.getElementById('ship-fee').innerText = isFreeShipping ? "FREE" : "₹50"; 
+        
+        document.getElementById('total').innerText = finalSubtotal + (isFreeShipping ? 0 : 50);
     }
 
     document.getElementById('order-form').onsubmit = async (e) => {
