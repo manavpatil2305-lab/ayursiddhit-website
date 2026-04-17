@@ -31,7 +31,7 @@
         .product-item img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; margin-right: 15px; background: #000; }
 
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-        .tab-btn { background: #ddd; color: #333; padding: 10px 20px; border-radius: 25px; white-space: nowrap; }
+        .tab-btn { background: #ddd; color: #333; padding: 10px 20px; border-radius: 25px; white-space: nowrap; border: none; font-weight: bold; cursor: pointer; }
         .tab-btn.active { background: var(--amazon); color: var(--gold); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -60,6 +60,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('dashboard')">📈 Dashboard</button>
         <button class="tab-btn" onclick="switchTab('products')">📦 Products</button>
+        <button class="tab-btn" onclick="switchTab('vip')">👑 VIP Manager</button>
         <button class="tab-btn" onclick="switchTab('marketing')">🚀 Marketing</button>
         <button class="tab-btn" onclick="switchTab('customers')">👥 Customers</button>
     </div>
@@ -76,10 +77,27 @@
         </div>
     </div>
 
+    <div id="vip" class="tab-content">
+        <div class="card" style="border-top: 4px solid var(--gold);">
+            <h3>👑 Premium Access Portal</h3>
+            <p style="font-size:0.85rem; color:#666; margin-top:0;">Flip the switch to grant customers their ₹800/month VIP access. This instantly unlocks free shipping, 10% off, and the Private Vault.</p>
+            <div id="vip-users-list">Loading VIP data...</div>
+        </div>
+    </div>
+
     <div id="products" class="tab-content">
         <div class="card">
             <h3>📦 Add New Product</h3>
             <input type="text" id="p-name" placeholder="Product Name">
+            
+            <div style="background: rgba(212, 175, 55, 0.1); padding: 12px; border: 1px solid var(--gold); border-radius: 6px; margin-bottom: 15px;">
+                <label style="font-weight:bold; color:var(--amazon); display:flex; align-items:center; gap:8px; cursor:pointer;">
+                    <input type="checkbox" id="p-vault" style="width:20px; height:20px; margin:0;">
+                    👑 Make this a VIP-Only Vault Product
+                </label>
+                <p style="margin: 5px 0 0 28px; font-size: 0.8rem; color: #555;">Free users will see a padlock and must subscribe to buy this.</p>
+            </div>
+
             <div class="grid-3">
                 <input type="number" id="p-price" placeholder="Price (₹)">
                 <input type="number" id="p-stock" placeholder="Stock Qty">
@@ -245,14 +263,55 @@
     window.updateOrderStatus = async (orderId, newStatus) => { await updateDoc(doc(db, "orders", orderId), { status: newStatus }); alert(`Order updated to: ${newStatus}`); };
 
     async function loadUsers() {
-        const snap = await getDocs(collection(db, "users")); const list = document.getElementById('users-list'); list.innerHTML = ''; let userCount = 0;
-        snap.forEach(doc => { userCount++; const u = doc.data(); list.innerHTML += `<div class="user-item"><div><b>${u.name}</b><br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div></div>`; });
+        const snap = await getDocs(collection(db, "users")); 
+        const list = document.getElementById('users-list'); 
+        const vipList = document.getElementById('vip-users-list');
+        list.innerHTML = ''; vipList.innerHTML = ''; 
+        let userCount = 0;
+        
+        snap.forEach(doc => { 
+            userCount++; 
+            const u = doc.data(); 
+            const isVIP = u.isPremium || false;
+            
+            // Standard Customer List
+            list.innerHTML += `<div class="user-item"><div><b>${u.name}</b> ${isVIP ? '👑' : ''}<br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div></div>`; 
+            
+            // VIP Manager List
+            vipList.innerHTML += `
+            <div class="user-item" style="border-left: 4px solid ${isVIP ? 'var(--gold)' : '#ccc'};">
+                <div><b>${u.name}</b><br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div>
+                <div>
+                    <button onclick="toggleVIP('${doc.id}', ${isVIP})" style="background: ${isVIP ? 'var(--red)' : 'var(--amazon)'}; color: ${isVIP ? 'white' : 'var(--gold)'}; font-size: 0.85rem; padding: 8px 15px; margin:0;">
+                        ${isVIP ? 'Revoke VIP ✖' : 'Grant VIP 👑'}
+                    </button>
+                </div>
+            </div>`;
+        });
         document.getElementById('stat-users').innerText = userCount;
     }
 
+    // 🔥 VIP TOGGLE FUNCTION 🔥
+    window.toggleVIP = async (userId, currentStatus) => {
+        const action = currentStatus ? "REVOKE Premium access" : "GRANT VIP access";
+        if(confirm(`Are you sure you want to ${action} for this user?`)) {
+            await updateDoc(doc(db, "users", userId), { isPremium: !currentStatus });
+            alert(`User VIP Status Updated!`);
+            loadUsers(); // refresh the list live
+        }
+    };
+
     window.addProduct = async () => {
         const btn = document.getElementById('add-btn'); btn.innerText = "⏳ Uploading..."; btn.disabled = true;
-        const name = document.getElementById('p-name').value; const price = document.getElementById('p-price').value; const stock = document.getElementById('p-stock').value; const cat = document.getElementById('p-category').value; const desc = document.getElementById('p-desc').value; const tag = document.getElementById('p-tag').value; const file = document.getElementById('p-image').files[0];
+        const name = document.getElementById('p-name').value; 
+        const price = document.getElementById('p-price').value; 
+        const stock = document.getElementById('p-stock').value; 
+        const cat = document.getElementById('p-category').value; 
+        const desc = document.getElementById('p-desc').value; 
+        const tag = document.getElementById('p-tag').value; 
+        const isVault = document.getElementById('p-vault').checked; // Check VIP Vault status
+        const file = document.getElementById('p-image').files[0];
+        
         if(!name || !price || !stock || !file) { alert("Please fill all fields and select an image."); btn.innerText = "➕ Add Product"; btn.disabled = false; return; }
         
         const formData = new FormData(); formData.append('image', file);
@@ -260,9 +319,18 @@
             const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
             const data = await response.json();
             if(data.success) {
-                await addDoc(collection(db, "products"), { name: name, price: parseInt(price), stock: parseInt(stock), category: cat, desc: desc, tag: tag, image: data.data.url });
+                await addDoc(collection(db, "products"), { 
+                    name: name, 
+                    price: parseInt(price), 
+                    stock: parseInt(stock), 
+                    category: cat, 
+                    desc: desc, 
+                    tag: tag, 
+                    isVault: isVault, // Save vault status to database
+                    image: data.data.url 
+                });
                 alert("Product Added Successfully!"); loadProducts();
-                document.getElementById('p-name').value = ''; document.getElementById('p-price').value = ''; document.getElementById('p-stock').value = ''; document.getElementById('p-desc').value = ''; document.getElementById('p-image').value = ''; document.getElementById('p-tag').value = '';
+                document.getElementById('p-name').value = ''; document.getElementById('p-price').value = ''; document.getElementById('p-stock').value = ''; document.getElementById('p-desc').value = ''; document.getElementById('p-image').value = ''; document.getElementById('p-tag').value = ''; document.getElementById('p-vault').checked = false;
             }
         } catch(e) { alert("Error uploading image."); }
         btn.innerText = "➕ Add Product"; btn.disabled = false;
@@ -277,8 +345,9 @@
         if(snap.empty) { list.innerHTML = "<p>No products.</p>"; return; }
         snap.forEach(doc => {
             const p = doc.data();
+            const vaultIcon = p.isVault ? '<span style="color:var(--gold); font-size:0.8rem;"> 👑 VIP VAULT</span>' : '';
             upsellSelect.innerHTML += `<option value="${doc.id}">${p.name} (₹${p.price})</option>`;
-            list.innerHTML += `<div class="product-item"><div style="display:flex; align-items:center;"><img src="${p.image}"><div><b>${p.name}</b><br><span style="color:var(--red);">₹${p.price}</span></div></div><div><input type="number" value="${p.stock}" onchange="updateStock('${doc.id}', this.value)" style="width:60px; margin:0 10px 0 0; padding:5px;"><button onclick="deleteProduct('${doc.id}')" class="btn-danger" style="padding:5px 10px;">🗑️</button></div></div>`;
+            list.innerHTML += `<div class="product-item"><div style="display:flex; align-items:center;"><img src="${p.image}"><div><b>${p.name}</b> ${vaultIcon}<br><span style="color:var(--red);">₹${p.price}</span></div></div><div><input type="number" value="${p.stock}" onchange="updateStock('${doc.id}', this.value)" style="width:60px; margin:0 10px 0 0; padding:5px;"><button onclick="deleteProduct('${doc.id}')" class="btn-danger" style="padding:5px 10px;">🗑️</button></div></div>`;
         });
     }
 
