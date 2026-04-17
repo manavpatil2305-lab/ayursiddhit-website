@@ -568,13 +568,56 @@
     window.openConsult = () => { document.getElementById('consult-overlay').classList.add('show-consult'); };
     window.closeConsult = () => { document.getElementById('consult-overlay').classList.remove('show-consult'); };
     
-    window.startConsultSubscription = () => {
+    // 🔥 THE LIVE SUBSCRIPTION ENGINE 🔥
+    window.startConsultSubscription = async () => {
         const btn = document.querySelector('.consult-box button');
-        btn.innerText = "⏳ Loading Secure Portal...";
-        setTimeout(() => {
-            alert("Subscription API is active! (This is where the Netflix-style Auto-Pay will open).");
+        btn.innerText = "⏳ Connecting to Bank...";
+        btn.disabled = true;
+
+        try {
+            // 1. Ask Vercel backend to create the secure subscription ticket
+            const response = await fetch('/api/subscribe', { method: 'POST' });
+            const data = await response.json();
+
+            if (!data.id) {
+                alert("Backend Sync Error: Make sure your api/subscribe.js file is deployed on GitHub.");
+                btn.innerText = "Subscribe & Book Now";
+                btn.disabled = false;
+                return;
+            }
+
+            // 2. Open the live Razorpay Mandate popup
+            var options = {
+                "key": "rzp_live_SeWOakhF098GMl", // Your Live Key
+                "subscription_id": data.id,
+                "name": "Ayursiddhit Naturals",
+                "description": "VIP Consultation Auto-Pay",
+                "image": "logo.png",
+                "handler": async function (response) {
+                    btn.innerText = "✅ Subscribed Successfully!";
+                    // Alert Dr. Prasiddhi directly on WhatsApp
+                    let msg = `🚨 *NEW VIP CONSULTATION SUBSCRIBER* 🚨\n\n*Subscription ID:* ${response.razorpay_subscription_id}\n*Payment ID:* ${response.razorpay_payment_id}`;
+                    window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+                    closeConsult();
+                    btn.innerText = "Subscribe & Book Now";
+                    btn.disabled = false;
+                },
+                "theme": { "color": "#1b5e20" }
+            };
+            var rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response){
+                alert("Payment Authorization Failed. Please try again or use a different UPI app.");
+                btn.innerText = "Subscribe & Book Now";
+                btn.disabled = false;
+            });
+            rzp.open();
+
+        } catch (error) {
+            alert("Error connecting to Vercel Server. Wait 1 minute and try again.");
+            console.error(error);
             btn.innerText = "Subscribe & Book Now";
-        }, 1500);
+            btn.disabled = false;
+        }
     };
 
     // ✨ SPLASH SCREEN & AUTO-POPUP DELAY
@@ -586,7 +629,7 @@
                 setTimeout(() => splash.style.display = 'none', 600);
             }
             
-            // 🚨 Show the Doctor Consultation popup exactly 5 seconds after the app opens
+            // Show the Doctor Consultation popup exactly 5 seconds after the app opens
             setTimeout(() => {
                 openConsult();
             }, 5000);
