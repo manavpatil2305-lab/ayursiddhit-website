@@ -313,19 +313,31 @@
 <div id="consult-overlay">
     <div class="consult-box">
         <img src="logo.png" class="consult-img">
-        <h2 style="color:var(--gold); margin: 0 0 10px 0;">👑 VIP Premium</h2>
-        <div style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.6; text-align:left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
-            <b style="color: white; font-size: 1.1rem; display: block; margin-bottom: 10px; text-align: center;">Unlock for ₹800/month:</b>
-            ✨ 1-on-1 Monthly Doctor Consultation<br>
-            🚚 100% FREE Shipping on all orders<br>
-            💸 Flat 10% OFF everything in store<br>
-            🔓 Access to "Members-Only" Vault
-        </div>
         
-        <div style="margin-bottom: 15px; min-height: 45px; display: flex; justify-content: center;">
-            <form>
-                <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_SeY3dMMLfV5xO6" data-button_theme="brand-color" async></script>
-            </form>
+        <div id="vip-subscribe-pitch">
+            <h2 style="color:var(--gold); margin: 0 0 10px 0;">👑 VIP Premium</h2>
+            <div style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.6; text-align:left; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                <b style="color: white; font-size: 1.1rem; display: block; margin-bottom: 10px; text-align: center;">Unlock for ₹800/month:</b>
+                ✨ 1-on-1 Monthly Doctor Consultation<br>
+                🚚 100% FREE Shipping on all orders<br>
+                💸 Flat 10% OFF everything in store<br>
+                🔓 Access to "Members-Only" Vault
+            </div>
+            
+            <div style="margin-bottom: 15px; min-height: 45px; display: flex; justify-content: center;">
+                <form>
+                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_SeY3dMMLfV5xO6" data-button_theme="brand-color" async></script>
+                </form>
+            </div>
+        </div>
+
+        <div id="vip-active-portal" style="display: none;">
+            <h2 style="color:var(--gold); margin: 0 0 10px 0;">✨ Welcome, VIP!</h2>
+            <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.5;">Your private Doctor Desk is open. Tap below to start your 1-on-1 consultation and regimen check-in with Dr. Prasiddhi.</p>
+            
+            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:#25d366; color:white; text-decoration:none; padding:15px; border-radius:25px; font-weight:bold; font-size:1.1rem; margin-bottom:15px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+                💬 Priority WhatsApp Chat
+            </a>
         </div>
         
         <button onclick="closeConsult()" style="background: transparent; border: 1px solid #777; color: #aaa; padding: 10px; width: 100%; border-radius: 25px; font-weight: bold; cursor: pointer;">✖ Back to Menu</button>
@@ -372,7 +384,20 @@
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
     
     window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
-    window.openConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.add('show-consult'); };
+    
+    window.openConsult = function() { 
+        const el = document.getElementById('consult-overlay'); 
+        if(el) el.classList.add('show-consult'); 
+        
+        // 🧠 CEO LOGIC: If user is VIP, hide the payment pitch and show the Doctor Desk!
+        if (typeof isUserVIP !== 'undefined' && isUserVIP === true) {
+            document.getElementById('vip-subscribe-pitch').style.display = 'none';
+            document.getElementById('vip-active-portal').style.display = 'block';
+        } else {
+            document.getElementById('vip-subscribe-pitch').style.display = 'block';
+            document.getElementById('vip-active-portal').style.display = 'none';
+        }
+    };
     
     window.resetViews = function() { 
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view'].forEach(id => window.hideSafe(id)); 
@@ -438,14 +463,14 @@
     const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
-    let currentUser = null; let isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
+    window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; isUserVIP = false; render(); }); };
+    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; window.isUserVIP = false; render(); }); };
     
     window.handleAccountClick = () => { 
-        if(currentUser) { 
+        if(window.currentUser) { 
             window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0);
         } else { 
             window.login(); 
@@ -453,25 +478,25 @@
     };
 
     onAuthStateChanged(auth, async (user) => { 
-        currentUser = user;
+        window.currentUser = user;
         if(user) { 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             
             // 🔥 SECURE VIP CHECK FROM FIREBASE 🔥
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if(userDoc.exists() && userDoc.data().isPremium) {
-                isUserVIP = true;
+                window.isUserVIP = true;
                 const profDisplay = document.getElementById('prof-name-display');
                 if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.8rem; background:var(--amazon); padding:2px 6px; border-radius:4px;">👑 VIP</span>`;
             } else {
-                isUserVIP = false;
+                window.isUserVIP = false;
                 const profDisplay = document.getElementById('prof-name-display');
                 if(profDisplay) profDisplay.innerText = user.displayName;
             }
         } else {
-            isUserVIP = false;
+            window.isUserVIP = false;
         }
-        render(); // Re-render the grid to apply or remove locks
+        render(); 
         if(!document.getElementById('cart-view').classList.contains('hidden')) renderCart();
     });
 
@@ -506,8 +531,7 @@
         let count = Object.values(cart).reduce((a,b)=>a+b,0);
         if(count > 0 && activeUpsell && !windowHasUpsellShown && !cart[activeUpsell.productId]) {
             const upProd = products.find(p => p.id === activeUpsell.productId);
-            // Dont upsell a VIP product to a free user
-            if(upProd && (!upProd.isVault || isUserVIP)) {
+            if(upProd && (!upProd.isVault || window.isUserVIP)) {
                 document.getElementById('up-img').src = upProd.image;
                 document.getElementById('up-name').innerText = upProd.name;
                 document.getElementById('up-old-price').innerText = "₹" + upProd.price;
@@ -542,11 +566,9 @@
             if (p.isVault) {
                 badgeHtml = `<div class="p-badge" style="background: linear-gradient(135deg, #d4af37, #febd69); color: black; border: none; font-weight: 900;">👑 VIP EXCLUSIVE</div>`;
                 
-                if (!isUserVIP) {
-                    // LOCKED STATE
+                if (!window.isUserVIP) {
                     buttonHtml = `<div class="p-actions"><button style="background:var(--amazon); color:var(--gold); border:2px solid var(--gold); padding:8px 0; border-radius:6px; font-weight:bold; width:100%; font-size:0.85rem; cursor:pointer;" onclick="openConsult()">🔒 Unlock Premium to Buy</button></div>`;
                 } else {
-                    // UNLOCKED STATE
                     if (q > 0) {
                         buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
                     } else {
@@ -554,7 +576,6 @@
                     }
                 }
             } else {
-                // NORMAL PRODUCT LOGIC
                 if (q > 0) {
                     buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
                 } else {
@@ -598,8 +619,7 @@
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`; document.getElementById('modal-desc').innerHTML = p.desc || ""; 
         
-        // 🔥 VIP MODAL LOCK ENGINE 🔥
-        if(p.isVault && !isUserVIP) {
+        if(p.isVault && !window.isUserVIP) {
             document.getElementById('modal-qty-controls').style.display = "none";
             document.getElementById('modal-add-btn').onclick = window.openConsult; 
             document.getElementById('modal-add-btn').innerText = "🔒 Unlock Premium to Buy"; 
@@ -671,10 +691,9 @@
             } 
         }
         
-        // 🔥 VIP DISCOUNT ENGINE 🔥
         let vipDiscountAmount = 0;
-        if(isUserVIP && sub > 0) {
-            vipDiscountAmount = Math.floor(sub * 0.10); // 10% OFF
+        if(window.isUserVIP && sub > 0) {
+            vipDiscountAmount = Math.floor(sub * 0.10); 
             document.getElementById('vip-discount-row').classList.remove('hidden');
             document.getElementById('vip-discount-amt').innerText = vipDiscountAmount;
         } else {
@@ -682,7 +701,7 @@
         }
 
         const finalSubtotal = sub - vipDiscountAmount - appliedDiscount;
-        const isFreeShipping = (finalSubtotal >= 800 || count >= 5 || isUserVIP); // VIP ALWAYS GETS FREE SHIPPING
+        const isFreeShipping = (finalSubtotal >= 800 || count >= 5 || window.isUserVIP); 
 
         document.getElementById('subtotal').innerText = sub;
         
@@ -706,7 +725,7 @@
             "handler": async function (response) {
                 btn.innerText = "✅ Payment Successful!";
                 let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n*ID:* ${response.razorpay_payment_id}\n*Customer:* ${d.name}\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${fullAddress}`;
-                try { await addDoc(collection(db, "orders"), { uid: currentUser ? currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
+                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, "theme": { "color": "#1b5e20" }
