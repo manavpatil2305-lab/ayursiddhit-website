@@ -301,7 +301,11 @@
         <h2 style="color:var(--gold); margin: 0 0 10px 0;">1-on-1 Consultation</h2>
         <p style="font-size: 0.95rem; color: #ccc; margin-bottom: 20px; line-height: 1.5;">Book a private session with Dr. Prasiddhi Patil (BAMS) for a personalized Ayurvedic skincare & haircare regimen.</p>
         
-        <button onclick="startConsultSubscription()" style="background:var(--gold); color:var(--amazon); border:none; padding:15px; font-weight:bold; width:100%; border-radius:8px; font-size:1.1rem; cursor:pointer; margin-bottom: 15px;">Subscribe & Book Now</button>
+        <div style="margin-bottom: 15px; min-height: 45px; display: flex; justify-content: center;">
+            <form>
+                <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_SeY3dMMLfV5xO6" data-button_theme="brand-color" async></script>
+            </form>
+        </div>
         
         <button onclick="closeConsult()" style="background: transparent; border: 1px solid #777; color: #aaa; padding: 10px; width: 100%; border-radius: 25px; font-weight: bold; cursor: pointer;">✖ Back to Menu</button>
     </div>
@@ -567,58 +571,6 @@
     // 🩺 CONSULTATION LOGIC
     window.openConsult = () => { document.getElementById('consult-overlay').classList.add('show-consult'); };
     window.closeConsult = () => { document.getElementById('consult-overlay').classList.remove('show-consult'); };
-    
-    // 🔥 THE LIVE SUBSCRIPTION ENGINE 🔥
-    window.startConsultSubscription = async () => {
-        const btn = document.querySelector('.consult-box button');
-        btn.innerText = "⏳ Connecting to Bank...";
-        btn.disabled = true;
-
-        try {
-            // 1. Ask Vercel backend to create the secure subscription ticket
-            const response = await fetch('/api/subscribe', { method: 'POST' });
-            const data = await response.json();
-
-            if (!data.id) {
-                alert("Backend Sync Error: Make sure your api/subscribe.js file is deployed on GitHub.");
-                btn.innerText = "Subscribe & Book Now";
-                btn.disabled = false;
-                return;
-            }
-
-            // 2. Open the live Razorpay Mandate popup
-            var options = {
-                "key": "rzp_live_SeWOakhF098GMl", // Your Live Key
-                "subscription_id": data.id,
-                "name": "Ayursiddhit Naturals",
-                "description": "VIP Consultation Auto-Pay",
-                "image": "logo.png",
-                "handler": async function (response) {
-                    btn.innerText = "✅ Subscribed Successfully!";
-                    // Alert Dr. Prasiddhi directly on WhatsApp
-                    let msg = `🚨 *NEW VIP CONSULTATION SUBSCRIBER* 🚨\n\n*Subscription ID:* ${response.razorpay_subscription_id}\n*Payment ID:* ${response.razorpay_payment_id}`;
-                    window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
-                    closeConsult();
-                    btn.innerText = "Subscribe & Book Now";
-                    btn.disabled = false;
-                },
-                "theme": { "color": "#1b5e20" }
-            };
-            var rzp = new Razorpay(options);
-            rzp.on('payment.failed', function (response){
-                alert("Payment Authorization Failed. Please try again or use a different UPI app.");
-                btn.innerText = "Subscribe & Book Now";
-                btn.disabled = false;
-            });
-            rzp.open();
-
-        } catch (error) {
-            alert("Error connecting to Vercel Server. Wait 1 minute and try again.");
-            console.error(error);
-            btn.innerText = "Subscribe & Book Now";
-            btn.disabled = false;
-        }
-    };
 
     // ✨ SPLASH SCREEN & AUTO-POPUP DELAY
     window.addEventListener('load', () => {
