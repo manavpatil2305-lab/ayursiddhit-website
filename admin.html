@@ -60,6 +60,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('dashboard')">📈 Dashboard</button>
         <button class="tab-btn" onclick="switchTab('products')">📦 Products</button>
+        <button class="tab-btn" onclick="switchTab('videos')">📱 Videos</button>
         <button class="tab-btn" onclick="switchTab('vip')">👑 VIP Manager</button>
         <button class="tab-btn" onclick="switchTab('marketing')">🚀 Marketing</button>
         <button class="tab-btn" onclick="switchTab('customers')">👥 Customers</button>
@@ -74,6 +75,20 @@
         <div class="card">
             <h3>📦 Live Order Management</h3>
             <div id="orders-list">Loading orders...</div>
+        </div>
+    </div>
+
+    <div id="videos" class="tab-content">
+        <div class="card" style="border-top: 4px solid #E1306C;">
+            <h3>📱 Add New Video Link</h3>
+            <p style="font-size:0.85rem; color:#666; margin-top:0;">Paste a YouTube or Instagram Reel link here to display it in the app's Video Feed.</p>
+            <input type="text" id="v-title" placeholder="Video Title (e.g. How to use our Face Pack)">
+            <input type="text" id="v-link" placeholder="Paste Video URL Here...">
+            <button onclick="addVideo()" style="width: 100%; background: #E1306C;">➕ Post Video to App</button>
+        </div>
+        <div class="card">
+            <h3>📺 Live App Video Feed</h3>
+            <div id="video-list">Loading videos...</div>
         </div>
     </div>
 
@@ -231,7 +246,7 @@
         }
     });
 
-    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); }
+    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); loadVideos(); }
 
     async function loadOrdersAndStats() {
         const snap = await getDocs(collection(db, "orders"));
@@ -274,13 +289,16 @@
             const u = doc.data(); 
             const isVIP = u.isPremium || false;
             
+            // 🔥 SMART PAID/UNPAID BADGE 🔥
+            const paidTag = isVIP ? '<span style="background:green; color:white; padding:2px 8px; border-radius:12px; font-size:0.7rem; font-weight:bold; margin-left:8px;">PAID ✅</span>' : '<span style="background:red; color:white; padding:2px 8px; border-radius:12px; font-size:0.7rem; font-weight:bold; margin-left:8px;">UNPAID ❌</span>';
+            
             // Standard Customer List
             list.innerHTML += `<div class="user-item"><div><b>${u.name}</b> ${isVIP ? '👑' : ''}<br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div></div>`; 
             
-            // VIP Manager List
+            // VIP Manager List with Tag
             vipList.innerHTML += `
             <div class="user-item" style="border-left: 4px solid ${isVIP ? 'var(--gold)' : '#ccc'};">
-                <div><b>${u.name}</b><br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div>
+                <div><b>${u.name}</b> ${paidTag}<br><span style="font-size:0.85rem; color:#666;">${u.email}</span></div>
                 <div>
                     <button onclick="toggleVIP('${doc.id}', ${isVIP})" style="background: ${isVIP ? 'var(--red)' : 'var(--amazon)'}; color: ${isVIP ? 'white' : 'var(--gold)'}; font-size: 0.85rem; padding: 8px 15px; margin:0;">
                         ${isVIP ? 'Revoke VIP ✖' : 'Grant VIP 👑'}
@@ -296,8 +314,52 @@
         const action = currentStatus ? "REVOKE Premium access" : "GRANT VIP access";
         if(confirm(`Are you sure you want to ${action} for this user?`)) {
             await updateDoc(doc(db, "users", userId), { isPremium: !currentStatus });
-            alert(`User VIP Status Updated!`);
             loadUsers(); // refresh the list live
+        }
+    };
+
+    // 🔥 NEW VIDEO MANAGER FUNCTIONS 🔥
+    async function loadVideos() {
+        const snap = await getDocs(collection(db, "videos"));
+        const list = document.getElementById('video-list');
+        list.innerHTML = '';
+        if(snap.empty) { list.innerHTML = "<p style='color:#666;'>No videos posted yet.</p>"; return; }
+        
+        snap.forEach(doc => {
+            const v = doc.data();
+            list.innerHTML += `
+            <div class="product-item">
+                <div style="flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                    <b>${v.title}</b><br>
+                    <a href="${v.link}" target="_blank" style="font-size:0.8rem; color:#0066cc; text-decoration:none;">${v.link}</a>
+                </div>
+                <button onclick="deleteVideo('${doc.id}')" class="btn-danger" style="padding:5px 12px; border-radius:4px; margin-left:10px;">🗑️</button>
+            </div>`;
+        });
+    }
+
+    window.addVideo = async () => {
+        const title = document.getElementById('v-title').value.trim();
+        const link = document.getElementById('v-link').value.trim();
+        
+        if(!title || !link) { alert("Please enter both a title and a valid video link."); return; }
+        
+        await addDoc(collection(db, "videos"), { 
+            title: title, 
+            link: link, 
+            date: new Date().toISOString() 
+        });
+        
+        alert("✅ Video successfully posted to app!");
+        document.getElementById('v-title').value = '';
+        document.getElementById('v-link').value = '';
+        loadVideos();
+    };
+
+    window.deleteVideo = async (id) => {
+        if(confirm("Are you sure you want to remove this video from the app?")) {
+            await deleteDoc(doc(db, "videos", id));
+            loadVideos();
         }
     };
 
@@ -309,7 +371,7 @@
         const cat = document.getElementById('p-category').value; 
         const desc = document.getElementById('p-desc').value; 
         const tag = document.getElementById('p-tag').value; 
-        const isVault = document.getElementById('p-vault').checked; // Check VIP Vault status
+        const isVault = document.getElementById('p-vault').checked; 
         const file = document.getElementById('p-image').files[0];
         
         if(!name || !price || !stock || !file) { alert("Please fill all fields and select an image."); btn.innerText = "➕ Add Product"; btn.disabled = false; return; }
@@ -326,7 +388,7 @@
                     category: cat, 
                     desc: desc, 
                     tag: tag, 
-                    isVault: isVault, // Save vault status to database
+                    isVault: isVault, 
                     image: data.data.url 
                 });
                 alert("Product Added Successfully!"); loadProducts();
