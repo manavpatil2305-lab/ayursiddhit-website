@@ -161,7 +161,7 @@
     <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">📱 Videos</div>
 </div>
 
-<div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚</div>
+<div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹<span id="banner-threshold">800</span> OR buy 5+ Soaps! 🚚</div>
 
 <div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border);">
     <div class="search-container" style="position: relative; display: flex; align-items: center; max-width: 1200px; margin: 0 auto;">
@@ -299,11 +299,15 @@
             <div class="form-grid"><input type="text" id="f-city" placeholder="City" required><input type="number" id="f-pin" placeholder="Pincode" required></div>
             
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
-                <p style="display:flex; justify-content:space-between;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
-                <p id="vip-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; background:var(--amazon); padding:5px 8px; border-radius:4px;">👑 VIP Discount (10%): <span>-₹<span id="vip-discount-amt">0</span></span></p>
-                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold;">Promo Code: <span>-₹<span id="discount-amt">0</span></span></p>
-                <p style="display:flex; justify-content:space-between;">Shipping: <span id="ship-fee">₹50</span></p>
-                <h3 style="display:flex; justify-content:space-between; color:var(--red);">Total: <span>₹<span id="total">0</span></span></h3>
+                <p style="display:flex; justify-content:space-between; margin: 8px 0;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
+                <p id="vip-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; background:var(--amazon); padding:5px 8px; border-radius:4px; margin: 8px 0;">👑 VIP Discount (10%): <span>-₹<span id="vip-discount-amt">0</span></span></p>
+                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:green; font-weight:bold; margin: 8px 0;">Promo Code: <span>-₹<span id="discount-amt">0</span></span></p>
+                
+                <p style="display:flex; justify-content:space-between; margin: 8px 0; color:#555; font-size:0.9rem;">Secure Handling & Packaging: <span id="handling-fee">₹0</span></p>
+                <p style="display:flex; justify-content:space-between; margin: 8px 0; color:#555; font-size:0.9rem;">Platform GST (<span id="gst-label">5</span>%): <span id="gst-fee">₹0</span></p>
+                <p style="display:flex; justify-content:space-between; margin: 8px 0; color:#555; font-size:0.9rem;">Delivery Fee: <span id="ship-fee" style="font-weight:bold; color:var(--amazon);">₹0</span></p>
+                
+                <h3 style="display:flex; justify-content:space-between; color:var(--red); border-top:2px solid #eee; padding-top:10px; margin-top:10px;">Total: <span>₹<span id="total">0</span></span></h3>
                 
                 <button type="submit" class="btn-buy" style="background:var(--amazon); color:var(--gold); border: 2px solid var(--gold); padding:15px; font-size:1.1rem; border-radius: 8px;">⚡ Pay via UPI / Cards</button>
             </div>
@@ -369,7 +373,7 @@
         <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
         <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;">Terms & Conditions</a>
     </div>
-    <p style="margin: 0; color: #aaa;">&copy; 2026 Ayursiddhit Naturals.</p>
+    <p style="margin: 0; color: #aaa;">© 2026 Ayursiddhit Naturals.</p>
 </footer>
 
 <div class="bottom-nav">
@@ -505,6 +509,9 @@
 
     window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
+    
+    // 🔥 DEFAULT DYNAMIC BILLING VARS 🔥
+    let dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
     window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; window.isUserVIP = false; render(); }); };
@@ -539,14 +546,13 @@
         if(!document.getElementById('cart-view').classList.contains('hidden')) renderCart();
     });
 
-    // 🔥 SMART YOUTUBE PARSER 🔥
     function getYouTubeEmbedUrl(url) {
         let videoId = '';
-        if(url.includes('youtube.com/watch?v=')) {
+        if(url.includes('v=')) {
             videoId = url.split('v=')[1].split('&')[0];
         } else if(url.includes('youtu.be/')) {
             videoId = url.split('youtu.be/')[1].split('?')[0];
-        } else if(url.includes('youtube.com/shorts/')) {
+        } else if(url.includes('shorts/')) {
             videoId = url.split('shorts/')[1].split('?')[0];
         }
         return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
@@ -559,7 +565,6 @@
             render();
         } catch(e) {}
         
-        // 🔥 FETCH VIDEOS & AUTO-EMBED 🔥
         try {
             const vSnap = await getDocs(collection(db, "videos"));
             const vList = document.getElementById('video-feed-container');
@@ -571,11 +576,9 @@
                 const embedUrl = getYouTubeEmbedUrl(v.link);
                 let mediaHtml = '';
                 
-                // If it's a parsed YouTube link, show the iFrame
                 if(embedUrl.includes('youtube.com/embed/')) {
                     mediaHtml = `<iframe width="100%" height="250" src="${embedUrl}" title="${v.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:8px;"></iframe>`;
                 } else {
-                    // Fallback button for non-YouTube links
                     mediaHtml = `<a href="${v.link}" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-align:center; padding:15px; border-radius:8px; font-weight:bold; font-size:1.1rem; text-decoration:none; border:2px solid var(--gold); box-shadow:0 4px 10px rgba(0,0,0,0.1);">▶️ Watch Video</a>`;
                 }
 
@@ -598,6 +601,18 @@
                 const data = setSnap.data();
                 if(data.ads && data.ads.length > 0) { multiAds = data.ads; startMultiAds(); }
                 if(data.upsell && data.upsell.isActive) { activeUpsell = data.upsell; }
+                
+                // 🔥 LOAD DYNAMIC BILLING DATA FROM FIREBASE 🔥
+                if(data.billing) {
+                    dynamicBilling.gst = data.billing.gst !== undefined ? data.billing.gst : 5;
+                    dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
+                    dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
+                    dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
+                    
+                    // Auto-update the UI banner threshold text!
+                    const bannerThresh = document.getElementById('banner-threshold');
+                    if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
+                }
             } 
         } catch(e) {}
     }
@@ -605,8 +620,8 @@
     function startMultiAds() {
         if(multiAds.length === 0) return;
         document.getElementById('top-promo-bar').style.display = 'block';
-        const combinedAds = multiAds.join(' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ');
-        document.getElementById('multi-ad-container').innerHTML = combinedAds + ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' + combinedAds;
+        const combinedAds = multiAds.join('       ✨       ');
+        document.getElementById('multi-ad-container').innerHTML = combinedAds + '       ✨       ' + combinedAds;
     }
 
     window.triggerCartFlow = () => {
@@ -759,6 +774,7 @@
     window.updateCartQty = (id, newQty) => { let qty = parseInt(newQty); if(qty > 0) { cart[id] = qty; } else { delete cart[id]; } render(); updateBadge(); renderCart(); };
     window.removeFromCart = (id) => { delete cart[id]; render(); updateBadge(); renderCart(); };
 
+    // 🔥 DYNAMIC FEE UNBUNDLING ENGINE 🔥
     function renderCart() {
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
         for(let id in cart) { 
@@ -781,23 +797,40 @@
             document.getElementById('vip-discount-row').classList.add('hidden');
         }
 
-        const finalSubtotal = sub - vipDiscountAmount - appliedDiscount;
-        const isFreeShipping = (finalSubtotal >= 800 || count >= 5 || window.isUserVIP); 
+        const discountedSubtotal = sub - vipDiscountAmount - appliedDiscount;
+        
+        // Use Dynamic Billing config
+        const handlingFee = sub > 0 ? dynamicBilling.handling : 0; 
+        const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (dynamicBilling.gst / 100)) : 0; 
+        const isFreeShipping = (discountedSubtotal >= dynamicBilling.threshold || count >= 5 || window.isUserVIP); 
+        const shippingFee = (isFreeShipping || sub === 0) ? 0 : dynamicBilling.shipping;
 
         document.getElementById('subtotal').innerText = sub;
         
         if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
         
-        document.getElementById('ship-fee').innerText = isFreeShipping ? "FREE" : "₹50"; 
+        document.getElementById('gst-label').innerText = dynamicBilling.gst;
+        document.getElementById('handling-fee').innerText = `₹${handlingFee}`;
+        document.getElementById('gst-fee').innerText = `₹${gstFee}`;
+        document.getElementById('ship-fee').innerText = isFreeShipping ? "FREE" : `₹${shippingFee}`; 
         
-        document.getElementById('total').innerText = finalSubtotal + (isFreeShipping ? 0 : 50);
+        const finalTotal = discountedSubtotal + handlingFee + gstFee + shippingFee;
+        document.getElementById('total').innerText = finalTotal;
     }
 
     document.getElementById('order-form').onsubmit = async (e) => {
         e.preventDefault(); const btn = document.querySelector('#order-form .btn-buy'); btn.innerText = "⏳ Opening Secure Checkout..."; btn.disabled = true;
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, flat: document.getElementById('f-flat').value, bldg: document.getElementById('f-bldg').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
+        
+        const handlingFee = document.getElementById('handling-fee').innerText;
+        const gstFee = document.getElementById('gst-fee').innerText;
+        const shipFee = document.getElementById('ship-fee').innerText;
+
         let orderSummary = ""; let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, ${d.city} - ${d.pin}`;
         for(let id in cart) { const p = products.find(x => x.id === id); orderSummary += `${p.name} (x${cart[id]}), `; }
+        
+        orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
+
         const finalTotal = parseInt(document.getElementById('total').innerText);
 
         var options = {
