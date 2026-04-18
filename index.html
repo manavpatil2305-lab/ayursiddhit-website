@@ -67,6 +67,12 @@
         .goog-te-gadget-simple img { display: none !important; }
         .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
+        /* 🔥 STORE / VIDEOS TOGGLE BAR 🔥 */
+        #main-toggle-bar { display: flex; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 62px; z-index: 1900; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .tab-btn-main { flex: 1; text-align: center; padding: 12px; font-weight: bold; cursor: pointer; font-size: 1.05rem; transition: 0.2s; }
+        .tab-btn-main.active { color: var(--amazon); border-bottom: 3px solid var(--amazon); }
+        .tab-btn-main.inactive { color: #888; border-bottom: 3px solid transparent; }
+
         /* ✨ LUXURY PRODUCT GRID */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; background: #fff; }
         .p-card { background: white; border-radius: 12px; border: 1px solid #f0f0f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
@@ -92,7 +98,7 @@
         .back-btn { background: rgba(27, 94, 32, 0.1); color: var(--green); border: 1px solid var(--green); padding: 8px 18px; border-radius: 25px; font-weight: bold; font-size: 0.9rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: 0.3s; }
         .back-btn:hover { background: var(--green); color: white; }
 
-        .cart-view, .product-view, .policy-view, .about-view, #profile-view { padding: 15px; max-width: 800px; margin: auto; }
+        .cart-view, .product-view, .policy-view, .about-view, #profile-view, #videos-view { padding: 15px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; margin-bottom: 10px; font-size: 0.9rem; }
 
@@ -150,6 +156,11 @@
     </div>
 </header>
 
+<div id="main-toggle-bar">
+    <div id="tab-store" class="tab-btn-main active" onclick="switchMainTab('store')">🛍️ Store</div>
+    <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">📱 Videos</div>
+</div>
+
 <div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹800 OR buy 5+ Soaps! 🚚</div>
 
 <div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border);">
@@ -189,6 +200,12 @@
 </div>
 
 <main id="main-view" class="product-grid"></main>
+
+<div id="videos-view" class="hidden">
+    <h2 style="color:var(--amazon); margin-top:0; text-align:center;">Ayurvedic Clinical Guide</h2>
+    <p style="text-align:center; color:#666; font-size:0.95rem; margin-bottom:20px;">Watch and learn directly from Dr. Prasiddhi Patil.</p>
+    <div id="video-feed-container">Loading videos...</div>
+</div>
 
 <div id="upsell-overlay" class="hidden">
     <div class="upsell-box">
@@ -360,7 +377,7 @@
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Home</span>
     </div>
-    <div class="nav-item" onclick="activateNav(this); document.getElementById('search-box').focus(); window.scrollTo(0,0);">
+    <div class="nav-item" onclick="activateNav(this); switchMainTab('store'); document.getElementById('search-box').focus(); window.scrollTo(0,0);">
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         <span>Search</span>
     </div>
@@ -389,7 +406,6 @@
         const el = document.getElementById('consult-overlay'); 
         if(el) el.classList.add('show-consult'); 
         
-        // 🧠 CEO LOGIC: If user is VIP, hide the payment pitch and show the Doctor Desk!
         if (typeof isUserVIP !== 'undefined' && isUserVIP === true) {
             document.getElementById('vip-subscribe-pitch').style.display = 'none';
             document.getElementById('vip-active-portal').style.display = 'block';
@@ -399,14 +415,38 @@
         }
     };
     
+    // 🔥 NEW: TOGGLE STORE VS VIDEOS 🔥
+    window.switchMainTab = function(tab) {
+        const tStore = document.getElementById('tab-store');
+        const tVideos = document.getElementById('tab-videos');
+        
+        if(tab === 'store') {
+            tStore.className = 'tab-btn-main active';
+            tVideos.className = 'tab-btn-main inactive';
+            window.showSafe('home-top-section');
+            window.showSafe('search-section');
+            window.showSafe('main-view');
+            window.showSafe('t-offer-banner');
+            window.hideSafe('videos-view');
+        } else {
+            tVideos.className = 'tab-btn-main active';
+            tStore.className = 'tab-btn-main inactive';
+            window.hideSafe('home-top-section');
+            window.hideSafe('search-section');
+            window.hideSafe('main-view');
+            window.hideSafe('t-offer-banner');
+            window.showSafe('videos-view');
+        }
+    };
+
     window.resetViews = function() { 
-        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view'].forEach(id => window.hideSafe(id)); 
+        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view'].forEach(id => window.hideSafe(id)); 
         window.closeConsult();
     };
     
     window.restoreHome = function() { 
         window.resetViews();
-        ['home-top-section', 'main-view', 'search-section', 't-offer-banner'].forEach(id => window.showSafe(id)); 
+        window.switchMainTab('store'); 
         window.scrollTo(0, 0); 
     };
 
@@ -482,7 +522,6 @@
         if(user) { 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             
-            // 🔥 SECURE VIP CHECK FROM FIREBASE 🔥
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if(userDoc.exists() && userDoc.data().isPremium) {
                 window.isUserVIP = true;
@@ -507,6 +546,24 @@
             render();
         } catch(e) {}
         
+        // 🔥 FETCH VIDEOS 🔥
+        try {
+            const vSnap = await getDocs(collection(db, "videos"));
+            const vList = document.getElementById('video-feed-container');
+            vList.innerHTML = '';
+            if(vSnap.empty) { vList.innerHTML = '<p style="text-align:center; color:#888;">No videos posted yet.</p>'; }
+            vSnap.forEach(doc => {
+                const v = doc.data();
+                vList.innerHTML += `
+                <div style="background:white; border-radius:12px; border:1px solid var(--border); overflow:hidden; margin-bottom:20px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+                    <div style="padding:15px; text-align:center;">
+                        <h3 style="margin:0 0 15px 0; color:var(--amazon); font-size:1.1rem; line-height:1.4;">${v.title}</h3>
+                        <a href="${v.link}" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-align:center; padding:15px; border-radius:8px; font-weight:bold; font-size:1.1rem; text-decoration:none; border:2px solid var(--gold); box-shadow:0 4px 10px rgba(0,0,0,0.1);">▶️ Watch Video</a>
+                    </div>
+                </div>`;
+            });
+        } catch(e) {}
+
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
         try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } } catch(e) {}
         
@@ -562,7 +619,6 @@
             let badgeHtml = p.tag ? `<div class="p-badge">✨ ${p.tag}</div>` : '';
             let buttonHtml = '';
 
-            // 🔥 VIP VAULT LOCK ENGINE 🔥
             if (p.isVault) {
                 badgeHtml = `<div class="p-badge" style="background: linear-gradient(135deg, #d4af37, #febd69); color: black; border: none; font-weight: 900;">👑 VIP EXCLUSIVE</div>`;
                 
