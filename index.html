@@ -917,7 +917,21 @@
     }
 
     document.getElementById('order-form').onsubmit = async (e) => {
-        e.preventDefault(); const btn = document.querySelector('#order-form .btn-buy'); btn.innerText = "⏳ Opening Secure Checkout..."; btn.disabled = true;
+        e.preventDefault(); 
+        const btn = document.querySelector('#order-form .btn-buy'); 
+        btn.innerText = "⏳ Opening Secure Checkout..."; 
+        btn.disabled = true;
+
+        const finalTotal = parseInt(document.getElementById('total').innerText);
+
+        // 🛑 SAFEGUARD: Prevent Razorpay Crash if total is less than ₹1
+        if (finalTotal < 1 || isNaN(finalTotal)) {
+            alert("⚠️ Cart total must be at least ₹1.00 to checkout.");
+            btn.innerText = "⚡ Pay via UPI / Cards"; 
+            btn.disabled = false;
+            return;
+        }
+
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, flat: document.getElementById('f-flat').value, bldg: document.getElementById('f-bldg').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
         
         const handlingFee = document.getElementById('handling-fee').innerText;
@@ -929,20 +943,32 @@
         
         orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
 
-        const finalTotal = parseInt(document.getElementById('total').innerText);
-
         var options = {
             "key": "rzp_live_SeWOakhF098GMl", 
-            "amount": finalTotal * 100, "currency": "INR", "name": "Ayursiddhit Naturals", "image": "logo.png",
+            "amount": finalTotal * 100, 
+            "currency": "INR", 
+            "name": "Ayursiddhit Naturals", 
+            "image": "logo.png",
             "handler": async function (response) {
                 btn.innerText = "✅ Payment Successful!";
                 let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n*ID:* ${response.razorpay_payment_id}\n*Customer:* ${d.name}\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${fullAddress}`;
                 try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
             },
-            "prefill": { "name": d.name, "contact": d.phone }, "theme": { "color": "#1b5e20" }
+            "prefill": { "name": d.name, "contact": d.phone }, 
+            "theme": { "color": "#1b5e20" }
         };
-        var rzp1 = new Razorpay(options); rzp1.open();
+
+        var rzp1 = new Razorpay(options); 
+        
+        // 🔥 NEW: THE ERROR CATCHER ENGINE 🔥
+        rzp1.on('payment.failed', function (response){
+            alert("❌ Payment Failed!\nReason: " + response.error.reason + "\nDescription: " + response.error.description);
+            btn.innerText = "⚡ Pay via UPI / Cards"; 
+            btn.disabled = false;
+        });
+
+        rzp1.open();
     };
 
     let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
