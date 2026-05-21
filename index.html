@@ -18,34 +18,9 @@
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
         
-        body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; top: 0 !important; }
+        body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         
         .hidden { display: none !important; }
-        
-        /* ✨ PREMIUM LUXURY LOADING SCREEN */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--amazon);
-            z-index: 9999; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 0.6s ease-out;
-        }
-        .splash-logo {
-            width: 110px; height: 110px; border-radius: 50%;
-            border: 3px solid var(--luxury);
-            animation: pulseLogo 1.5s infinite alternate ease-in-out;
-            object-fit: cover;
-            background: transparent;
-        }
-        .splash-text {
-            color: var(--gold); margin-top: 15px; font-weight: bold;
-            font-size: 1.3rem; letter-spacing: 1px;
-        }
-        @keyframes pulseLogo {
-            0% { transform: scale(0.95); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-            100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(212, 175, 55, 0.8); }
-        }
-        .splash-hidden { opacity: 0; pointer-events: none; }
 
         #top-promo-bar { background: var(--green); color: white; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; display: none; border-bottom: 1px solid #114015; }
         .scrolling-multi-ads { display: inline-block; padding-left: 100%; animation: scrollLeftAds 25s linear infinite; }
@@ -137,27 +112,9 @@
         .nav-item.active svg { fill: var(--amazon); }
         .nav-item.active span { color: var(--amazon); font-weight: 800; }
         .nav-badge { position: absolute; top: -5px; right: 18px; background: #e40046; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.6rem; font-weight: bold; min-width: 12px; text-align: center; }
-
-        /* 🔥 AI CLINIC CSS 🔥 */
-        #ai-fab { position: fixed; bottom: 85px; right: 15px; background: var(--amazon); color: var(--gold); border: 2px solid var(--gold); border-radius: 50px; padding: 10px 18px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 4000; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
-        #ai-clinic-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 7000; display: flex; flex-direction: column; transition: transform 0.3s ease-out; transform: translateY(100%); }
-        #ai-clinic-overlay.active { transform: translateY(0); }
-        .ai-header { background: var(--amazon); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--luxury); }
-        .ai-chat-box { flex: 1; padding: 15px; overflow-y: auto; background: #fff; display: flex; flex-direction: column; gap: 15px; padding-bottom: 20px; }
-        .msg-ai { align-self: flex-start; background: #f1f3f6; color: #333; padding: 12px 18px; border-radius: 15px 15px 15px 0; max-width: 80%; border: 1px solid #ddd; font-size: 0.95rem; line-height: 1.4; }
-        .msg-user { align-self: flex-end; background: var(--green); color: white; padding: 12px 18px; border-radius: 15px 15px 0 15px; max-width: 80%; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .ai-input-area { padding: 10px 15px; background: #fdfdfd; border-top: 1px solid #ddd; display: flex; align-items: center; gap: 10px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
-        .ai-input-area input[type="text"] { flex: 1; padding: 12px 15px; border: 1px solid #ccc; border-radius: 25px; margin: 0; outline: none; font-size: 0.95rem; }
-        .cam-btn { background: var(--amazon); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
     </style>
 </head>
 <body>
-
-<div id="splash-screen">
-    <img src="logo.png" class="splash-logo" onerror="this.style.display='none'">
-    <div class="splash-text">Ayursiddhit Naturals</div>
-</div>
 
 <div id="top-promo-bar"><div class="scrolling-multi-ads" id="multi-ad-container"></div></div>
 <div id="promo-banner" class="promo-banner"><div class="scrolling-text" id="promo-text"></div></div>
@@ -210,4 +167,49 @@
                 <p style="margin:5px 0 0 0; font-weight:bold;">Flat 10% Off on Custom Hampers</p>
             </div>
             <div class="slide-card" style="background: linear-gradient(135deg, #8b4513, #a0522d);">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Stop Hairfall Natur
+                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Stop Hairfall Naturally</h2>
+                <p style="margin:5px 0 0 0; font-weight:bold;">Try our Bestselling Oils</p>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 15px; background: var(--card-bg); margin: 0 15px 15px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-size: 0.75rem; font-weight: bold; color: var(--amazon); border: 1px solid var(--border);">
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🌿</span>100% Natural</div>
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">👩‍⚕️</span>Dr. Formulated</div>
+        <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🇮🇳</span>Made in India</div>
+    </div>
+</div>
+
+<main id="main-view" class="product-grid"></main>
+
+<div id="videos-view" class="hidden">
+    <h2 style="color:var(--amazon); margin-top:0; text-align:center;">Ayurvedic Clinical Guide</h2>
+    <p style="text-align:center; color:#666; font-size:0.95rem; margin-bottom:20px;">Watch and learn directly from Dr. Prasiddhi Patil.</p>
+    <div id="video-feed-container">Loading videos...</div>
+</div>
+
+<div id="upsell-overlay" class="hidden">
+    <div class="upsell-box">
+        <h2 style="color:var(--green); margin-bottom:5px;">Enhance Your Ritual ✨</h2>
+        <p style="font-size:0.9rem; color:#555; margin-bottom:20px; font-weight:bold;">Complete your clinical regimen today.</p>
+        <img id="up-img" class="upsell-img" src="">
+        <h3 id="up-name" style="margin:0; font-size:1.2rem; color:var(--amazon);"></h3>
+        <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
+        <button id="up-btn" style="background:var(--amazon); color:white; border:none; padding:12px; font-weight:bold; width:100%; border-radius:6px; font-size:1rem; cursor:pointer;">Add to Order</button>
+        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#777; text-decoration:underline; font-size:0.85rem; margin-top:15px; font-weight:bold; cursor:pointer;">No thanks, proceed to checkout</button>
+    </div>
+</div>
+
+<div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px; max-width:800px; margin-left:auto; margin-right:auto;">
+    <button onclick="closeProfile()" class="back-btn">⬅ Back to Menu</button>
+    <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
+    <p style="font-size:1.1rem; font-weight:bold; border-bottom: 2px solid var(--border); padding-bottom: 10px;" id="prof-name-display"></p>
+    
+    <h3 style="color:var(--green); margin-top: 20px;">📦 My Orders</h3>
+    <div id="prof-orders-list" style="font-size:0.95rem;">Loading your orders...</div>
+    
+    <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
+</div>
+
+<div id="product-view" class="hidden product-view" style="position: relative;">
+    <button onclick="closeProduct()" class="back-btn">⬅ Back to Menu</button>
+    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid
