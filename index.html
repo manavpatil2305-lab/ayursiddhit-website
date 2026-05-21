@@ -18,9 +18,34 @@
     <style>
         :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
         
-        body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+        body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; top: 0 !important; }
         
         .hidden { display: none !important; }
+        
+        /* ✨ PREMIUM LUXURY LOADING SCREEN */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--amazon);
+            z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.6s ease-out;
+        }
+        .splash-logo {
+            width: 110px; height: 110px; border-radius: 50%;
+            border: 3px solid var(--luxury);
+            animation: pulseLogo 1.5s infinite alternate ease-in-out;
+            object-fit: cover;
+            background: transparent;
+        }
+        .splash-text {
+            color: var(--gold); margin-top: 15px; font-weight: bold;
+            font-size: 1.3rem; letter-spacing: 1px;
+        }
+        @keyframes pulseLogo {
+            0% { transform: scale(0.95); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+            100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(212, 175, 55, 0.8); }
+        }
+        .splash-hidden { opacity: 0; pointer-events: none; }
 
         #top-promo-bar { background: var(--green); color: white; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; display: none; border-bottom: 1px solid #114015; }
         .scrolling-multi-ads { display: inline-block; padding-left: 100%; animation: scrollLeftAds 25s linear infinite; }
@@ -112,9 +137,15 @@
         .nav-item.active svg { fill: var(--amazon); }
         .nav-item.active span { color: var(--amazon); font-weight: 800; }
         .nav-badge { position: absolute; top: -5px; right: 18px; background: #e40046; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.6rem; font-weight: bold; min-width: 12px; text-align: center; }
+
     </style>
 </head>
 <body>
+
+<div id="splash-screen">
+    <img src="logo.png" class="splash-logo" onerror="this.style.display='none'">
+    <div class="splash-text">Ayursiddhit Naturals</div>
+</div>
 
 <div id="top-promo-bar"><div class="scrolling-multi-ads" id="multi-ad-container"></div></div>
 <div id="promo-banner" class="promo-banner"><div class="scrolling-text" id="promo-text"></div></div>
@@ -195,21 +226,4 @@
         <h3 id="up-name" style="margin:0; font-size:1.2rem; color:var(--amazon);"></h3>
         <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
         <button id="up-btn" style="background:var(--amazon); color:white; border:none; padding:12px; font-weight:bold; width:100%; border-radius:6px; font-size:1rem; cursor:pointer;">Add to Order</button>
-        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#777; text-decoration:underline; font-size:0.85rem; margin-top:15px; font-weight:bold; cursor:pointer;">No thanks, proceed to checkout</button>
-    </div>
-</div>
-
-<div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:12px; border:1px solid var(--border); padding:25px; margin-top:20px; max-width:800px; margin-left:auto; margin-right:auto;">
-    <button onclick="closeProfile()" class="back-btn">⬅ Back to Menu</button>
-    <h2 style="color:var(--amazon); margin-top:0;">👤 My Profile</h2>
-    <p style="font-size:1.1rem; font-weight:bold; border-bottom: 2px solid var(--border); padding-bottom: 10px;" id="prof-name-display"></p>
-    
-    <h3 style="color:var(--green); margin-top: 20px;">📦 My Orders</h3>
-    <div id="prof-orders-list" style="font-size:0.95rem;">Loading your orders...</div>
-    
-    <button onclick="logoutUser()" style="background:var(--red); color:white; border:none; width:100%; padding:12px; border-radius:6px; font-weight:bold; margin-top:20px; cursor:pointer;">Sign Out</button>
-</div>
-
-<div id="product-view" class="hidden product-view" style="position: relative;">
-    <button onclick="closeProduct()" class="back-btn">⬅ Back to Menu</button>
-    <div style="background:var(--card-bg); padding:20px; border-radius:12px; border:1px solid
+        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#777; text-decoration
