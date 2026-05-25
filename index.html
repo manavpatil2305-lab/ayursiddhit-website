@@ -907,7 +907,7 @@
         
         orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
 
-        var options = {
+                var options = {
             "key": "rzp_live_SeWOakhF098GMI", 
             "amount": finalTotal * 100, 
             "currency": "INR", 
@@ -920,12 +920,20 @@
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, 
-            "theme": { "color": "#1b5e20" }
+            "theme": { "color": "#1b5e20" },
+            
+            // 🔥 THE MAGIC RESET SENSOR 🔥
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerText = "⚡ Pay via UPI / Cards";
+                    btn.disabled = false;
+                }
+            }
         };
 
         var rzp1 = new Razorpay(options); 
         
-        // 🔥 NEW: THE ERROR CATCHER ENGINE 🔥
+        // 🔥 THE ERROR CATCHER ENGINE 🔥
         rzp1.on('payment.failed', function (response){
             alert("❌ Payment Failed!\nReason: " + response.error.reason + "\nDescription: " + response.error.description);
             btn.innerText = "⚡ Pay via UPI / Cards"; 
