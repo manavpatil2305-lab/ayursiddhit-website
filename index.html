@@ -164,22 +164,16 @@
 </div>
 
 <div id="home-top-section">
-    <div class="hero-slider">
-        <div class="slides" id="slide-track">
-            <div class="slide-card" style="background: linear-gradient(135deg, #1b5e20, #4caf50);">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Pure Ayurvedic Healing</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Formulated by Dr. Prasiddhi Patil</p>
-            </div>
-            <div class="slide-card" style="background: linear-gradient(135deg, #d4af37, #febd69); color:black;">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">Luxury Combos</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Flat 10% Off on Custom Hampers</p>
-            </div>
-            <div class="slide-card" style="background: linear-gradient(135deg, #8b4513, #a0522d);">
-                <h2 style="margin:0; font-size:1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Stop Hairfall Naturally</h2>
-                <p style="margin:5px 0 0 0; font-weight:bold;">Try our Bestselling Oils</p>
-            </div>
-        </div>
+        <style>
+        #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 15px 15px 0 15px; box-sizing: border-box; }
+        .image-ad-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; }
+        .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
+        .image-ad-slide img { width: 100%; height: auto; border-radius: 12px; object-fit: cover; max-height: 220px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border: 2px solid var(--luxury); }
+    </style>
+    <div id="dynamic-image-ads" style="display:none;">
+        <div class="image-ad-track" id="image-ad-track"></div>
     </div>
+    
     <div style="display: flex; justify-content: space-between; padding: 15px; background: var(--card-bg); margin: 0 15px 15px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-size: 0.75rem; font-weight: bold; color: var(--amazon); border: 1px solid var(--border);">
         <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">🌿</span>100% Natural</div>
         <div><span style="font-size:1.5rem; display:block; margin-bottom:5px;">👩‍⚕️</span>Dr. Formulated</div>
