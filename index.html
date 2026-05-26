@@ -148,7 +148,16 @@
     <div id="tab-store" class="tab-btn-main active" onclick="switchMainTab('store')">🛍️ Store</div>
     <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">📱 Videos</div>
 </div>
-
+<style>
+    #dynamic-image-ads { width: 100%; overflow: hidden; display: none; background: var(--bg); padding-top: 15px; }
+    .image-ad-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; }
+    .image-ad-slide { min-width: 100%; padding: 0 15px; box-sizing: border-box; }
+    .image-ad-slide img { width: 100%; height: auto; border-radius: 12px; object-fit: cover; max-height: 220px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid var(--luxury); }
+</style>
+<div id="dynamic-image-ads">
+    <div class="image-ad-track" id="image-ad-track"></div>
+</div>
+    
 <div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹<span id="banner-threshold">800</span> OR buy 5+ Soaps! 🚚</div>
 
 <div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border);">
@@ -654,6 +663,24 @@
             if(setSnap.exists()) { 
                 const data = setSnap.data();
                 if(data.ads && data.ads.length > 0) { multiAds = data.ads; startMultiAds(); }
+                                // 🔥 THE IMAGE AD PULLER & SLIDER 🔥
+                if(data.custom_image_ads && data.custom_image_ads.length > 0) {
+                    const adTrack = document.getElementById('image-ad-track');
+                    if(adTrack) {
+                        document.getElementById('dynamic-image-ads').style.display = 'block';
+                        adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}"></div>`).join('');
+                        
+                        if(data.custom_image_ads.length > 1) {
+                            let imgAdIndex = 0;
+                            setInterval(() => { 
+                                imgAdIndex++; 
+                                if(imgAdIndex >= data.custom_image_ads.length) imgAdIndex = 0; 
+                                adTrack.style.transform = `translateX(-${imgAdIndex * 100}%)`; 
+                            }, 3500); 
+                        }
+                    }
+                }
+                
                 if(data.upsell && data.upsell.isActive) { activeUpsell = data.upsell; }
                 
                 if(data.billing) {
