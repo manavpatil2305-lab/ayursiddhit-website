@@ -30,7 +30,7 @@
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-                /* ✨ PREMIUM LUXURY HEADER */
+                        /* ✨ PREMIUM LUXURY HEADER */
         header { background: #fdfbf7; color: var(--green); padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 3px solid var(--luxury); box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: background 0.3s; }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
         .h-logo { height: 42px; width: 42px; border-radius: 50%; border: 2px solid var(--luxury); background: white; object-fit: cover; }
@@ -41,7 +41,13 @@
         /* Invert Translate Button for Light Theme */
         .goog-te-gadget-simple { background-color: white !important; border: 1px solid var(--luxury) !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .goog-te-gadget-simple span { color: var(--green) !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
-        
+
+        /* 🔥 KILL GOOGLE TRANSLATE BANNER & TOOLTIPS 🔥 */
+        .goog-te-banner-frame.skiptranslate, .goog-te-balloon-frame { display: none !important; }
+        body { top: 0px !important; position: static !important; }
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
         
         .goog-te-gadget-simple { background-color: var(--amazon) !important; border: 1px solid white !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; }
         .goog-te-gadget-simple span { color: white !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
