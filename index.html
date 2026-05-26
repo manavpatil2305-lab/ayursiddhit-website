@@ -42,9 +42,11 @@
         .goog-te-gadget-simple { background-color: white !important; border: 1px solid var(--luxury) !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .goog-te-gadget-simple span { color: var(--green) !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
 
-        /* 🔥 KILL GOOGLE TRANSLATE BANNER & TOOLTIPS 🔥 */
-        .goog-te-banner-frame.skiptranslate, .goog-te-balloon-frame { display: none !important; }
+                /* 🔥 KILL GOOGLE TRANSLATE BANNER (NUCLEAR OPTION) 🔥 */
+        .goog-te-banner-frame { display: none !important; visibility: hidden !important; }
+        .skiptranslate iframe { display: none !important; }
         body { top: 0px !important; position: static !important; }
+        html { top: 0px !important; height: 100%; }
         .goog-tooltip { display: none !important; }
         .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
