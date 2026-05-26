@@ -30,12 +30,18 @@
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        header { background: var(--amazon); color: white; padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--luxury); transition: background 0.3s; }
+                /* ✨ PREMIUM LUXURY HEADER */
+        header { background: #fdfbf7; color: var(--green); padding: 10px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 3px solid var(--luxury); box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: background 0.3s; }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
-        .h-logo { height: 40px; width: 40px; border-radius: 50%; border: 1.5px solid var(--luxury); background: transparent; }
-        .h-text { font-size: 0.95rem; font-weight: bold; line-height: 1.1; margin-left: 8px; }
-        .h-text span { color: var(--gold); font-size: 0.6rem; display: block; }
+        .h-logo { height: 42px; width: 42px; border-radius: 50%; border: 2px solid var(--luxury); background: white; object-fit: cover; }
+        .h-text { font-size: 1.05rem; font-weight: 900; line-height: 1.1; margin-left: 8px; color: var(--green); }
+        .h-text span { color: #8b6d20; font-size: 0.65rem; display: block; font-weight: bold; }
         .h-actions { display: flex; align-items: center; gap: 8px; }
+
+        /* Invert Translate Button for Light Theme */
+        .goog-te-gadget-simple { background-color: white !important; border: 1px solid var(--luxury) !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .goog-te-gadget-simple span { color: var(--green) !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
+        
         
         .goog-te-gadget-simple { background-color: var(--amazon) !important; border: 1px solid white !important; border-radius: 6px !important; padding: 4px 6px !important; display: flex; align-items: center; }
         .goog-te-gadget-simple span { color: white !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: bold; text-decoration: none !important; }
@@ -129,7 +135,8 @@
         
         <div class="h-actions">
             <div id="google_translate_element"></div>
-            <div onclick="openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px; filter: drop-shadow(0 0 5px var(--gold));" title="VIP Consultation">🩺</div>
+            <div onclick="openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px; text-shadow: 0 2px 5px rgba(0,0,0,0.15);" title="VIP Consultation">🩺</div>
+            
             <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank" style="text-decoration:none; display:flex; align-items:center;">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="28">
             </a>
