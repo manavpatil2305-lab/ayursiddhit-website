@@ -607,6 +607,21 @@
 
     // Auto-load the gallery when admin opens
     setTimeout(renderImageAdsGallery, 2000);
+
+        // 🔥 EDIT PRODUCT DESCRIPTION ENGINE 🔥
+    window.editProductDesc = async (id, currentName) => {
+        const newDesc = prompt(`Enter new description for ${currentName}:`);
+        
+        if(newDesc !== null && newDesc.trim() !== "") {
+            try {
+                await updateDoc(doc(db, "products", id), { desc: newDesc.trim() });
+                alert(`✅ Description updated for ${currentName}!`);
+                loadProducts(); // Automatically refresh your product list
+            } catch(e) {
+                alert("❌ Error updating description.");
+            }
+        }
+    };
     
 </script>
 </body>
