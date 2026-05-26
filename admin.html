@@ -409,7 +409,20 @@
             const p = doc.data();
             const vaultIcon = p.isVault ? '<span style="color:var(--gold); font-size:0.8rem;"> 👑 VIP VAULT</span>' : '';
             upsellSelect.innerHTML += `<option value="${doc.id}">${p.name} (₹${p.price})</option>`;
-            list.innerHTML += `<div class="product-item"><div style="display:flex; align-items:center;"><img src="${p.image}"><div><b>${p.name}</b> ${vaultIcon}<br><span style="color:var(--red);">₹${p.price}</span></div></div><div><input type="number" value="${p.stock}" onchange="updateStock('${doc.id}', this.value)" style="width:60px; margin:0 10px 0 0; padding:5px;"><button onclick="deleteProduct('${doc.id}')" class="btn-danger" style="padding:5px 10px;">🗑️</button></div></div>`;
+                    list.innerHTML += `
+        <div class="product-item" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; background: white;">
+            <div style="display:flex; align-items:center; gap: 15px;">
+                <img src="${p.image}" style="width: 50px; height: 50px; border-radius: 6px; object-fit: cover; border: 1px solid var(--luxury);">
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--green);">${p.name}</strong>
+                    <div style="color: #666; font-size: 0.9rem;">₹${p.price} | Stock: ${p.stock}</div>
+                </div>
+            </div>
+            <div style="display:flex; gap: 8px;">
+                <button onclick="editProductDesc('${doc.id}', '${p.name}')" style="background: var(--amazon); color: white; padding: 8px 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">✏️ Edit</button>
+                <button onclick="deleteProduct('${doc.id}')" style="background: var(--red); color: white; padding: 8px 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🗑️ Delete</button>
+            </div>
+        </div>`;
         });
     }
 
