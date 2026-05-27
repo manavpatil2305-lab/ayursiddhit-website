@@ -64,6 +64,7 @@
         <button class="tab-btn" onclick="switchTab('vip')">👑 VIP Manager</button>
         <button class="tab-btn" onclick="switchTab('marketing')">🚀 Marketing</button>
         <button class="tab-btn" onclick="switchTab('customers')">👥 Customers</button>
+        <button class="tab-btn" onclick="switchTab('analytics')">📈 Analytics</button>    
     </div>
 
     <div id="dashboard" class="tab-content active">
@@ -222,6 +223,27 @@
         </div>
     </div>
 </div>
+        <div id="analytics" class="tab-content">
+        <div class="card" style="border-top: 4px solid #8A2BE2;">
+            <h3>📈 Live Traffic & Engagement</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-top:0;">Real-time data on how users interact with Ayursiddhit Naturals.</p>
+            
+            <div class="grid-3" style="margin-top: 15px;">
+                <div class="stat-box" style="background: linear-gradient(135deg, #8A2BE2, #4B0082);">
+                    <h2 id="stat-visitors" style="margin:0; font-size:2rem; color:white;">0</h2>
+                    <p style="margin:5px 0 0 0; color:#ddd; font-weight:bold;">Total Store Visitors</p>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #ff7e5f, #feb47b);">
+                    <h2 id="stat-clicks" style="margin:0; font-size:2rem; color:white;">0</h2>
+                    <p style="margin:5px 0 0 0; color:#fff; font-weight:bold;">Product Taps</p>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #00c6ff, #0072ff);">
+                    <h2 id="stat-conversion" style="margin:0; font-size:2rem; color:white;">0%</h2>
+                    <p style="margin:5px 0 0 0; color:#fff; font-weight:bold;">Purchase Rate</p>
+                </div>
+            </div>
+        </div>
+        </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
