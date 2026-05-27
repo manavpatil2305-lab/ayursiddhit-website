@@ -972,7 +972,35 @@
 
     let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 3500);
 
-    load(); 
+    load();
+    
+        // 🕵️ SILENT TRAFFIC TRACKER 🕵️
+    setTimeout(async () => {
+        try {
+            const ref = doc(db, "settings", "analytics");
+            const snap = await getDoc(ref);
+            if(snap.exists()) {
+                await updateDoc(ref, { visitors: (snap.data().visitors || 0) + 1 });
+            } else {
+                await setDoc(ref, { visitors: 1, clicks: 0 });
+            }
+        } catch(e) {}
+    }, 4000); // Waits 4 seconds to ensure it is a real user, not a bot
+
+    // 🕵️ SILENT PRODUCT TAP TRACKER 🕵️
+    document.addEventListener('click', async (e) => {
+        // Triggers if they tap anything inside a product card
+        if(e.target.closest('.product-item') || e.target.closest('.slide-card')) {
+            try {
+                const ref = doc(db, "settings", "analytics");
+                const snap = await getDoc(ref);
+                if(snap.exists()) {
+                    await updateDoc(ref, { clicks: (snap.data().clicks || 0) + 1 });
+                }
+            } catch(err) {}
+        }
+    });
+    
 </script>
 </body>
 </html>
