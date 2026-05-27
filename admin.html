@@ -662,6 +662,31 @@
         }
     };
     
+        // 🔥 LIVE ANALYTICS PULLER (ADMIN) 🔥
+    window.loadAnalyticsData = async () => {
+        try {
+            const snap = await getDoc(doc(db, "settings", "analytics"));
+            if(snap.exists()) {
+                const data = snap.data();
+                const visitors = data.visitors || 0;
+                const clicks = data.clicks || 0;
+                
+                document.getElementById('stat-visitors').innerText = visitors;
+                document.getElementById('stat-clicks').innerText = clicks;
+                
+                // Compare visitors to total orders for the conversion rate
+                const totalOrders = parseInt(document.getElementById('stat-orders').innerText) || 0;
+                let conversion = 0;
+                if(visitors > 0) conversion = ((totalOrders / visitors) * 100).toFixed(1);
+                
+                document.getElementById('stat-conversion').innerText = conversion + "%";
+            }
+        } catch(e) { console.error("Analytics error", e); }
+    };
+    
+    // Auto-load 3 seconds after opening dashboard
+    setTimeout(loadAnalyticsData, 3000);
+    
 </script>
 </body>
 </html>
