@@ -1000,6 +1000,29 @@
             } catch(err) {}
         }
     });
+
+    // 🔥 DYNAMIC PROMO CODE ENGINE 🔥
+    setTimeout(async () => {
+        try {
+            const snap = await getDoc(doc(db, "settings", "promos"));
+            if(snap.exists()) {
+                const promos = snap.data().codes || [];
+                const banner = document.getElementById('live-promo-banner');
+                
+                if(banner) {
+                    if(promos.length > 0) {
+                        // Grabs all active codes and joins them with " and "
+                        const codeNames = promos.map(p => p.code).join(" and ");
+                        banner.innerText = `✨ USE ${codeNames} FOR DISCOUNT ✨`;
+                        banner.style.display = 'block'; // Ensures it stays visible
+                    } else {
+                        // If you delete all promo codes in admin, it hides the banner!
+                        banner.style.display = 'none'; 
+                    }
+                }
+            }
+        } catch(e) { console.log("Promo error", e); }
+    }, 1000);
     
 </script>
 </body>
