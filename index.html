@@ -1013,7 +1013,7 @@
                     if(promos.length > 0) {
                         // Grabs all active codes and joins them with " and "
                         const codeNames = promos.map(p => p.code).join(" and ");
-                        banner.innerText = `✨ USE ${codeNames} FOR DISCOUNT ✨`;
+                        banner.innerHTML = `<div class="scrolling-text">✨ USE ${codeNames} FOR DISCOUNT ✨</div>`;
                         banner.style.display = 'block'; // Ensures it stays visible
                     } else {
                         // If you delete all promo codes in admin, it hides the banner!
