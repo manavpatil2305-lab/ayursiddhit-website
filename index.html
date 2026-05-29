@@ -433,21 +433,27 @@
 </div>
 
 <script>
+  
     window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
     
     window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
         window.openConsult = function() {
-        if (typeof isUserVIP !== 'undefined' && window.isUserVIP === true) {
-            // IF USER PAID: Show the Private Doctor WhatsApp Desk
-            const el = document.getElementById('consult-overlay');
-            if(el) el.classList.add('show-consult');
-            document.getElementById('vip-active-portal').style.display = 'block';
-        } else {
-            // IF NOT VIP: Show your brand new Razorpay Popup!
-            document.getElementById('premium-popup').style.display = 'flex';
+    if (window.isUserVIP === true) {
+        // IF USER PAID: Show the Private Doctor WhatsApp Desk
+        const el = document.getElementById('consult-overlay');
+        if(el) el.classList.add('show-consult');
+        const portal = document.getElementById('vip-active-portal');
+        if(portal) portal.style.display = 'block';
+    } else {
+        // IF NOT VIP: Break the popup out of the invisible folder and show it!
+        const popup = document.getElementById('premium-popup');
+        if (popup) {
+            document.body.appendChild(popup); // 🚀 THE MAGIC HACK
+            popup.style.display = 'flex';
         }
-    };
+    }
+};
     
     window.switchMainTab = function(tab) {
         const tStore = document.getElementById('tab-store');
