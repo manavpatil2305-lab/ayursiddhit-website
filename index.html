@@ -425,8 +425,8 @@
         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         <span>Search</span>
     </div>
-  
-    <div class="nav-item" onclick="document.getElementById('premium-popup').style.display='flex';">
+    
+  <div class="nav-item" onclick="window.activateNav(this); window.openConsult();"> 
         <span style="font-size: 1.3rem; line-height: 24px; margin-bottom: 4px;">🩺</span>
         <span>Consult</span>
     </div>
@@ -446,17 +446,15 @@
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
     
     window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
-    
-    window.openConsult = function() { 
-        const el = document.getElementById('consult-overlay'); 
-        if(el) el.classList.add('show-consult'); 
-        
-        if (typeof isUserVIP !== 'undefined' && isUserVIP === true) {
-            document.getElementById('vip-subscribe-pitch').style.display = 'none';
+        window.openConsult = function() {
+        if (typeof isUserVIP !== 'undefined' && window.isUserVIP === true) {
+            // IF USER PAID: Show the Private Doctor WhatsApp Desk
+            const el = document.getElementById('consult-overlay');
+            if(el) el.classList.add('show-consult');
             document.getElementById('vip-active-portal').style.display = 'block';
         } else {
-            document.getElementById('vip-subscribe-pitch').style.display = 'block';
-            document.getElementById('vip-active-portal').style.display = 'none';
+            // IF NOT VIP: Show your brand new Razorpay Popup!
+            document.getElementById('premium-popup').style.display = 'flex';
         }
     };
     
