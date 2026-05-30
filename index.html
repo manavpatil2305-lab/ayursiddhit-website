@@ -730,6 +730,10 @@
                     dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
                     dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
                     dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
+                      
+                    // 🚀 NEW: Grab the Dynamic City from your Admin Panel!
+            dynamicBilling.localCity = data.billing.localCity || "nashik";
+            dynamicBilling.localPin = data.billing.localPin || "";  
                     
                     const bannerThresh = document.getElementById('banner-threshold');
                     if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
@@ -920,13 +924,18 @@
 
         const discountedSubtotal = sub - vipDiscountAmount - appliedDiscount;
         
-        // 📍 NASHIK SENSOR CHECK
-        let isNashik = false;
-        const cityField = document.getElementById('f-city');
-        if(cityField) {
-            const cityVal = cityField.value.toLowerCase().replace(/\s/g, '');
-            if(cityVal === 'nashik' || cityVal === 'nasik') { isNashik = true; }
+            // 📍 DYNAMIC LOCAL FREE SHIPPING SENSOR
+    let isNashik = false; // We keep this variable name so it doesn't break your math below!
+    const cityField = document.getElementById('f-city');
+    if(cityField) {
+        const cityVal = cityField.value.toLowerCase().replace(/\s/g, '');
+        const targetCity = (dynamicBilling.localCity || "nashik").toLowerCase().replace(/\s/g, '');
+        
+        // If what the customer typed matches your Admin Panel city, trigger Free Shipping!
+        if(cityVal !== "" && targetCity !== "" && (cityVal === targetCity || cityVal.includes(targetCity))) { 
+            isNashik = true; 
         }
+    }
 
             // --- SMART FEE SWAP ENGINE ---
     let handlingFee = sub > 0 ? dynamicBilling.handling : 0;
@@ -972,16 +981,17 @@
         document.getElementById('gst-fee').innerText = `₹${gstFee}`;
         
         // Update shipping text
-        if (isNashik && sub > 0) {
-            document.getElementById('ship-fee').innerText = "FREE (Nashik Local)";
-            document.getElementById('ship-fee').style.color = "var(--green)";
-        } else if (isFreeShipping && sub > 0) {
-            document.getElementById('ship-fee').innerText = "FREE";
-            document.getElementById('ship-fee').style.color = "var(--green)";
-        } else {
-            document.getElementById('ship-fee').innerText = `₹${shippingFee}`;
-            document.getElementById('ship-fee').style.color = "var(--amazon)";
-        }
+            if (isNashik && sub > 0) {
+        const localName = dynamicBilling.localCity ? dynamicBilling.localCity.toUpperCase() : "LOCAL";
+        document.getElementById('ship-fee').innerText = `FREE (${localName})`;
+        document.getElementById('ship-fee').style.color = "var(--green)";
+    } else if (isFreeShipping && sub > 0) {
+        document.getElementById('ship-fee').innerText = "FREE";
+        document.getElementById('ship-fee').style.color = "var(--green)";
+    } else {
+        document.getElementById('ship-fee').innerText = `₹${shippingFee}`;
+        document.getElementById('ship-fee').style.color = "var(--amazon)";
+            }
         
         const finalTotal = discountedSubtotal + handlingFee + gstFee + shippingFee;
         document.getElementById('total').innerText = finalTotal;
