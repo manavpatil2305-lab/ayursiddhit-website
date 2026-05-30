@@ -294,6 +294,19 @@
                 <input type="text" id="f-city" placeholder="City" required oninput="renderCart()">
                 <input type="number" id="f-pin" placeholder="Pincode" required>
             </div>
+
+                    <div style="margin: 20px 0; padding: 15px; border: 1px solid var(--border); border-radius: 8px; background: rgba(0,0,0,0.02);">
+            <b style="font-size: 0.95rem; color: var(--text); display: block; margin-bottom: 10px;">Select Payment Method:</b>
+            <div style="display: flex; gap: 10px;">
+                <label style="flex: 1; border: 1px solid var(--amazon); padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; background: #fff; font-weight: bold;">
+                    <input type="radio" name="pay_mode" value="prepaid" checked onchange="window.renderCart()"> 💳 Pay Online
+                </label>
+                <label style="flex: 1; border: 1px solid #ccc; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; background: #fff; font-weight: bold;">
+                    <input type="radio" name="pay_mode" value="cod" onchange="window.renderCart()"> 💵 COD (+₹55)
+                </label>
+            </div>
+            <p id="cod-warning" style="display: none; color: var(--red); font-size: 0.85rem; margin-top: 10px; font-weight: bold; text-align: center;">⚠️ COD is only available on orders above ₹399.</p>
+                    </div>
             
             <div style="border-top:1px solid var(--border); padding-top:15px; margin-top:10px;">
                 <p style="display:flex; justify-content:space-between; margin: 8px 0;">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
@@ -915,7 +928,38 @@
             if(cityVal === 'nashik' || cityVal === 'nasik') { isNashik = true; }
         }
 
-        const handlingFee = sub > 0 ? dynamicBilling.handling : 0; 
+            // --- SMART FEE SWAP ENGINE ---
+    let handlingFee = sub > 0 ? dynamicBilling.handling : 0;
+    
+    const payMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
+    const codWarning = document.getElementById('cod-warning');
+    const checkoutBtn = document.querySelector('#order-form .btn-buy');
+
+    if (payMode === 'cod') {
+        if (discountedSubtotal < 399) {
+            // Block them if cart is under ₹399
+            if(codWarning) codWarning.style.display = 'block';
+            checkoutBtn.disabled = true;
+            checkoutBtn.style.opacity = '0.5';
+            checkoutBtn.innerText = 'Minimum ₹399 required for COD';
+        } else {
+            // ALLOW COD: Swap standard handling for ₹55 COD Fee
+            if(codWarning) codWarning.style.display = 'none';
+            checkoutBtn.disabled = false;
+            checkoutBtn.style.opacity = '1';
+            
+            handlingFee = 55; // 🚀 MAGIC: Overrides standard handling to flat ₹55!
+            checkoutBtn.innerText = '🛍️ Place COD Order';
+        }
+    } else {
+        // NORMAL PREPAID: Standard handling fee applies
+        if(codWarning) codWarning.style.display = 'none';
+        checkoutBtn.disabled = false;
+        checkoutBtn.style.opacity = '1';
+        checkoutBtn.innerText = '⚡ Pay via UPI / Cards';
+    }
+    // ------------------------------
+        
         const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (dynamicBilling.gst / 100)) : 0; 
         const isFreeShipping = (discountedSubtotal >= dynamicBilling.threshold || count >= 5 || window.isUserVIP || isNashik); 
         const shippingFee = (isFreeShipping || sub === 0) ? 0 : dynamicBilling.shipping;
@@ -969,6 +1013,25 @@
         for(let id in cart) { const p = products.find(x => x.id === id); orderSummary += `${p.name} (x${cart[id]}), `; }
         
         orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
+
+                const selectedPayMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
+
+        // IF COD IS SELECTED, SEND TO WHATSAPP AND STOP RAZORPAY!
+        if (selectedPayMode === 'cod') {
+            const codMsg = `🚨 NEW COD ORDER 🚨\n\nCustomer: ${d.name}\nTotal to Collect: ₹${finalTotal} CASH\nPayment Mode: Cash on Delivery (₹55 Fee Included)\n\n--- Order Details ---\n${orderSummary}`;
+            
+            // Save to Firebase Database
+            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString() }); } catch(e){}
+
+            // Send to Dr. Prasiddhi's WhatsApp
+            window.open(`https://wa.me/918080926195?text=${encodeURIComponent(codMsg)}`);
+            
+            // Clear the cart
+            cart = {}; updateBadge(); window.renderCart(); window.closeCart();
+            btn.innerText = '🛍️ Place COD Order';
+            btn.disabled = false;
+            return; // 🛑 This stops Razorpay from loading!
+        }
 
                 var options = {
             "key": "rzp_live_SeWOakhF098GMI", 
