@@ -167,6 +167,7 @@
                 <div>
                     <label style="font-size:0.8rem; font-weight:bold;">Handling Fee (₹)</label>
                     <input type="number" id="b-handling" placeholder="e.g. 25" style="margin-bottom:0;">
+                    
                 </div>
                 <div>
                     <label style="font-size:0.8rem; font-weight:bold;">Shipping Fee (₹)</label>
@@ -175,6 +176,11 @@
                 <div>
                     <label style="font-size:0.8rem; font-weight:bold;">Free Shipping Over (₹)</label>
                     <input type="number" id="b-threshold" placeholder="e.g. 800" style="margin-bottom:0;">
+                    <label style="font-size:0.8rem; font-weight:bold; color:var(--amazon);">📍 Local Free Shipping City</label>
+                    <input type="text" id="b-local-city" placeholder="e.g. pune" style="margin-bottom:0; text-transform: lowercase;">
+
+                    <label style="font-size:0.8rem; font-weight:bold; color:var(--amazon);">📍 Local Free Shipping Pincode</label>
+                    <input type="text" id="b-local-pin" placeholder="e.g. 411001 (Optional)" style="margin-bottom:0;">
                 </div>
             </div>
             <button onclick="saveBillingConfig()" style="width:100%; margin-top:15px; background:var(--red);">💾 Save Billing Rates</button>
@@ -480,11 +486,16 @@
                 // 🔥 LOAD BILLING SETTINGS 🔥
                 if(data.billing) {
                     setTimeout(() => {
-                        document.getElementById('b-gst').value = data.billing.gst !== undefined ? data.billing.gst : 5;
-                        document.getElementById('b-handling').value = data.billing.handling !== undefined ? data.billing.handling : 25;
-                        document.getElementById('b-shipping').value = data.billing.shipping !== undefined ? data.billing.shipping : 50;
-                        document.getElementById('b-threshold').value = data.billing.threshold !== undefined ? data.billing.threshold : 800;
-                    }, 1000);
+                document.getElementById('b-gst').value = data.billing.gst !== undefined ? data.billing.gst : 5;
+                document.getElementById('b-handling').value = data.billing.handling !== undefined ? data.billing.handling : 25;
+                document.getElementById('b-shipping').value = data.billing.shipping !== undefined ? data.billing.shipping : 50;
+                document.getElementById('b-threshold').value = data.billing.threshold !== undefined ? data.billing.threshold : 800;
+                
+                // 🚀 NEW: Load the saved City and Pincode!
+                document.getElementById('b-local-city').value = data.billing.localCity || "";
+                document.getElementById('b-local-pin').value = data.billing.localPin || "";
+            }, 1000);
+                    
                 } else {
                     setTimeout(() => {
                         document.getElementById('b-gst').value = 5;
@@ -500,12 +511,15 @@
     // 🔥 SAVE BILLING SETTINGS 🔥
     window.saveBillingConfig = async () => {
         const billingData = {
-            billing: {
-                gst: parseInt(document.getElementById('b-gst').value) || 0,
-                handling: parseInt(document.getElementById('b-handling').value) || 0,
-                shipping: parseInt(document.getElementById('b-shipping').value) || 0,
-                threshold: parseInt(document.getElementById('b-threshold').value) || 0
-            }
+    billing: {
+            gst: parseInt(document.getElementById('b-gst').value) || 0,
+            handling: parseInt(document.getElementById('b-handling').value) || 0,
+            shipping: parseInt(document.getElementById('b-shipping').value) || 0,
+            threshold: parseInt(document.getElementById('b-threshold').value) || 0,
+            localCity: document.getElementById('b-local-city').value.toLowerCase().trim(),
+            localPin: document.getElementById('b-local-pin').value.trim()
+                    }
+        
         };
         await setDoc(doc(db, "settings", "store_config"), billingData, { merge: true });
         alert("✅ Dynamic Billing Rules updated live!");
