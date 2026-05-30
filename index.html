@@ -624,11 +624,65 @@
         }
 
         const totalAmt = document.getElementById('b2b-total').innerText;
+                const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', '');
+        const totalAmt = parseInt(totalAmtStr) || 0;
         const discountStr = document.getElementById('b2b-margin-percent').innerText;
 
-        const msg = `🚨 NEW B2B WHOLESALE ORDER 🚨\n\n🏢 Store: ${store}\n👤 Owner: ${owner}\n📞 Phone: ${phone}\n📍 Address: ${addr}, ${city} - ${pin}\n\n--- Bulk Items ---\n${orderSummary}\n📦 Total Items: ${totalQty}\n📉 Margin Applied: ${discountStr}\n💰 Product Total: ${totalAmt}\n\n(Note: GST & Shipping will be calculated manually. Please share Bank/UPI details for payment.)`;
+        // 🧠 B2B LOGISTICS MATH ENGINE
+        const b2bGstAmt = Math.floor(totalAmt * (dynamicBilling.b2bGst / 100));
+        let b2bShippingAmt = totalAmt >= dynamicBilling.b2bThreshold ? 0 : dynamicBilling.b2bShipping;
+        let b2bHandlingAmt = dynamicBilling.b2bHandling;
+        
+        const finalGrandTotal = totalAmt + b2bGstAmt + b2bShippingAmt + b2bHandlingAmt;
 
-        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
+        // 💳 RAZORPAY B2B SECURE CHECKOUT
+        const btn = document.getElementById('submit-b2b-btn');
+        btn.innerText = "⏳ Opening Secure Checkout...";
+        btn.disabled = true;
+
+        var options = {
+            "key": "rzp_live_SeWDwkhFO98GNI", // ⚠️ Put your exact Razorpay key here. Ensure correct character case!
+            "amount": finalGrandTotal * 100,
+            "currency": "INR",
+            "name": "Ayursiddhit Naturals",
+            "description": "B2B Wholesale Order",
+            "image": "logo.png",
+            "handler": async function (response) {
+                btn.innerText = "✅ Payment Successful!";
+                
+                // 1. Send Paid Alert to your WhatsApp
+                let paidMsg = `🚨 PAID B2B ORDER 🚨\n\nPayment ID: ${response.razorpay_payment_id}\n🏢 Store: ${store}\n👤 Owner: ${owner}\n📞 Phone: ${phone}\n📍 Address: ${addr}, ${city} - ${pin}\n\n--- Bulk Items ---\n${orderSummary}\n📦 Total Items: ${totalQty}\n📉 Margin Applied: ${discountStr}\n\n💵 AMOUNT COLLECTED: ₹${finalGrandTotal}`;
+                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(paidMsg)}`);
+                
+                // 2. Save Order to Firebase Database
+                try { 
+                    await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "Paid B2B", payMode: "Razorpay", date: new Date().toISOString() }); 
+                } catch(e){}
+
+                // 3. Clear the B2B Cart and close page
+                b2bCart = {}; 
+                window.renderB2BProducts(); 
+                window.restoreHome();
+                btn.innerText = "📤 Send Purchase Order";
+                btn.disabled = false;
+            },
+            "prefill": {
+                "name": owner,
+                "contact": phone
+            },
+            "theme": {
+                "color": "#1b5e20"
+            },
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerText = "📤 Send Purchase Order";
+                    btn.disabled = false;
+                }
+            }
+        };
+        var rzpB2B = new Razorpay(options);
+        rzpB2B.open();
+        
     };
     // ==========================================
     
@@ -872,7 +926,12 @@
                       
                     // 🚀 NEW: Grab the Dynamic City from your Admin Panel!
             dynamicBilling.localCity = data.billing.localCity || "nashik";
-            dynamicBilling.localPin = data.billing.localPin || "";  
+            dynamicBilling.localPin = data.billing.localPin || "";
+                        // 🚀 NEW: Grab the B2B Settings!
+            dynamicBilling.b2bGst = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
+            dynamicBilling.b2bHandling = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
+            dynamicBilling.b2bShipping = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
+            dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
                     
                     const bannerThresh = document.getElementById('banner-threshold');
                     if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
