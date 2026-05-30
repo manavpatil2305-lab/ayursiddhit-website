@@ -598,160 +598,7 @@
             loadMyOrders(); // 🔥 PULLS ORDER HISTORY + TRACKING 
         } else { 
             window.login(); 
-        }
-                // ==========================================
-        // 💼 B2B WHOLESALE MATH & LOGIC ENGINE
-        // ==========================================
-        let b2bCart = {};
-
-        window.renderB2BProducts = function() {
-            const list = document.getElementById('b2b-product-list');
-            if(!list) return;
-            list.innerHTML = '';
-            
-            products.forEach(p => {
-                const qty = b2bCart[p.id] || 0;
-                list.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid #eee; border-radius:8px; background: #fff;">
-                        <div style="flex: 1;">
-                            <b style="color:var(--amazon); font-size:0.95rem;">${p.name}</b>
-                            <div style="font-size:0.85rem; color:#666;">MRP: ₹${p.price}</div>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:12px; background: rgba(0,0,0,0.03); padding: 5px; border-radius: 6px;">
-                            <button onclick="updateB2BQty('${p.id}', -1)" style="background:#ddd; border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">-</button>
-                            <span style="font-weight:bold; min-width:20px; text-align:center; color: var(--amazon);">${qty}</span>
-                            <button onclick="updateB2BQty('${p.id}', 1)" style="background:var(--amazon); color:var(--gold); border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">+</button>
-                        </div>
-                    </div>
-                `;
-            });
-            window.calculateB2BTotal();
-        };
-
-        window.updateB2BQty = function(id, change) {
-            b2bCart[id] = (b2bCart[id] || 0) + change;
-            if(b2bCart[id] <= 0) delete b2bCart[id];
-            window.renderB2BProducts();
-        };
-
-        window.calculateB2BTotal = function() {
-            let totalQty = 0;
-            let totalMrp = 0;
-            
-            for(let id in b2bCart) {
-                const p = products.find(x => x.id === id);
-                if(p) {
-                    totalQty += b2bCart[id];
-                    totalMrp += (p.price * b2bCart[id]);
-                }
-            }
-
-            // 🧠 THE SMART MARGIN TIER SYSTEM
-            let margin = 0;
-            if(totalQty >= 100) margin = 0.35;      // 35% for 100+ items
-            else if(totalQty >= 50) margin = 0.30;  // 30% for 50+ items
-            else if(totalQty >= 20) margin = 0.25;  // 25% for 20+ items
-
-            const discountAmt = Math.floor(totalMrp * margin);
-            const finalB2BTotal = totalMrp - discountAmt;
-
-            document.getElementById('b2b-total-qty').innerText = totalQty;
-            document.getElementById('b2b-mrp').innerText = `₹${totalMrp}`;
-            
-            const marginSpan = document.getElementById('b2b-margin-percent');
-            marginSpan.innerText = `${margin * 100}%`;
-            if (margin > 0) marginSpan.style.color = "var(--green)";
-            else marginSpan.style.color = "var(--red)";
-
-            document.getElementById('b2b-discount').innerText = `-₹${discountAmt}`;
-            document.getElementById('b2b-total').innerText = `₹${finalB2BTotal}`;
-        };
-
-        window.submitB2BOrder = function() {
-            const store = document.getElementById('b2b-store').value.trim();
-            const owner = document.getElementById('b2b-owner').value.trim();
-            const phone = document.getElementById('b2b-phone').value.trim();
-            const city = document.getElementById('b2b-city').value.trim();
-            const pin = document.getElementById('b2b-pin').value.trim();
-            const addr = document.getElementById('b2b-address').value.trim();
-
-            if(!store || !owner || !phone || !city || !pin || !addr) {
-                alert("⚠️ Please fill all business details to request wholesale pricing!");
-                return;
-            }
-
-            let totalQty = parseInt(document.getElementById('b2b-total-qty').innerText);
-            if(totalQty < 20) {
-                alert("⚠️ Minimum bulk order is 20 items to unlock wholesale margins!");
-                return;
-            }
-
-            let orderSummary = "";
-            for(let id in b2bCart) {
-                const p = products.find(x => x.id === id);
-                if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`;
-            }
-
-            const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', '');
-            const totalAmt = parseInt(totalAmtStr) || 0;
-            const discountStr = document.getElementById('b2b-margin-percent').innerText;
-
-            // 🧠 B2B LOGISTICS MATH ENGINE
-            const b2bGstAmt = Math.floor(totalAmt * (dynamicBilling.b2bGst / 100));
-            let b2bShippingAmt = totalAmt >= dynamicBilling.b2bThreshold ? 0 : dynamicBilling.b2bShipping;
-            let b2bHandlingAmt = dynamicBilling.b2bHandling;
-            
-            const finalGrandTotal = totalAmt + b2bGstAmt + b2bShippingAmt + b2bHandlingAmt;
-
-            // 💳 RAZORPAY B2B SECURE CHECKOUT
-            const btn = document.getElementById('submit-b2b-btn');
-            btn.innerText = "⏳ Opening Secure Checkout...";
-            btn.disabled = true;
-
-            var options = {
-                "key": "rzp_live_SeWDwkhFO98GNI", // ✨ Your live key is pre-filled!
-                "amount": finalGrandTotal * 100,
-                "currency": "INR",
-                "name": "Ayursiddhit Naturals",
-                "description": "B2B Wholesale Order",
-                "image": "logo.png",
-                "handler": async function (response) {
-                    btn.innerText = "✅ Payment Successful!";
-                    
-                    // 1. Send Paid Alert to your WhatsApp
-                    let paidMsg = `🚨 PAID B2B ORDER 🚨\n\nPayment ID: ${response.razorpay_payment_id}\n🏢 Store: ${store}\n👤 Owner: ${owner}\n📞 Phone: ${phone}\n📍 Address: ${addr}, ${city} - ${pin}\n\n--- Bulk Items ---\n${orderSummary}\n📦 Total Items: ${totalQty}\n📉 Margin Applied: ${discountStr}\n\n💵 AMOUNT COLLECTED: ₹${finalGrandTotal}`;
-                    window.open(`https://wa.me/918080926195?text=${encodeURIComponent(paidMsg)}`);
-                    
-                    // 2. Save Order to Firebase Database
-                    try { 
-                        await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "Paid B2B", payMode: "Razorpay", date: new Date().toISOString() }); 
-                    } catch(e){}
-
-                    // 3. Clear the B2B Cart and close page
-                    b2bCart = {}; 
-                    window.renderB2BProducts(); 
-                    window.restoreHome();
-                    btn.innerText = "📤 Send Purchase Order";
-                    btn.disabled = false;
-                },
-                "prefill": {
-                    "name": owner,
-                    "contact": phone
-                },
-                "theme": {
-                    "color": "#1b5e20"
-                },
-                "modal": {
-                    "ondismiss": function(){
-                        btn.innerText = "📤 Send Purchase Order";
-                        btn.disabled = false;
-                    }
-                }
-            };
-            var rzpB2B = new Razorpay(options);
-            rzpB2B.open();
-        };
-        // ==========================================
+        }         
     };
 
     onAuthStateChanged(auth, async (user) => { 
@@ -973,6 +820,160 @@
 
     window.showCart = () => { window.resetViews(); window.showSafe('cart-view'); window.scrollTo(0, 0); window.renderCart(); };
 
+            // ==========================================
+        // 💼 B2B WHOLESALE MATH & LOGIC ENGINE
+        // ==========================================
+        let b2bCart = {};
+
+        window.renderB2BProducts = function() {
+            const list = document.getElementById('b2b-product-list');
+            if(!list) return;
+            list.innerHTML = '';
+            
+            products.forEach(p => {
+                const qty = b2bCart[p.id] || 0;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid #eee; border-radius:8px; background: #fff;">
+                        <div style="flex: 1;">
+                            <b style="color:var(--amazon); font-size:0.95rem;">${p.name}</b>
+                            <div style="font-size:0.85rem; color:#666;">MRP: ₹${p.price}</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; background: rgba(0,0,0,0.03); padding: 5px; border-radius: 6px;">
+                            <button onclick="updateB2BQty('${p.id}', -1)" style="background:#ddd; border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">-</button>
+                            <span style="font-weight:bold; min-width:20px; text-align:center; color: var(--amazon);">${qty}</span>
+                            <button onclick="updateB2BQty('${p.id}', 1)" style="background:var(--amazon); color:var(--gold); border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            window.calculateB2BTotal();
+        };
+
+        window.updateB2BQty = function(id, change) {
+            b2bCart[id] = (b2bCart[id] || 0) + change;
+            if(b2bCart[id] <= 0) delete b2bCart[id];
+            window.renderB2BProducts();
+        };
+
+        window.calculateB2BTotal = function() {
+            let totalQty = 0;
+            let totalMrp = 0;
+            
+            for(let id in b2bCart) {
+                const p = products.find(x => x.id === id);
+                if(p) {
+                    totalQty += b2bCart[id];
+                    totalMrp += (p.price * b2bCart[id]);
+                }
+            }
+
+            // 🧠 THE SMART MARGIN TIER SYSTEM
+            let margin = 0;
+            if(totalQty >= 100) margin = 0.35;      // 35% for 100+ items
+            else if(totalQty >= 50) margin = 0.30;  // 30% for 50+ items
+            else if(totalQty >= 20) margin = 0.25;  // 25% for 20+ items
+
+            const discountAmt = Math.floor(totalMrp * margin);
+            const finalB2BTotal = totalMrp - discountAmt;
+
+            document.getElementById('b2b-total-qty').innerText = totalQty;
+            document.getElementById('b2b-mrp').innerText = `₹${totalMrp}`;
+            
+            const marginSpan = document.getElementById('b2b-margin-percent');
+            marginSpan.innerText = `${margin * 100}%`;
+            if (margin > 0) marginSpan.style.color = "var(--green)";
+            else marginSpan.style.color = "var(--red)";
+
+            document.getElementById('b2b-discount').innerText = `-₹${discountAmt}`;
+            document.getElementById('b2b-total').innerText = `₹${finalB2BTotal}`;
+        };
+
+        window.submitB2BOrder = function() {
+            const store = document.getElementById('b2b-store').value.trim();
+            const owner = document.getElementById('b2b-owner').value.trim();
+            const phone = document.getElementById('b2b-phone').value.trim();
+            const city = document.getElementById('b2b-city').value.trim();
+            const pin = document.getElementById('b2b-pin').value.trim();
+            const addr = document.getElementById('b2b-address').value.trim();
+
+            if(!store || !owner || !phone || !city || !pin || !addr) {
+                alert("⚠️ Please fill all business details to request wholesale pricing!");
+                return;
+            }
+
+            let totalQty = parseInt(document.getElementById('b2b-total-qty').innerText);
+            if(totalQty < 20) {
+                alert("⚠️ Minimum bulk order is 20 items to unlock wholesale margins!");
+                return;
+            }
+
+            let orderSummary = "";
+            for(let id in b2bCart) {
+                const p = products.find(x => x.id === id);
+                if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`;
+            }
+
+            const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', '');
+            const totalAmt = parseInt(totalAmtStr) || 0;
+            const discountStr = document.getElementById('b2b-margin-percent').innerText;
+
+            // 🧠 B2B LOGISTICS MATH ENGINE
+            const b2bGstAmt = Math.floor(totalAmt * (dynamicBilling.b2bGst / 100));
+            let b2bShippingAmt = totalAmt >= dynamicBilling.b2bThreshold ? 0 : dynamicBilling.b2bShipping;
+            let b2bHandlingAmt = dynamicBilling.b2bHandling;
+            
+            const finalGrandTotal = totalAmt + b2bGstAmt + b2bShippingAmt + b2bHandlingAmt;
+
+            // 💳 RAZORPAY B2B SECURE CHECKOUT
+            const btn = document.getElementById('submit-b2b-btn');
+            btn.innerText = "⏳ Opening Secure Checkout...";
+            btn.disabled = true;
+
+            var options = {
+                "key": "rzp_live_SeWDwkhFO98GNI", // ✨ Your live key is pre-filled!
+                "amount": finalGrandTotal * 100,
+                "currency": "INR",
+                "name": "Ayursiddhit Naturals",
+                "description": "B2B Wholesale Order",
+                "image": "logo.png",
+                "handler": async function (response) {
+                    btn.innerText = "✅ Payment Successful!";
+                    
+                    // 1. Send Paid Alert to your WhatsApp
+                    let paidMsg = `🚨 PAID B2B ORDER 🚨\n\nPayment ID: ${response.razorpay_payment_id}\n🏢 Store: ${store}\n👤 Owner: ${owner}\n📞 Phone: ${phone}\n📍 Address: ${addr}, ${city} - ${pin}\n\n--- Bulk Items ---\n${orderSummary}\n📦 Total Items: ${totalQty}\n📉 Margin Applied: ${discountStr}\n\n💵 AMOUNT COLLECTED: ₹${finalGrandTotal}`;
+                    window.open(`https://wa.me/918080926195?text=${encodeURIComponent(paidMsg)}`);
+                    
+                    // 2. Save Order to Firebase Database
+                    try { 
+                        await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "Paid B2B", payMode: "Razorpay", date: new Date().toISOString() }); 
+                    } catch(e){}
+
+                    // 3. Clear the B2B Cart and close page
+                    b2bCart = {}; 
+                    window.renderB2BProducts(); 
+                    window.restoreHome();
+                    btn.innerText = "📤 Send Purchase Order";
+                    btn.disabled = false;
+                },
+                "prefill": {
+                    "name": owner,
+                    "contact": phone
+                },
+                "theme": {
+                    "color": "#1b5e20"
+                },
+                "modal": {
+                    "ondismiss": function(){
+                        btn.innerText = "📤 Send Purchase Order";
+                        btn.disabled = false;
+                    }
+                }
+            };
+            var rzpB2B = new Razorpay(options);
+            rzpB2B.open();
+        };
+        // ==========================================
+    
     function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
         products.forEach(p => {
