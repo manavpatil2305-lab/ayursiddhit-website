@@ -820,7 +820,104 @@
 
     window.showCart = () => { window.resetViews(); window.showSafe('cart-view'); window.scrollTo(0, 0); window.renderCart(); };
 
-                 // 🧠 B2B LOGISTICS MATH ENGINE (WITH FAIL-SAFES)
+                // ==========================================
+        // 💼 B2B WHOLESALE MATH & LOGIC ENGINE
+        // ==========================================
+        let b2bCart = {};
+
+        window.renderB2BProducts = function() {
+            const list = document.getElementById('b2b-product-list');
+            if(!list) return;
+            list.innerHTML = '';
+            
+            products.forEach(p => {
+                const qty = b2bCart[p.id] || 0;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid #eee; border-radius:8px; background: #fff;">
+                        <div style="flex: 1;">
+                            <b style="color:var(--amazon); font-size:0.95rem;">${p.name}</b>
+                            <div style="font-size:0.85rem; color:#666;">MRP: ₹${p.price}</div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; background: rgba(0,0,0,0.03); padding: 5px; border-radius: 6px;">
+                            <button onclick="updateB2BQty('${p.id}', -1)" style="background:#ddd; border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">-</button>
+                            <span style="font-weight:bold; min-width:20px; text-align:center; color: var(--amazon);">${qty}</span>
+                            <button onclick="updateB2BQty('${p.id}', 1)" style="background:var(--amazon); color:var(--gold); border:none; padding:5px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            window.calculateB2BTotal();
+        };
+
+        window.updateB2BQty = function(id, change) {
+            b2bCart[id] = (b2bCart[id] || 0) + change;
+            if(b2bCart[id] <= 0) delete b2bCart[id];
+            window.renderB2BProducts();
+        };
+
+        window.calculateB2BTotal = function() {
+            let totalQty = 0;
+            let totalMrp = 0;
+            
+            for(let id in b2bCart) {
+                const p = products.find(x => x.id === id);
+                if(p) {
+                    totalQty += b2bCart[id];
+                    totalMrp += (p.price * b2bCart[id]);
+                }
+            }
+
+            // 🧠 THE SMART MARGIN TIER SYSTEM
+            let margin = 0;
+            if(totalQty >= 100) margin = 0.35;      // 35% for 100+ items
+            else if(totalQty >= 50) margin = 0.30;  // 30% for 50+ items
+            else if(totalQty >= 20) margin = 0.25;  // 25% for 20+ items
+
+            const discountAmt = Math.floor(totalMrp * margin);
+            const finalB2BTotal = totalMrp - discountAmt;
+
+            document.getElementById('b2b-total-qty').innerText = totalQty;
+            document.getElementById('b2b-mrp').innerText = `₹${totalMrp}`;
+            
+            const marginSpan = document.getElementById('b2b-margin-percent');
+            marginSpan.innerText = `${margin * 100}%`;
+            if (margin > 0) marginSpan.style.color = "var(--green)";
+            else marginSpan.style.color = "var(--red)";
+
+            document.getElementById('b2b-discount').innerText = `-₹${discountAmt}`;
+            document.getElementById('b2b-total').innerText = `₹${finalB2BTotal}`;
+        };
+
+        window.submitB2BOrder = function() {
+            const store = document.getElementById('b2b-store').value.trim();
+            const owner = document.getElementById('b2b-owner').value.trim();
+            const phone = document.getElementById('b2b-phone').value.trim();
+            const city = document.getElementById('b2b-city').value.trim();
+            const pin = document.getElementById('b2b-pin').value.trim();
+            const addr = document.getElementById('b2b-address').value.trim();
+
+            if(!store || !owner || !phone || !city || !pin || !addr) {
+                alert("⚠️ Please fill all business details to request wholesale pricing!");
+                return;
+            }
+
+            let totalQty = parseInt(document.getElementById('b2b-total-qty').innerText);
+            if(totalQty < 20) {
+                alert("⚠️ Minimum bulk order is 20 items to unlock wholesale margins!");
+                return;
+            }
+
+            let orderSummary = "";
+            for(let id in b2bCart) {
+                const p = products.find(x => x.id === id);
+                if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`;
+            }
+
+            const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', '');
+            const totalAmt = parseInt(totalAmtStr) || 0;
+            const discountStr = document.getElementById('b2b-margin-percent').innerText;
+
+            // 🧠 B2B LOGISTICS MATH ENGINE (WITH FAIL-SAFES)
             const b2bGst = dynamicBilling.b2bGst !== undefined ? dynamicBilling.b2bGst : 18;
             const b2bShipping = dynamicBilling.b2bShipping !== undefined ? dynamicBilling.b2bShipping : 300;
             const b2bHandling = dynamicBilling.b2bHandling !== undefined ? dynamicBilling.b2bHandling : 150;
@@ -869,16 +966,13 @@
                 },
                 "modal": {
                     "ondismiss": function(){
-                        // 🔥 RESETS BUTTON WHEN USER CLOSES POPUP
                         btn.innerText = "📤 Send Purchase Order";
                         btn.disabled = false;
                     }
                 }
             };
-            
             var rzpB2B = new Razorpay(options);
             
-            // 🔥 THE ERROR CATCHER ENGINE (RESETS BUTTON IF PAYMENT FAILS) 🔥
             rzpB2B.on('payment.failed', function (response) {
                 btn.innerText = "📤 Send Purchase Order";
                 btn.disabled = false;
@@ -886,6 +980,9 @@
             });
 
             rzpB2B.open();
+        };
+        // ==========================================
+            
          };
     
     function render() {
