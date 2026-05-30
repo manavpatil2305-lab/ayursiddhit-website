@@ -186,6 +186,29 @@
             <button onclick="saveBillingConfig()" style="width:100%; margin-top:15px; background:var(--red);">💾 Save Billing Rates</button>
         </div>
 
+                <div class="card" style="border-top: 4px solid var(--amazon);">
+            <h3 style="margin-top:0;">🏢 B2B Wholesale Billing Rules</h3>
+            <p style="font-size:0.85rem; color:#666; margin-top:0;">Control your margins, GST, and Logistics for Bulk Orders.</p>
+            <div class="grid-2">
+                <div>
+                    <label style="font-size:0.8rem; font-weight:bold;">B2B GST (%)</label>
+                    <input type="number" id="b2b-gst" placeholder="e.g. 18" style="margin-bottom:0;">
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; font-weight:bold;">B2B Handling Fee (₹)</label>
+                    <input type="number" id="b2b-handling" placeholder="e.g. 150" style="margin-bottom:0;">
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; font-weight:bold;">B2B Shipping (₹)</label>
+                    <input type="number" id="b2b-shipping" placeholder="e.g. 300" style="margin-bottom:0;">
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; font-weight:bold;">B2B Free Shipping Over (₹)</label>
+                    <input type="number" id="b2b-threshold" placeholder="e.g. 5000" style="margin-bottom:0;">
+                </div>
+            </div>
+                </div>
+        
         <div class="card" style="border-top: 4px solid var(--green);">
             <h3>📢 Top Banner Ads Management</h3>
             <div style="display:flex; gap:10px; margin-bottom:15px;">
@@ -494,6 +517,11 @@
                 // 🚀 NEW: Load the saved City and Pincode!
                 document.getElementById('b-local-city').value = data.billing.localCity || "";
                 document.getElementById('b-local-pin').value = data.billing.localPin || "";
+                                // 🚀 NEW: Load B2B Settings
+                document.getElementById('b2b-gst').value = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
+                document.getElementById('b2b-handling').value = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
+                document.getElementById('b2b-shipping').value = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
+                document.getElementById('b2b-threshold').value = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
             }, 1000);
                     
                 } else {
@@ -511,14 +539,20 @@
     // 🔥 SAVE BILLING SETTINGS 🔥
     window.saveBillingConfig = async () => {
         const billingData = {
-    billing: {
+            billing: {
             gst: parseInt(document.getElementById('b-gst').value) || 0,
             handling: parseInt(document.getElementById('b-handling').value) || 0,
             shipping: parseInt(document.getElementById('b-shipping').value) || 0,
             threshold: parseInt(document.getElementById('b-threshold').value) || 0,
             localCity: document.getElementById('b-local-city').value.toLowerCase().trim(),
-            localPin: document.getElementById('b-local-pin').value.trim()
-                    }
+            localPin: document.getElementById('b-local-pin').value.trim(),
+            
+            // 🚀 NEW: B2B Settings!
+            b2bGst: parseInt(document.getElementById('b2b-gst').value) || 0,
+            b2bHandling: parseInt(document.getElementById('b2b-handling').value) || 0,
+            b2bShipping: parseInt(document.getElementById('b2b-shipping').value) || 0,
+            b2bThreshold: parseInt(document.getElementById('b2b-threshold').value) || 0
+            }
         
         };
         await setDoc(doc(db, "settings", "store_config"), billingData, { merge: true });
