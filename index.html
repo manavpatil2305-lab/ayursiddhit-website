@@ -271,6 +271,36 @@
     </div>
 </div>
 
+            <div id="b2b-view" class="hidden" style="background:var(--card-bg); padding:20px; border-radius:12px; border: 1px solid var(--border); margin-bottom: 20px;">
+            <button onclick="window.restoreHome()" class="back-btn">← Back to Store</button>
+            <h2 style="color:var(--amazon); margin-top:0;">🤝 B2B Wholesale Portal</h2>
+            <p style="font-size:0.9rem; color:#666; line-height: 1.4;">Apply for bulk pricing. Add 20+ items for a 25% discount, 50+ for 30%, and 100+ for 35% margin!</p>
+            
+            <div class="form-grid" style="margin-bottom:25px; margin-top: 15px;">
+                <input type="text" id="b2b-store" placeholder="Store / Clinic Name *" required>
+                <input type="text" id="b2b-owner" placeholder="Owner Name *" required>
+                <input type="tel" id="b2b-phone" placeholder="Mobile Number (10 Digits) *" required>
+                <input type="text" id="b2b-city" placeholder="City *" required>
+                <input type="number" id="b2b-pin" placeholder="Pincode *" required>
+                <textarea id="b2b-address" placeholder="Full Delivery Address *" rows="2" style="grid-column: 1 / -1;" required></textarea>
+            </div>
+
+            <h3 style="color:var(--green); border-bottom:1px solid #eee; padding-bottom:5px;">📦 Build Bulk Order</h3>
+            
+            <div id="b2b-product-list" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;"></div>
+
+            <div style="background:rgba(0,0,0,0.03); padding:15px; border-radius:8px; border:1px solid var(--border);">
+                <p style="display:flex; justify-content:space-between; margin: 5px 0; color:var(--text);">Total Items: <b id="b2b-total-qty">0</b></p>
+                <p style="display:flex; justify-content:space-between; margin: 5px 0; color:var(--text);">Total MRP Value: <span id="b2b-mrp">₹0</span></p>
+                <p style="display:flex; justify-content:space-between; margin: 5px 0; color:var(--green); font-weight:bold;">Margin Discount (<span id="b2b-margin-percent">0%</span>): <span id="b2b-discount">-₹0</span></p>
+                <p style="display:flex; justify-content:space-between; margin: 5px 0; color:var(--text); font-size:0.8rem;">*GST & Logistics calculated by Admin.</p>
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+                <h3 style="display:flex; justify-content:space-between; margin: 0; color:var(--amazon);">Bulk Total: <span id="b2b-total">₹0</span></h3>
+            </div>
+
+            <button id="submit-b2b-btn" onclick="submitB2BOrder()" style="width:100%; padding:14px; background:var(--amazon); color:var(--gold); border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; margin-top:20px; cursor: pointer;">📤 Send Purchase Order</button>
+            </div>
+    
 <div id="cart-view" class="hidden cart-view">
     <button onclick="closeCart()" class="back-btn">⬅ Back to Menu</button>
     <h2 id="t-cart-title" style="margin-top: 0;">Review Your Order</h2>
@@ -421,10 +451,10 @@
     <div class="nav-item active" onclick="activateNav(this); restoreHome();">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="activateNav(this); switchMainTab('store'); document.getElementById('search-box').focus(); window.scrollTo(0,0);">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <span>Search</span>
+</div>
+    <div class="nav-item" onclick="window.activateNav(this); window.openB2B();">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+        <span>Wholesale</span>
     </div>
     
   <div class="nav-item" onclick="window.activateNav(this); window.openConsult();"> 
@@ -488,9 +518,15 @@
         }
     };
 
-    window.resetViews = function() { 
-        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view'].forEach(id => window.hideSafe(id)); 
+        window.resetViews = function() {
+        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view'].forEach(id => window.hideSafe(id));
         window.closeConsult();
+    };
+
+    window.openB2B = function() {
+        window.resetViews();
+        window.showSafe('b2b-view');
+        window.scrollTo(0, 0);
     };
     
     window.restoreHome = function() { 
