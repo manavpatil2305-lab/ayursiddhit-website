@@ -939,6 +939,10 @@
                 "currency": "INR",
                 "name": "Ayursiddhit Naturals",
                 "description": "B2B Wholesale Order",
+                "notes": {
+                    "firebase_uid": window.currentUser ? window.currentUser.uid : "guest"
+                },
+                
                 "image": "logo.png",
                 "handler": async function (response) {
                     btn.innerText = "✅ Payment Successful!";
