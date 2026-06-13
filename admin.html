@@ -58,7 +58,7 @@
 <div class="container" id="admin-content" style="display:none;">
     
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('dashboard')">📈 Dashboard</button>
+        <button id="unlock-btn" style="background: var(--amazon); ...">Unlock Dashboard</button>
         <button class="tab-btn" onclick="switchTab('products')">📦 Products</button>
         <button class="tab-btn" onclick="switchTab('videos')">📱 Videos</button>
         <button class="tab-btn" onclick="switchTab('vip')">👑 VIP Manager</button>
@@ -871,6 +871,13 @@ window.deleteWorkshop = async (id) => {
 
   }
 };
+    
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('unlock-btn');
+    if (btn) {
+        btn.addEventListener('click', window.unlockDashboard);
+    }
+});
     
 </script>
 </body>
