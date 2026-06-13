@@ -44,16 +44,6 @@
     <button id="login-btn" style="background:var(--gold); color:black; padding:8px 15px; font-size:0.9rem; border:none; border-radius:6px; font-weight:bold;">System Locked</button>
 </header>
 
-<div id="login-prompt" style="text-align: center; margin-top: 80px; padding: 20px;">
-    <img src="logo.png" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 15px;">
-    <h2 style="color: var(--amazon); margin-top: 0; margin-bottom: 5px;">CEO Dashboard Locked 🔒</h2>
-    <p style="color: #555; font-size: 1rem; margin-bottom: 25px;">Please enter your Master Password to access the control panel.</p>
-    <div style="max-width: 350px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <input type="password" id="master-pass" placeholder="Enter Password" style="text-align: center; font-size: 1.2rem; padding: 15px; border: 2px solid #ddd; border-radius: 8px;">
-        <button id="actual-login-btn" style="background: var(--amazon); color: white; width: 100%; padding: 15px; font-size: 1.1rem; border:none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Unlock Version 2 🔒</button>
-    </div>
-</div>
-
 <div class="container" id="admin-content" style="display:block;">
     
     <div class="tabs">
@@ -899,21 +889,9 @@ window.deleteWorkshop = async (id) => {
 };
 
   }
-};
-    
-// --- FIX: Remove the DOMContentLoaded wrapper entirely ---
-// Target the REAL button on the login screen
-const loginBtn = document.getElementById('actual-login-btn');
+};    
 
-if (loginBtn) {
-    loginBtn.addEventListener('click', window.unlockDashboard);
-    console.log("✅ The REAL login button is now wired!");
-} else {
-    console.error("❌ Could not find the actual-login-btn.");
-}
-
-// Optional: Add this to test if the button is reachable
-console.log("Script finished loading.");
+activateDashboard();
     
 </script>
 </body>
