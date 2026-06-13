@@ -566,7 +566,7 @@ window.loadWorkshops = async () => {
         // The Smart Brain Date Checker
         const today = new Date(); 
         
-        snap.forEach((docSnap) => {
+         snap.forEach((docSnap) => {
             const data = docSnap.data();
             
             // Format dates for comparison
@@ -581,13 +581,36 @@ window.loadWorkshops = async () => {
             // Date Logic
             if (today > regEnd) {
                 btnText = "Registration Closed";
-                btnColor = "#ccc"; // Grey out the button
+                btnColor = "#ccc"; 
                 isDisabled = true;
-                btnLink = "#"     
-                <a href="#" ${isDisabled ? 'onclick="return false;"' : `onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${btnLink}'); return false;"`} style="margin-top:auto; display: block; text-align: center; background: ${btnColor}; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
+                btnLink = "#";
+            } else if (today < regStart) {
+                btnText = "Starts " + data.Registration_start;
+                btnColor = "var(--green)"; 
+                isDisabled = true;
+                btnLink = "#";
+            }
+
+            // Safe Button Click Logic
+            let clickAction = "";
+            if (isDisabled) {
+                clickAction = 'onclick="return false;"';
+            } else {
+                clickAction = `onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${btnLink}'); return false;"`;
+            }
+
+            // Build the Beautiful Card
+            html += `
+            <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+                <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--green); font-size:1.3rem;">${data.Title}</h3>
+                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">🕒 <b>Timing:</b> ${data.Timing}</p>
+                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">📅 <b>Dates:</b> ${data.Workshop_start} to ${data.Workshop_end}</p>
+                
+                <h2 style="color: var(--amazon); margin: 15px 0 20px 0;">₹${data.Fees}</h2>
+                
+                <a href="#" ${clickAction} style="margin-top:auto; display: block; text-align: center; background: ${btnColor}; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
                     ${btnText}
                 </a>
-
             </div>
             `;
         });
