@@ -307,6 +307,10 @@
 
       <button onclick="saveWorkshop()" style="width: 100%; margin-top: 15px;">🚀 Publish Batch</button>
     </div>
+          <hr style="margin: 25px 0; border: 0; border-top: 1px solid #ddd;">
+    <h3 style="color: var(--amazon);">📋 Manage Active Batches</h3>
+    <div id="admin-workshop-list">Loading live batches...</div>
+
   </div>
 </div>
 
@@ -471,6 +475,42 @@
         }
     };
 
+// 👨‍⚕️ LOAD AND DELETE WORKSHOPS (ADMIN)
+window.loadWorkshopsAdmin = async () => {
+    const snap = await getDocs(collection(db, "Medical_workshop"));
+    const list = document.getElementById('admin-workshop-list');
+    if(!list) return;
+    
+    list.innerHTML = '';
+    if(snap.empty) { 
+        list.innerHTML = "<p style='color:#888; font-size:0.9rem;'>No active medical batches right now.</p>"; 
+        return; 
+    }
+
+    let html = "";
+    snap.forEach(doc => {
+        const data = doc.data();
+        html += `
+        <div style="background: #f9f9f9; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <strong style="color: var(--green); font-size: 1.1rem;">${data.Title}</strong><br>
+                <span style="font-size: 0.85rem; color: #555;">📅 ${data.Workshop_start} | 💰 ₹${data.Fees}</span>
+            </div>
+            <button onclick="deleteWorkshop('${doc.id}')" style="background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">🗑️ Delete</button>
+        </div>
+        `;
+    });
+    list.innerHTML = html;
+};
+
+window.deleteWorkshop = async (id) => {
+    if(confirm("⚠️ Are you sure you want to permanently delete this batch?")) {
+        await deleteDoc(doc(db, "Medical_workshop", id));
+        alert("✅ Batch successfully deleted!");
+        loadWorkshopsAdmin(); // Automatically reload the list so it disappears
+    }
+};
+    
     window.addProduct = async () => {
         const btn = document.getElementById('add-btn'); btn.innerText = "⏳ Uploading..."; btn.disabled = true;
         const name = document.getElementById('p-name').value; const price = document.getElementById('p-price').value; const stock = document.getElementById('p-stock').value; const cat = document.getElementById('p-category').value; const desc = document.getElementById('p-desc').value; const tag = document.getElementById('p-tag').value; const isVault = document.getElementById('p-vault').checked; const file = document.getElementById('p-image').files[0];
