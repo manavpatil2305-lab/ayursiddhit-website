@@ -902,12 +902,19 @@ window.deleteWorkshop = async (id) => {
   }
 };
     
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('unlock-btn');
-    if (btn) {
-        btn.addEventListener('click', window.unlockDashboard);
-    }
-});
+// --- FIX: Remove the DOMContentLoaded wrapper entirely ---
+// This runs as soon as the module loads.
+const unlockBtn = document.getElementById('unlock-btn');
+
+if (unlockBtn) {
+    unlockBtn.addEventListener('click', window.unlockDashboard);
+    console.log("✅ Success: Unlock Button Listener Attached.");
+} else {
+    console.error("❌ Error: Could not find 'unlock-btn' in the HTML.");
+}
+
+// Optional: Add this to test if the button is reachable
+console.log("Script finished loading.");
     
 </script>
 </body>
