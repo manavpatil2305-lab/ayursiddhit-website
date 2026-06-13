@@ -347,13 +347,16 @@
         event.target.classList.add('active');
     };
 
-    window.unlockDashboard = () => {
-        const inputPass = document.getElementById('master-pass').value;
-        if(inputPass === MASTER_PASSWORD) {
-            isUnlocked = true;
-            document.getElementById('login-prompt').style.display = 'none';
-            if(auth.currentUser) { activateDashboard(); } else {
-                signInWithPopup(auth, provider).catch(e => { alert("Google Sign-In failed."); });
+            if(auth.currentUser) { 
+            activateDashboard(); 
+        } else { 
+            signInWithPopup(auth, provider).then((result) => {
+                activateDashboard();
+            }).catch((e) => {
+                alert("Google Sign-In failed: " + e.message);
+            });
+        }
+
             }
         } else { alert("❌ Unauthorized Access."); }
     };
