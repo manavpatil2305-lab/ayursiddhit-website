@@ -770,6 +770,64 @@
     
     // Auto-load 3 seconds after opening dashboard
     setTimeout(loadAnalyticsData, 3000);
+    // ⚕️ LAUNCH MEDICAL WORKSHOP ENGINE ⚕️
+window.saveWorkshop = async () => {
+  // 1. Grab all the typed data from the HTML form
+  const title = document.getElementById('workshop_title').value;
+  const fees = document.getElementById('workshop_fees').value;
+  const timing = document.getElementById('workshop_timing').value;
+  const whatsapp = document.getElementById('workshop_whatsapp').value;
+  const regStart = document.getElementById('reg_start').value;
+  const regEnd = document.getElementById('reg_end').value;
+  const workStart = document.getElementById('work_start').value;
+  const workEnd = document.getElementById('work_end').value;
+
+  // 2. Security Check: Make sure no boxes were left empty
+  if(!title || !fees || !timing || !whatsapp || !regStart || !regEnd || !workStart || !workEnd) {
+    alert("⚠️ Please fill out all fields and dates before publishing!");
+    return;
+  }
+
+  try {
+    const btn = event.target;
+    btn.innerText = "⏳ Publishing Batch...";
+    btn.disabled = true;
+
+    // 3. Push perfectly formatted data to Firebase collection "Medical_workshop"
+    await addDoc(collection(db, "Medical_workshop"), {
+      Title: title,
+      Fees: Number(fees), // Converts text to number like you set up in Firebase!
+      Timing: timing,
+      Whatsapp_link: whatsapp,
+      Registration_start: regStart,
+      Registration_end: regEnd,
+      Workshop_start: workStart,
+      Workshop_end: workEnd,
+      Status: "Active"
+    });
+
+    alert("✅ Medical Batch Published Successfully!");
+    
+    // 4. Clear the form instantly so you can add another batch
+    document.getElementById('workshop_title').value = '';
+    document.getElementById('workshop_fees').value = '';
+    document.getElementById('workshop_timing').value = '';
+    document.getElementById('workshop_whatsapp').value = '';
+    document.getElementById('reg_start').value = '';
+    document.getElementById('reg_end').value = '';
+    document.getElementById('work_start').value = '';
+    document.getElementById('work_end').value = '';
+
+    btn.innerText = "🚀 Publish Batch";
+    btn.disabled = false;
+
+  } catch (error) {
+    console.error("Error adding workshop: ", error);
+    alert("❌ Error publishing batch. Check console.");
+    event.target.innerText = "🚀 Publish Batch";
+    event.target.disabled = false;
+  }
+};
     
 </script>
 </body>
