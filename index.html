@@ -583,26 +583,11 @@ window.loadWorkshops = async () => {
                 btnText = "Registration Closed";
                 btnColor = "#ccc"; // Grey out the button
                 isDisabled = true;
-                btnLink = "#";
-            } else if (today < regStart) {
-                btnText = "Starts " + data.Registration_start;
-                btnColor = "var(--green)"; // Your brand green
-                isDisabled = true;
-                btnLink = "#";
-            }
-
-            // Build the Beautiful Card
-            html += `
-            <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
-                <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--green); font-size:1.3rem;">${data.Title}</h3>
-                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">🕒 <b>Timing:</b> ${data.Timing}</p>
-                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">📅 <b>Dates:</b> ${data.Workshop_start} to ${data.Workshop_end}</p>
-                
-                <h2 style="color: var(--amazon); margin: 15px 0 20px 0;">₹${data.Fees}</h2>
-                
-                <a href="${btnLink}" ${isDisabled ? 'onclick="return false;"' : ''} target="_blank" style="margin-top:auto; display: block; text-align: center; background: ${btnColor}; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
+                btnLink = "#"     
+                <a href="#" ${isDisabled ? 'onclick="return false;"' : `onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${btnLink}'); return false;"`} style="margin-top:auto; display: block; text-align: center; background: ${btnColor}; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
                     ${btnText}
                 </a>
+
             </div>
             `;
         });
@@ -622,6 +607,34 @@ window.loadWorkshops = async () => {
 // Auto-load the cards a second after the website opens!
 setTimeout(window.loadWorkshops, 1000);
 
+// 💳 RAZORPAY MEDICAL BATCH CHECKOUT
+window.payForWorkshop = function(title, amount, whatsappUrl) {
+    // Prevent empty clicks just in case
+    if(amount <= 0 || !whatsappUrl) {
+        alert("Error: Batch details missing.");
+        return;
+    }
+
+    var options = {
+        "key": "rzp_live_SeWOakhF098GMI", // ⚠️ Paste your Test or Live Key ID here
+        "amount": amount * 100, // Razorpay reads in paise (so 499 becomes 49900)
+        "currency": "INR",
+        "name": "Ayursiddhit Naturals",
+        "description": "Live Medical Batch: " + title,
+        "handler": function (response) {
+            // THE MAGIC TRICK: This only runs if the payment is 100% successful
+            alert("✅ Payment Successful! Redirecting to Dr. Prasiddhi's private batch...");
+            window.location.href = whatsappUrl;
+        },
+        "theme": {
+            "color": "#1b5e20" // Matches your brand green!
+        }
+    };
+    
+    var rzp = new Razorpay(options);
+    rzp.open();
+};
+    
         window.resetViews = function() {
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view'].forEach(id => window.hideSafe(id));
         window.closeConsult();
