@@ -379,13 +379,6 @@ function activateDashboard() {
     }
 }
 
-    onAuthStateChanged(auth, (user) => {
-        if(user && isUnlocked) { activateDashboard(); } else if (!user) {
-            document.getElementById('admin-content').style.display = 'none';
-            document.getElementById('login-prompt').style.display = 'block';
-        }
-    });
-
     async function loadAllData() {
     console.log("Loading started...");
     
