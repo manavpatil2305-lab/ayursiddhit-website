@@ -370,7 +370,7 @@
         }
     });
 
-    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); loadVideos(); }
+    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); loadVideos(); loadWorkshopsAdmin();}
 
     async function loadOrdersAndStats() {
         const snap = await getDocs(collection(db, "orders"));
