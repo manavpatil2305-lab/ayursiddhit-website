@@ -35,16 +35,43 @@
         .tab-btn.active { background: var(--amazon); color: var(--gold); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+        
+        /* LOGIN SCREEN STYLES */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--amazon); z-index: 9999; 
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .login-box {
+            background: white; padding: 40px; border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; 
+            width: 90%; max-width: 400px;
+        }
     </style>
 </head>
 <body>
+
+<!-- 🔐 SECURE LOGIN OVERLAY -->
+<div id="login-overlay">
+    <div class="login-box">
+        <h2 style="color: var(--amazon); margin-top: 0;">CEO Dashboard 🔒</h2>
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">Please enter your credentials to access live data.</p>
+        
+        <input type="text" id="admin-id" placeholder="Admin ID" style="margin-bottom: 15px;">
+        <input type="password" id="admin-pass" placeholder="Master Password" style="margin-bottom: 20px;">
+        
+        <button onclick="loginAdmin()" style="width: 100%; background: var(--amazon); color: var(--gold); font-size: 1.1rem;">Unlock Dashboard</button>
+        <p id="login-error" style="color: var(--red); display: none; margin-top: 15px; font-weight: bold; font-size: 0.9rem;">❌ Incorrect ID or Password</p>
+    </div>
+</div>
 
 <header>
     <div style="font-size: 1.2rem; font-weight: bold;">Ayursiddhit <span>Admin</span></div>
     <span style="background:var(--green); color:white; padding:5px 12px; font-size:0.85rem; border-radius:6px; font-weight:bold;">🟢 System Live</span>
 </header>
 
-<div class="container" id="admin-content">
+<!-- DASHBOARD CONTENT (HIDDEN UNTIL LOGIN) -->
+<div class="container" id="admin-content" style="display: none;">
     
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
@@ -57,6 +84,7 @@
         <button class="tab-btn" onclick="switchTab('workshops')">👨‍⚕️ Workshops</button>
     </div>
 
+    <!-- DASHBOARD TAB -->
     <div id="dashboard" class="tab-content active">
         <div class="grid-3">
             <div class="stat-box"><h2>₹<span id="stat-rev">0</span></h2><p>Total Revenue</p></div>
@@ -69,6 +97,7 @@
         </div>
     </div>
 
+    <!-- VIDEOS TAB -->
     <div id="videos" class="tab-content">
         <div class="card" style="border-top: 4px solid #E1306C;">
             <h3>📱 Add New Video Link</h3>
@@ -83,6 +112,7 @@
         </div>
     </div>
 
+    <!-- VIP TAB -->
     <div id="vip" class="tab-content">
         <div class="card" style="border-top: 4px solid var(--gold);">
             <h3>👑 Premium Access Portal</h3>
@@ -91,6 +121,7 @@
         </div>
     </div>
 
+    <!-- PRODUCTS TAB -->
     <div id="products" class="tab-content">
         <div class="card">
             <h3>📦 Add New Product</h3>
@@ -132,6 +163,7 @@
         </div>
     </div>
 
+    <!-- MARKETING TAB -->
     <div id="marketing" class="tab-content">
         <div class="card" style="border-top: 4px solid var(--gold);">
             <h3>📸 Push Live Image Banner Ad</h3>
@@ -232,6 +264,7 @@
         </div>
     </div>
 
+    <!-- CUSTOMERS TAB -->
     <div id="customers" class="tab-content">
         <div class="card">
             <h3>👥 Registered Customers</h3>
@@ -239,6 +272,7 @@
         </div>
     </div>
 
+    <!-- ANALYTICS TAB -->
     <div id="analytics" class="tab-content">
         <div class="card" style="border-top: 4px solid #8A2BE2;">
             <h3>📈 Live Traffic & Engagement</h3>
@@ -261,6 +295,7 @@
         </div>
     </div>
     
+    <!-- WORKSHOPS TAB -->
     <div id="workshops" class="tab-content">
         <div class="card">
             <h3>⚕️ Launch New Medical Batch</h3>
@@ -318,6 +353,27 @@
     let activePromos = [];
     let multiAdsArray = [];
 
+    // --- 🔐 LOGIN ENGINE ---
+    window.loginAdmin = () => {
+        const idInput = document.getElementById('admin-id').value.trim();
+        const passInput = document.getElementById('admin-pass').value.trim();
+        const errorMsg = document.getElementById('login-error');
+
+        // Check credentials here
+        if (idInput === "admin" && passInput === "AyurCEO2026") {
+            // Success: Hide login, show dashboard, load data
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+            errorMsg.style.display = 'none';
+            
+            // Only pull Firebase data AFTER successful login
+            loadAllData();
+        } else {
+            // Failure: Show error
+            errorMsg.style.display = 'block';
+        }
+    };
+
     // --- CRASH-FREE TAB SWITCHER ---
     window.switchTab = (tabId) => {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -326,7 +382,6 @@
         const targetTab = document.getElementById(tabId);
         if(targetTab) targetTab.classList.add('active');
         
-        // Find and highlight the corresponding button
         const btns = document.querySelectorAll('.tab-btn');
         for(let btn of btns) {
             if(btn.getAttribute('onclick').includes(tabId)) {
@@ -789,7 +844,7 @@
         btn.innerText = "🚀 Publish Batch";
     };
 
-    // --- AUTO-START ENGINE ---
+    // --- AUTO-START ENGINE (TRIGGERED ONLY ON LOGIN) ---
     async function loadAllData() {
         console.log("🚀 Starting data fetch...");
         try {
@@ -810,9 +865,6 @@
             console.error("Data load error", e);
         }
     }
-
-    // This guarantees the code starts the millisecond your page loads
-    document.addEventListener('DOMContentLoaded', loadAllData);
 
 </script>
 </body>
