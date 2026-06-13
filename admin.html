@@ -357,12 +357,23 @@
         alert("❌ Unauthorized Access.");
     }
 };
+    
     function activateDashboard() {
-        document.getElementById('admin-content').style.display = 'block';
-        document.getElementById('login-btn').innerText = "Sign Out";
-        document.getElementById('login-btn').onclick = () => { auth.signOut().then(()=> location.reload()); };
-        loadAllData();
-    }
+    // 1. Force the container to show using !important
+    const adminContent = document.getElementById('admin-content');
+    adminContent.style.setProperty('display', 'block', 'important');
+    
+    // 2. Hide the login prompt
+    const loginPrompt = document.getElementById('login-prompt');
+    loginPrompt.style.setProperty('display', 'none', 'important');
+    
+    // 3. Setup buttons
+    document.getElementById('login-btn').innerText = "Sign Out";
+    document.getElementById('login-btn').onclick = () => { auth.signOut().then(() => location.reload()); };
+    
+    // 4. Load data
+    loadAllData();
+  }
 
     onAuthStateChanged(auth, (user) => {
         if(user && isUnlocked) { activateDashboard(); } else if (!user) {
