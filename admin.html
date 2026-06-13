@@ -51,7 +51,7 @@
     
     <div style="max-width: 350px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
         <input type="password" id="master-pass" placeholder="Enter Password" style="text-align: center; font-size: 1.2rem; padding: 15px; border: 2px solid #ddd; border-radius: 8px;">
-        <button id="unlock-btn" style="background: var(--amazon); color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; margin-top: 15px; font-weight: bold; cursor: pointer;">Unlock Dashboard</button>
+        <button id="actual-login-btn" style="background: var(--amazon); color: white; width: 100%; padding: 15px; font-size: 1.1rem; border:none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Unlock Dashboard 🔒</button>
     </div>
 </div>
 
@@ -903,13 +903,14 @@ window.deleteWorkshop = async (id) => {
 };
     
 // --- FIX: Remove the DOMContentLoaded wrapper entirely ---
-// Remove the DOMContentLoaded wrapper! Just run it directly.
-const unlockBtn = document.getElementById('unlock-btn');
-if (unlockBtn) {
-    unlockBtn.addEventListener('click', window.unlockDashboard);
-    console.log("✅ Button directly wired!");
+// Target the REAL button on the login screen
+const loginBtn = document.getElementById('actual-login-btn');
+
+if (loginBtn) {
+    loginBtn.addEventListener('click', window.unlockDashboard);
+    console.log("✅ The REAL login button is now wired!");
 } else {
-    console.error("❌ Button not found.");
+    console.error("❌ Could not find the actual-login-btn.");
 }
 
 // Optional: Add this to test if the button is reachable
