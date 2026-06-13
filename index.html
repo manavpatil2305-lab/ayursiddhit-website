@@ -551,6 +551,76 @@
         window.showSafe('workshops-view');
     }
 };
+    
+    // 👨‍⚕️ FETCH AND RENDER MEDICAL BATCHES
+window.loadWorkshops = async () => {
+    const container = document.getElementById('public-workshop-list');
+    if (!container) return;
+    
+    container.innerHTML = '<p style="text-align:center; width:100%; color:#888;">Loading live batches...</p>';
+
+    try {
+        const snap = await getDocs(collection(db, "Medical_workshop"));
+        let html = '';
+        
+        // The Smart Brain Date Checker
+        const today = new Date(); 
+        
+        snap.forEach((docSnap) => {
+            const data = docSnap.data();
+            
+            // Format dates for comparison
+            const regStart = new Date(data.Registration_start);
+            const regEnd = new Date(data.Registration_end);
+            
+            let btnText = "Enroll Now";
+            let btnColor = "var(--amazon)"; // Your brand orange
+            let btnLink = data.Whatsapp_link;
+            let isDisabled = false;
+
+            // Date Logic
+            if (today > regEnd) {
+                btnText = "Registration Closed";
+                btnColor = "#ccc"; // Grey out the button
+                isDisabled = true;
+                btnLink = "#";
+            } else if (today < regStart) {
+                btnText = "Starts " + data.Registration_start;
+                btnColor = "var(--green)"; // Your brand green
+                isDisabled = true;
+                btnLink = "#";
+            }
+
+            // Build the Beautiful Card
+            html += `
+            <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+                <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--green); font-size:1.3rem;">${data.Title}</h3>
+                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">🕒 <b>Timing:</b> ${data.Timing}</p>
+                <p style="margin: 5px 0; color: #555; font-size:0.95rem;">📅 <b>Dates:</b> ${data.Workshop_start} to ${data.Workshop_end}</p>
+                
+                <h2 style="color: var(--amazon); margin: 15px 0 20px 0;">₹${data.Fees}</h2>
+                
+                <a href="${btnLink}" ${isDisabled ? 'onclick="return false;"' : ''} target="_blank" style="margin-top:auto; display: block; text-align: center; background: ${btnColor}; color: white; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
+                    ${btnText}
+                </a>
+            </div>
+            `;
+        });
+
+        if(html === '') {
+            container.innerHTML = '<p style="text-align:center; width:100%; color:#888;">No active batches right now. Check back soon!</p>';
+        } else {
+            container.innerHTML = html;
+        }
+
+    } catch (error) {
+        console.error("Error fetching workshops: ", error);
+        container.innerHTML = '<p style="text-align:center; width:100%; color:red;">Error loading batches. Please refresh.</p>';
+    }
+};
+
+// Auto-load the cards a second after the website opens!
+setTimeout(window.loadWorkshops, 1000);
 
         window.resetViews = function() {
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view'].forEach(id => window.hideSafe(id));
