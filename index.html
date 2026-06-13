@@ -507,27 +507,50 @@
 };
     
     window.switchMainTab = function(tab) {
-        const tStore = document.getElementById('tab-store');
-        const tVideos = document.getElementById('tab-videos');
+    const tStore = document.getElementById('tab-store');
+    const tVideos = document.getElementById('tab-videos');
+    const tWorkshops = document.getElementById('tab-workshops');
+
+    if(tab === 'store') {
+        if(tStore) tStore.className = 'tab-btn-main active';
+        if(tVideos) tVideos.className = 'tab-btn-main inactive';
+        if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
         
-        if(tab === 'store') {
-            tStore.className = 'tab-btn-main active';
-            tVideos.className = 'tab-btn-main inactive';
-            window.showSafe('home-top-section');
-            window.showSafe('search-section');
-            window.showSafe('main-view');
-            window.showSafe('t-offer-banner');
-            window.hideSafe('videos-view');
-        } else {
-            tVideos.className = 'tab-btn-main active';
-            tStore.className = 'tab-btn-main inactive';
-            window.hideSafe('home-top-section');
-            window.hideSafe('search-section');
-            window.hideSafe('main-view');
-            window.hideSafe('t-offer-banner');
-            window.showSafe('videos-view');
-        }
-    };
+        window.showSafe('home-top-section');
+        window.showSafe('search-section');
+        window.showSafe('main-view');
+        window.showSafe('t-offer-banner');
+        
+        window.hideSafe('videos-view');
+        window.hideSafe('workshops-view');
+        
+    } else if (tab === 'videos') {
+        if(tVideos) tVideos.className = 'tab-btn-main active';
+        if(tStore) tStore.className = 'tab-btn-main inactive';
+        if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
+        
+        window.hideSafe('home-top-section');
+        window.hideSafe('search-section');
+        window.hideSafe('main-view');
+        window.hideSafe('t-offer-banner');
+        window.hideSafe('workshops-view');
+        
+        window.showSafe('videos-view');
+        
+    } else if (tab === 'workshops') {
+        if(tWorkshops) tWorkshops.className = 'tab-btn-main active';
+        if(tStore) tStore.className = 'tab-btn-main inactive';
+        if(tVideos) tVideos.className = 'tab-btn-main inactive';
+        
+        window.hideSafe('home-top-section');
+        window.hideSafe('search-section');
+        window.hideSafe('main-view');
+        window.hideSafe('t-offer-banner');
+        window.hideSafe('videos-view');
+        
+        window.showSafe('workshops-view');
+    }
+};
 
         window.resetViews = function() {
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view'].forEach(id => window.hideSafe(id));
