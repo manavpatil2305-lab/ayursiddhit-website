@@ -347,16 +347,20 @@
         event.target.classList.add('active');
     };
 
-            if(auth.currentUser) { 
-            activateDashboard(); 
-        } else { 
-            signInWithPopup(auth, provider).then((result) => {
-                activateDashboard();
-            }).catch((e) => {
-                alert("Google Sign-In failed: " + e.message);
-            });
-        }
-
+  window.unlockDashboard = () => {
+    const inputPass = document.getElementById('master-pass').value;
+    if(inputPass === MASTER_PASSWORD) {
+        isUnlocked = true;
+        // 1. Hide the login box immediately
+        document.getElementById('login-prompt').style.display = 'none';
+        
+        // 2. FORCE the dashboard to activate
+        activateDashboard();
+    } else {
+        alert("❌ Unauthorized Access.");
+    }
+};
+    
             }
         } else { alert("❌ Unauthorized Access."); }
     };
