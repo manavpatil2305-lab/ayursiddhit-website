@@ -274,6 +274,41 @@
             </div>
         </div>
         </div>
+    
+<div id="workshops" class="tab-content">
+  <div class="card">
+    <h3>⚕️ Launch New Medical Batch</h3>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      
+      <input type="text" id="workshop_title" placeholder="Class Title (e.g. High-Yield Human Physiology)">
+      <input type="number" id="workshop_fees" placeholder="Fees (₹) (e.g. 499)">
+      <input type="text" id="workshop_timing" placeholder="Class Timing (e.g. 6:00 PM IST)">
+      <input type="text" id="workshop_whatsapp" placeholder="WhatsApp Group Link">
+
+      <h4 style="margin-bottom:0;">Enrollment & Schedule Dates</h4>
+      <div class="grid-2" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div>
+          <label style="font-size:0.8rem; color:#888;">Registration Starts</label>
+          <input type="date" id="reg_start" style="width:100%;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem; color:#888;">Registration Ends</label>
+          <input type="date" id="reg_end" style="width:100%;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem; color:#888;">Workshop Starts</label>
+          <input type="date" id="work_start" style="width:100%;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem; color:#888;">Workshop Ends</label>
+          <input type="date" id="work_end" style="width:100%;">
+        </div>
+      </div>
+
+      <button onclick="saveWorkshop()" style="width: 100%; margin-top: 15px;">🚀 Publish Batch</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
