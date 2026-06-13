@@ -155,6 +155,7 @@
 <div id="main-toggle-bar">
     <div id="tab-store" class="tab-btn-main active" onclick="switchMainTab('store')">🛍️ Store</div>
     <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">📱 Videos</div>
+    <div id="tab-workshops" class="tab-btn-main inactive" onclick="switchMainTab('workshops')">⚕️ Classes</div>
 </div>
     
 <div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹<span id="banner-threshold">800</span> OR buy 5+ Soaps! 🚚</div>
@@ -196,6 +197,16 @@
     <p style="text-align:center; color:#666; font-size:0.95rem; margin-bottom:20px;">Watch and learn directly from Dr. Prasiddhi Patil.</p>
     <div id="video-feed-container">Loading videos...</div>
 </div>
+     
+   <div id="workshops-view" class="hidden" style="padding: 15px;">
+     <h2 style="color:var(--amazon); margin-top:0; text-align:center;">👨‍⚕️ Live Medical Batches</h2>
+     <p style="text-align:center; color:#666; font-size:0.95rem; margin-bottom:20px;">Enroll in high-yield sessions with Dr. Prasiddhi Patil</p>
+     
+     <!-- The Smart Grid for the Cards -->
+     <div id="public-workshop-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+         <!-- Cards will auto-load here -->
+     </div>
+   </div>
 
 <div id="upsell-overlay" class="hidden">
     <div class="upsell-box">
