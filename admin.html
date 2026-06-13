@@ -386,7 +386,29 @@ function activateDashboard() {
         }
     });
 
-    async function loadAllData() { loadProducts(); loadOrdersAndStats(); loadUsers(); loadSettings(); loadStoreConfig(); loadVideos(); loadWorkshopsAdmin();}
+    async function loadAllData() {
+    console.log("Loading started...");
+    
+    // We try each one individually to see which one causes the crash
+    const loaders = [
+        { name: "Products", fn: loadProducts },
+        { name: "Orders", fn: loadOrdersAndStats },
+        { name: "Users", fn: loadUsers },
+        { name: "Settings", fn: loadSettings },
+        { name: "StoreConfig", fn: loadStoreConfig }
+    ];
+
+    for (let loader of loaders) {
+        try {
+            console.log("Attempting to load:", loader.name);
+            await loader.fn(); 
+            console.log("Successfully loaded:", loader.name);
+        } catch (err) {
+            console.error("CRASHED AT:", loader.name, err);
+            alert("Dashboard froze because of: " + loader.name);
+        }
+    }
+}
 
     async function loadOrdersAndStats() {
         const snap = await getDocs(collection(db, "orders"));
