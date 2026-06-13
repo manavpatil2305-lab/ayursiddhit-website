@@ -347,20 +347,16 @@
         event.target.classList.add('active');
     };
 
-  window.unlockDashboard = () => {
+ window.unlockDashboard = function() {
     const inputPass = document.getElementById('master-pass').value;
-    if(inputPass === MASTER_PASSWORD) {
+    if (inputPass === "AyurCEO2026") {
         isUnlocked = true;
-        // 1. Hide the login box immediately
         document.getElementById('login-prompt').style.display = 'none';
-        
-        // 2. FORCE the dashboard to activate
         activateDashboard();
     } else {
         alert("❌ Unauthorized Access.");
     }
 };
-
     function activateDashboard() {
         document.getElementById('admin-content').style.display = 'block';
         document.getElementById('login-btn').innerText = "Sign Out";
