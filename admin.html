@@ -856,6 +856,47 @@
                 Status: "upcoming", 
                 StreamUrl: ""       
             });
+
+                                  // 🚀 THE MAILMAN ENGINE: BLAST NOTIFICATIONS TO ALL PHONES
+                    try {
+                        btn.innerText = "🔔 Pushing Alerts to Phones...";
+                        
+                        // 1. Grab every single user from your database
+                        const usersReq = await getDocs(collection(db, "users"));
+                        const tokens = [];
+                        
+                        // 2. Filter out only the users who have granted notification permission
+                        usersReq.forEach(doc => {
+                            if (doc.data().fcmToken) {
+                                tokens.push(doc.data().fcmToken);
+                            }
+                        });
+
+                        // 3. If we have tokens, blast the message!
+                        if (tokens.length > 0) {
+                            const payload = {
+                                registration_ids: tokens, // Sends to everyone at once
+                                notification: {
+                                    title: "🚨 New Live Class Added!",
+                                    body: title + " is now open for registration. Tap to enroll!",
+                                    icon: "logo.png"
+                                }
+                            };
+
+                            // Send the command directly to Firebase's dispatch server
+                            await fetch("https://fcm.googleapis.com/fcm/send", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": "key=AIzaSyCgQYGfZ5Z3qBPIhfw632BVjKYLfMM81cY" 
+                                },
+                                body: JSON.stringify(payload)
+                            });
+                            console.log(`Alert sent to ${tokens.length} students!`);
+                        }
+                    } catch (err) {
+                        console.error("Mailman error:", err);
+                    }
                 
                 alert("✅ Batch Published with Banner!");
                 document.getElementById('workshop_title').value = '';
