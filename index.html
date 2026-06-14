@@ -1466,7 +1466,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px;">
                                 <span style="font-size: 1.3rem; font-weight: bold; color: #1b5e20;">₹${data.Fees}</span>
-                                <button onclick="window.open('${data.Whatsapp_link}', '_blank')" style="background: #1b5e20; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor:pointer;">Enroll via WhatsApp</button>
+                               <button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: #1b5e20; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor:pointer;">Pay ₹${data.Fees} & Join Batch</button>
                             </div>
                         </div>
                     </div>
