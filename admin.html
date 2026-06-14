@@ -509,19 +509,44 @@
             return; 
         }
 
-        let html = "";
+                let html = "";
         snap.forEach(doc => {
             const data = doc.data();
+            
+            // Generate the correct badge color
+            let statusBadge = data.Status === "live" 
+                ? `<span style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">🔴 LIVE NOW</span>`
+                : `<span style="background: #fbd38d; color: #333; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">⏳ ${data.Status ? data.Status.toUpperCase() : 'UPCOMING'}</span>`;
+
             html += `
-            <div style="background: #f9f9f9; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <strong style="color: var(--green); font-size: 1.1rem;">${data.Title}</strong><br>
-                    <span style="font-size: 0.85rem; color: #555;">📅 ${data.Workshop_start} | 💰 ₹${data.Fees}</span>
+            <div style="background: #1e293b; border: 1px solid #334155; padding: 15px; margin-bottom: 15px; border-radius: 8px; color: white;">
+                <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom: 10px;">
+                    <div>
+                        <strong style="color: var(--gold); font-size: 1.1rem;">${data.Title}</strong><br>
+                        <span style="font-size: 0.85rem; color: #cbd5e1;">📅 ${data.Workshop_start} | 💰 ₹${data.Fees}</span>
+                    </div>
+                    <div>${statusBadge}</div>
                 </div>
-                <button onclick="deleteWorkshop('${doc.id}')" style="background: var(--red); color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">🗑️ Delete</button>
+                
+                <input type="text" id="stream_url_${doc.id}" placeholder="Paste Live URL here (Jitsi/Meet/YouTube)" 
+                       value="${data.StreamUrl || ''}"
+                       style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: none; color: black; font-size: 0.9rem;">
+                
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="startLiveClass('${doc.id}')" style="background: #ef4444; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; flex: 1;">
+                        🔴 Go Live
+                    </button>
+                    <button onclick="endLiveClass('${doc.id}')" style="background: #64748b; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; flex: 1;">
+                        ⏹️ End Class
+                    </button>
+                    <button onclick="deleteWorkshop('${doc.id}')" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 10px; border-radius: 4px; cursor: pointer;">
+                        🗑️
+                    </button>
+                </div>
             </div>
             `;
         });
+
         list.innerHTML = html;
     };
 
@@ -823,12 +848,14 @@
             const data = await response.json();
 
             if (data.success) {
-                await addDoc(collection(db, "Medical_workshop"), {
-                    Title: title, Fees: Number(fees), Timing: timing, Whatsapp_link: whatsapp,
-                    Registration_start: regStart, Registration_end: regEnd,
-                    Workshop_start: workStart, Workshop_end: workEnd,
-                    BannerUrl: data.data.url, Status: "Active"
-                });
+              await addDoc(collection(db, "Medical_workshop"), {
+                Title: title, Fees: Number(fees), Timing: timing, Whatsapp_link: whatsapp,
+                Registration_start: regStart, Registration_end: regEnd,
+                Workshop_start: workStart, Workshop_end: workEnd,
+                BannerUrl: data.data.url, 
+                Status: "upcoming", 
+                StreamUrl: ""       
+            });
                 
                 alert("✅ Batch Published with Banner!");
                 document.getElementById('workshop_title').value = '';
@@ -844,6 +871,40 @@
         btn.innerText = "🚀 Publish Batch";
     };
 
+          // --- LIVE CLASS CONTROLS ---
+    window.startLiveClass = async (id) => {
+        const urlInput = document.getElementById(`stream_url_${id}`).value.trim();
+        if(!urlInput) { 
+            alert("Please paste the Video/Stream URL first!"); 
+            return; 
+        }
+        
+        try {
+            await updateDoc(doc(db, "Medical_workshop", id), {
+                Status: "live",
+                StreamUrl: urlInput
+            });
+            alert("🔴 Class is now LIVE! Students can see it in the app.");
+            loadWorkshopsAdmin();
+        } catch (e) { 
+            alert("Error: " + e.message); 
+        }
+    };
+
+    window.endLiveClass = async (id) => {
+        if(confirm("Are you sure you want to end this class? It will be marked as Completed.")) {
+            try {
+                await updateDoc(doc(db, "Medical_workshop", id), {
+                    Status: "completed"
+                });
+                alert("⏹️ Class successfully ended.");
+                loadWorkshopsAdmin();
+            } catch (e) { 
+                alert("Error: " + e.message); 
+            }
+        }
+    }; 
+    
     // --- AUTO-START ENGINE (TRIGGERED ONLY ON LOGIN) ---
     async function loadAllData() {
         console.log("🚀 Starting data fetch...");
