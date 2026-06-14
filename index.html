@@ -1431,7 +1431,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         document.getElementById('customer-install-popup').style.display = 'none';
     }; 
 
-           // --- FETCH MEDICAL WORKSHOPS WITH PW TABS ---
+               // --- FETCH MEDICAL WORKSHOPS WITH PW TABS & VIP LOGIC ---
     window.loadWorkshops = async () => {
         const list = document.getElementById('public-workshop-list');
         if (!list) return;
@@ -1442,10 +1442,24 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             let upcomingHtml = "";
             let hasLive = false;
 
+            // 👑 CHECK VIP STATUS: (Make sure your login system saves this!)
+            // We assume you store a flag like 'isPremium' in localStorage when they log in.
+            const isVIP = localStorage.getItem('isPremium') === 'true';
+
             snap.forEach(doc => {
                 const data = doc.data();
 
-                // 🎟️ Build the Standard Enrollment Card (For Upcoming Classes)
+                // 🎟️ VIP DYNAMIC BUTTON LOGIC
+                let enrollButtonHtml = "";
+                if (isVIP) {
+                    // VIPs get a gold button that takes them straight to the Whatsapp Group (Free Entry)
+                    enrollButtonHtml = `<button onclick="window.location.href='${data.Whatsapp_link}'" style="background: linear-gradient(135deg, #d4af37, #aa7c11); color: white; padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">👑 VIP: Free Entry</button>`;
+                } else {
+                    // Normal users get the standard payment button
+                    enrollButtonHtml = `<button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: var(--amazon, #131921); color: var(--gold, #febd69); padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Pay ₹${data.Fees}</button>`;
+                }
+
+                // 📅 Build the Standard Enrollment Card (For Upcoming Classes)
                 const cardHtml = `
                     <div style="background: white; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                         <img src="${data.BannerUrl}" style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover;">
@@ -1457,34 +1471,46 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                             </div>
                             <div style="display:flex; justify-content:space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px;">
                                 <span style="font-size: 1.3rem; font-weight: bold; color: #1b5e20;">₹${data.Fees}</span>
-                                <button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: var(--amazon, #131921); color: var(--gold, #febd69); padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Enroll Now</button>
+                                ${enrollButtonHtml} <!-- The button changes based on VIP status -->
                             </div>
                         </div>
                     </div>
                 `;
 
-                // 🔴 If Class is LIVE, build the Video Player
+                // 🔴 If Class is LIVE, build the Video Player with Full Screen Controls
                 if (data.Status === "live") {
                     hasLive = true;
                     liveHtml += `
                         <div style="margin-bottom: 20px;">
                             <h3 style="color: #ef4444; margin: 0 0 10px 0; font-size: 1.1rem;">🔴 LIVE: ${data.Title}</h3>
-                            <div style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 2px solid #ef4444;">
+                            
+                            <!-- Video Container -->
+                            <div id="vid-container-${doc.id}" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 2px solid #ef4444;">
                                 <iframe src="${data.StreamUrl}" style="width: 100%; height: 100%; border: none;" allow="camera; microphone; display-capture; autoplay; fullscreen"></iframe>
                             </div>
+                            
+                            <!-- 🎛️ BIG SCREEN CONTROLS -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                <button onclick="makeFullScreen('vid-container-${doc.id}')" style="flex: 1; background: #3b82f6; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                                    🔲 Full Screen
+                                </button>
+                                <button onclick="window.open('${data.StreamUrl}', '_blank')" style="flex: 1; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                                    🚀 Open in App
+                                </button>
+                            </div>
+
                             <div style="background: #111827; padding: 15px; border-radius: 8px; color: white; text-align: center; border: 1px solid #334155;">
                                 <p style="color: #a0aec0; margin: 0; font-size: 0.9rem;">Chat feature connecting soon...</p>
                             </div>
                         </div>
                     `;
                 } 
-                // 📅 If Class is UPCOMING, put it in the upcoming tab
                 else if (data.Status === "upcoming") {
                     upcomingHtml += cardHtml;
                 }
             });
 
-            // 🛑 Empty States (What it shows if nothing is live or upcoming)
+            // 🛑 Empty States 
             if (!hasLive) {
                 liveHtml = `
                     <div style="text-align: center; padding: 40px 20px; color: #a0aec0; background: #1a202c; border-radius: 12px; margin-top: 10px;">
@@ -1541,6 +1567,18 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             liveBtn.style.color = '#a0aec0';
             upBtn.style.borderBottom = '3px solid #fbd38d';
             upBtn.style.color = '#fbd38d';
+        }
+    };
+
+    // 📺 FULL SCREEN LOGIC
+    window.makeFullScreen = (elementId) => {
+        const elem = document.getElementById(elementId);
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
         }
     };
 
