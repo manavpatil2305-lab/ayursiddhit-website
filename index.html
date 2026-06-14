@@ -648,8 +648,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
     window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
-
-        const messaging = getMessaging(app);
+    const messaging = getMessaging(app);
 
     window.requestNotificationPermission = async () => {
         try {
