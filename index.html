@@ -648,37 +648,36 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
     window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
-    const messaging = getMessaging(app);
+
+        // 🛡️ CRASH-PROOF NOTIFICATION ENGINE
+    let messaging = null;
+    try {
+        messaging = getMessaging(app);
+        
+        // Listen for notifications while the app is actively open
+        onMessage(messaging, (payload) => {
+            alert(`📢 ${payload.notification.title}\n\n${payload.notification.body}`);
+        });
+    } catch (e) {
+        console.warn("Firebase Messaging paused, but store safely loaded!", e);
+    }
 
     window.requestNotificationPermission = async () => {
+        if (!messaging) return; // If messaging failed, stop silently so the app doesn't break
         try {
-            console.log("Asking for notification permission...");
             const permission = await Notification.requestPermission();
-            
             if (permission === 'granted') {
-                console.log("Permission granted! Fetching token...");
-                // ⚠️ NOTE: You will paste your VAPID Key here later
                 const token = await getToken(messaging, { 
                     vapidKey: "BOqrl8oP9Ou42o4-WWgAbofURLAzc9uU4s_xkxngXqs1wHsTE0Io_slrK2dp8rpB3KKJLLgPZa5gCl6a_zduRY8" 
                 });
-                
                 if (token && window.currentUser) {
-                    console.log("FCM Token Generated!");
-                    // Save the token to their profile in the database
                     await setDoc(doc(db, "users", window.currentUser.uid), { fcmToken: token }, { merge: true });
                 }
-            } else {
-                console.log("Customer denied notifications.");
             }
         } catch (error) {
             console.error("FCM Permission Error:", error);
         }
     };
-
-    // Listen for notifications while the app is actively open
-    onMessage(messaging, (payload) => {
-        alert(`📢 ${payload.notification.title}\n\n${payload.notification.body}`);
-    });
     
     let dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
 
@@ -698,7 +697,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         window.currentUser = user;
         if(user) { 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
-            window.requestNotificationPermission();
+            setTimeout(() => window.requestNotificationPermission(), 2000);
  
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if(userDoc.exists() && userDoc.data().isPremium) {
