@@ -1431,53 +1431,116 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         document.getElementById('customer-install-popup').style.display = 'none';
     }; 
 
-        // --- 🩺 FETCH MEDICAL WORKSHOPS FOR CUSTOMERS (FIXED) ---
+           // --- FETCH MEDICAL WORKSHOPS WITH PW TABS ---
     window.loadWorkshops = async () => {
-        // Automatically finds your existing HTML container
         const list = document.getElementById('public-workshop-list');
         if (!list) return;
 
         try {
-            // Pulls exactly from "Medical_workshop"
             const snap = await getDocs(collection(db, "Medical_workshop"));
-            
-            if (snap.empty) {
-                list.innerHTML = "<p style='text-align:center; color:#555;'>No live batches available right now. Check back soon!</p>";
-                return;
-            }
+            let liveHtml = "";
+            let upcomingHtml = "";
+            let hasLive = false;
 
-            let html = "";
             snap.forEach(doc => {
                 const data = doc.data();
-                
-                // Only show active batches
-                if(data.Status === "Active") {
-                    html += `
-                    <div style="background: white; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <img src="${data.BannerUrl}" style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: #0B1021;" alt="Workshop Banner">
-                        
+
+                // 🎟️ Build the Standard Enrollment Card (For Upcoming Classes)
+                const cardHtml = `
+                    <div style="background: white; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <img src="${data.BannerUrl}" style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover;">
                         <div style="padding: 15px;">
                             <h3 style="margin: 0 0 10px 0; color: #131921; font-size: 1.2rem;">${data.Title}</h3>
-                            
                             <div style="display:flex; justify-content:space-between; margin-bottom: 15px; font-size: 0.9rem; color: #555;">
                                 <span>📅 <b>${data.Workshop_start}</b></span>
                                 <span>⏰ <b>${data.Timing}</b></span>
                             </div>
-                            
-                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px;">
+                            <div style="display:flex; justify-content:space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px;">
                                 <span style="font-size: 1.3rem; font-weight: bold; color: #1b5e20;">₹${data.Fees}</span>
-                               <button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: #1b5e20; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor:pointer;">Pay ₹${data.Fees} & Join Batch</button>
+                                <button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: var(--amazon, #131921); color: var(--gold, #febd69); padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Enroll Now</button>
                             </div>
                         </div>
                     </div>
+                `;
+
+                // 🔴 If Class is LIVE, build the Video Player
+                if (data.Status === "live") {
+                    hasLive = true;
+                    liveHtml += `
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="color: #ef4444; margin: 0 0 10px 0; font-size: 1.1rem;">🔴 LIVE: ${data.Title}</h3>
+                            <div style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 2px solid #ef4444;">
+                                <iframe src="${data.StreamUrl}" style="width: 100%; height: 100%; border: none;" allow="camera; microphone; display-capture; autoplay; fullscreen"></iframe>
+                            </div>
+                            <div style="background: #111827; padding: 15px; border-radius: 8px; color: white; text-align: center; border: 1px solid #334155;">
+                                <p style="color: #a0aec0; margin: 0; font-size: 0.9rem;">Chat feature connecting soon...</p>
+                            </div>
+                        </div>
                     `;
+                } 
+                // 📅 If Class is UPCOMING, put it in the upcoming tab
+                else if (data.Status === "upcoming") {
+                    upcomingHtml += cardHtml;
                 }
             });
-            list.innerHTML = html;
+
+            // 🛑 Empty States (What it shows if nothing is live or upcoming)
+            if (!hasLive) {
+                liveHtml = `
+                    <div style="text-align: center; padding: 40px 20px; color: #a0aec0; background: #1a202c; border-radius: 12px; margin-top: 10px;">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">🕒</div>
+                        <h3 style="margin: 0 0 5px 0; color: white;">No live classes right now.</h3>
+                        <p style="margin: 0; font-size: 0.9rem;">Perfect time to catch up on pending work!</p>
+                    </div>
+                `;
+            }
+            if (!upcomingHtml) {
+                upcomingHtml = `<p style="text-align:center; color:#555; padding: 20px;">No upcoming batches scheduled.</p>`;
+            }
+
+            // 🏗️ INJECT THE FULL TABS LAYOUT INTO THE APP
+            list.innerHTML = `
+                <div style="display: flex; background: #1a202c; border-radius: 8px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <button id="liveTabBtn" onclick="window.switchClassTab('live')" style="flex: 1; padding: 15px; background: none; color: #ef4444; border: none; font-weight: bold; border-bottom: 3px solid #ef4444; cursor: pointer; transition: 0.3s; font-size: 1rem;">🔴 Live Classes</button>
+                    <button id="upcomingTabBtn" onclick="window.switchClassTab('upcoming')" style="flex: 1; padding: 15px; background: none; color: #a0aec0; border: none; font-weight: bold; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.3s; font-size: 1rem;">📅 Upcoming</button>
+                </div>
+                
+                <div id="liveClassesSection" style="display: block;">
+                    ${liveHtml}
+                </div>
+                
+                <div id="upcomingClassesSection" style="display: none;">
+                    ${upcomingHtml}
+                </div>
+            `;
 
         } catch (error) {
             console.error("Workshop Fetch Error:", error);
-            list.innerHTML = `<p style='text-align:center; color:red;'>Failed to load: ${error.message}</p>`;
+            list.innerHTML = `<p style="text-align:center; color:red;">Failed to load: ${error.message}</p>`;
+        }
+    };
+
+    // 🎛️ TAB SWITCHER LOGIC
+    window.switchClassTab = (tabName) => {
+        const liveSec = document.getElementById('liveClassesSection');
+        const upSec = document.getElementById('upcomingClassesSection');
+        const liveBtn = document.getElementById('liveTabBtn');
+        const upBtn = document.getElementById('upcomingTabBtn');
+        
+        if (tabName === 'live') {
+            liveSec.style.display = 'block';
+            upSec.style.display = 'none';
+            liveBtn.style.borderBottom = '3px solid #ef4444';
+            liveBtn.style.color = '#ef4444';
+            upBtn.style.borderBottom = '3px solid transparent';
+            upBtn.style.color = '#a0aec0';
+        } else {
+            liveSec.style.display = 'none';
+            upSec.style.display = 'block';
+            liveBtn.style.borderBottom = '3px solid transparent';
+            liveBtn.style.color = '#a0aec0';
+            upBtn.style.borderBottom = '3px solid #fbd38d';
+            upBtn.style.color = '#fbd38d';
         }
     };
 
