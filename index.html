@@ -1513,13 +1513,14 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                 // 🔴 If Class is LIVE, build the Video Player with Full Screen Controls
                 if (data.Status === "live") {
                     hasLive = true;
+                    setTimeout(() => { if(window.joinLiveStream) window.joinLiveStream(); }, 1000);
                     liveHtml += `
                         <div style="margin-bottom: 20px;">
                             <h3 style="color: #ef4444; margin: 0 0 10px 0; font-size: 1.1rem;">🔴 LIVE: ${data.Title}</h3>
                             
                             <!-- Video Container -->
                             <div id="vid-container-${doc.id}" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 2px solid #ef4444;">
-                                <iframe src="${data.StreamUrl}" style="width: 100%; height: 100%; border: none;" allow="camera; microphone; display-capture; autoplay; fullscreen"></iframe>
+                                <div id="student-video-player" style="width: 100%; height: 100%;"></div>
                             </div>
                             
                             <!-- 🎛️ BIG SCREEN CONTROLS -->
@@ -1617,6 +1618,38 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
     // Auto-run the fetcher 1 second after the page loads
     setTimeout(window.loadWorkshops, 1000);
+    
+  // --- AGORA STUDENT RECEIVER ENGINE ---
+const agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
+agoraClient.setClientRole("audience"); 
+
+window.joinLiveStream = async () => {
+    try {
+        // Unlocks the liveclass room with your VIP Token
+        await agoraClient.join(
+            "607e950d81484e6abcfdf326049241ac", 
+            "liveclass", 
+            "007eJxTYJgVIL+MnSnXbNKu2WvYJ4dP2vhowobcg2In3d8Hv49gSvyvwGBmYJ5qaWqQYmFoYmGSapaYlJyWkmZsZGZgYmlkYpiY/MXIMKshkJHBs8CEmZEBAkF8ToaczLLU5JzE4mIGBgCzVyB9", 
+            null
+        );
+        
+        // Listens for you to turn on your camera
+        agoraClient.on("user-published", async (user, mediaType) => {
+            await agoraClient.subscribe(user, mediaType);
+            
+            if (mediaType === "video") {
+                // Beams the video onto the screen we made in Step 1
+                user.videoTrack.play("student-video-player"); 
+            }
+            if (mediaType === "audio") {
+                user.audioTrack.play(); 
+            }
+        });
+        
+    } catch (e) {
+        console.error("Agora Receiver Error:", e);
+    }
+};
     
    </script>
     
