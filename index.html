@@ -1619,8 +1619,45 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
     setTimeout(window.loadWorkshops, 1000);
     
   // --- AGORA STUDENT RECEIVER ENGINE ---
-const agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
-agoraClient.setClientRole("audience"); 
+  window.joinLiveStream = async () => {
+    alert("Step 1: Button tapped! Checking engine...");
+    
+    try {
+        // This checks if the Agora script is actually installed in the <head>
+        if (typeof AgoraRTC === "undefined") {
+            alert("🚨 FATAL CRASH: Agora Engine is missing! We need to check your <head> tags.");
+            return;
+        }
+
+        // We build the engine safely inside the button
+        const agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
+        agoraClient.setClientRole("audience");
+
+        // TURN ON RECEIVER
+        agoraClient.on("user-published", async (user, mediaType) => {
+            await agoraClient.subscribe(user, mediaType);
+            if (mediaType === "video") {
+                user.videoTrack.play("student-video-player");
+            }
+            if (mediaType === "audio") {
+                user.audioTrack.play();
+            }
+        });
+
+        // JOIN THE ROOM (Token locked to "liveclass")
+        await agoraClient.join(
+            "607e950d81484e6abcfdf326049241ac", 
+            "liveclass", 
+            "007eJxTYJgVIL+MnSnXbNKu2WvYJ4dP2vhowobcg2In3d8Hv49gSvyvwGBmYJ5qaWqQYmFoYmGSapaYlJyWkmZsZGZgYmlkYpiY/MXIMKshkJHBs8CEmZEBAkF8ToaczLLU5JzE4mIGBgCzVyB9", 
+            null
+        );
+        
+        alert("Step 2: Successfully entered the room!");
+        
+    } catch (e) {
+        alert("CRASH ERROR: " + (e.message || e));
+    }
+};
     
    </script>
     
