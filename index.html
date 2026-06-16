@@ -1513,7 +1513,6 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                 // 🔴 If Class is LIVE, build the Video Player with Full Screen Controls
                 if (data.Status === "live") {
                     hasLive = true;
-                    setTimeout(() => { if(window.joinLiveStream) window.joinLiveStream(); }, 1000);
                     liveHtml += `
                         <div style="margin-bottom: 20px;">
                             <h3 style="color: #ef4444; margin: 0 0 10px 0; font-size: 1.1rem;">🔴 LIVE: ${data.Title}</h3>
@@ -1528,8 +1527,8 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                                 <button onclick="makeFullScreen('vid-container-${doc.id}')" style="flex: 1; background: #3b82f6; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
                                     🔲 Full Screen
                                 </button>
-                                <button onclick="window.open('${data.StreamUrl}', '_blank')" style="flex: 1; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                                    🚀 Open in App
+                                <button onclick="window.joinLiveStream()" style="flex: 1; background: var(--green); color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                                     🔴 Tap to Join Class
                                 </button>
                             </div>
 
