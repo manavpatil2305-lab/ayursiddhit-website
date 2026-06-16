@@ -939,7 +939,7 @@ let localVideoTrack = null;
         await agoraClient.setClientRole("host");
         
         // 3. Join the room (using the unique workshop ID as the channel name)
-        await agoraClient.join(AGORA_APP_ID, id, null, null);
+        await agoraClient.join(AGORA_APP_ID, "liveclass", "007eJxTYJgVIL+MnSnXbNKu2WvYJ4dP2vhowobcg2In3d8Hv49gSvyvwGBmYJ5qaWqQYmFoYmGSapaYlJyWkmZsZGZgYmlkYpiY/MXIMKshkJHBs8CEmZEBAkF8ToaczLLU5JzE4mIGBgCzVyB9", null);
         
         // 4. Create and turn on Microphone + Camera tracks
         localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
