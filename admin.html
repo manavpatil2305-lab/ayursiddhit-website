@@ -47,6 +47,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; 
             width: 90%; max-width: 400px;
         }
+        <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
     </style>
 </head>
 <body>
@@ -329,6 +330,13 @@
             </div>
             <hr style="margin: 25px 0; border: 0; border-top: 1px solid #ddd;">
             <h3 style="color: var(--amazon);">📋 Manage Active Batches</h3>
+            <!-- AGORA LIVE STUDIO SCREEN -->
+<div id="live-studio-container" style="display: none; border: 2px solid #ef4444; border-radius: 10px; padding: 15px; margin-bottom: 20px; background: #000; text-align: center;">
+    <h3 style="color: white; margin-top: 0;">🔴 YOU ARE LIVE BROADCASTING</h3>
+    <div id="local-player" style="width: 100%; height: 250px; background: #222; border-radius: 8px; margin: 10px auto; overflow: hidden;"></div>
+    <p style="color: #aaa; font-size: 0.85rem;">Students can now see and hear you inside the app.</p>
+</div>
+
             <div id="admin-workshop-list">Loading live batches...</div>
         </div>
     </div>
@@ -349,6 +357,12 @@
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    
+    // --- AGORA SETUP ---
+const AGORA_APP_ID = "60c1dfdfaaa4485e9511704010222532";
+let agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
+let localAudioTrack = null;
+let localVideoTrack = null;
 
     let activePromos = [];
     let multiAdsArray = [];
@@ -913,28 +927,53 @@
     };
 
           // --- LIVE CLASS CONTROLS ---
-    window.startLiveClass = async (id) => {
-        const urlInput = document.getElementById(`stream_url_${id}`).value.trim();
-        if(!urlInput) { 
-            alert("Please paste the Video/Stream URL first!"); 
-            return; 
-        }
+       window.startLiveClass = async (id) => {
+    try {
+        // 1. Show the Live Studio Box
+        document.getElementById('live-studio-container').style.display = "block";
         
-        try {
-            await updateDoc(doc(db, "Medical_workshop", id), {
-                Status: "live",
-                StreamUrl: urlInput
-            });
-            alert("🔴 Class is now LIVE! Students can see it in the app.");
-            loadWorkshopsAdmin();
-        } catch (e) { 
-            alert("Error: " + e.message); 
-        }
-    };
+        // 2. Set role as Host/Broadcaster
+        await agoraClient.setClientRole("host");
+        
+        // 3. Join the room (using the unique workshop ID as the channel name)
+        await agoraClient.join(AGORA_APP_ID, id, null, null);
+        
+        // 4. Create and turn on Microphone + Camera tracks
+        localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        
+        // 5. Play your preview inside the player container
+        localVideoTrack.play("local-player");
+        
+        // 6. Broadcast live to all connected students
+        await agoraClient.publish([localAudioTrack, localVideoTrack]);
+        
+        // 7. Update Firebase status so the student app unlocks the live view
+        await updateDoc(doc(db, "Medical_workshop", id), {
+            Status: "live",
+            StreamUrl: "agora_live"
+        });
+        
+        alert("🔴 Live stream started successfully! Your camera is broadcasting.");
+        loadWorkshopsAdmin();
+        
+    } catch (e) {
+        console.error("Agora Stream Error:", e);
+        alert("Could not start camera broadcast: " + e.message);
+    }
+};
 
     window.endLiveClass = async (id) => {
         if(confirm("Are you sure you want to end this class? It will be marked as Completed.")) {
             try {
+                            // Shut down camera and audio tracks safely
+            if (localAudioTrack) { localAudioTrack.close(); localAudioTrack = null; }
+            if (localVideoTrack) { localVideoTrack.close(); localVideoTrack = null; }
+            try { await agoraClient.leave(); } catch(err) {}
+
+            // Hide the Studio Box container
+            document.getElementById('live-studio-container').style.display = "none";
+
                 await updateDoc(doc(db, "Medical_workshop", id), {
                     Status: "completed"
                 });
