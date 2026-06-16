@@ -1625,7 +1625,20 @@ agoraClient.setClientRole("audience");
 
 window.joinLiveStream = async () => {
     try {
-        // Unlocks the liveclass room with your VIP Token
+        // 1. TURN ON THE RECEIVER FIRST (Open your eyes)
+        agoraClient.on("user-published", async (user, mediaType) => {
+            await agoraClient.subscribe(user, mediaType);
+            
+            if (mediaType === "video") {
+                // Beams the video onto the screen
+                user.videoTrack.play("student-video-player"); 
+            }
+            if (mediaType === "audio") {
+                user.audioTrack.play(); 
+            }
+        });
+
+        // 2. NOW JOIN THE ROOM (Walk through the door)
         await agoraClient.join(
             "607e950d81484e6abcfdf326049241ac", 
             "liveclass", 
@@ -1633,23 +1646,10 @@ window.joinLiveStream = async () => {
             null
         );
         
-        // Listens for you to turn on your camera
-        agoraClient.on("user-published", async (user, mediaType) => {
-            await agoraClient.subscribe(user, mediaType);
-            
-            if (mediaType === "video") {
-                // Beams the video onto the screen we made in Step 1
-                user.videoTrack.play("student-video-player"); 
-            }
-            if (mediaType === "audio") {
-                user.audioTrack.play(); 
-            }
-        });
-        
     } catch (e) {
         console.error("Agora Receiver Error:", e);
     }
-};
+};        
     
    </script>
     
