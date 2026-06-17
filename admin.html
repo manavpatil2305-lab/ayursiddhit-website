@@ -358,6 +358,10 @@
         </div>
     </div>
     </div>
+       <!-- 🗂️ THE MISSING BATCH MANAGER CONTAINER -->
+    <div id="admin-workshop-list" style="margin-top: 30px; padding: 20px;">
+        <p style="color:#888;">Loading your batches...</p>
+    </div> 
 </div>
 
 <script type="module">
@@ -411,8 +415,9 @@ let localVideoTrack = null;
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         
-        const targetTab = document.getElementById(tabId);
+        const targetTab = document.getElementById(tabId);  
         if(targetTab) targetTab.classList.add('active');
+        if (tabId === 'workshops') { loadWorkshopsAdmin(); }
         
         const btns = document.querySelectorAll('.tab-btn');
         for(let btn of btns) {
