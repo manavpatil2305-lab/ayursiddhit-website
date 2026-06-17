@@ -1684,14 +1684,19 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     </div>
                 `;
             }
-        } else { 
+        } else {    
             storeHtml += cardHtml; 
         }
+    }); // 🔥 FIXED: This bracket perfectly closes the loop!
 
-            unlockedContainer.innerHTML = (unlockedHtml || "<p style='color:#888; text-align:center; padding: 10px;'>You haven't unlocked any batches yet.</p>") + storeHtml;
-            liveContainer.innerHTML = liveHtml || "<p style='color: #888; text-align: center; padding: 20px;'>No live classes running right now.</p>";
-        } catch (error) { console.error("LMS Fetch Error:", error); }
-    };
+    // 🔥 THIS ACTUALLY DRAWS THE CLASSES TO THE SCREEN!
+    unlockedContainer.innerHTML = unlockedHtml || storeHtml || "<p style='color:#888; text-align:center; padding: 10px;'>No batches available.</p>";
+    liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
+    
+} catch (error) { 
+    console.error("LMS Fetch Error:", error); 
+}
+}; // 🔥 FIXED: This bracket perfectly closes the whole function!            
 
     // --- 💳 AUTOMATED PAYMENT & VIP ENROLLMENT ---
     window.payForBatch = async (batchId, title, amount) => {
