@@ -342,7 +342,7 @@
         <label style="font-weight: bold; font-size: 0.9rem;">Banner Image (Select from Gallery)</label>
         <input type="file" id="batchBanner" accept="image/*" style="width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #fff; color: #000; border-radius: 5px; border: none;">
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 20px; width: 100%; box-sizing: border-box;">
             <div>
                 <label style="font-weight: bold; font-size: 0.85rem;">🟢 Registration Opens</label>
                 <input type="datetime-local" id="regOpen" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: none;">
