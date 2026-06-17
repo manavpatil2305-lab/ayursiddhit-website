@@ -1794,6 +1794,75 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             alert("❌ Failed to join stream: " + error.message); 
         }
     };
+
+            // --- 🚀 THE ULTIMATE MASTER BATCH PUBLISHER ENGINE ---
+    window.createMasterBatch = async () => {
+        // Grab the button so we can control its text and stop spam clicks
+        const btn = document.querySelector('button[onclick="createMasterBatch()"]');
+        if(btn) { btn.innerText = "⏳ Uploading to Cloud..."; btn.disabled = true; }
+
+        try {
+            // Grab all your inputs using the exact correct HTML IDs
+            const title = document.getElementById('batchName').value.trim();
+            const fees = document.getElementById('batchPrice').value;
+            const regStart = document.getElementById('regOpen').value;
+            const regEnd = document.getElementById('regClose').value;
+            const workStart = document.getElementById('batchStart').value;
+            const workEnd = document.getElementById('batchEnd').value;
+            const fileInput = document.getElementById('batchBanner');
+            
+            if(!title || !fees || !fileInput.files[0]) {
+                alert("🚨 Please fill out the Name, Price, and select a Banner Image!");
+                if(btn) { btn.innerText = "🚀 Publish Master Batch"; btn.disabled = false; }
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            // 1. Upload to ImgBB Securely
+            const formData = new FormData();
+            formData.append('image', file);
+            const response = await fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_API_KEY, { method: 'POST', body: formData });
+            const data = await response.json();
+
+            if (!data.success) throw new Error("Image failed to upload to ImgBB. Check connection.");
+
+            // 2. Save directly to your new "Batches" database
+            await addDoc(collection(db, "Batches"), {
+                title: title, 
+                price: Number(fees), 
+                RegOpen: regStart, 
+                RegClose: regEnd,
+                Workshop_start: workStart, 
+                Workshop_end: workEnd,
+                bannerUrl: data.data.url,
+                Status: "upcoming",
+                StreamUrl: "",
+                enrolledStudents: [], // Starts empty!
+                description: ""
+            });
+
+            // 3. Success & Reset!
+            alert("✅ Master Batch Published Successfully!");
+            
+            // Clear the form boxes for the next batch
+            document.getElementById('batchName').value = "";
+            document.getElementById('batchPrice').value = "";
+            fileInput.value = "";
+            
+            // Auto-refresh the manager cards below so the new batch appears instantly
+            if(typeof window.loadWorkshopsAdmin === 'function') window.loadWorkshopsAdmin();
+
+            // Reset the button
+            if(btn) { btn.innerText = "🚀 Publish Master Batch"; btn.disabled = false; }
+
+        } catch (error) {
+            console.error("Publisher Crash:", error);
+            alert("❌ Crash: " + error.message);
+            // If it fails, unfreeze the button so you can try again
+            if(btn) { btn.innerText = "🚀 Publish Master Batch"; btn.disabled = false; }
+        }
+    };
     
    </script>
     
