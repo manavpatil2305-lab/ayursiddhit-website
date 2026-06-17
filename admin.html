@@ -530,63 +530,90 @@ let localVideoTrack = null;
         }
     };
 
+        // --- 🛠️ ADMIN MASTER BATCH MANAGER ---
     window.loadWorkshopsAdmin = async () => {
-        const snap = await getDocs(collection(db, "Medical_workshop"));
+        // FETCHING FROM YOUR NEW 'Batches' DATABASE
+        const snap = await getDocs(collection(db, "Batches"));
         const list = document.getElementById('admin-workshop-list');
+        const proSelect = document.getElementById('pro-batch-select'); // Your Broadcasting Dropdown
+        
         if(!list) return;
         
-        list.innerHTML = '';
-        if(snap.empty) { 
-            list.innerHTML = "<p style='color:#888; font-size:0.9rem;'>No active medical batches right now.</p>"; 
-            return; 
+        list.innerHTML = "";
+        let selectHtml = '<option value="">-- Select Master Batch to Broadcast --</option>';
+
+        if(snap.empty) {
+            list.innerHTML = "<p style='color:#888; font-size:0.9rem;'>No active batches right now.</p>";
+            if(proSelect) proSelect.innerHTML = selectHtml;
+            return;
         }
 
-                let html = "";
+        let html = "";
         snap.forEach(doc => {
             const data = doc.data();
+            const batchId = doc.id;
             
-            // Generate the correct badge color
-            let statusBadge = data.Status === "live" 
-                ? `<span style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">🔴 LIVE NOW</span>`
-                : `<span style="background: #fbd38d; color: #333; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">⏳ ${data.Status ? data.Status.toUpperCase() : 'UPCOMING'}</span>`;
+            // Normalize data fields
+            const title = data.title || data.Title || "Unnamed Batch";
+            const price = data.price || data.Fees || 0;
+            const startDate = data.RegOpen || data.Workshop_start || "Date TBA";
+            
+            // 🎙️ BUILD PRO STUDIO DROPDOWN OPTION WITH TITLE AND DATE!
+            selectHtml += `<option value="${batchId}">${title} (Starts: ${startDate})</option>`;
 
+            let statusBadge = data.Status === "live" 
+                ? `<span style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight:bold;">🔴 LIVE NOW</span>`
+                : `<span style="background: #fbd38d; color: #333; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight:bold;">Upcoming</span>`;
+
+            // 🗂️ BUILD THE ADMIN MANAGER CARD
             html += `
-            <div style="background: #1e293b; border: 1px solid #334155; padding: 15px; margin-bottom: 15px; border-radius: 8px; color: white;">
+            <div style="background: #1e293b; border: 1px solid #334155; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
                 <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom: 10px;">
                     <div>
-                        <strong style="color: var(--gold); font-size: 1.1rem;">${data.Title}</strong><br>
-                        <span style="font-size: 0.85rem; color: #cbd5e1;">📅 ${data.Workshop_start} | 💰 ₹${data.Fees}</span>
+                        <strong style="color: var(--gold); font-size: 1.1rem;">${title}</strong><br>
+                        <span style="font-size: 0.85rem; color: #cbd5e1;">📅 ${startDate} | 💰 ₹${price}</span>
                     </div>
                     <div>${statusBadge}</div>
                 </div>
                 
-                <input type="text" id="stream_url_${doc.id}" placeholder="Paste Live URL here (Jitsi/Meet/YouTube)" 
-                       value="${data.StreamUrl || ''}"
-                       style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: none; color: black; font-size: 0.9rem;">
-                
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4;">
+                    <strong style="color:white;">Description & Syllabus:</strong><br>
+                    ${data.description ? data.description : '<em>No details added yet. Click Edit to add syllabus/features.</em>'}
+                </p>
+
                 <div style="display: flex; gap: 10px;">
-                    <button onclick="startLiveClass('${doc.id}')" style="background: #ef4444; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; flex: 1;">
-                        🔴 Go Live
-                    </button>
-                    <button onclick="endLiveClass('${doc.id}')" style="background: #64748b; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; flex: 1;">
-                        ⏹️ End Class
-                    </button>
-                    <button onclick="deleteWorkshop('${doc.id}')" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 10px; border-radius: 4px; cursor: pointer;">
-                        🗑️
-                    </button>
+                    <button onclick="window.editBatchDesc('${batchId}', '${title}')" style="flex: 1; background: #3b82f6; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">✏️ Edit Details</button>
+                    <button onclick="window.deleteBatch('${batchId}')" style="flex: 1; background: #ef4444; color: white; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">🗑️ Delete Batch</button>
                 </div>
             </div>
             `;
         });
 
+        // INJECT THE DATA TO THE SCREEN
         list.innerHTML = html;
+        if(proSelect) proSelect.innerHTML = selectHtml; // Feeds the Broadcaster!
     };
 
-    window.deleteWorkshop = async (id) => {
-        if(confirm("⚠️ Are you sure you want to permanently delete this batch?")) {
-            await deleteDoc(doc(db, "Medical_workshop", id));
-            alert("✅ Batch successfully deleted!");
-            loadWorkshopsAdmin();
+    // --- ✏️ EDIT DESCRIPTION ENGINE ---
+    window.editBatchDesc = async (id, currentTitle) => {
+        const newDesc = prompt(`Enter what is included in the batch "${currentTitle}":\n(e.g., Live Classes, Notes, Mock Tests)`);
+        if(newDesc !== null && newDesc.trim() !== "") {
+            try {
+                await updateDoc(doc(db, "Batches", id), { description: newDesc.trim() });
+                alert("✅ Description successfully updated!");
+                window.loadWorkshopsAdmin(); // Auto-refresh UI
+            } catch (e) { alert("❌ Error updating description: " + e.message); }
+        }
+    };
+
+    // --- 🗑️ DELETE BATCH ENGINE ---
+    window.deleteBatch = async (id) => {
+        if(confirm("⚠️ WARNING: Are you sure you want to permanently delete this batch? All student access will be lost!")) {
+            try {
+                await deleteDoc(doc(db, "Batches", id));
+                alert("🗑️ Batch successfully deleted!");
+                window.loadWorkshopsAdmin(); // Auto-refresh UI
+            } catch (e) { alert("❌ Error deleting batch: " + e.message); }
         }
     };
     
@@ -854,7 +881,7 @@ let localVideoTrack = null;
         } catch(e) {}
     };
     
-    window.saveWorkshop = async (btn) => {
+        window.saveWorkshop = async (btn) => {
         btn.innerText = "🚀 Uploading & Publishing...";
         btn.disabled = true;
 
@@ -868,26 +895,34 @@ let localVideoTrack = null;
         const workEnd = document.getElementById('work_end').value;
         const file = document.getElementById('workshop_image').files[0];
 
-        if(!title || !fees || !file) { 
-            alert("Please fill all fields and select an image!"); 
-            btn.disabled = false; btn.innerText = "🚀 Publish Batch"; return; 
+        if(!title || !fees || !file) {
+            alert("Please fill all fields and select an image!");
+            btn.disabled = false; btn.innerText = "🚀 Publish Batch"; return;
         }
 
         try {
             const formData = new FormData();
             formData.append('image', file);
-            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+            const response = await fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_API_KEY, { method: 'POST', body: formData });
             const data = await response.json();
 
             if (data.success) {
-              await addDoc(collection(db, "Medical_workshop"), {
-                Title: title, Fees: Number(fees), Timing: timing, Whatsapp_link: whatsapp,
-                Registration_start: regStart, Registration_end: regEnd,
-                Workshop_start: workStart, Workshop_end: workEnd,
-                BannerUrl: data.data.url, 
-                Status: "upcoming", 
-                StreamUrl: ""       
-            });
+                // 🔥 SAVING TO THE NEW MASTER "Batches" DATABASE
+                await addDoc(collection(db, "Batches"), {
+                    title: title, 
+                    price: Number(fees), 
+                    timing: timing, 
+                    whatsapp: whatsapp,
+                    RegOpen: regStart, 
+                    RegClose: regEnd,
+                    Workshop_start: workStart, 
+                    Workshop_end: workEnd,
+                    bannerUrl: data.data.url,
+                    Status: "upcoming",
+                    StreamUrl: "",
+                    enrolledStudents: [], // Starts empty!
+                    description: ""
+                });
 
                                   // 🚀 THE MAILMAN ENGINE: BLAST NOTIFICATIONS TO ALL PHONES
                     try {
