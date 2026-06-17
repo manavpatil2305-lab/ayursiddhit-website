@@ -366,18 +366,27 @@
         </button>
     </div>
 
-    <!-- YOUR OLD CODE CONTINUES HERE -->
-            <hr style="margin: 25px 0; border: 0; border-top: 1px solid #ddd;">
-            <h3 style="color: var(--amazon);">📋 Manage Active Batches</h3>
-            <!-- AGORA LIVE STUDIO SCREEN -->
-<div id="live-studio-container" style="display: none; border: 2px solid #ef4444; border-radius: 10px; padding: 15px; margin-bottom: 20px; background: #000; text-align: center;">
-    <h3 style="color: white; margin-top: 0;">🔴 YOU ARE LIVE BROADCASTING</h3>
-    <div id="local-player" style="width: 100%; height: 250px; background: #222; border-radius: 8px; margin: 10px auto; overflow: hidden;"></div>
-    <p style="color: #aaa; font-size: 0.85rem;">Students can now see and hear you inside the app.</p>
-</div>
+     <hr style="margin: 30px 0; border: 0; border-top: 2px solid #ccc;">
+    
+    <div style="background: #131921; padding: 20px; border-radius: 12px; margin-bottom: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h2 style="margin-top: 0; color: #ffeb3b; display: flex; align-items: center; gap: 10px;">🎙️ Pro Broadcasting Studio</h2>
+        
+        <label style="font-weight: bold; font-size: 0.9rem; color: #ccc;">Select Master Batch to Broadcast:</label>
+        <select id="pro-batch-select" style="width: 100%; padding: 12px; margin: 5px 0 20px 0; border-radius: 8px; border: none; background: #fff; color: #000; font-size: 1rem; font-weight: bold;">
+            <option value="">Loading Batches...</option>
+        </select>
 
-            <div id="admin-workshop-list">Loading live batches...</div>
+        <div id="pro-local-player" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; margin-bottom: 20px; border: 3px solid #333; overflow: hidden; position: relative;">
+            </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px;">
+            <button id="btn-go-live" onclick="startProLive()" style="background: #e53935; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">🔴 Go Live</button>
+            <button id="btn-mic" onclick="toggleMic()" style="background: #4caf50; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">🎤 Mic: ON</button>
+            <button id="btn-cam" onclick="toggleCam()" style="background: #4caf50; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">📷 Cam: ON</button>
+            <button id="btn-screen" onclick="startScreenShare()" style="background: #2196f3; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">💻 Share PPT</button>
+            <button id="btn-end" onclick="endProLive()" style="background: #607d8b; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">⏹ End Class</button>
         </div>
+    </div>
     </div>
 </div>
 
@@ -1109,6 +1118,133 @@ window.createMasterBatch = async () => {
     
     btn.innerText = originalText;
     btn.disabled = false;
+};
+
+// --- 🎙️ PRO STUDIO ENGINE ---
+let proAudioTrack = null;
+let proVideoTrack = null;
+let proScreenTrack = null;
+let isMicOn = true;
+let isCamOn = true;
+
+// 1. Auto-Load Batches into Dropdown
+setTimeout(async () => {
+    const select = document.getElementById('pro-batch-select');
+    if(!select) return;
+    try {
+        const snap = await getDocs(collection(db, "Batches"));
+        select.innerHTML = '<option value="">Select a Master Batch to Broadcast...</option>';
+        snap.forEach(doc => {
+            select.innerHTML += `<option value="${doc.id}">${doc.data().title}</option>`;
+        });
+    } catch(e) { console.error("Batch load error:", e); }
+}, 2500); // Waits 2.5s for Firebase to log in
+
+// 2. The "Go Live" Button
+window.startProLive = async () => {
+    const batchId = document.getElementById('pro-batch-select').value;
+    if(!batchId) { alert("🚨 Please select a Batch from the dropdown first!"); return; }
+
+    const btn = document.getElementById('btn-go-live');
+    btn.innerText = "⏳ Starting Engine...";
+    btn.disabled = true;
+
+    try {
+        if(!agoraClient) agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
+        await agoraClient.setClientRole("host");
+        
+        // We use the unique Batch ID as the secure video room password!
+        await agoraClient.join(AGORA_APP_ID, batchId, null, null);
+
+        proAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        proVideoTrack = await AgoraRTC.createCameraVideoTrack();
+        
+        proVideoTrack.play("pro-local-player");
+        await agoraClient.publish([proAudioTrack, proVideoTrack]);
+
+        // Tell Firebase this batch is currently LIVE
+        await updateDoc(doc(db, "Batches", batchId), { Status: "live", StreamUrl: batchId });
+
+        btn.innerText = "🔴 YOU ARE LIVE";
+        btn.style.background = "#d32f2f";
+        alert("🎙️ SUCCESS: You are broadcasting live to this batch!");
+    } catch (e) {
+        alert("CRASH: " + e.message);
+        btn.innerText = "🔴 Go Live";
+        btn.disabled = false;
+    }
+};
+
+// 3. The "End Class" Button
+window.endProLive = async () => {
+    const batchId = document.getElementById('pro-batch-select').value;
+    if(!confirm("Are you sure you want to end this class?")) return;
+
+    if(proAudioTrack) { proAudioTrack.close(); proAudioTrack = null; }
+    if(proVideoTrack) { proVideoTrack.close(); proVideoTrack = null; }
+    if(proScreenTrack) { proScreenTrack.close(); proScreenTrack = null; }
+    if(agoraClient) await agoraClient.leave();
+
+    document.getElementById('pro-local-player').innerHTML = ""; // Clear screen
+    document.getElementById('btn-go-live').innerText = "🔴 Go Live";
+    document.getElementById('btn-go-live').disabled = false;
+    document.getElementById('btn-go-live').style.background = "#e53935";
+
+    if(batchId) {
+        await updateDoc(doc(db, "Batches", batchId), { Status: "completed" });
+        alert("⏹ Class Ended Successfully.");
+    }
+};
+
+// 4. Mute & Camera Toggles
+window.toggleMic = async () => {
+    if(!proAudioTrack) return;
+    const btn = document.getElementById('btn-mic');
+    isMicOn = !isMicOn;
+    await proAudioTrack.setMuted(!isMicOn);
+    btn.innerText = isMicOn ? "🎤 Mic: ON" : "🔇 Mic: OFF";
+    btn.style.background = isMicOn ? "#4caf50" : "#f44336";
+};
+
+window.toggleCam = async () => {
+    if(!proVideoTrack) return;
+    const btn = document.getElementById('btn-cam');
+    isCamOn = !isCamOn;
+    await proVideoTrack.setMuted(!isCamOn);
+    btn.innerText = isCamOn ? "📷 Cam: ON" : "📷 Cam: OFF";
+    btn.style.background = isCamOn ? "#4caf50" : "#f44336";
+};
+
+// 5. Screen Share (PPT Casting)
+window.startScreenShare = async () => {
+    if(!agoraClient || !proVideoTrack) { alert("🚨 Go Live first before sharing your screen!"); return; }
+    
+    try {
+        await agoraClient.unpublish(proVideoTrack); // Temporarily hide camera
+        proScreenTrack = await AgoraRTC.createScreenVideoTrack();
+        
+        document.getElementById('pro-local-player').innerHTML = "";
+        proScreenTrack.play("pro-local-player");
+        await agoraClient.publish(proScreenTrack);
+
+        const btn = document.getElementById('btn-screen');
+        btn.innerText = "💻 Sharing Screen...";
+        btn.style.background = "#ff9800";
+
+        // When you click "Stop Sharing" on your browser popup
+        proScreenTrack.on("track-ended", async () => {
+            await agoraClient.unpublish(proScreenTrack);
+            proScreenTrack.close();
+            proScreenTrack = null;
+            
+            document.getElementById('pro-local-player').innerHTML = "";
+            proVideoTrack.play("pro-local-player"); // Bring camera back
+            await agoraClient.publish(proVideoTrack);
+
+            btn.innerText = "💻 Share PPT";
+            btn.style.background = "#2196f3";
+        });
+    } catch(e) { alert("Screen share canceled or failed: " + e.message); }
 };
     
 </script>
