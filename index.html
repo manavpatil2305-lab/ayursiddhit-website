@@ -1667,7 +1667,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     </div>
                 `;
 
-                        if (isEnrolled) {
+                          if (isEnrolled) {
             unlockedHtml += cardHtml;
             
             if (isLive) {
@@ -1684,10 +1684,9 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     </div>
                 `;
             }
-         }
-                
-                } else { storeHtml += cardHtml; }
-            });
+        } else { 
+            storeHtml += cardHtml; 
+        }
 
             unlockedContainer.innerHTML = (unlockedHtml || "<p style='color:#888; text-align:center; padding: 10px;'>You haven't unlocked any batches yet.</p>") + storeHtml;
             liveContainer.innerHTML = liveHtml || "<p style='color: #888; text-align: center; padding: 20px;'>No live classes running right now.</p>";
