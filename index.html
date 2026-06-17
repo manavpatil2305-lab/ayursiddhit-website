@@ -17,10 +17,35 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
     <style>
-        :root { --amazon: #131921; --green: #1b5e20; --gold: #febd69; --luxury: #d4af37; --bg: #f1f3f6; --red: #B12704; --card-bg: white; --text: #333; --border: #eee; }
-        
-        body { margin: 0; padding-bottom: 70px; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; top: 0 !important; }
-        
+
+        :root {
+    --amazon: #131921;
+    --green: #1b5a20;
+    --gold: #febd69;
+    --luxury: #d4af37;
+    --red: #B12704;
+    --bg: #f5f6fa;
+    --text: #131921;
+    --card-bg: #ffffff;
+    --border: #dddddd;
+}
+
+[data-theme="dark"] {
+    --bg: #0c1017;
+    --text: #f5f6fa;
+    --card-bg: #161b22;
+    --border: #30363d;
+}
+
+body {
+    margin: 0;
+    padding-bottom: 70px;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+
         .hidden { display: none !important; }
         
         #top-promo-bar { background: var(--green); color: white; padding: 6px 0; font-weight: bold; font-size: 0.85rem; overflow: hidden; white-space: nowrap; display: none; border-bottom: 1px solid #114015; }
@@ -128,6 +153,37 @@
         .nav-item.active span { color: var(--amazon); font-weight: 800; }
         .nav-badge { position: absolute; top: -5px; right: 18px; background: #e40046; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.6rem; font-weight: bold; min-width: 12px; text-align: center; }
 
+            /* 🎒 LMS SUB-TABS (PW-STYLE) */
+    .lms-sub-tabs-bar {
+        display: flex;
+        gap: 10px;
+        padding: 10px 15px;
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .lms-sub-tabs-bar::-webkit-scrollbar {
+        display: none;
+    }
+    .sub-tab-item {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+    .sub-tab-item.active {
+        background: var(--amazon);
+        color: var(--gold);
+        border-color: var(--gold);
+    }
+        
     </style>
 </head>
 <body>
@@ -142,15 +198,18 @@
             <div class="h-text">Ayursiddhit<span>By Dr. Prasiddhi Patil</span></div>
         </div>
         
-        <div class="h-actions">
+                <div class="h-actions">
             <div id="google_translate_element"></div>
-            <div onclick="window.openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px; text-shadow: ...">🩺</div>
             
-            <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank" style="text-decoration:none; display:flex; align-items:center;">
+            <!-- 🌗 THEME TOGGLE SWITCH -->
+            <div id="theme-switcher-btn" onclick="togglePlatformTheme()" style="font-size: 1.4rem; cursor: pointer; margin-left: 8px;">🌙</div>
+            
+            <div onclick="window.openConsult()" style="font-size: 1.6rem; cursor: pointer; padding: 5px 10px; margin-left: 5px;">💼</div>
+            <a href="https://wa.me/918080926195?text=Hi%20ayursiddhit%20naturals%20%F0%9F%A5%B0" target="_blank">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="28">
             </a>
         </div>
-    </div>
+
 </header>
 
 <div id="main-toggle-bar">
@@ -199,15 +258,44 @@
     <div id="video-feed-container">Loading videos...</div>
 </div>
      
-   <div id="workshops-view" class="hidden" style="padding: 15px;">
-     <h2 style="color:var(--amazon); margin-top:0; text-align:center;">👨‍⚕️ Live Medical Batches</h2>
-     <p style="text-align:center; color:#666; font-size:0.95rem; margin-bottom:20px;">Enroll in high-yield sessions with Dr. Prasiddhi Patil</p>
-     
-     <!-- The Smart Grid for the Cards -->
-     <div id="public-workshop-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
-         <!-- Cards will auto-load here -->
-     </div>
-   </div>
+    <div id="workshops-view" class="hidden" style="padding: 0;">
+        
+        <!-- 🎒 PW-STYLE SUB-NAVIGATION BAR -->
+        <div class="lms-sub-tabs-bar">
+            <button id="sub-tab-live" class="sub-tab-item active" onclick="switchLMSSubTab('live')">🔴 Live Now</button>
+            <button id="sub-tab-mybatches" class="sub-tab-item" onclick="switchLMSSubTab('mybatches')">🎒 My Batches</button>
+            <button id="sub-tab-library" class="sub-tab-item" onclick="switchLMSSubTab('library')">📚 Library</button>
+        </div>
+
+        <!-- 🏢 THE 3 VAULTS (CONTENT AREAS) -->
+        <div style="padding: 15px;">
+            
+            <!-- VAULT 1: LIVE RADAR -->
+            <div id="lms-panel-live" class="lms-panel-view">
+                <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">⚡ Upcoming & Live Sessions</h3>
+                <div id="live-broadcast-radar-container">
+                    <p style="color: #888; text-align: center; padding: 20px;">No live classes running right now.</p>
+                </div>
+            </div>
+
+            <!-- VAULT 2: MY BATCHES (Unlocked Courses) -->
+            <div id="lms-panel-mybatches" class="lms-panel-view hidden">
+                <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">🎒 My Enrolled Courses</h3>
+                <div id="student-unlocked-batches-grid">
+                    <p style="color: #888; text-align: center; padding: 20px;">You haven't enrolled in any batches yet. Visit the Store to unlock!</p>
+                </div>
+            </div>
+
+            <!-- VAULT 3: LIBRARY (Saved Recordings) -->
+            <div id="lms-panel-library" class="lms-panel-view hidden">
+                <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">📚 Video & Notes Vault</h3>
+                <div id="student-historical-recordings-list">
+                    <p style="color: #888; text-align: center; padding: 20px;">Your completed class recordings will appear here.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 <div id="upsell-overlay" class="hidden">
     <div class="upsell-box">
@@ -485,7 +573,43 @@
 </div>
 
 <script>
-  
+
+      // 🌗 THEME SWITCHER ENGINE
+    window.togglePlatformTheme = function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('platform-theme', targetTheme);
+        
+        const btn = document.getElementById('theme-switcher-btn');
+        if(btn) btn.innerText = targetTheme === 'dark' ? '☀️' : '🌙';
+    };
+
+    // Auto-load saved theme when app opens
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('platform-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('theme-switcher-btn');
+        if(btn) btn.innerText = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+    
+        // --- 🎒 PW-STYLE TAB ROUTER ---
+    window.switchLMSSubTab = function(tabName) {
+        // 1. Turn off all buttons
+        document.querySelectorAll('.sub-tab-item').forEach(btn => btn.classList.remove('active'));
+        // 2. Turn on the clicked button
+        const activeBtn = document.getElementById('sub-tab-' + tabName);
+        if(activeBtn) activeBtn.classList.add('active');
+        
+        // 3. Hide all 3 Vaults
+        document.querySelectorAll('.lms-panel-view').forEach(panel => panel.classList.add('hidden'));
+        // 4. Show the specifically chosen Vault
+        const activePanel = document.getElementById('lms-panel-' + tabName);
+        if(activePanel) activePanel.classList.remove('hidden');
+    };
+
+    
     window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
     
@@ -1465,120 +1589,126 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         document.getElementById('customer-install-popup').style.display = 'none';
     }; 
 
-               // --- FETCH MEDICAL WORKSHOPS WITH PW TABS & VIP LOGIC ---
-    window.loadWorkshops = async () => {
-        const list = document.getElementById('public-workshop-list');
-        if (!list) return;
+             // --- 🎓 PHASE 2: PW-STYLE LMS BATCH ROUTER & VIP BOUNCER ---
+    window.loadLMSBatches = async () => {
+        const liveContainer = document.getElementById('live-broadcast-radar-container');
+        const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
+        
+        if(!liveContainer || !unlockedContainer) return;
 
         try {
-            const snap = await getDocs(collection(db, "Medical_workshop"));
+            // Talk to the new Master Database!
+            const snap = await getDocs(collection(db, "Batches"));
+            
             let liveHtml = "";
-            let upcomingHtml = "";
-            let hasLive = false;
+            let unlockedHtml = "";
+            let storeHtml = "<h3 style='width:100%; color:var(--gold); margin-top:30px; border-bottom: 1px solid var(--border); padding-bottom: 10px;'>🛒 Available in Store</h3>";
 
-            // 👑 CHECK VIP STATUS: (Make sure your login system saves this!)
-            // We assume you store a flag like 'isPremium' in localStorage when they log in.
-            const isVIP = localStorage.getItem('isPremium') === 'true';
+            // Identify the Student
+            const isVIP = window.isUserVIP === true;
+            const uid = window.currentUser ? window.currentUser.uid : null;
+
+            if (snap.empty) {
+                unlockedContainer.innerHTML = "<p style='color:#888;'>No active batches available yet.</p>";
+                return;
+            }
 
             snap.forEach(doc => {
                 const data = doc.data();
+                const batchId = doc.id;
+                
+                // THE BOUNCER: Check if this user owns this batch
+                const isEnrolled = uid && data.enrolledStudents && data.enrolledStudents.includes(uid);
+                const isLive = data.Status === "live";
 
-                // 🎟️ VIP DYNAMIC BUTTON LOGIC
-                let enrollButtonHtml = "";
-                if (isVIP) {
-                    // VIPs get a gold button that takes them straight to the Whatsapp Group (Free Entry)
-                    enrollButtonHtml = `<button onclick="window.location.href='${data.Whatsapp_link}'" style="background: linear-gradient(135deg, #d4af37, #aa7c11); color: white; padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">👑 VIP: Free Entry</button>`;
+                // SMART BUTTON LOGIC
+                let actionButton = "";
+                if (isEnrolled) {
+                    actionButton = `<button onclick="alert('📚 Library & Subject Folders opening soon!')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--gold); width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">📚 Access Course Materials</button>`;
+                } else if (isVIP) {
+                    actionButton = `<button onclick="window.enrollVIP('${batchId}')" style="background: var(--green); color: white; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">🎓 VIP: Enroll Free</button>`;
                 } else {
-                    // Normal users get the standard payment button
-                    enrollButtonHtml = `<button onclick="window.payForWorkshop('${data.Title}', ${data.Fees}, '${data.Whatsapp_link}')" style="background: var(--amazon, #131921); color: var(--gold, #febd69); padding: 8px 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Pay ₹${data.Fees}</button>`;
+                    actionButton = `<button onclick="window.payForBatch('${batchId}', '${data.title}', ${data.price})" style="background: #B12704; color: white; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer;">Pay ₹${data.price} to Unlock</button>`;
                 }
 
-                // 📅 Build the Standard Enrollment Card (For Upcoming Classes)
+                // BUILD THE BATCH CARD
                 const cardHtml = `
-                    <div style="background: white; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                        <img src="${data.BannerUrl}" style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover;">
+                    <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                        <img src="${data.bannerUrl || 'logo.png'}" style="width: 100%; height: 160px; object-fit: cover;">
                         <div style="padding: 15px;">
-                            <h3 style="margin: 0 0 10px 0; color: #131921; font-size: 1.2rem;">${data.Title}</h3>
-                            <div style="display:flex; justify-content:space-between; margin-bottom: 15px; font-size: 0.9rem; color: #555;">
-                                <span>📅 <b>${data.Workshop_start}</b></span>
-                                <span>⏰ <b>${data.Timing}</b></span>
+                            <div style="display:flex; justify-content:space-between; align-items:start;">
+                                <h3 style="margin: 0 0 10px 0; color: var(--text); font-size: 1.1rem;">${data.title}</h3>
+                                ${isEnrolled ? '<span style="background:var(--green); color:white; padding:4px 8px; border-radius:12px; font-size:0.7rem; font-weight:bold;">✅ Owned</span>' : ''}
                             </div>
-                            <div style="display:flex; justify-content:space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px;">
-                                <span style="font-size: 1.3rem; font-weight: bold; color: #1b5e20;">₹${data.Fees}</span>
-                                ${enrollButtonHtml} <!-- The button changes based on VIP status -->
-                            </div>
+                            <p style="margin: 0 0 15px 0; font-size: 0.85rem; color: #888;">💰 Price: ₹${data.price}</p>
+                            ${actionButton}
                         </div>
                     </div>
                 `;
 
-                // 🔴 If Class is LIVE, build the Video Player with Full Screen Controls
-                if (data.Status === "live") {
-                    hasLive = true;
-                    liveHtml += `
-                        <div style="margin-bottom: 20px;">
-                            <h3 style="color: #ef4444; margin: 0 0 10px 0; font-size: 1.1rem;">🔴 LIVE: ${data.Title}</h3>
-                            
-                            <!-- Video Container -->
-                            <div id="vid-container-${doc.id}" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 2px solid #ef4444;">
-                                <div id="student-video-player" style="width: 100%; height: 100%;"></div>
+                // ROUTE THE CARD TO THE RIGHT VAULT
+                if (isEnrolled) {
+                    unlockedHtml += cardHtml;
+                    
+                    // LIVE RADAR TRIGGER
+                    if (isLive) {
+                        liveHtml += `
+                            <div style="background: rgba(177, 39, 4, 0.1); border: 2px solid var(--red); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                                <h3 style="color: var(--text); margin-top: 0;">🔴 LIVE NOW: ${data.title}</h3>
+                                <button onclick="window.joinLiveStream('liveclass')" style="background: #B12704; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; animation: pulse 2s infinite;">🔥 Tap to Join Class</button>
                             </div>
-                            
-                            <!-- 🎛️ BIG SCREEN CONTROLS -->
-                            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                                <button onclick="makeFullScreen('vid-container-${doc.id}')" style="flex: 1; background: #3b82f6; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                                    🔲 Full Screen
-                                </button>
-                                <button onclick="window.joinLiveStream()" style="flex: 1; background: var(--green); color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                                     🔴 Tap to Join Class
-                                </button>
-                            </div>
-
-                            <div style="background: #111827; padding: 15px; border-radius: 8px; color: white; text-align: center; border: 1px solid #334155;">
-                                <p style="color: #a0aec0; margin: 0; font-size: 0.9rem;">Chat feature connecting soon...</p>
-                            </div>
-                        </div>
-                    `;
-                } 
-                else if (data.Status === "upcoming") {
-                    upcomingHtml += cardHtml;
+                        `;
+                    }
+                } else {
+                    storeHtml += cardHtml;
                 }
             });
 
-            // 🛑 Empty States 
-            if (!hasLive) {
-                liveHtml = `
-                    <div style="text-align: center; padding: 40px 20px; color: #a0aec0; background: #1a202c; border-radius: 12px; margin-top: 10px;">
-                        <div style="font-size: 3rem; margin-bottom: 10px;">🕒</div>
-                        <h3 style="margin: 0 0 5px 0; color: white;">No live classes right now.</h3>
-                        <p style="margin: 0; font-size: 0.9rem;">Perfect time to catch up on pending work!</p>
-                    </div>
-                `;
-            }
-            if (!upcomingHtml) {
-                upcomingHtml = `<p style="text-align:center; color:#555; padding: 20px;">No upcoming batches scheduled.</p>`;
-            }
-
-            // 🏗️ INJECT THE FULL TABS LAYOUT INTO THE APP
-            list.innerHTML = `
-                <div style="display: flex; background: #1a202c; border-radius: 8px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    <button id="liveTabBtn" onclick="window.switchClassTab('live')" style="flex: 1; padding: 15px; background: none; color: #ef4444; border: none; font-weight: bold; border-bottom: 3px solid #ef4444; cursor: pointer; transition: 0.3s; font-size: 1rem;">🔴 Live Classes</button>
-                    <button id="upcomingTabBtn" onclick="window.switchClassTab('upcoming')" style="flex: 1; padding: 15px; background: none; color: #a0aec0; border: none; font-weight: bold; border-bottom: 3px solid transparent; cursor: pointer; transition: 0.3s; font-size: 1rem;">📅 Upcoming</button>
-                </div>
-                
-                <div id="liveClassesSection" style="display: block;">
-                    ${liveHtml}
-                </div>
-                
-                <div id="upcomingClassesSection" style="display: none;">
-                    ${upcomingHtml}
-                </div>
-            `;
+            // INJECT INTO THE SCREEN
+            unlockedContainer.innerHTML = (unlockedHtml || "<p style='color:#888; text-align:center; padding: 10px;'>You haven't unlocked any batches yet.</p>") + storeHtml;
+            liveContainer.innerHTML = liveHtml || "<p style='color: #888; text-align: center; padding: 20px;'>No live classes running right now.</p>";
 
         } catch (error) {
-            console.error("Workshop Fetch Error:", error);
-            list.innerHTML = `<p style="text-align:center; color:red;">Failed to load: ${error.message}</p>`;
+            console.error("LMS Fetch Error:", error);
+            unlockedContainer.innerHTML = `<p style="color:red;">Failed to load batches: ${error.message}</p>`;
         }
     };
+
+    // --- 💳 AUTOMATED PAYMENT & VIP ENROLLMENT ---
+    window.payForBatch = async (batchId, title, amount) => {
+        if(!window.currentUser) { alert("🚨 Please log in first to purchase a batch!"); return window.login(); }
+
+        var options = {
+            "key": "rzp_live_SeWOakhFO9BGMI", 
+            "amount": amount * 100, 
+            "currency": "INR",
+            "name": "Ayursiddhit Naturals",
+            "description": "Enrollment: " + title,
+            "handler": async function (response) {
+                alert("✅ Payment Successful! Unlocking your batch...");
+                try {
+                    await updateDoc(doc(db, "Batches", batchId), { enrolledStudents: arrayUnion(window.currentUser.uid) });
+                    window.loadLMSBatches(); // Refresh UI instantly
+                    alert("🎓 Batch Unlocked! It has been moved to your 'Owned' section.");
+                } catch(e) { alert("Error saving enrollment: " + e.message); }
+            },
+            "theme": { "color": "#1b5a20" }
+        };
+        var rzp = new Razorpay(options);
+        rzp.open();
+    };
+
+    window.enrollVIP = async (batchId) => {
+        if(!window.currentUser) return;
+        try {
+            await updateDoc(doc(db, "Batches", batchId), { enrolledStudents: arrayUnion(window.currentUser.uid) });
+            window.loadLMSBatches(); // Refresh UI instantly
+            alert("🎓 VIP Access Granted! Batch Unlocked.");
+        } catch(e) { alert("Error with VIP enrollment: " + e.message); }
+    };
+
+    // Tell the app to load this new engine automatically
+    setTimeout(window.loadLMSBatches, 2000);   
 
     // 🎛️ TAB SWITCHER LOGIC
     window.switchClassTab = (tabName) => {
