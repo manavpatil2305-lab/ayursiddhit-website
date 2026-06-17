@@ -297,37 +297,7 @@
     </div>
     
     <!-- WORKSHOPS TAB -->
-    <div id="workshops" class="tab-content">
-        <div class="card">
-            <h3>⚕️ Launch New Medical Batch</h3>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-                <input type="text" id="workshop_title" placeholder="Class Title (e.g. High-Yield Human Physiology)">
-                <input type="number" id="workshop_fees" placeholder="Fees (₹) (e.g. 499)">
-                <input type="text" id="workshop_timing" placeholder="Class Timing (e.g. 6:00 PM IST)">
-                <input type="text" id="workshop_whatsapp" placeholder="WhatsApp Group Link">
-                <input type="file" id="workshop_image" accept="image/*" style="margin-top: 10px;">
-
-                <h4 style="margin-bottom:0;">Enrollment & Schedule Dates</h4>
-                <div class="grid-2" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <div>
-                        <label style="font-size:0.8rem; color:#888;">Registration Starts</label>
-                        <input type="date" id="reg_start" style="width:100%;">
-                    </div>
-                    <div>
-                        <label style="font-size:0.8rem; color:#888;">Registration Ends</label>
-                        <input type="date" id="reg_end" style="width:100%;">
-                    </div>
-                    <div>
-                        <label style="font-size:0.8rem; color:#888;">Workshop Starts</label>
-                        <input type="date" id="work_start" style="width:100%;">
-                    </div>
-                    <div>
-                        <label style="font-size:0.8rem; color:#888;">Workshop Ends</label>
-                        <input type="date" id="work_end" style="width:100%;">
-                    </div>
-                </div>
-                <button onclick="saveWorkshop(this)" style="width: 100%; margin-top: 15px;">🚀 Publish Batch</button>
-            </div>           
+    <div id="workshops" class="tab-content">         
 
     <!-- 👑 THE MASTER BATCH CREATOR FORM -->
     <div style="background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; color: white;">
@@ -1153,8 +1123,13 @@ window.startProLive = async () => {
         if(!agoraClient) agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
         await agoraClient.setClientRole("host");
         
-        // We use the unique Batch ID as the secure video room password!
-        await agoraClient.join(AGORA_APP_ID, batchId, null, null);
+        // THE FIX: We use the exact same room and token as the Student App!
+        await agoraClient.join(
+            AGORA_APP_ID, 
+            "liveclass", 
+            "007eJxTYJgVIL+MnSnXbNKu2WvYJ4dP2vhowobcg2In3d8Hv49gSvyvwGBmYJ5qaWqQYmFoYmGSapaYlJyWkmZsZGZgYmlkYpiY/MXIMKshkJHBs8CEmZEBAkF8ToaczLLU5JzE4mIGBgCzVyB9", 
+            null
+        );
 
         proAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
         proVideoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -1163,7 +1138,7 @@ window.startProLive = async () => {
         await agoraClient.publish([proAudioTrack, proVideoTrack]);
 
         // Tell Firebase this batch is currently LIVE
-        await updateDoc(doc(db, "Batches", batchId), { Status: "live", StreamUrl: batchId });
+        await updateDoc(doc(db, "Batches", batchId), { Status: "live", StreamUrl: "liveclass" });
 
         btn.innerText = "🔴 YOU ARE LIVE";
         btn.style.background = "#d32f2f";
