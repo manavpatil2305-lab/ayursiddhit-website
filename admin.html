@@ -890,15 +890,14 @@ let localVideoTrack = null;
         btn.innerText = "🚀 Uploading & Publishing...";
         btn.disabled = true;
 
-        const title = document.getElementById('workshop_title').value;
-        const fees = document.getElementById('workshop_fees').value;
-        const timing = document.getElementById('workshop_timing').value;
-        const whatsapp = document.getElementById('workshop_whatsapp').value;
-        const regStart = document.getElementById('reg_start').value;
-        const regEnd = document.getElementById('reg_end').value;
-        const workStart = document.getElementById('work_start').value;
-        const workEnd = document.getElementById('work_end').value;
-        const file = document.getElementById('workshop_image').files[0];
+                // 🔥 FIX: MATCHING THE EXACT HTML IDs
+        const title = document.getElementById('batchName').value;
+        const fees = document.getElementById('batchPrice').value;
+        const regStart = document.getElementById('regOpen').value;
+        const regEnd = document.getElementById('regClose').value;
+        const workStart = document.getElementById('batchStart').value;
+        const workEnd = document.getElementById('batchEnd').value;
+        const file = document.getElementById('batchBanner').files[0];
 
         if(!title || !fees || !file) {
             alert("Please fill all fields and select an image!");
@@ -916,8 +915,6 @@ let localVideoTrack = null;
                 await addDoc(collection(db, "Batches"), {
                     title: title, 
                     price: Number(fees), 
-                    timing: timing, 
-                    whatsapp: whatsapp,
                     RegOpen: regStart, 
                     RegClose: regEnd,
                     Workshop_start: workStart, 
