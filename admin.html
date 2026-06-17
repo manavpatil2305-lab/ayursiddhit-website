@@ -343,6 +343,7 @@
         
         <label style="font-weight: bold; font-size: 0.9rem; color: #ccc;">Select Master Batch to Broadcast:</label>
         <select id="pro-batch-select" style="width: 100%; padding: 12px; margin: 5px 0 20px 0; border-radius: 8px; border: none; background: #fff; color: #000; font-size: 1rem; font-weight: bold;">
+        <input type="text" id="agora-token-input" placeholder="🔑 Paste Today's Agora Temp Token Here..." style="width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; color: #333;">
             <option value="">Loading Batches...</option>
         </select>
 
@@ -1147,45 +1148,49 @@ setTimeout(async () => {
     } catch(e) { console.error("Batch load error:", e); }
 }, 2500); // Waits 2.5s for Firebase to log in
 
-// 2. The "Go Live" Button
-window.startProLive = async () => {
-    const batchId = document.getElementById('pro-batch-select').value;
-    if(!batchId) { alert("🚨 Please select a Batch from the dropdown first!"); return; }
+    // 2. The "Go Live" Button
+    window.startProLive = async () => {
+        const batchId = document.getElementById('pro-batch-select').value;
+        const tempToken = document.getElementById('agora-token-input') ? document.getElementById('agora-token-input').value.trim() : "";
 
-    const btn = document.getElementById('btn-go-live');
-    btn.innerText = "⏳ Starting Engine...";
-    btn.disabled = true;
+        if(!batchId) { alert("🚨 Please select a Batch from the dropdown first!"); return; }
+        if(!tempToken) { alert("⚠️ Please paste your Temp Token from Agora!"); return; }
 
-    try {
-        if(!agoraClient) agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
-        await agoraClient.setClientRole("host");
-        
-        // THE FIX: We use the exact same room and token as the Student App!
-        await agoraClient.join(
-            AGORA_APP_ID, 
-            "liveclass", 
-            "007eJxTYJgVIL+MnSnXbNKu2WvYJ4dP2vhowobcg2In3d8Hv49gSvyvwGBmYJ5qaWqQYmFoYmGSapaYlJyWkmZsZGZgYmlkYpiY/MXIMKshkJHBs8CEmZEBAkF8ToaczLLU5JzE4mIGBgCzVyB9", 
-            null
-        );
+        const btn = document.getElementById('btn-go-live');
+        btn.innerText = "⏳ Starting Engine...";
+        btn.disabled = true;
 
-        proAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-        proVideoTrack = await AgoraRTC.createCameraVideoTrack();
-        
-        proVideoTrack.play("pro-local-player");
-        await agoraClient.publish([proAudioTrack, proVideoTrack]);
+        try {
+            if(!agoraClient) agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
+            await agoraClient.setClientRole("host");
 
-        // Tell Firebase this batch is currently LIVE
-        await updateDoc(doc(db, "Batches", batchId), { Status: "live", StreamUrl: "liveclass" });
+            // 1. Join using your pasted daily token
+            await agoraClient.join(AGORA_APP_ID, "liveclass", tempToken, null);
 
-        btn.innerText = "🔴 YOU ARE LIVE";
-        btn.style.background = "#d32f2f";
-        alert("🎙️ SUCCESS: You are broadcasting live to this batch!");
-    } catch (e) {
-        alert("CRASH: " + e.message);
-        btn.innerText = "🔴 Go Live";
-        btn.disabled = false;
-    }
-};
+            proAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+            proVideoTrack = await AgoraRTC.createCameraVideoTrack();
+            
+            document.getElementById('pro-local-player').innerHTML = ""; // Clear box
+            proVideoTrack.play("pro-local-player");
+
+            await agoraClient.publish([proAudioTrack, proVideoTrack]);
+
+            // 2. MAGICAL STEP: Save the token to Firebase so students can use it instantly!
+            await updateDoc(doc(db, "Batches", batchId), {
+                Status: "live",
+                StreamUrl: "liveclass",
+                liveToken: tempToken
+            });
+
+            btn.innerText = "🔴 YOU ARE LIVE";
+            btn.style.background = "#ef4444";
+            alert("✅ SUCCESS: You are broadcasting live to this batch!");
+        } catch(e) { 
+            alert("CRASH: " + e.message); 
+            btn.innerText = "🔴 Go Live"; 
+            btn.disabled = false;
+        }
+    };
 
 // 3. The "End Class" Button
 window.endProLive = async () => {
