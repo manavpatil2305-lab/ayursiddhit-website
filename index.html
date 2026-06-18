@@ -1656,7 +1656,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
                     let actionButton = "";
                     if (isEnrolled) {
-                        actionButton = `<button onclick="window.showBeautifulAlert('Library opening soon!', '📚')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">📂 Access Course Materials</button>`;
+                        actionButton = `<button onclick="window.openBatchLibrary('${batchId}', '${safeTitle}')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">📂 Access Course Materials</button>`;
                     } else if (isVIP) {
                         actionButton = `<button onclick="window.enrollVIP('${batchId}')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">🔓 Unlock (VIP Access)</button>`;
                     } else {
@@ -1719,6 +1719,67 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
     
     // 🔥 3. THIS ACTUALLY FORCES THE ENGINE TO TURN ON!
     setTimeout(window.loadLMSBatches, 1500);
+
+         // --- 📚 PHASE 3: PRO LIBRARY FOLDER SYSTEM ---
+    window.openBatchLibrary = async (batchId, batchTitle) => {
+        // 1. Create a bulletproof fullscreen overlay so it works regardless of your HTML setup!
+        let modal = document.getElementById('pw-library-modal');
+        if(!modal) {
+            modal = document.createElement('div');
+            modal.id = 'pw-library-modal';
+            modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; overflow-y:auto; display:none; flex-direction:column;";
+            document.body.appendChild(modal);
+        }
+
+        // 2. Draw the Header and Loading State
+        modal.innerHTML = `
+            <div style="background:var(--card-bg); padding:15px 20px; position:sticky; top:0; z-index:10; border-bottom:2px solid var(--gold); display:flex; align-items:center; gap:15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <button onclick="document.getElementById('pw-library-modal').style.display='none'" style="background:var(--card-bg); border:1px solid var(--border); border-radius:50%; width:40px; height:40px; font-size:1.2rem; display:flex; align-items:center; justify-content:center; color:var(--text); cursor:pointer;">🔙</button>
+                <div>
+                    <h2 style="margin:0; color:var(--text); font-size:1.2rem; font-weight:900;">${batchTitle}</h2>
+                    <p style="margin:0; color:var(--green); font-size:0.8rem; font-weight:bold;">📚 Course Library</p>
+                </div>
+            </div>
+            <div id="library-folders-container" style="padding:20px; display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:15px;">
+                <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
+                    <h3 style="color:var(--gold);">⏳ Fetching Subjects...</h3>
+                </div>
+            </div>
+        `;
+        modal.style.display = 'flex';
+
+        // 3. Fetch Folders from Firebase (Subcollection: "Folders")
+        try {
+            const snap = await getDocs(collection(db, "Batches", batchId, "Folders"));
+            const container = document.getElementById('library-folders-container');
+            
+            if(snap.empty) {
+                container.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
+                        <span style="font-size:4rem; filter: grayscale(100%); opacity: 0.5;">📂</span>
+                        <h3 style="color:var(--text); margin-top:15px;">Library Empty</h3>
+                        <p style="color:#888;">The teacher hasn't uploaded any study materials or recordings for this batch yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let foldersHtml = "";
+            snap.forEach(doc => {
+                const fData = doc.data();
+                foldersHtml += `
+                    <div onclick="window.showBeautifulAlert('Opening ${fData.title || doc.id} videos soon!', '▶️')" style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:25px 10px; text-align:center; cursor:pointer; transition: transform 0.2s; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+                        <div style="font-size:3.5rem; margin-bottom:10px; text-shadow: 2px 2px 5px rgba(0,0,0,0.1);">📁</div>
+                        <h4 style="margin:0; color:var(--text); font-size:1rem; font-weight:bold;">${fData.title || doc.id}</h4>
+                        <p style="margin:5px 0 0 0; color:#888; font-size:0.75rem;">View Materials ➔</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = foldersHtml;
+        } catch(error) {
+            document.getElementById('library-folders-container').innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;"><h3 style="color:red;">🚨 Error Loading Library</h3><p style="color:#888;">${error.message}</p></div>`;
+        }
+    };
 
     // --- 💳 AUTOMATED PAYMENT & VIP ENROLLMENT ---
     window.payForBatch = async (batchId, title, amount) => {
