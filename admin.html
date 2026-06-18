@@ -1155,18 +1155,20 @@ let proScreenTrack = null;
 let isMicOn = true;
 let isCamOn = true;
 
-// 1. Auto-Load Batches into Dropdown
-setTimeout(async () => {
-    const select = document.getElementById('pro-batch-select');
-    if(!select) return;
-    try {
-        const snap = await getDocs(collection(db, "Batches"));
-        select.innerHTML = '<option value="">Select a Master Batch to Broadcast...</option>';
-        snap.forEach(doc => {
-            select.innerHTML += `<option value="${doc.id}">${doc.data().title}</option>`;
-        });
-    } catch(e) { console.error("Batch load error:", e); }
-}, 2500); // Waits 2.5s for Firebase to log in
+    // 1. Live Auto-Load Batches into Dropdown
+    setTimeout(() => {
+        const select = document.getElementById('pro-batch-select');
+        if(!select) return;
+        try {
+            // 🔥 The dropdown now watches the database in real-time!
+            onSnapshot(collection(db, "Batches"), (snap) => {
+                select.innerHTML = '<option value="">-- Select Master Batch to Broadcast --</option>';
+                snap.forEach(doc => {
+                    select.innerHTML += `<option value="${doc.id}">${doc.data().title}</option>`;
+                });
+            });
+        } catch(e) { console.error("Batch load error:", e); }
+    }, 2000); // Waits 2.5s for Firebase to log in
 
         // 2. The "Go Live" Button with Thumbnail Uploader
     window.startProLive = async () => {
