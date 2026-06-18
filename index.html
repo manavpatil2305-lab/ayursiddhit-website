@@ -1624,15 +1624,16 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         }, 3000); // Disappears after 3 seconds!
     };
 
-             // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (LIVE AUTO-REFRESH) ---
+                 // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (LIVE AUTO-REFRESH) ---
     window.loadLMSBatches = () => {
         const liveContainer = document.getElementById('live-broadcast-radar-container');
         const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
         if(!liveContainer || !unlockedContainer) return;
 
+        // 🔥 1. Tell us the engine is thinking...
+        unlockedContainer.innerHTML = "<div style='text-align:center; padding: 30px;'><h3 style='color:var(--gold);'>⏳ Connecting to Store...</h3></div>";
+
         try {
-            
-            // 🔥 THE MAGIC UPGRADE: onSnapshot listens instantly forever!
             onSnapshot(collection(db, "Batches"), (snap) => {
                 let liveHtml = "";
                 let unlockedHtml = "";
@@ -1642,7 +1643,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                 const uid = window.currentUser ? window.currentUser.uid : null;
 
                 if (snap.empty) {
-                    unlockedContainer.innerHTML = "<p style='color:#888; text-align:center; padding: 20px;'>No active batches available yet.</p>"; 
+                    unlockedContainer.innerHTML = storeHtml + "<p style='color:#888; text-align:center; padding: 20px;'>No active batches available yet.</p>"; 
                     return;
                 }
 
@@ -1702,17 +1703,22 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     } else { 
                         storeHtml += cardHtml; 
                     }
-                }); // End forEach
+                }); 
 
-                // 🔥 CRITICAL FIX: Combine BOTH unlocked and store HTML together perfectly!
                 unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No batches found.</p>";
                 liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
 
-            }); // End onSnapshot
+            // 🔥 2. THIS CATCHES THE SILENT FIREBASE CRASH!
+            }, (error) => {
+                unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Database Blocked!</h3><p style="color:#888;">${error.message}</p><p style="color:var(--text); font-weight:bold;">(You must LOG IN to see the store!)</p></div>`;
+            }); 
         } catch (error) { 
-            console.error("LMS Fetch Error:", error); 
+            unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Code Error!</h3><p style="color:#888;">${error.message}</p></div>`;
         }
     };
+    
+    // 🔥 3. THIS ACTUALLY FORCES THE ENGINE TO TURN ON!
+    setTimeout(window.loadLMSBatches, 1500);
 
     // --- 💳 AUTOMATED PAYMENT & VIP ENROLLMENT ---
     window.payForBatch = async (batchId, title, amount) => {
