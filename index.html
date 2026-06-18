@@ -250,6 +250,16 @@ body {
 </div>
 
 <main id="main-view" class="product-grid"></main>
+   <footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 15px 10px 30px 10px; margin-top: 20px; font-size: 0.8rem; border-top: 3px solid var(--luxury);">
+    <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 0.95rem;">Ayursiddhit Naturals</p>
+    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+        <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;">👩‍⚕️ Our Story</a>
+        <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
+        <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
+        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;">Terms & Conditions</a>
+    </div>
+    <p style="margin: 0; color: #aaa;">© 2026 Ayursiddhit Naturals.</p>
+   </footer>
 
 <div id="videos-view" class="hidden">
     <h2 style="color:var(--amazon); margin-top:0; text-align:center;">Ayurvedic Clinical Guide</h2>
@@ -535,17 +545,6 @@ body {
     </div>
 </div>
 
-<footer id="site-footer" style="background: var(--amazon); color: white; text-align: center; padding: 15px 10px 30px 10px; margin-top: 20px; font-size: 0.8rem; border-top: 3px solid var(--luxury);">
-    <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 0.95rem;">Ayursiddhit Naturals</p>
-    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
-        <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; font-weight:bold;">👩‍⚕️ Our Story</a>
-        <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none;">Contact Us</a>
-        <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none;">Refund Policy</a>
-        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none;">Terms & Conditions</a>
-    </div>
-    <p style="margin: 0; color: #aaa;">© 2026 Ayursiddhit Naturals.</p>
-</footer>
-
 <div class="bottom-nav">
     <div class="nav-item active" onclick="activateNav(this); restoreHome();">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -630,52 +629,56 @@ body {
     }
 };
     
+      // --- 🚨 PW-STYLE TAB ROUTER (UPGRADED WITH FOOTER CONTROL) ---
     window.switchMainTab = function(tab) {
-    const tStore = document.getElementById('tab-store');
-    const tVideos = document.getElementById('tab-videos');
-    const tWorkshops = document.getElementById('tab-workshops');
+        const tStore = document.getElementById('tab-store');
+        const tVideos = document.getElementById('tab-videos');
+        const tWorkshops = document.getElementById('tab-workshops');
 
-    if(tab === 'store') {
-        if(tStore) tStore.className = 'tab-btn-main active';
-        if(tVideos) tVideos.className = 'tab-btn-main inactive';
-        if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-        
-        window.showSafe('home-top-section');
-        window.showSafe('search-section');
-        window.showSafe('main-view');
-        window.showSafe('t-offer-banner');
-        
-        window.hideSafe('videos-view');
-        window.hideSafe('workshops-view');
-        
-    } else if (tab === 'videos') {
-        if(tVideos) tVideos.className = 'tab-btn-main active';
-        if(tStore) tStore.className = 'tab-btn-main inactive';
-        if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-        
-        window.hideSafe('home-top-section');
-        window.hideSafe('search-section');
-        window.hideSafe('main-view');
-        window.hideSafe('t-offer-banner');
-        window.hideSafe('workshops-view');
-        
-        window.showSafe('videos-view');
-        
-    } else if (tab === 'workshops') {
-        if(tWorkshops) tWorkshops.className = 'tab-btn-main active';
-        if(tStore) tStore.className = 'tab-btn-main inactive';
-        if(tVideos) tVideos.className = 'tab-btn-main inactive';
-        
-        window.hideSafe('home-top-section');
-        window.hideSafe('search-section');
-        window.hideSafe('main-view');
-        window.hideSafe('t-offer-banner');
-        window.hideSafe('videos-view');
-        
-        window.showSafe('workshops-view');
-    }
- };
+        if(tab === 'store') {
+            if(tStore) tStore.className = 'tab-btn-main active';
+            if(tVideos) tVideos.className = 'tab-btn-main inactive';
+            if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
 
+            window.showSafe('home-top-section');
+            window.showSafe('search-section');
+            window.showSafe('main-view');
+            window.showSafe('t-offer-banner');
+            window.showSafe('site-footer'); // 🔥 SHOWS FOOTER ON STORE TAB
+
+            window.hideSafe('videos-view');
+            window.hideSafe('workshops-view');
+            
+        } else if (tab === 'videos') {
+            if(tVideos) tVideos.className = 'tab-btn-main active';
+            if(tStore) tStore.className = 'tab-btn-main inactive';
+            if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
+
+            window.hideSafe('home-top-section');
+            window.hideSafe('search-section');
+            window.hideSafe('main-view');
+            window.hideSafe('t-offer-banner');
+            window.hideSafe('site-footer'); // 🚫 HIDES FOOTER
+
+            window.showSafe('videos-view');
+            window.hideSafe('workshops-view');
+            
+        } else if (tab === 'workshops') {
+            if(tWorkshops) tWorkshops.className = 'tab-btn-main active';
+            if(tStore) tStore.className = 'tab-btn-main inactive';
+            if(tVideos) tVideos.className = 'tab-btn-main inactive';
+
+            window.hideSafe('home-top-section');
+            window.hideSafe('search-section');
+            window.hideSafe('main-view');
+            window.hideSafe('t-offer-banner');
+            window.hideSafe('site-footer'); // 🚫 HIDES FOOTER
+
+            window.hideSafe('videos-view');
+            window.showSafe('workshops-view');
+        }
+    };
+    
 // 💳 RAZORPAY MEDICAL BATCH CHECKOUT
 window.payForWorkshop = function(title, amount, whatsappUrl) {
     // Prevent empty clicks just in case
