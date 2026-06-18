@@ -1624,35 +1624,43 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         }, 3000); // Disappears after 3 seconds!
     };
 
-        // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (LIVE AUTO-REFRESH) ---
+             // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (LIVE AUTO-REFRESH) ---
     window.loadLMSBatches = () => {
         const liveContainer = document.getElementById('live-broadcast-radar-container');
         const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
         if(!liveContainer || !unlockedContainer) return;
 
         try {
+            
             // 🔥 THE MAGIC UPGRADE: onSnapshot listens instantly forever!
             onSnapshot(collection(db, "Batches"), (snap) => {
-                let liveHtml = "", unlockedHtml = "", storeHtml = "<h3 style='width:100%; color:var(--gold); margin-top:30px; padding-bottom: 10px; border-bottom: 2px solid var(--gold);'>🛍️ Course Store</h3>";
+                let liveHtml = "";
+                let unlockedHtml = "";
+                let storeHtml = "<div style='margin-top: 30px;'><h3 style='color:var(--gold); padding-bottom: 10px; border-bottom: 2px solid var(--gold);'>🛍️ Course Store</h3></div>";
+                
                 const isVIP = window.isUserVIP === true;
                 const uid = window.currentUser ? window.currentUser.uid : null;
 
                 if (snap.empty) {
-                    unlockedContainer.innerHTML = "<p style='color:#888;'>No active batches available yet.</p>"; return;
+                    unlockedContainer.innerHTML = "<p style='color:#888; text-align:center; padding: 20px;'>No active batches available yet.</p>"; 
+                    return;
                 }
 
                 snap.forEach(doc => {
-                    const data = doc.data(); const batchId = doc.id;
-                    const isEnrolled = uid && data.enrolledStudents && data.enrolledStudents.includes(uid);
+                    const data = doc.data(); 
+                    const batchId = doc.id;
+                    const enrolledArr = data.enrolledStudents || [];
+                    const isEnrolled = uid && enrolledArr.includes(uid);
                     const isLive = data.Status === "live";
 
                     let actionButton = "";
                     if (isEnrolled) {
-                        actionButton = `<button onclick="window.showBeautifulAlert('Library & Subject Folders opening soon!', '📚')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">📂 Access Course Materials</button>`;
+                        actionButton = `<button onclick="window.showBeautifulAlert('Library opening soon!', '📚')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">📂 Access Course Materials</button>`;
                     } else if (isVIP) {
                         actionButton = `<button onclick="window.enrollVIP('${batchId}')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">🔓 Unlock (VIP Access)</button>`;
                     } else {
-                        actionButton = `<button onclick="window.payForBatch('${batchId}', '${data.title}', ${data.price})" style="background: var(--gold); color: #333; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">💳 Buy Now - ₹${data.price}</button>`;
+                        const safeTitle = data.title ? data.title.replace(/'/g, "\\'") : "Course";
+                        actionButton = `<button onclick="window.payForBatch('${batchId}', '${safeTitle}', ${data.price})" style="background: var(--gold); color: #333; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">💳 Buy Now - ₹${data.price}</button>`;
                     }
 
                     const cardHtml = `
@@ -1666,7 +1674,6 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                                 <div style="background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 10px; margin-bottom: 15px;">
                                     <p style="margin: 0 0 5px 0; font-size: 0.8rem; color: #555;">📅 <b>Classes Start:</b> ${data.Workshop_start || 'TBA'}</p>
                                     <p style="margin: 0 0 5px 0; font-size: 0.8rem; color: #555;">🛑 <b>Reg. Closes:</b> ${data.RegClose || 'TBA'}</p>
-                                    <p style="margin: 0; font-size: 0.8rem; color: #555;">📝 <b>Details:</b> ${data.description || 'Full syllabus inside.'}</p>
                                 </div>
                                 <p style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight:bold; color: #B12704;">💰 Price: ₹${data.price}</p>
                                 ${actionButton}
@@ -1695,13 +1702,17 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     } else { 
                         storeHtml += cardHtml; 
                     }
-                });
+                }); // End forEach
 
-                unlockedContainer.innerHTML = unlockedHtml || storeHtml || "<p style='color:#888; text-align:center; padding: 10px;'>No batches available.</p>";
+                // 🔥 CRITICAL FIX: Combine BOTH unlocked and store HTML together perfectly!
+                unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No batches found.</p>";
                 liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
-            }); // 🔥 Closes the live listener
-        } catch (error) { console.error("LMS Fetch Error:", error); }
-    };            
+
+            }); // End onSnapshot
+        } catch (error) { 
+            console.error("LMS Fetch Error:", error); 
+        }
+    };
 
     // --- 💳 AUTOMATED PAYMENT & VIP ENROLLMENT ---
     window.payForBatch = async (batchId, title, amount) => {
