@@ -346,7 +346,18 @@
         <option value="">Loading Batches...</option>
     </select>
 
-    <input type="text" id="agora-token-input" placeholder="🔑 Paste Today's Agora Temp Token Here..." style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; font-weight: bold; color: #333;">
+        <input type="text" id="agora-token-input" placeholder="🔑 Paste Today's Agora Temp Token Here..." oninput="localStorage.setItem('agoraDailyToken', this.value)" style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; font-weight: bold; color: #333;">
+    
+    <!-- This tiny script auto-loads the saved token the second you open the page! -->
+    <script>
+        setTimeout(() => {
+            const savedToken = localStorage.getItem('agoraDailyToken');
+            if(savedToken) {
+                const tokenInput = document.getElementById('agora-token-input');
+                if(tokenInput) tokenInput.value = savedToken;
+            }
+        }, 800);
+    </script>
 
     <label style="font-weight: bold; font-size: 0.9rem; color: #ccc; display: block; margin-top: 10px;">📸 Live Thumbnail (PW Style):</label>
     <input type="file" id="live-thumbnail-input" accept="image/*" style="width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 20px; border-radius: 8px; border: none; background: white;">
