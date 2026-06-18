@@ -678,7 +678,53 @@ body {
             window.showSafe('workshops-view');
         }
     };
-    
+
+        // --- 📺 LIVE PLAYER CONTROLS (FULLSCREEN & LEAVE CLASS) ---
+    window.makeFullscreen = function(elementId) {
+        var elem = document.getElementById(elementId);
+        if (!elem) return;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(e => console.log("Fullscreen blocked: ", e));
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        }
+    };
+
+    // Auto-Inject the "Leave Class" Button when they join!
+    const originalJoinLiveStream = window.joinLiveStream;
+    window.joinLiveStream = function(token) {
+        // 1. Run your normal video connection
+        if(originalJoinLiveStream) originalJoinLiveStream(token);
+        
+        // 2. Turn on the Fullscreen button
+        var fsBtn = document.getElementById('fullscreen-btn');
+        if(fsBtn) fsBtn.style.display = 'block';
+
+        // 3. Create the "Leave Class" button dynamically
+        var wrapper = document.getElementById('live-video-wrapper');
+        if(wrapper && !document.getElementById('leave-class-btn')) {
+            var btn = document.createElement('button');
+            btn.id = 'leave-class-btn';
+            btn.innerHTML = '🛑 Leave Class';
+            btn.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 99; background: #ef4444; color: white; border: none; border-radius: 6px; padding: 8px 15px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.5);';
+            
+            // 4. What happens when they click Leave:
+            btn.onclick = function() {
+                var player = document.getElementById('student-video-player');
+                if(player) {
+                    player.innerHTML = ''; // Kills the video/audio stream
+                    player.style.display = 'none';
+                }
+                document.getElementById('live-banner-img').style.display = 'block';
+                if(fsBtn) fsBtn.style.display = 'none';
+                this.style.display = 'none';
+            };
+            wrapper.appendChild(btn);
+        } else if (document.getElementById('leave-class-btn')) {
+            document.getElementById('leave-class-btn').style.display = 'block';
+        }
+    };
+
 // 💳 RAZORPAY MEDICAL BATCH CHECKOUT
 window.payForWorkshop = function(title, amount, whatsappUrl) {
     // Prevent empty clicks just in case
