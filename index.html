@@ -1624,35 +1624,41 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         }, 3000); // Disappears after 3 seconds!
     };
 
-                 // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (LIVE AUTO-REFRESH) ---
-    window.loadLMSBatches = () => {
+                     // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (BULLETPROOF EDITION) ---
+    window.loadLMSBatches = async () => {
         const liveContainer = document.getElementById('live-broadcast-radar-container');
         const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
         if(!liveContainer || !unlockedContainer) return;
 
-        // 🔥 1. Tell us the engine is thinking...
-        unlockedContainer.innerHTML = "<div style='text-align:center; padding: 30px;'><h3 style='color:var(--gold);'>⏳ Connecting to Store...</h3></div>";
+        unlockedContainer.innerHTML = "<div style='text-align:center; padding: 30px;'><h3 style='color:var(--gold);'>⏳ Fetching Store Data...</h3></div>";
 
         try {
-            onSnapshot(collection(db, "Batches"), (snap) => {
-                let liveHtml = "";
-                let unlockedHtml = "";
-                let storeHtml = "<div style='margin-top: 30px;'><h3 style='color:var(--gold); padding-bottom: 10px; border-bottom: 2px solid var(--gold);'>🛍️ Course Store</h3></div>";
-                
-                const isVIP = window.isUserVIP === true;
-                const uid = window.currentUser ? window.currentUser.uid : null;
+            // 🚀 1. Standard Fetch (Bypasses strict mobile battery/network blocks!)
+            const snap = await getDocs(collection(db, "Batches"));
+            
+            let liveHtml = "";
+            let unlockedHtml = "";
+            let storeHtml = "<div style='margin-top: 30px;'><h3 style='color:var(--gold); padding-bottom: 10px; border-bottom: 2px solid var(--gold);'>🛍️ Course Store</h3></div>";
+            
+            const isVIP = window.isUserVIP === true;
+            const uid = window.currentUser ? window.currentUser.uid : null;
 
-                if (snap.empty) {
-                    unlockedContainer.innerHTML = storeHtml + "<p style='color:#888; text-align:center; padding: 20px;'>No active batches available yet.</p>"; 
-                    return;
-                }
+            if (snap.empty) {
+                unlockedContainer.innerHTML = storeHtml + "<p style='color:#888; text-align:center; padding: 20px;'>No active batches available yet.</p>"; 
+                return;
+            }
 
-                snap.forEach(doc => {
+            snap.forEach(doc => {
+                // 🛡️ 2. INDESTRUCTIBLE LOOP: Prevents one bad batch from breaking the whole store!
+                try {
                     const data = doc.data(); 
                     const batchId = doc.id;
-                    const enrolledArr = data.enrolledStudents || [];
+                    
+                    // 🛡️ 3. Safe Data Coercion (Fixes missing strings and arrays)
+                    const enrolledArr = Array.isArray(data.enrolledStudents) ? data.enrolledStudents : [];
                     const isEnrolled = uid && enrolledArr.includes(uid);
                     const isLive = data.Status === "live";
+                    const safeTitle = String(data.title || "Course").replace(/'/g, "\\'");
 
                     let actionButton = "";
                     if (isEnrolled) {
@@ -1660,8 +1666,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     } else if (isVIP) {
                         actionButton = `<button onclick="window.enrollVIP('${batchId}')" style="background: var(--green); color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">🔓 Unlock (VIP Access)</button>`;
                     } else {
-                        const safeTitle = data.title ? data.title.replace(/'/g, "\\'") : "Course";
-                        actionButton = `<button onclick="window.payForBatch('${batchId}', '${safeTitle}', ${data.price})" style="background: var(--gold); color: #333; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">💳 Buy Now - ₹${data.price}</button>`;
+                        actionButton = `<button onclick="window.payForBatch('${batchId}', '${safeTitle}', ${data.price || 0})" style="background: var(--gold); color: #333; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">💳 Buy Now - ₹${data.price || 0}</button>`;
                     }
 
                     const cardHtml = `
@@ -1669,14 +1674,14 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                             <img src="${data.bannerUrl || 'logo.png'}" style="width: 100%; height: 160px; object-fit: cover;">
                             <div style="padding: 15px;">
                                 <div style="display:flex; justify-content:space-between; align-items:start;">
-                                    <h3 style="margin: 0 0 10px 0; color: var(--text); font-size: 1.1rem; font-weight: 800;">${data.title}</h3>
+                                    <h3 style="margin: 0 0 10px 0; color: var(--text); font-size: 1.1rem; font-weight: 800;">${data.title || 'Unnamed Course'}</h3>
                                     ${isEnrolled ? '<span style="background:var(--green); color:white; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold; letter-spacing:0.5px;">✅ OWNED</span>' : ''}
                                 </div>
                                 <div style="background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 10px; margin-bottom: 15px;">
                                     <p style="margin: 0 0 5px 0; font-size: 0.8rem; color: #555;">📅 <b>Classes Start:</b> ${data.Workshop_start || 'TBA'}</p>
                                     <p style="margin: 0 0 5px 0; font-size: 0.8rem; color: #555;">🛑 <b>Reg. Closes:</b> ${data.RegClose || 'TBA'}</p>
                                 </div>
-                                <p style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight:bold; color: #B12704;">💰 Price: ₹${data.price}</p>
+                                <p style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight:bold; color: #B12704;">💰 Price: ₹${data.price || 0}</p>
                                 ${actionButton}
                             </div>
                         </div>
@@ -1688,13 +1693,13 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                             liveHtml += `
                                 <div style="background: var(--card-bg); border: 2px solid var(--red); border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(226, 54, 54, 0.3);">
                                     <div id="live-video-wrapper" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000;">
-                                        <img id="live-banner-img" src="${data.liveThumbnailUrl || data.bannerUrl}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 1;">
+                                        <img id="live-banner-img" src="${data.liveThumbnailUrl || data.bannerUrl || 'logo.png'}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 1;">
                                         <div id="student-video-player" style="width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 2; display: none;"></div>
                                         <button id="fullscreen-btn" onclick="window.makeFullscreen('live-video-wrapper')" style="display: none; position: absolute; bottom: 10px; right: 10px; z-index: 3; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 4px; padding: 5px 12px; font-size: 1.2rem; cursor: pointer;">⛶</button>
                                         <span style="position: absolute; top: 10px; left: 10px; z-index: 3; background: #ef4444; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; animation: pulse 1.5s infinite;">🔴 LIVE NOW</span>
                                     </div>
                                     <div style="padding: 15px;">
-                                        <h3 style="color: var(--text); margin: 0 0 10px 0; font-size: 1.1rem;">${data.title}</h3>
+                                        <h3 style="color: var(--text); margin: 0 0 10px 0; font-size: 1.1rem;">${data.title || 'Live Class'}</h3>
                                         <button id="join-btn" onclick="window.joinLiveStream('${data.liveToken}')" style="background: #B12704; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">🔥 Join Live Class</button>
                                     </div>
                                 </div>
@@ -1703,21 +1708,20 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                     } else { 
                         storeHtml += cardHtml; 
                     }
-                }); 
-
-                unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No batches found.</p>";
-                liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
-
-            // 🔥 2. THIS CATCHES THE SILENT FIREBASE CRASH!
-            }, (error) => {
-                unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Database Blocked!</h3><p style="color:#888;">${error.message}</p><p style="color:var(--text); font-weight:bold;">(You must LOG IN to see the store!)</p></div>`;
+                } catch(loopErr) {
+                    console.log("Ignored a corrupted test batch!");
+                }
             }); 
+
+            unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No batches found.</p>";
+            liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
+
         } catch (error) { 
-            unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Code Error!</h3><p style="color:#888;">${error.message}</p></div>`;
+            // 🚨 4. The Final Safety Net
+            unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Connection Error!</h3><p style="color:#888;">${error.message}</p></div>`;
         }
-    };
-    
-    // 🔥 3. THIS ACTUALLY FORCES THE ENGINE TO TURN ON!
+        };
+
     setTimeout(window.loadLMSBatches, 1500);
 
          // --- 📚 PHASE 3: PRO LIBRARY FOLDER SYSTEM ---
