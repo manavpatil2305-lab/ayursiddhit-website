@@ -308,6 +308,8 @@
 
         <label style="font-weight: bold; font-size: 0.9rem;">Price (₹)</label>
         <input type="number" id="batchPrice" placeholder="2999" style="width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 5px; border: none;">
+        <label style="font-weight: bold; font-size: 0.9rem;">📲 WhatsApp Group Invite Link</label>
+        <input type="text" id="batchWhatsapp" placeholder="Paste link here (e.g., https://chat.whatsapp.com/...)" style="width: 100%; padding: 10px; margin: 5px 0 15px 0; border-radius: 8px; border: 1px solid #ccc;" required>
 
         <label style="font-weight: bold; font-size: 0.9rem;">Banner Image (Select from Gallery)</label>
         <input type="file" id="batchBanner" accept="image/*" style="width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #fff; color: #000; border-radius: 5px; border: none;">
@@ -336,49 +338,6 @@
         </button>
     </div>
 
-     <hr style="margin: 30px 0; border: 0; border-top: 2px solid #ccc;">
-    
-    <div style="background: #131921; padding: 20px; border-radius: 12px; margin-bottom: 20px; color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <h2 style="margin-top: 0; color: #ffeb3b; display: flex; align-items: center; gap: 10px;">🎙️ Pro Broadcasting Studio</h2>
-        
-            <label style="font-weight: bold; font-size: 0.9rem; color: #ccc;">Select Master Batch to Broadcast:</label>
-    <select id="pro-batch-select" style="width: 100%; padding: 12px; margin: 5px 0 15px 0; border-radius: 8px; border: none;">
-        <option value="">Loading Batches...</option>
-    </select>
-
-        <input type="text" id="agora-token-input" placeholder="🔑 Paste Today's Agora Temp Token Here..." oninput="localStorage.setItem('agoraDailyToken', this.value)" style="width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; font-weight: bold; color: #333;">
-    
-    <!-- This tiny script auto-loads the saved token the second you open the page! -->
-    <script>
-        setTimeout(() => {
-            const savedToken = localStorage.getItem('agoraDailyToken');
-            if(savedToken) {
-                const tokenInput = document.getElementById('agora-token-input');
-                if(tokenInput) tokenInput.value = savedToken;
-            }
-        }, 800);
-    </script>
-
-    <label style="font-weight: bold; font-size: 0.9rem; color: #ccc; display: block; margin-top: 10px;">📸 Live Thumbnail (PW Style):</label>
-    <input type="file" id="live-thumbnail-input" accept="image/*" style="width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 20px; border-radius: 8px; border: none; background: white;">
-
-        <div id="pro-local-player" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; margin-bottom: 20px; border: 3px solid #333; overflow: hidden; position: relative;">
-            </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px;">
-            <button id="btn-go-live" onclick="startProLive()" style="background: #e53935; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">🔴 Go Live</button>
-            <button id="btn-mic" onclick="toggleMic()" style="background: #4caf50; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">🎤 Mic: ON</button>
-            <button id="btn-cam" onclick="toggleCam()" style="background: #4caf50; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">📷 Cam: ON</button>
-            <button id="btn-screen" onclick="startScreenShare()" style="background: #2196f3; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">💻 Share PPT</button>
-            <button id="btn-end" onclick="endProLive()" style="background: #607d8b; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">⏹ End Class</button>
-        </div>
-    </div>
-      <!-- 🗂️ THE MISSING BATCH MANAGER CONTAINER -->
-    <div id="admin-workshop-list" style="margin-top: 30px; padding: 20px;">
-        <p style="color:#888;">Loading your batches...</p>
-    </div> 
- </div>  
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc, arrayUnion, arrayRemove, onSnapshot} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -394,12 +353,6 @@
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    
-    // --- AGORA SETUP ---
-const AGORA_APP_ID = "607e950d81484e6abcfdf326049241ac";
-let agoraClient = null;
-let localAudioTrack = null;
-let localVideoTrack = null;
 
     let activePromos = [];
     let multiAdsArray = [];
@@ -1089,14 +1042,15 @@ let localVideoTrack = null;
         try {
             const name = document.getElementById('batchName').value.trim();
             const price = document.getElementById('batchPrice').value;
+            const waUrl = document.getElementById('batchWhatsapp').value.trim();
             const regOpen = document.getElementById('regOpen').value || "TBA";
             const regClose = document.getElementById('regClose').value || "TBA";
             const batchStart = document.getElementById('batchStart').value || "TBA";
             const batchEnd = document.getElementById('batchEnd').value || "TBA";
             const fileInput = document.getElementById('batchBanner');
             
-            if(!name || !price || !fileInput.files[0]) {
-                alert("🚨 Please fill out all fields and select a banner image!");
+            if(!name || !price || !waUrl || !fileInput.files[0]) {
+                alert("🚨 Please fill out all fields, including the WhatsApp Link, and select a banner!");
                 return;
             }
 
@@ -1118,6 +1072,7 @@ let localVideoTrack = null;
             await addDoc(collection(db, "Batches"), {
                 title: name,
                 price: Number(price),
+                whatsappUrl: waUrl,
                 bannerUrl: data.data.url,
                 RegOpen: regOpen,
                 RegClose: regClose,
@@ -1136,6 +1091,7 @@ let localVideoTrack = null;
             
             document.getElementById('batchName').value = "";
             document.getElementById('batchPrice').value = "";
+            document.getElementById('batchWhatsapp').value = "";
             fileInput.value = "";
             
             if(typeof window.loadWorkshopsAdmin === 'function') window.loadWorkshopsAdmin();
