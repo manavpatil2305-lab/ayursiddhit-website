@@ -271,21 +271,12 @@ body {
         
         <!-- 🎒 PW-STYLE SUB-NAVIGATION BAR -->
         <div class="lms-sub-tabs-bar">
-            <button id="sub-tab-live" class="sub-tab-item active" onclick="switchLMSSubTab('live')">🔴 Live Now</button>
-            <button id="sub-tab-mybatches" class="sub-tab-item" onclick="switchLMSSubTab('mybatches')">🎒 My Batches</button>
+            <button id="sub-tab-mybatches" class="sub-tab-item active" onclick="switchLMSSubTab('mybatches')">🎒 My Batches</button>
             <button id="sub-tab-library" class="sub-tab-item" onclick="switchLMSSubTab('library')">📚 Library</button>
         </div>
 
         <!-- 🏢 THE 3 VAULTS (CONTENT AREAS) -->
         <div style="padding: 15px;">
-            
-            <!-- VAULT 1: LIVE RADAR -->
-            <div id="lms-panel-live" class="lms-panel-view">
-                <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">⚡ Upcoming & Live Sessions</h3>
-                <div id="live-broadcast-radar-container">
-                    <p style="color: #888; text-align: center; padding: 20px;">No live classes running right now.</p>
-                </div>
-            </div>
 
             <!-- VAULT 2: MY BATCHES (Unlocked Courses) -->
             <div id="lms-panel-mybatches" class="lms-panel-view hidden">
@@ -296,7 +287,7 @@ body {
             </div>
 
             <!-- VAULT 3: LIBRARY (Saved Recordings) -->
-            <div id="lms-panel-library" class="lms-panel-view hidden">
+            <div id="lms-panel-library" class="lms-panel-view">
                 <h3 style="color: var(--green); margin-top: 0; font-size: 1.1rem;">📚 Video & Notes Vault</h3>
                 <div id="student-historical-recordings-list">
                     <p style="color: #888; text-align: center; padding: 20px;">Your completed class recordings will appear here.</p>
@@ -1675,17 +1666,15 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
                      // --- 🏫 PHASE 2: PW-STYLE LMS BATCH ROUTER (BULLETPROOF EDITION) ---
     window.loadLMSBatches = async () => {
-        const liveContainer = document.getElementById('live-broadcast-radar-container');
         const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
-        if(!liveContainer || !unlockedContainer) return;
+        if(!unlockedContainer) return;
 
         unlockedContainer.innerHTML = "<div style='text-align:center; padding: 30px;'><h3 style='color:var(--gold);'>⏳ Fetching Store Data...</h3></div>";
 
         try {
             // 🚀 1. Standard Fetch (Bypasses strict mobile battery/network blocks!)
             const snap = await getDocs(collection(db, "Batches"));
-            
-            let liveHtml = "";
+           
             let unlockedHtml = "";
             let storeHtml = "<div style='margin-top: 30px;'><h3 style='color:var(--gold); padding-bottom: 10px; border-bottom: 2px solid var(--gold);'>🛍️ Course Store</h3></div>";
             
@@ -1738,33 +1727,17 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
 
                     if (isEnrolled) {
                         unlockedHtml += cardHtml;
-                        if (isLive) {
-                            liveHtml += `
-                                <div style="background: var(--card-bg); border: 2px solid var(--red); border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(226, 54, 54, 0.3);">
-                                    <div id="live-video-wrapper" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000;">
-                                        <img id="live-banner-img" src="${data.liveThumbnailUrl || data.bannerUrl || 'logo.png'}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 1;">
-                                        <div id="student-video-player" style="width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 2; display: none;"></div>
-                                        <button id="fullscreen-btn" onclick="window.makeFullscreen('live-video-wrapper')" style="display: none; position: absolute; bottom: 10px; right: 10px; z-index: 3; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 4px; padding: 5px 12px; font-size: 1.2rem; cursor: pointer;">⛶</button>
-                                        <span style="position: absolute; top: 10px; left: 10px; z-index: 3; background: #ef4444; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; animation: pulse 1.5s infinite;">🔴 LIVE NOW</span>
-                                    </div>
-                                    <div style="padding: 15px;">
-                                        <h3 style="color: var(--text); margin: 0 0 10px 0; font-size: 1.1rem;">${data.title || 'Live Class'}</h3>
-                                        <button id="join-btn" onclick="window.joinLiveStream('${data.liveToken}')" style="background: #B12704; color: white; width: 100%; padding: 12px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">🔥 Join Live Class</button>
-                                    </div>
-                                </div>
-                            `;
-                        }
-                    } else { 
-                        storeHtml += cardHtml; 
+                    else {
+                        storeHtml += cardHtml;
                     }
+                    
                 } catch(loopErr) {
                     console.log("Ignored a corrupted test batch!");
                 }
             }); 
 
             unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No batches found.</p>";
-            liveContainer.innerHTML = liveHtml || "<p style='color:#888; text-align:center; padding: 20px;'>No live classes right now.</p>";
-
+            
         } catch (error) { 
             // 🚨 4. The Final Safety Net
             unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Connection Error!</h3><p style="color:#888;">${error.message}</p></div>`;
@@ -1888,62 +1861,8 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
         }
     };
 
-    // 📺 FULL SCREEN LOGIC
-    window.makeFullScreen = (elementId) => {
-        const elem = document.getElementById(elementId);
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-            elem.msRequestFullscreen();
-        }
-    };
-
     // Auto-run the fetcher 1 second after the page loads
     setTimeout(window.loadWorkshops, 1000);
-    
-          // --- AGORA STUDENT RECEIVER ENGINE ---
-    window.joinLiveStream = async (dailyToken) => {
-        if(!dailyToken) { alert("🚨 Error: Stream token missing. Please refresh the app."); return; }
-
-        try {
-            if (typeof AgoraRTC === "undefined") { alert("Error: Video engine not loaded."); return; }
-
-            // 🔥 THE FIX: We lock the engine to the global 'window' so it never crashes!
-            if (!window.agoraClient) {
-                window.agoraClient = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
-            }
-            
-            await window.agoraClient.setClientRole("audience");
-            await window.agoraClient.join("607e950d81484e6abcfdf326049241ac", "liveclass", dailyToken, null);
-
-            window.agoraClient.on("user-published", async (user, mediaType) => {
-                await window.agoraClient.subscribe(user, mediaType);
-                
-                                if (mediaType === "video") {
-                    // Hide the image, show the video player & fullscreen button
-                    document.getElementById('live-banner-img').style.display = "none";
-                    document.getElementById('student-video-player').style.display = "block";
-                    document.getElementById('fullscreen-btn').style.display = "block";
-                    
-                    // Change the Join button to say Connected
-                    const joinBtn = document.getElementById('join-btn');
-                    if(joinBtn) { joinBtn.innerText = "🟢 Connected"; joinBtn.style.background = "var(--green)"; }
-
-                    const videoBox = document.getElementById('student-video-player');
-                    if(videoBox) videoBox.innerHTML = ""; 
-                    user.videoTrack.play("student-video-player");
-                 }
-                
-                if (mediaType === "audio") user.audioTrack.play();
-            });
-
-            alert("🟢 Connected to Live Class!");
-        } catch (error) { 
-            console.error(error); alert("❌ Failed to join stream: " + error.message); 
-        }
-    };
     
             // --- 🚀 THE ULTIMATE MASTER BATCH PUBLISHER ENGINE ---
     window.createMasterBatch = async () => {
