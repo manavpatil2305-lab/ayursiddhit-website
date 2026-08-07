@@ -206,7 +206,6 @@ body {
             <!-- 🌗 THEME TOGGLE SWITCH -->
             <div id="theme-switcher-btn" onclick="togglePlatformTheme()" style="font-size: 1.4rem; cursor: pointer; margin-left: 8px;">🌙</div>
             
-            <!-- Removed WhatsApp and Briefcase to keep UI clean and push users to Bottom Nav / VIP -->
         </div>  
 
 </header>
@@ -220,8 +219,10 @@ body {
 <div id="t-offer-banner" style="background: var(--red); color: white; text-align: center; padding: 8px 10px; font-size: 0.85rem; font-weight: bold; letter-spacing: 0.5px;">🎉 OFFER: FREE Delivery on orders above ₹<span id="banner-threshold">800</span> OR buy 5+ Soaps! 🚚</div>
 
 <div id="search-section" style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border);">
-    <div class="search-container" style="position: relative; display: flex; align-items: center; max-width: 1200px; margin: 0 auto;">
-        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="searchProducts()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 45px 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+    <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
+        <input type="text" id="search-box" placeholder="🔍 Search for Neem Soap, Hair Oil..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1.5px solid var(--green); border-radius: 25px; padding: 10px 45px 10px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box; z-index: 1001;">
+        <!-- DYNAMIC SEARCH DROPDOWN -->
+        <div id="search-dropdown" style="display:none; position:absolute; top:45px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 10px 20px rgba(0,0,0,0.15); border-radius:12px; max-height:300px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 10px; overflow-x: auto; margin-top: 15px; padding-bottom: 5px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
         <button class="cat-btn t-all" onclick="filterCategory('All')" style="background: var(--amazon); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-weight: bold; white-space: nowrap; cursor: pointer; border: 1px solid var(--amazon);">✨ All</button>
@@ -236,7 +237,7 @@ body {
         #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 15px 15px 0 15px; box-sizing: border-box; }
         .image-ad-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; }
         .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
-        .image-ad-slide img { width: 100%; height: auto; border-radius: 12px; object-fit: cover; max-height: 220px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border: 2px solid var(--luxury); }
+        .image-ad-slide img { width: 100%; height: auto; border-radius: 12px; max-height: 220px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border: 2px solid var(--luxury); }
     </style>
     <div id="dynamic-image-ads" style="display:none;">
         <div class="image-ad-track" id="image-ad-track"></div>
@@ -744,8 +745,8 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
     rzp.open();
 };
     
-        window.resetViews = function() {
-        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view'].forEach(id => window.hideSafe(id));
+    window.resetViews = function() {
+        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
         window.closeConsult();
     };
 
@@ -899,6 +900,8 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             snap.forEach(doc => ordersArray.push({id: doc.id, ...doc.data()}));
             ordersArray.sort((a,b) => new Date(b.date) - new Date(a.date));
 
+            window.userOrders = ordersArray; // Save globally so we can access it
+
             ordersArray.forEach(o => {
                 const d = new Date(o.date).toLocaleDateString();
                 
@@ -918,6 +921,8 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                 if(o.trackingLink) {
                     trackingBtn = `<a href="${o.trackingLink}" target="_blank" style="display:inline-block; margin-top:15px; background:var(--amazon); color:var(--gold); padding:10px 20px; border-radius:25px; text-decoration:none; font-weight:bold; font-size:0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">📍 Track Live Hub-to-Hub</a>`;
                 }
+
+                let orderAgainBtn = o.cartData ? `<button onclick="orderAgain('${o.id}')" style="margin-top:15px; width:100%; background:white; color:var(--amazon); border:1.5px solid var(--amazon); padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">🔄 Order Again</button>` : '';
 
                 html += `
                 <div style="border:1px solid var(--border); border-radius:8px; padding:15px; margin-bottom:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.02);">
@@ -943,6 +948,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
                       </div>
                     </div>
                     ${trackingBtn}
+                    ${orderAgainBtn}
                 </div>`;
             });
                     list.innerHTML = html;
@@ -1001,20 +1007,41 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             if(setSnap.exists()) { 
                 const data = setSnap.data();
                 if(data.ads && data.ads.length > 0) { multiAds = data.ads; startMultiAds(); }
-                                // 🔥 THE IMAGE AD PULLER & SLIDER 🔥
+                
+                // 🔥 THE UPGRADED IMAGE AD SLIDER (SWIPE + PORTRAIT FIX) 🔥
                 if(data.custom_image_ads && data.custom_image_ads.length > 0) {
                     const adTrack = document.getElementById('image-ad-track');
+                    const adWrap = document.getElementById('dynamic-image-ads');
                     if(adTrack) {
-                        document.getElementById('dynamic-image-ads').style.display = 'block';
-                        adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}"></div>`).join('');
+                        adWrap.style.display = 'block';
+                        // 'object-fit: contain' stops portrait images from getting cut off!
+                        adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}" style="object-fit:contain; background:rgba(0,0,0,0.03);"></div>`).join('');
                         
                         if(data.custom_image_ads.length > 1) {
-                            let imgAdIndex = 0;
-                            setInterval(() => { 
-                                imgAdIndex++; 
-                                if(imgAdIndex >= data.custom_image_ads.length) imgAdIndex = 0; 
-                                adTrack.style.transform = `translateX(-${imgAdIndex * 100}%)`; 
-                            }, 3500); 
+                            window.imgAdIndex = 0;
+                            let startX = 0, isSwiping = false;
+                            
+                            const startAutoSlide = () => {
+                                clearInterval(window.adInterval);
+                                window.adInterval = setInterval(() => { 
+                                    window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; 
+                                    adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`; 
+                                }, 3500); 
+                            };
+                            
+                            startAutoSlide(); // Start the automatic timer
+                            
+                            // MANUAL SWIPE SENSORS
+                            adWrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isSwiping = true; clearInterval(window.adInterval); }, {passive: true});
+                            adWrap.addEventListener('touchend', e => {
+                                if(!isSwiping) return;
+                                let endX = e.changedTouches[0].clientX;
+                                if(startX - endX > 40) { window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; } // Swipe Left
+                                else if(endX - startX > 40) { window.imgAdIndex = (window.imgAdIndex - 1 + data.custom_image_ads.length) % data.custom_image_ads.length; } // Swipe Right
+                                adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`;
+                                isSwiping = false;
+                                startAutoSlide(); // Restart automatic timer
+                            });
                         }
                     }
                 }
@@ -1499,7 +1526,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             const codMsg = `🚨 NEW COD ORDER 🚨\n\nCustomer: ${d.name}\nTotal to Collect: ₹${finalTotal} CASH\nPayment Mode: Cash on Delivery (₹55 Fee Included)\n\n--- Order Details ---\n${orderSummary}`;
             
             // Save to Firebase Database
-            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString() }); } catch(e){}
+            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: cart }); } catch(e){}
 
             // Send to Dr. Prasiddhi's WhatsApp
             window.open(`https://wa.me/918080926195?text=${encodeURIComponent(codMsg)}`);
@@ -1520,7 +1547,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             "handler": async function (response) {
                 btn.innerText = "✅ Payment Successful!";
                 let msg = `🚨 *NEW PAID ORDER ALERT* 🚨\n\n*ID:* ${response.razorpay_payment_id}\n*Customer:* ${d.name}\n*Total Paid:* ₹${finalTotal}\n\n*Address:* ${fullAddress}`;
-                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress }); } catch(err) { }
+                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: cart }); } catch(err) { }
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "⚡ Pay via UPI / Cards"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, 
@@ -1742,7 +1769,7 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             // 🚨 4. The Final Safety Net
             unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:red;">🚨 Connection Error!</h3><p style="color:#888;">${error.message}</p></div>`;
         }
-        };
+    };
 
     setTimeout(window.loadLMSBatches, 1500);
 
@@ -1930,6 +1957,51 @@ window.payForWorkshop = function(title, amount, whatsappUrl) {
             alert("❌ Crash: " + error.message);
             // If it fails, unfreeze the button so you can try again
             if(btn) { btn.innerText = "🚀 Publish Master Batch"; btn.disabled = false; }
+        }
+    };
+    
+    // --- NEW: LIVE SEARCH FUNCTION ---
+    window.liveSearch = () => {
+        const query = document.getElementById('search-box').value.toLowerCase().trim();
+        const dropdown = document.getElementById('search-dropdown');
+        if(!query) { dropdown.style.display = 'none'; return; }
+        
+        let results = products.filter(p => p.name.toLowerCase().includes(query) || (p.tag && p.tag.toLowerCase().includes(query)));
+        
+        if(results.length === 0) {
+            dropdown.innerHTML = '<div style="padding:15px; color:#888; text-align:center;">No products found</div>';
+        } else {
+            dropdown.innerHTML = results.map(p => `
+                <div onclick="document.getElementById('search-dropdown').style.display='none'; openProduct('${p.id}')" style="display:flex; align-items:center; gap:12px; padding:12px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <img src="${p.image}" style="width:50px; height:50px; border-radius:8px; object-fit:cover; border:1px solid #eee;">
+                    <div style="flex:1;">
+                        <b style="font-size:0.95rem; color:var(--text);">${p.name}</b>
+                        <div style="color:var(--amazon); font-size:0.9rem; font-weight:bold;">₹${p.price}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        dropdown.style.display = 'block';
+    };
+
+    // Close search dropdown if tapped outside
+    document.addEventListener('click', (e) => {
+        if(!e.target.closest('.search-container')) {
+            const dd = document.getElementById('search-dropdown');
+            if(dd) dd.style.display = 'none';
+        }
+    });
+
+    // --- NEW: ORDER AGAIN FUNCTION ---
+    window.orderAgain = (orderId) => {
+        const order = window.userOrders.find(o => o.id === orderId);
+        if(order && order.cartData) {
+            cart = {...order.cartData}; // Copies the exact cart from that order
+            updateBadge();
+            window.showCart();
+            window.showBeautifulAlert("Previous items added to cart!", "🛒");
+        } else {
+            alert("Sorry, we couldn't restore this older order automatically.");
         }
     };
     
