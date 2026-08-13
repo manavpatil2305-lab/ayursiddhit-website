@@ -9,30 +9,31 @@
     
     <meta name="description" content="Premium 100% natural Ayurvedic healing soaps, face packs, and hair oils formulated by Dr. Prasiddhi Patil. Pure, clinical, and Made in India.">
     <meta name="keywords" content="Ayurvedic soap, natural hair growth oil, Dr. Prasiddhi Patil, Ayursiddhit Naturals, organic skincare, buy ayurvedic products online">
-    <meta name="author" content="Ayursiddhit Naturals">
-    <meta property="og:title" content="Ayursiddhit Naturals | Pure Ayurvedic Healing">
-    <meta property="og:description" content="100% Doctor Formulated Ayurvedic Skincare & Haircare.">
-    <meta property="og:image" content="https://ayursiddhitnaturals.in/logo.png">
+    
+    <!-- ✨ PREMIUM GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 
+    <!-- 🪄 3D ANIMATION ENGINE (SPLINE) -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
+    
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
     <style>
 
         :root {
-            /* 👑 LUXURY CLINICAL PALETTE UPDATE */
-            --amazon: #0f3d14; /* Deep Forest Green for primary actions */
-            --green: #155724;  /* Lighter Forest Green for text/accents */
-            --gold: #e6c27a;   /* Champagne Gold */
-            --luxury: #d4af37; /* Metallic Gold for borders/badges */
-            --red: #8b0000;    /* Deep Crimson for warnings/offers */
-            --bg: #faf9f6;     /* Cream Off-White */
-            --text: #2c2c2c;   /* Soft Black for readable text */
+            --amazon: #0f3d14; 
+            --green: #155724;  
+            --gold: #e6c27a;   
+            --luxury: #d4af37; 
+            --red: #8b0000;    
+            --bg: #faf9f6;     
+            --text: #2c2c2c;   
             --card-bg: #ffffff;
-            --border: #e8e5dc; /* Subtle warm border */
+            --border: #e8e5dc; 
         }
 
         [data-theme="dark"] {
-            --bg: #121513;     /* Deep Forest Black */
+            --bg: #121513;     
             --text: #f0f0f0;
             --card-bg: #1a1e1b;
             --border: #2c332e;
@@ -41,7 +42,6 @@
         body {
             margin: 0;
             padding-bottom: 70px;
-            /* 👑 PREMIUM TYPOGRAPHY */
             font-family: 'Playfair Display', 'Merriweather', 'Georgia', serif;
             background: var(--bg);
             color: var(--text);
@@ -50,7 +50,6 @@
             overscroll-behavior-x: none;
         }
 
-        /* Elements needing a modern sans-serif for readability (prices, buttons, tags) */
         button, input, .p-price, .p-badge, .nav-item span, .status-text, .sensory-badge {
             font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
         }
@@ -65,20 +64,18 @@
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* ✨ 1. HYPER-PREMIUM GLASSMORPHISM HEADER & THIN GOLD DIVIDERS */
         header { 
             background: rgba(250, 249, 246, 0.85); 
             backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px);
             color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; 
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Subtle Botanical Gold Line */
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
         .h-logo { height: 45px; width: 45px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.6); background: white; object-fit: cover; }
         .h-text { font-size: 1.35rem; font-weight: normal; line-height: 1.1; margin-left: 10px; color: var(--amazon); letter-spacing: 0.5px;}
-        /* Editorial Letter-Spacing */
         .h-text span { color: var(--gold); font-size: 0.65rem; display: block; font-weight: normal; letter-spacing: 2.5px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;}
         .h-actions { display: flex; align-items: center; gap: 12px; }
 
@@ -95,7 +92,6 @@
         .goog-te-gadget-simple img { display: none !important; }
         .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
-        /* 🔥 GLASSMORPHISM STORE / VIDEOS TOGGLE BAR 🔥 */
         #main-toggle-bar { 
             display: flex; 
             background: rgba(250, 249, 246, 0.85); 
@@ -108,7 +104,6 @@
         .tab-btn-main.active { color: var(--amazon); border-bottom: 2px solid var(--amazon); background: rgba(255,255,255,0.4);}
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
-        /* ✨ 2. SILKY MICRO-INTERACTIONS & ATMOSPHERIC LIGHTING */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; background: var(--bg); }
         .p-card { 
             background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; 
@@ -123,18 +118,14 @@
         
         .p-img-container { 
             position: relative; width: 100%; padding-top: 100%; cursor: pointer; 
-            background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); /* Warm Apothecary lighting gradient */
+            background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%);
             border-bottom: 1px solid var(--border); overflow: hidden; 
         }
         .p-img { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
         }
-        /* Cinematic Macro Hover Effect */
-        .p-card:hover .p-img { 
-            transform: scale(1.08); 
-            filter: contrast(1.05) brightness(1.02);
-        }
+        .p-card:hover .p-img { transform: scale(1.08); filter: contrast(1.05) brightness(1.02); }
         
         .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         
@@ -166,7 +157,6 @@
         input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);}
         input:focus, textarea:focus { outline: none; border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
 
-        /* 🔥 VISUAL TRACKER CSS 🔥 */
         .track-container { font-family: 'Segoe UI', sans-serif; max-width: 100%; margin: 15px 0; background: var(--bg); padding: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); }
         .step { display: flex; align-items: center; position: relative; margin-bottom: 30px; }
         .step:last-child { margin-bottom: 5px; }
@@ -183,13 +173,11 @@
         .upsell-price { font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 15px 0; font-family: 'Segoe UI', sans-serif;}
         .upsell-price strike { color: #999; font-size: 0.95rem; margin-right: 12px; font-weight: normal;}
 
-        /* 🩺 VIP CONSULTATION POPUP */
         #consult-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
         #consult-overlay.show-consult { opacity: 1; pointer-events: auto; }
         .consult-box { background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; width: 90%; max-width: 420px; text-align: center; padding: 50px 30px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); position: relative; color: var(--text); }
         .consult-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 25px; object-fit: cover; background: white; border: 1px solid rgba(212, 175, 55, 0.6); padding: 5px;}
         
-        /* ✨ 1. HYPER-PREMIUM GLASSMORPHISM BOTTOM APP BAR */
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; width: 100%; 
             background: rgba(255, 255, 255, 0.85); 
@@ -208,7 +196,6 @@
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
         .nav-badge { position: absolute; top: -8px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; font-family: 'Segoe UI', sans-serif; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(15, 61, 20, 0.3);}
 
-        /* 🎒 LMS SUB-TABS */
         .lms-sub-tabs-bar {
             display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center;
         }
@@ -218,47 +205,71 @@
         }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);}
 
-        /* 🪄 LUXURY DOSHA QUIZ */
         .quiz-option {
             background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px;
         }
         .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
         
+        /* 🔥 THE 3D SPLINE LOGIN WALL 🔥 */
+        #login-wall {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ff8e6b; /* Warm modern fallback background */
+            z-index: 99999; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease; overflow: hidden;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            padding: 40px 30px; border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); text-align: center;
+            width: 90%; max-width: 380px; border: 1px solid rgba(255,255,255,0.3);
+            transform: translateY(20px); opacity: 0; animation: floatUp 0.8s forwards 0.2s ease-out;
+            position: relative; z-index: 10;
+        }
+        .login-card input {
+            background: rgba(255, 255, 255, 0.8); color: #333; border: none; font-weight: 500;
+        }
+        .login-card input:focus { background: #ffffff; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        @keyframes floatUp { to { transform: translateY(0); opacity: 1; } }
+
+        /* 🔥 BANNER SIZE FIX 🔥 */
+        #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 20px 20px 0 20px; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
+        .image-ad-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
+        .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
+        .image-ad-slide img { 
+            width: 100%; 
+            height: 180px; /* LOCKS THE HEIGHT SO IT IS NEVER TOO BIG */
+            object-fit: cover; /* CROPS IT PERFECTLY LIKE A LANDSCAPE BANNER */
+            border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
+            border: 1px solid var(--border); background: var(--light-gold); 
+        }
+
     </style>
 </head>
 <body>
 
-<!-- ✨ LUXURY ANIMATED LOGIN WALL ✨ -->
+<!-- ✨ LUXURY 3D SPLINE LOGIN WALL ✨ -->
 <div id="login-wall">
+    
+    <!-- THE 3D BACKGROUND (Loads a beautiful interactive scene) -->
+    <spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></spline-viewer>
+
+    <!-- THE GLASSMORPHISM CARD -->
     <div class="login-card">
-        <img src="logo.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(212,175,55,0.2);">
-        <h2 style="margin: 0 0 5px 0; color: var(--amazon); font-family: 'Playfair Display', serif; font-size: 1.8rem;">Welcome to Ayursiddhit</h2>
-        <p style="color: #666; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; font-family: 'Segoe UI', sans-serif;">Sign in to unlock exclusive Ayurvedic remedies, clinical consultations, and wholesale pricing.</p>
+        <h2 style="margin: 0 0 5px 0; color: white; font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Sign In</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; font-family: 'Outfit', sans-serif;">Unlock exclusive Ayurvedic remedies.</p>
         
-        <button onclick="window.login()" style="width: 100%; background: white; color: var(--amazon); border: 1px solid var(--border); padding: 14px; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            Continue with Google
+        <!-- FAKE INPUTS JUST FOR THE VIDEO'S AESTHETIC -->
+        <input type="email" placeholder="Email Address" style="margin-bottom: 15px;">
+        <input type="password" placeholder="Password" style="margin-bottom: 25px;">
+        
+        <!-- THE REAL GOOGLE LOGIN BUTTON -->
+        <button onclick="window.login()" style="width: 100%; background: #ff7e5f; color: white; border: none; padding: 16px; border-radius: 10px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 10px 20px rgba(255, 126, 95, 0.3);">
+            <svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="background:white; border-radius:50%; padding:2px;"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Verify Identity
         </button>
     </div>
 </div>
-
-<style>
-#login-wall {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(251, 251, 249, 0.95); backdrop-filter: blur(15px);
-    z-index: 99999; display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-.login-card {
-    background: var(--card-bg); padding: 40px 30px; border-radius: 8px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center;
-    width: 90%; max-width: 380px; border: 1px solid rgba(212,175,55,0.3);
-    transform: translateY(20px); opacity: 0; animation: floatUp 0.8s forwards 0.2s ease-out;
-}
-@keyframes floatUp {
-    to { transform: translateY(0); opacity: 1; }
-}
-</style>
 
 <div id="top-promo-bar"><div class="scrolling-multi-ads" id="multi-ad-container"></div></div>
 <div id="live-promo-banner" class="promo-banner" style="text-align: center;">✨ Loading Promos... ✨</div>
@@ -301,8 +312,8 @@
 </div>
 
 <div id="home-top-section">
-    <div id="dynamic-image-ads" style="display:none; width: 100%; overflow: hidden; background: transparent; padding: 30px 20px 0 20px; box-sizing: border-box;">
-        <div class="image-ad-track" id="image-ad-track" style="display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%;"></div>
+    <div id="dynamic-image-ads" style="display:none;">
+        <div class="image-ad-track" id="image-ad-track"></div>
     </div>
     
     <div style="display: flex; justify-content: space-between; padding: 25px 20px; background: transparent; margin: 0 10px 10px 10px; text-align: center; font-size: 0.7rem; font-weight: normal; color: var(--text); font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">
@@ -399,7 +410,6 @@
 
         <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444;"></p>
         
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Ritual Subscription UI -->
         <div style="background:var(--bg); border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; padding:25px; margin-bottom:35px;">
             <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
                 <input type="radio" name="purchase_type" value="one-time" checked style="width:auto; margin:0;"> 
@@ -424,7 +434,6 @@
             <button id="modal-buy-btn" class="btn-buy" style="padding:18px; font-size:0.85rem;">Secure Checkout</button>
         </div>
 
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Concierge Checkout -->
         <button onclick="conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
 
         <div style="background:var(--bg); padding:20px; border-radius:4px; margin-bottom:30px; border: 1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
@@ -481,7 +490,7 @@
         <p style="display:flex; justify-content:space-between; margin: 10px 0; color:var(--amazon); font-weight:600; font-size: 0.95rem;">Margin Applied (<span id="b2b-margin-percent">0%</span>): <span id="b2b-discount">-₹0</span></p>
         <p style="display:flex; justify-content:space-between; margin: 10px 0; color:#888; font-size:0.75rem; text-transform: uppercase; letter-spacing: 1px;">*Taxes & logistics calculated prior to payment execution.</p>
         <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
-        <h3 style="display:flex; justify-content:space-between; margin: 0; color:var(--amazon); font-family:'Playfair Display', serif; font-size:1.5rem;">Bulk Total: <span id="b2b-total">₹0</span></h3>
+        <h3 style="display:flex; justify-content:space-between; margin: 0; color:var(--text); font-weight: 600; font-size: 1.2rem;">Net Payable: <span id="b2b-total">₹0</span></h3>
     </div>
 
     <button id="submit-b2b-btn" class="btn-buy" onclick="submitB2BOrder()" style="width:100%; padding:18px; font-size:1rem; margin-top:30px; letter-spacing: 2px;">Submit Purchase Order</button>
@@ -626,7 +635,6 @@
     </div>
 </div>
 
-<!-- 🪄 HYPER-PREMIUM FEATURE: Skin Dosha AI Quiz Modal -->
 <div id="dosha-quiz-overlay" class="hidden">
     <div style="background: var(--bg); width: 90%; max-width: 520px; border-radius: 4px; padding: 50px 40px; text-align: center; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4);">
         <button onclick="closeDoshaQuiz()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 26px; cursor: pointer; transition: 0.3s;">&times;</button>
@@ -686,7 +694,6 @@
 </div>
 
 <script>
-    // 🌗 THEME SWITCHER ENGINE
     window.togglePlatformTheme = function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -728,7 +735,6 @@
         }
     };
     
-    // 🪄 QUIZ LOGIC
     window.openDoshaQuiz = function() {
         document.getElementById('dosha-quiz-overlay').classList.remove('hidden');
         document.getElementById('quiz-step-1').classList.remove('hidden');
@@ -747,7 +753,6 @@
         document.getElementById('dosha-quiz-overlay').classList.add('hidden');
     };
 
-    // 🪄 CONCIERGE CHECKOUT LOGIC
     window.conciergeCheckout = function() {
         const p = products.find(x => x.id === currentModalProductId);
         if(!p) return;
@@ -824,12 +829,11 @@
         var rzp = new Razorpay(options); rzp.open();
     };
     
-    // 🪄 GLOBAL GALLERY VARIABLES
     window.galleryInterval = null; 
     window.currentGalleryIndex = 0;
 
     window.resetViews = function() {
-        clearInterval(window.galleryInterval); // 🔥 Kills the auto-slider when leaving the product
+        clearInterval(window.galleryInterval); 
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
         window.closeConsult(); window.closeDoshaQuiz();
     };
@@ -852,35 +856,29 @@
     };
     window.closePolicy = function() { window.restoreHome(); };
     
-    // Updated openProduct function to use Auto-Scrolling Gallery
     window.openProduct = (id) => { 
         const p = products.find(x => x.id === id); if(!p) return; 
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         
-        // 🔥 THE AUTO-SCROLL GALLERY MAGIC 🔥
-        clearInterval(window.galleryInterval); // Stop any previous slider
+        clearInterval(window.galleryInterval); 
         const imgEl = document.getElementById('modal-img');
-        
-        // Check if the product has a new gallery array, otherwise fallback to the single image
         const gallery = (p.gallery && p.gallery.length > 0) ? p.gallery : [p.image];
         window.currentGalleryIndex = 0;
         
-        // Set the Main (1st) Photo instantly
         imgEl.src = gallery[0];
-        imgEl.style.transition = "opacity 0.4s ease-in-out"; // Silky fade effect
+        imgEl.style.transition = "opacity 0.4s ease-in-out"; 
         imgEl.style.opacity = 1;
 
-        // If there is more than 1 photo, start the loop!
         if (gallery.length > 1) {
             window.galleryInterval = setInterval(() => {
-                imgEl.style.opacity = 0.3; // Fade out slightly
+                imgEl.style.opacity = 0.3; 
                 setTimeout(() => {
                     window.currentGalleryIndex = (window.currentGalleryIndex + 1) % gallery.length;
-                    imgEl.src = gallery[window.currentGalleryIndex]; // Swap photo
-                    imgEl.style.opacity = 1; // Fade back in
-                }, 400); // Wait for fade out to finish before swapping
-            }, 3500); // Changes photo every 3.5 seconds
+                    imgEl.src = gallery[window.currentGalleryIndex]; 
+                    imgEl.style.opacity = 1; 
+                }, 400); 
+            }, 3500); 
         }
         
         document.getElementById('modal-name').innerText = p.name; 
@@ -1078,7 +1076,7 @@
                     const adTrack = document.getElementById('image-ad-track'); const adWrap = document.getElementById('dynamic-image-ads');
                     if(adTrack) {
                         adWrap.style.display = 'block';
-                        adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}" style="object-fit:contain; background:transparent;"></div>`).join('');
+                        adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}" style="object-fit:cover; background:transparent;"></div>`).join('');
                         if(data.custom_image_ads.length > 1) {
                             window.imgAdIndex = 0; let startX = 0, isSwiping = false;
                             const startAutoSlide = () => { clearInterval(window.adInterval); window.adInterval = setInterval(() => { window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`; }, 5000); };
@@ -1225,6 +1223,11 @@
             } else {
                 if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`; } 
                 else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Purchase</button></div>`; }
+            }
+
+            // 🔥 STORE OFFLINE MAINTENANCE OVERRIDE 🔥
+            if(window.isStoreOffline) {
+                buttonHtml = `<div class="p-actions"><button style="background:#ddd; color:#888; border:none; padding:10px 0; border-radius:8px; font-weight:700; width:100%; font-size:0.85rem; cursor:not-allowed; font-family:'Segoe UI', sans-serif;" onclick="alert('🔴 Sorry, the store is currently closed for maintenance. Please check back later!')">Store Offline</button></div>`;
             }
 
             grid.innerHTML += `
