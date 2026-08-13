@@ -151,7 +151,6 @@
                 <input type="number" id="p-price" placeholder="Price (₹)">
                 <input type="number" id="p-stock" placeholder="Stock Qty">
                 
-                <!-- CUSTOM CATEGORY INPUT WITH DATALIST -->
                 <input type="text" id="p-category" list="cat-options" placeholder="Category (Select or Type new)">
                 <datalist id="cat-options">
                     <option value="Soap">
@@ -160,7 +159,6 @@
                 </datalist>
             </div>
             
-            <!-- CUSTOM RIBBON TAG INPUT WITH DATALIST -->
             <input type="text" id="p-tag" list="tag-options" placeholder="Ribbon Tag (Select or Type new)" style="margin-bottom: 15px;">
             <datalist id="tag-options">
                 <option value="🔥 Bestseller">
@@ -170,8 +168,10 @@
 
             <textarea id="p-desc" placeholder="Product Description..." rows="3"></textarea>
             
-            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">Upload Product Image (Leave blank to keep current when editing):</label>
-            <input type="file" id="p-image" accept="image/*">
+            <!-- 🔥 MULTIPLE IMAGE UPLOAD FIELD 🔥 -->
+            <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:5px;">Upload Product Images (Max 4):</label>
+            <small style="color:#888; display:block; margin-bottom:10px;">The first photo selected will be the main display. The rest will auto-scroll.</small>
+            <input type="file" id="p-image" accept="image/*" multiple style="margin-bottom: 15px;">
             
             <button id="add-btn" onclick="addProduct()" style="width: 100%;">➕ Add Product</button>
             <button id="cancel-edit-btn" onclick="cancelEdit()" style="display:none; background:var(--red); margin-top:10px; width:100%;">❌ Cancel Editing</button>
@@ -312,7 +312,6 @@
     <!-- WORKSHOPS TAB -->
     <div id="workshops" class="tab-content">         
 
-    <!-- 👑 THE MASTER BATCH CREATOR FORM -->
     <div style="background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; color: white;">
         <h2 style="margin-top: 0; color: #fbd38d;">👑 Create New Master Batch</h2>
 
@@ -353,8 +352,8 @@
 
     let activePromos = [];
     let multiAdsArray = [];
-    window.adminProducts = []; // Stores products for editing
-    window.editingProductId = null; // Tracks if we are editing
+    window.adminProducts = []; 
+    window.editingProductId = null; 
 
     window.loginAdmin = () => {
         const idInput = document.getElementById('admin-id').value.trim();
@@ -443,7 +442,7 @@
 
     window.deleteVideo = async (id) => { if(confirm("Remove video?")) { await deleteDoc(doc(db, "videos", id)); loadVideos(); } };
 
-    // --- 🛠️ FULL PRODUCT EDITING ENGINE ---
+    // --- 🛠️ FULL MULTIPLE IMAGE PRODUCT UPLOAD ENGINE ---
     window.addProduct = async () => {
         const btn = document.getElementById('add-btn'); 
         btn.innerText = "⏳ Processing..."; btn.disabled = true;
@@ -456,7 +455,7 @@
         const tag = document.getElementById('p-tag').value.trim(); 
         const isVault = document.getElementById('p-vault').checked; 
         const fileInput = document.getElementById('p-image');
-        const file = fileInput.files[0];
+        const files = fileInput.files;
 
         if(!name || !price || !stock || !cat) { 
             alert("⚠️ Please fill all required fields (Name, Price, Stock, Category)."); 
@@ -465,28 +464,51 @@
         }
 
         try {
-            let imageUrl = null;
-            if(file) {
-                const formData = new FormData(); formData.append('image', file);
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-                const data = await response.json();
-                if(data.success) imageUrl = data.data.url;
+            let galleryUrls = [];
+            
+            // Loop through selected photos and upload to ImgBB
+            if(files.length > 0) {
+                btn.innerText = "⏳ Uploading Gallery...";
+                for (let i = 0; i < Math.min(files.length, 4); i++) { // Max 4 images
+                    const formData = new FormData(); 
+                    formData.append('image', files[i]);
+                    try {
+                        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+                        const data = await response.json();
+                        if(data.success) { galleryUrls.push(data.data.url); }
+                    } catch (err) {
+                        console.error("Failed to upload image " + i);
+                    }
+                }
             }
 
             if(window.editingProductId) {
                 // UPDATE EXISTING PRODUCT
                 let updateData = { name, price: parseInt(price), stock: parseInt(stock), category: cat, desc, tag, isVault };
-                if(imageUrl) updateData.image = imageUrl; // Only update image if a new one was uploaded
+                if(galleryUrls.length > 0) {
+                    updateData.image = galleryUrls[0]; // Set the main image
+                    updateData.gallery = galleryUrls;  // Save the full array
+                }
                 
                 await updateDoc(doc(db, "products", window.editingProductId), updateData);
                 alert("✅ Product Updated Successfully!");
                 window.cancelEdit();
             } else {
                 // CREATE NEW PRODUCT
-                if(!imageUrl) { alert("⚠️ Please select an image for the new product."); btn.disabled = false; btn.innerText="➕ Add Product"; return; }
-                await addDoc(collection(db, "products"), { name, price: parseInt(price), stock: parseInt(stock), category: cat, desc, tag, isVault, image: imageUrl });
+                if(galleryUrls.length === 0) { alert("⚠️ Please select an image for the new product."); btn.disabled = false; btn.innerText="➕ Add Product"; return; }
+                await addDoc(collection(db, "products"), { 
+                    name, 
+                    price: parseInt(price), 
+                    stock: parseInt(stock), 
+                    category: cat, 
+                    desc, 
+                    tag, 
+                    isVault, 
+                    image: galleryUrls[0], // Main Image
+                    gallery: galleryUrls   // Image Array
+                });
                 alert("✅ Product Added Successfully!");
-                window.cancelEdit(); // Clears form
+                window.cancelEdit(); 
             }
             loadProducts();
         } catch(e) { alert("❌ Error: " + e.message); btn.disabled = false; btn.innerText = window.editingProductId ? "💾 Update Product" : "➕ Add Product"; }
@@ -539,14 +561,21 @@
         if(snap.empty) { list.innerHTML = "<p>No products.</p>"; return; }
         snap.forEach(doc => {
             const p = doc.data();
-            window.adminProducts.push({id: doc.id, ...p}); // Save globally for editing
+            window.adminProducts.push({id: doc.id, ...p}); 
             upsellSelect.innerHTML += `<option value="${doc.id}">${p.name} (₹${p.price})</option>`;
+            
+            // Show gallery count badge if it has multiple photos
+            let galleryBadge = "";
+            if (p.gallery && p.gallery.length > 1) {
+                galleryBadge = `<span style="background:var(--gold); color:black; font-size:0.7rem; padding:2px 5px; border-radius:4px; font-weight:bold;">📸 ${p.gallery.length} Photos</span>`;
+            }
+
             list.innerHTML += `
             <div class="product-item" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; background: white;">
                 <div style="display:flex; align-items:center; gap: 15px;">
                     <img src="${p.image}" style="width: 50px; height: 50px; border-radius: 6px; object-fit: cover;">
                     <div>
-                        <strong style="font-size: 1.1rem; color: var(--green);">${p.name}</strong> ${p.isVault ? '👑' : ''}<br>
+                        <strong style="font-size: 1.1rem; color: var(--green);">${p.name}</strong> ${p.isVault ? '👑' : ''} ${galleryBadge}<br>
                         <span style="background:#eee; padding:2px 6px; border-radius:4px; font-size:0.75rem;">${p.category || 'No Cat'}</span>
                         <span style="color: #666; font-size: 0.9rem;">₹${p.price} | Stock: ${p.stock}</span>
                     </div>
@@ -567,7 +596,6 @@
         renderPromos();
     }
 
-    // --- 🚨 STORE STATUS (MAINTENANCE MODE) ---
     window.updateStoreStatus = async () => {
         const status = document.getElementById('store-status-toggle').value;
         await setDoc(doc(db, "settings", "store_config"), { storeStatus: status }, { merge: true });
