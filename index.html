@@ -8,6 +8,7 @@
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     
     <meta name="description" content="Premium 100% natural Ayurvedic healing soaps, face packs, and hair oils formulated by Dr. Prasiddhi Patil. Pure, clinical, and Made in India.">
+    <meta name="keywords" content="Ayurvedic soap, natural hair growth oil, Dr. Prasiddhi Patil, Ayursiddhit Naturals, organic skincare, buy ayurvedic products online">
     
     <!-- ✨ PREMIUM GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
     <style>
 
         :root {
+            /* 👑 LUXURY CLINICAL PALETTE UPDATE */
             --amazon: #0f3d14; 
             --green: #155724;  
             --gold: #e6c27a;   
@@ -62,9 +64,11 @@
 
         header { 
             background: rgba(250, 249, 246, 0.85); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
             color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; 
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
@@ -87,8 +91,11 @@
         .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
         #main-toggle-bar { 
-            display: flex; background: rgba(250, 249, 246, 0.85); backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
+            display: flex; 
+            background: rgba(250, 249, 246, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
             position: sticky; top: 76px; z-index: 1900; 
         }
         .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.85rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; }
@@ -96,11 +103,26 @@
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; background: var(--bg); }
-        .p-card { background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .p-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212, 175, 55, 0.4); }
+        .p-card { 
+            background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; 
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; 
+        }
+        .p-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+            border: 1px solid rgba(212, 175, 55, 0.4); 
+        }
         
-        .p-img-container { position: relative; width: 100%; padding-top: 100%; cursor: pointer; background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); border-bottom: 1px solid var(--border); overflow: hidden; }
-        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .p-img-container { 
+            position: relative; width: 100%; padding-top: 100%; cursor: pointer; 
+            background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%);
+            border-bottom: 1px solid var(--border); overflow: hidden; 
+        }
+        .p-img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
         .p-card:hover .p-img { transform: scale(1.08); filter: contrast(1.05) brightness(1.02); }
         
         .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -168,12 +190,18 @@
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
         .nav-badge { position: absolute; top: -8px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; font-family: 'Segoe UI', sans-serif; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(15, 61, 20, 0.3);}
 
-        .lms-sub-tabs-bar { display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center; }
+        .lms-sub-tabs-bar {
+            display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center;
+        }
         .lms-sub-tabs-bar::-webkit-scrollbar { display: none; }
-        .sub-tab-item { padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Segoe UI', sans-serif; }
+        .sub-tab-item {
+            padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Segoe UI', sans-serif;
+        }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);}
 
-        .quiz-option { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px; }
+        .quiz-option {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px;
+        }
         .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
         
         /* 🔥 THE 2D FROSTED GLASS LOGIN WALL 🔥 */
@@ -249,6 +277,7 @@
 <div id="search-section" style="background: var(--bg); padding: 30px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
         <input type="text" id="search-box" placeholder="Search the apothecary..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 18px 20px; font-size: 1rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
+        <!-- DYNAMIC SEARCH DROPDOWN -->
         <div id="search-dropdown" style="display:none; position:absolute; top:60px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.1); border-radius:4px; max-height:350px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 15px; overflow-x: auto; margin-top: 25px; padding-bottom: 10px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
@@ -270,6 +299,7 @@
         <div style="flex:1;">Authentic</div>
     </div>
 
+    <!-- 🪄 HYPER-PREMIUM FEATURE: Doctor Storytelling & AI Quiz Trigger -->
     <div id="luxury-story-section" style="padding: 50px 25px; text-align: center; background: radial-gradient(circle, #ffffff 0%, #faf9f6 100%); margin: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
         <p style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--amazon); font-style: italic; line-height: 1.6; margin-top:0;">"True radiance begins when we stop fighting our skin and start listening to it."</p>
         <h4 style="margin: 25px 0 5px 0; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; color: var(--text);">Dr. Prasiddhi Patil</h4>
@@ -408,7 +438,7 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic; font-size: 1.4rem;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:40px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
-        <!-- 🔥 REVIEW PHOTO SYSTEM (KEPT INTACT) 🔥 -->
+        <!-- 🔥 REVIEW PHOTO SYSTEM INTACT 🔥 -->
         <div style="background:var(--bg); padding:35px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.85rem; display:block; margin-bottom:15px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 25px;">
@@ -535,6 +565,66 @@
     <button onclick="closePolicy()" class="back-btn">Back</button>
     <h2 id="policy-title" style="color: var(--text); margin-top:15px; font-weight: normal;"></h2>
     <div id="policy-content" style="line-height: 1.9; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
+</div>
+
+<div id="consult-overlay">
+    <div class="consult-box">
+        <img src="logo.png" class="consult-img">
+        
+        <div id="premium-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(12px);">
+            <div style="background: var(--bg); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 4px; max-width: 420px; width: 100%; padding: 40px 30px; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; font-family: 'Segoe UI', sans-serif; box-sizing: border-box; max-height: 85vh; overflow-y: auto;">
+                
+                <button onclick="closePremiumPopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 26px; cursor: pointer; font-weight: normal; transition: 0.3s;">&times;</button>
+                
+                <h2 style="color: var(--text); margin-top: 10px; margin-bottom: 5px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: normal;">VIP Privilege</h2>
+                <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Unlock exclusive clinical benefits</p>
+                
+                <div style="text-align: left; margin-bottom: 30px; background: var(--card-bg); padding: 25px; border-radius: 4px; border: 1px solid var(--border);">
+                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🩺</span>
+                        <span style="font-size: 0.95rem; line-height: 1.5;">Direct private consultation access</span>
+                    </div>
+                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🛍️</span>
+                        <span style="font-size: 0.95rem; line-height: 1.5;">Access to reserved apothecary items</span>
+                    </div>
+                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🏷️</span>
+                        <span style="font-size: 0.95rem; line-height: 1.5;">Preferential acquisition pricing (-10%)</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🚚</span>
+                        <span style="font-size: 0.95rem; line-height: 1.5;">Complimentary priority logistics</span>
+                    </div>
+                </div>
+
+                <b style="color: #777; font-size: 0.8rem; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;">Select Tier Membership</b>
+                <form style="display: flex; justify-content: center; margin-bottom: 15px;">
+                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_Sv7BMoixqrZFmt" data-button_theme="rzp-outline-standard" async></script>
+                </form>
+                
+                <button onclick="closePremiumPopup()" style="margin-top: 25px; width: 100%; padding: 14px; background: transparent; border: 1px solid var(--border); color: #888; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Return to Directory</button>
+            </div>
+        </div>
+
+        <script>
+            function closePremiumPopup() {
+                var popup = document.getElementById('premium-popup');
+                if (popup) { popup.style.display = 'none'; }
+            }
+        </script>
+
+        <div id="vip-active-portal" style="display: none;">
+            <h2 style="color:var(--text); margin: 0 0 20px 0; font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.6rem;">Welcome, VIP</h2>
+            <p style="font-size: 0.95rem; color: #666; margin-bottom: 35px; line-height: 1.7; font-family: 'Segoe UI', sans-serif;">Your private channel is active. Begin your consultation with Dr. Prasiddhi.</p>
+            
+            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:18px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:25px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+                Open Secure Channel
+            </a>
+        </div>
+        
+        <button onclick="closeConsult()" style="background: transparent; border: none; color: #888; padding: 12px; width: 100%; cursor: pointer; font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;">Dismiss</button>
+    </div>
 </div>
 
 <div class="bottom-nav">
@@ -697,11 +787,21 @@
         var rzp = new Razorpay(options); rzp.open();
     };
     
-    window.galleryInterval = null; 
-    window.currentGalleryIndex = 0;
+    // 🔍 FULLSCREEN ZOOM FUNCTIONS
+    window.openFullscreenImage = (src) => {
+        document.getElementById('fullscreen-img').src = src;
+        document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
+    };
+    window.closeFullscreenImage = () => {
+        document.getElementById('fullscreen-image-overlay').classList.add('hidden');
+    };
+
+    // 🪄 GLOBAL GALLERY VARIABLES
+    window.modalGalleryInterval = null; 
+    window.modalGalleryIndex = 0;
 
     window.resetViews = function() {
-        clearInterval(window.modalGalleryInterval); 
+        clearInterval(window.modalGalleryInterval); // 🔥 Kills the auto-slider when leaving the product
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
         window.closeConsult(); window.closeDoshaQuiz(); window.closeFullscreenImage();
     };
@@ -724,16 +824,7 @@
     };
     window.closePolicy = function() { window.restoreHome(); };
     
-    // 🔍 FULLSCREEN ZOOM FUNCTIONS
-    window.openFullscreenImage = (src) => {
-        document.getElementById('fullscreen-img').src = src;
-        document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
-    };
-    window.closeFullscreenImage = () => {
-        document.getElementById('fullscreen-image-overlay').classList.add('hidden');
-    };
-
-    // 🔥 THE NEW AUTO-SCROLLING, SWIPEABLE GALLERY LOGIC 🔥
+    // 🔥 THE SWIPEABLE AUTO-GALLERY & ZOOM ENGINE 🔥
     window.openProduct = (id) => { 
         const p = products.find(x => x.id === id); if(!p) return; 
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
@@ -748,7 +839,7 @@
         
         galleryContainer.innerHTML = galleryImages.map((img, idx) => `
             <div style="min-width: 100%; box-sizing: border-box; padding: 10px;">
-                <img src="${img}" onclick="openFullscreenImage('${img}')" style="width: 100%; height: 350px; object-fit: contain; cursor: zoom-in; drop-shadow: 0 10px 20px rgba(0,0,0,0.05); mix-blend-mode: multiply;">
+                <img src="${img}" onclick="window.openFullscreenImage('${img}')" style="width: 100%; height: 350px; object-fit: contain; cursor: zoom-in; drop-shadow: 0 10px 20px rgba(0,0,0,0.05); mix-blend-mode: multiply;">
             </div>
         `).join('');
 
@@ -869,12 +960,7 @@
         const loginWall = document.getElementById('login-wall');
 
         if(user) { 
-            // ✅ USER IS LOGGED IN - HIDE THE WALL WITH A SMOOTH FADE
-            if(loginWall) {
-                loginWall.style.opacity = '0';
-                setTimeout(() => { loginWall.style.visibility = 'hidden'; }, 600);
-            }
-
+            if(loginWall) { loginWall.style.opacity = '0'; setTimeout(() => { loginWall.style.visibility = 'hidden'; }, 600); }
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             setTimeout(() => window.requestNotificationPermission(), 2000);
             const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -889,12 +975,8 @@
             }
             if(!document.getElementById('profile-view').classList.contains('hidden')) loadMyOrders();
         } else { 
-            // ❌ USER IS NOT LOGGED IN - SHOW THE WALL
             window.isUserVIP = false; 
-            if(loginWall) {
-                loginWall.style.visibility = 'visible';
-                loginWall.style.opacity = '1';
-            }
+            if(loginWall) { loginWall.style.visibility = 'visible'; loginWall.style.opacity = '1'; }
         }
         render(); if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
     });
@@ -1012,6 +1094,7 @@
                     dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
                     const bannerThresh = document.getElementById('banner-threshold'); if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
                 }
+                window.isStoreOffline = (data.storeStatus === 'offline');
             } 
         } catch(e) {}
     }
@@ -1132,7 +1215,6 @@
                 else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Purchase</button></div>`; }
             }
 
-            // 🔥 STORE OFFLINE MAINTENANCE OVERRIDE 🔥
             if(window.isStoreOffline) {
                 buttonHtml = `<div class="p-actions"><button style="background:#ddd; color:#888; border:none; padding:10px 0; border-radius:8px; font-weight:700; width:100%; font-size:0.85rem; cursor:not-allowed; font-family:'Segoe UI', sans-serif;" onclick="alert('🔴 Sorry, the store is currently closed for maintenance. Please check back later!')">Store Offline</button></div>`;
             }
@@ -1140,12 +1222,12 @@
             grid.innerHTML += `
             <div class="p-card">
                 ${badgeHtml}
-                <div class="p-img-container" onclick="openProduct('${p.id}')">
+                <div class="p-img-container" onclick="window.openProduct('${p.id}')">
                     <img src="${p.image}" class="p-img" loading="lazy">
                 </div>
                 <div class="p-details">
                     <span class="sensory-badge">${sensoryText}</span>
-                    <h4 onclick="openProduct('${p.id}')">${p.name}</h4>
+                    <h4 onclick="window.openProduct('${p.id}')">${p.name}</h4>
                     <div class="p-price-row">
                         <span class="p-price">₹${p.price}</span>
                     </div>
@@ -1478,7 +1560,7 @@
         if(results.length === 0) { dropdown.innerHTML = '<div style="padding:25px; color:#888; text-align:center; font-family:\'Segoe UI\',sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:1px;">Item unlisted</div>'; } 
         else {
             dropdown.innerHTML = results.map(p => `
-                <div onclick="document.getElementById('search-dropdown').style.display='none'; openProduct('${p.id}')" style="display:flex; align-items:center; gap:18px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(212,175,55,0.03)'" onmouseout="this.style.background='transparent'">
+                <div onclick="document.getElementById('search-dropdown').style.display='none'; window.openProduct('${p.id}')" style="display:flex; align-items:center; gap:18px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(212,175,55,0.03)'" onmouseout="this.style.background='transparent'">
                     <img src="${p.image}" style="width:50px; height:50px; border-radius:4px; object-fit:cover; border:1px solid rgba(212,175,55,0.3); padding:3px; background:var(--bg);">
                     <div style="flex:1;">
                         <b style="font-size:1rem; color:var(--text); font-weight:normal;">${p.name}</b>
