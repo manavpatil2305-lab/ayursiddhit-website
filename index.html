@@ -224,8 +224,8 @@
         .image-ad-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
         .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
         .image-ad-slide img { 
-            width: 100%; height: 180px; /* LOCKS THE HEIGHT SO IT IS NEVER TOO BIG */
-            object-fit: cover; /* CROPS IT PERFECTLY LIKE A LANDSCAPE BANNER */
+            width: 100%; height: 180px; 
+            object-fit: cover; 
             border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
             border: 1px solid var(--border); background: var(--light-gold); 
         }
@@ -277,7 +277,6 @@
 <div id="search-section" style="background: var(--bg); padding: 30px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
         <input type="text" id="search-box" placeholder="Search the apothecary..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 18px 20px; font-size: 1rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
-        <!-- DYNAMIC SEARCH DROPDOWN -->
         <div id="search-dropdown" style="display:none; position:absolute; top:60px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.1); border-radius:4px; max-height:350px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 15px; overflow-x: auto; margin-top: 25px; padding-bottom: 10px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
@@ -385,7 +384,7 @@
         <!-- 🔥 THE NEW AUTO-SCROLLING, SWIPEABLE GALLERY WITH ZOOM 🔥 -->
         <div id="modal-gallery-container" style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 20px 0; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden; position: relative;">
             <div id="modal-gallery-track" style="display: flex; transition: transform 0.4s ease-in-out; width: 100%;">
-                <!-- Images Injected Here -->
+                <!-- Images Injected Here by JavaScript -->
             </div>
             <!-- Interactive Dots below the gallery -->
             <div id="modal-gallery-dots" style="text-align: center; margin-top: 15px;"></div>
@@ -438,7 +437,7 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic; font-size: 1.4rem;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:40px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
-        <!-- 🔥 REVIEW PHOTO SYSTEM INTACT 🔥 -->
+        <!-- 🔥 REVIEW PHOTO SYSTEM (INTACT) 🔥 -->
         <div style="background:var(--bg); padding:35px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.85rem; display:block; margin-bottom:15px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 25px;">
@@ -565,66 +564,6 @@
     <button onclick="closePolicy()" class="back-btn">Back</button>
     <h2 id="policy-title" style="color: var(--text); margin-top:15px; font-weight: normal;"></h2>
     <div id="policy-content" style="line-height: 1.9; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
-</div>
-
-<div id="consult-overlay">
-    <div class="consult-box">
-        <img src="logo.png" class="consult-img">
-        
-        <div id="premium-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(12px);">
-            <div style="background: var(--bg); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 4px; max-width: 420px; width: 100%; padding: 40px 30px; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; font-family: 'Segoe UI', sans-serif; box-sizing: border-box; max-height: 85vh; overflow-y: auto;">
-                
-                <button onclick="closePremiumPopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 26px; cursor: pointer; font-weight: normal; transition: 0.3s;">&times;</button>
-                
-                <h2 style="color: var(--text); margin-top: 10px; margin-bottom: 5px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: normal;">VIP Privilege</h2>
-                <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Unlock exclusive clinical benefits</p>
-                
-                <div style="text-align: left; margin-bottom: 30px; background: var(--card-bg); padding: 25px; border-radius: 4px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🩺</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Direct private consultation access</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🛍️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Access to reserved apothecary items</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🏷️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Preferential acquisition pricing (-10%)</span>
-                    </div>
-                    <div style="display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🚚</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Complimentary priority logistics</span>
-                    </div>
-                </div>
-
-                <b style="color: #777; font-size: 0.8rem; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;">Select Tier Membership</b>
-                <form style="display: flex; justify-content: center; margin-bottom: 15px;">
-                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_Sv7BMoixqrZFmt" data-button_theme="rzp-outline-standard" async></script>
-                </form>
-                
-                <button onclick="closePremiumPopup()" style="margin-top: 25px; width: 100%; padding: 14px; background: transparent; border: 1px solid var(--border); color: #888; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Return to Directory</button>
-            </div>
-        </div>
-
-        <script>
-            function closePremiumPopup() {
-                var popup = document.getElementById('premium-popup');
-                if (popup) { popup.style.display = 'none'; }
-            }
-        </script>
-
-        <div id="vip-active-portal" style="display: none;">
-            <h2 style="color:var(--text); margin: 0 0 20px 0; font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.6rem;">Welcome, VIP</h2>
-            <p style="font-size: 0.95rem; color: #666; margin-bottom: 35px; line-height: 1.7; font-family: 'Segoe UI', sans-serif;">Your private channel is active. Begin your consultation with Dr. Prasiddhi.</p>
-            
-            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:18px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:25px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                Open Secure Channel
-            </a>
-        </div>
-        
-        <button onclick="closeConsult()" style="background: transparent; border: none; color: #888; padding: 12px; width: 100%; cursor: pointer; font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;">Dismiss</button>
-    </div>
 </div>
 
 <div class="bottom-nav">
