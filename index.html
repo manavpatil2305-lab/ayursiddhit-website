@@ -8,7 +8,6 @@
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     
     <meta name="description" content="Premium 100% natural Ayurvedic healing soaps, face packs, and hair oils formulated by Dr. Prasiddhi Patil. Pure, clinical, and Made in India.">
-    <meta name="keywords" content="Ayurvedic soap, natural hair growth oil, Dr. Prasiddhi Patil, Ayursiddhit Naturals, organic skincare, buy ayurvedic products online">
     
     <!-- ✨ PREMIUM GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -18,7 +17,6 @@
     <style>
 
         :root {
-            /* 👑 LUXURY CLINICAL PALETTE UPDATE */
             --amazon: #0f3d14; 
             --green: #155724;  
             --gold: #e6c27a;   
@@ -64,11 +62,9 @@
 
         header { 
             background: rgba(250, 249, 246, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; 
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
         }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
@@ -91,11 +87,8 @@
         .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
         #main-toggle-bar { 
-            display: flex; 
-            background: rgba(250, 249, 246, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
+            display: flex; background: rgba(250, 249, 246, 0.85); backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
             position: sticky; top: 76px; z-index: 1900; 
         }
         .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.85rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; }
@@ -103,26 +96,11 @@
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; background: var(--bg); }
-        .p-card { 
-            background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; 
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; 
-        }
-        .p-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
-            border: 1px solid rgba(212, 175, 55, 0.4); 
-        }
+        .p-card { background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+        .p-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212, 175, 55, 0.4); }
         
-        .p-img-container { 
-            position: relative; width: 100%; padding-top: 100%; cursor: pointer; 
-            background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%);
-            border-bottom: 1px solid var(--border); overflow: hidden; 
-        }
-        .p-img { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .p-img-container { position: relative; width: 100%; padding-top: 100%; cursor: pointer; background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); border-bottom: 1px solid var(--border); overflow: hidden; }
+        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .p-card:hover .p-img { transform: scale(1.08); filter: contrast(1.05) brightness(1.02); }
         
         .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -178,13 +156,9 @@
         
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 -5px 30px rgba(0,0,0,0.04); 
-            display: flex; justify-content: space-between; align-items: center; z-index: 5000; 
-            border-top: 1px solid rgba(212, 175, 55, 0.2); 
-            padding: 12px 15px 18px 15px; box-sizing: border-box; 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; z-index: 5000; 
+            border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 12px 15px 18px 15px; box-sizing: border-box; 
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #888; text-decoration: none; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); -webkit-tap-highlight-color: transparent; position: relative; }
         .nav-item svg { width: 22px; height: 22px; fill: #888; margin-bottom: 6px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -194,18 +168,12 @@
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
         .nav-badge { position: absolute; top: -8px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; font-family: 'Segoe UI', sans-serif; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(15, 61, 20, 0.3);}
 
-        .lms-sub-tabs-bar {
-            display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center;
-        }
+        .lms-sub-tabs-bar { display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center; }
         .lms-sub-tabs-bar::-webkit-scrollbar { display: none; }
-        .sub-tab-item {
-            padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Segoe UI', sans-serif;
-        }
+        .sub-tab-item { padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Segoe UI', sans-serif; }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);}
 
-        .quiz-option {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px;
-        }
+        .quiz-option { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px; }
         .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
         
         /* 🔥 THE 2D FROSTED GLASS LOGIN WALL 🔥 */
@@ -221,17 +189,14 @@
             width: 90%; max-width: 380px; border: 1px solid rgba(212,175,55,0.3);
             transform: translateY(20px); opacity: 0; animation: floatUp 0.8s forwards 0.2s ease-out;
         }
-        @keyframes floatUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
+        @keyframes floatUp { to { transform: translateY(0); opacity: 1; } }
 
         /* 🔥 BANNER SIZE FIX 🔥 */
         #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 20px 20px 0 20px; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
         .image-ad-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
         .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
         .image-ad-slide img { 
-            width: 100%; 
-            height: 180px; /* LOCKS THE HEIGHT SO IT IS NEVER TOO BIG */
+            width: 100%; height: 180px; /* LOCKS THE HEIGHT SO IT IS NEVER TOO BIG */
             object-fit: cover; /* CROPS IT PERFECTLY LIKE A LANDSCAPE BANNER */
             border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
             border: 1px solid var(--border); background: var(--light-gold); 
@@ -284,7 +249,6 @@
 <div id="search-section" style="background: var(--bg); padding: 30px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
         <input type="text" id="search-box" placeholder="Search the apothecary..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 18px 20px; font-size: 1rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
-        <!-- DYNAMIC SEARCH DROPDOWN -->
         <div id="search-dropdown" style="display:none; position:absolute; top:60px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.1); border-radius:4px; max-height:350px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 15px; overflow-x: auto; margin-top: 25px; padding-bottom: 10px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
@@ -296,8 +260,8 @@
 </div>
 
 <div id="home-top-section">
-    <div id="dynamic-image-ads" style="display:none;">
-        <div class="image-ad-track" id="image-ad-track"></div>
+    <div id="dynamic-image-ads" style="display:none; width: 100%; overflow: hidden; background: transparent; padding: 30px 20px 0 20px; box-sizing: border-box;">
+        <div class="image-ad-track" id="image-ad-track" style="display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%;"></div>
     </div>
     
     <div style="display: flex; justify-content: space-between; padding: 25px 20px; background: transparent; margin: 0 10px 10px 10px; text-align: center; font-size: 0.7rem; font-weight: normal; color: var(--text); font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">
@@ -306,7 +270,6 @@
         <div style="flex:1;">Authentic</div>
     </div>
 
-    <!-- 🪄 HYPER-PREMIUM FEATURE: Doctor Storytelling & AI Quiz Trigger -->
     <div id="luxury-story-section" style="padding: 50px 25px; text-align: center; background: radial-gradient(circle, #ffffff 0%, #faf9f6 100%); margin: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
         <p style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--amazon); font-style: italic; line-height: 1.6; margin-top:0;">"True radiance begins when we stop fighting our skin and start listening to it."</p>
         <h4 style="margin: 25px 0 5px 0; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; color: var(--text);">Dr. Prasiddhi Patil</h4>
@@ -379,11 +342,23 @@
     <button onclick="logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:16px; border-radius:4px; font-weight:normal; margin-top:50px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Sign Out</button>
 </div>
 
+<!-- ✨ FULL SCREEN ZOOM OVERLAY ✨ -->
+<div id="fullscreen-image-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+    <button onclick="closeFullscreenImage()" style="position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+    <img id="fullscreen-img" src="" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px;">
+</div>
+
 <div id="product-view" class="hidden product-view" style="position: relative;">
     <button onclick="closeProduct()" class="back-btn">Back</button>
     <div style="background:var(--card-bg); padding:40px 30px; border-radius:4px; border:1px solid var(--border); box-shadow: 0 10px 50px rgba(0,0,0,0.03);">
-        <div style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 30px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2);">
-            <img id="modal-img" src="" style="width:100%; object-fit:contain; max-height:450px;">
+        
+        <!-- 🔥 THE NEW AUTO-SCROLLING, SWIPEABLE GALLERY WITH ZOOM 🔥 -->
+        <div id="modal-gallery-container" style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 20px 0; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden; position: relative;">
+            <div id="modal-gallery-track" style="display: flex; transition: transform 0.4s ease-in-out; width: 100%;">
+                <!-- Images Injected Here -->
+            </div>
+            <!-- Interactive Dots below the gallery -->
+            <div id="modal-gallery-dots" style="text-align: center; margin-top: 15px;"></div>
         </div>
         
         <span id="modal-sensory" class="sensory-badge" style="margin-top:30px; font-size:0.75rem; color:#999; letter-spacing: 3px;"></span>
@@ -394,7 +369,6 @@
 
         <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444;"></p>
         
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Ritual Subscription UI -->
         <div style="background:var(--bg); border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; padding:25px; margin-bottom:35px;">
             <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
                 <input type="radio" name="purchase_type" value="one-time" checked style="width:auto; margin:0;"> 
@@ -419,7 +393,6 @@
             <button id="modal-buy-btn" class="btn-buy" style="padding:18px; font-size:0.85rem;">Secure Checkout</button>
         </div>
 
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Concierge Checkout -->
         <button onclick="conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
 
         <div style="background:var(--bg); padding:20px; border-radius:4px; margin-bottom:30px; border: 1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
@@ -435,6 +408,7 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic; font-size: 1.4rem;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:40px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
+        <!-- 🔥 REVIEW PHOTO SYSTEM (KEPT INTACT) 🔥 -->
         <div style="background:var(--bg); padding:35px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.85rem; display:block; margin-bottom:15px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 25px;">
@@ -446,8 +420,10 @@
             </div>
             <style> .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: var(--gold) !important; text-shadow: 0 0 10px rgba(230, 194, 122, 0.4); } </style>
             <textarea id="review-text" placeholder="Detailed feedback..." rows="4" style="width:100%; padding:18px; border-radius:4px; border:1px solid var(--border); font-size:0.95rem; box-sizing:border-box; background: var(--card-bg);"></textarea>
+            
             <label style="font-size:0.75rem; font-weight:normal; margin-bottom:10px; display:block; color:#888; margin-top:20px; text-transform: uppercase; letter-spacing: 2px;">Attach Documentation (Optional)</label>
             <input type="file" id="review-image" accept="image/*" style="padding:10px 0; background:transparent; border: none; cursor:pointer; width:100%; box-sizing:border-box; color: #888;">
+            
             <button id="submit-rev-btn" class="btn-cart" onclick="submitReview()" style="width:100%; padding: 16px; margin-top:20px; letter-spacing: 2px;">Submit Feedback</button>
         </div>
     </div>
@@ -559,100 +535,6 @@
     <button onclick="closePolicy()" class="back-btn">Back</button>
     <h2 id="policy-title" style="color: var(--text); margin-top:15px; font-weight: normal;"></h2>
     <div id="policy-content" style="line-height: 1.9; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
-</div>
-
-<div id="consult-overlay">
-    <div class="consult-box">
-        <img src="logo.png" class="consult-img">
-        
-        <div id="premium-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(12px);">
-            <div style="background: var(--bg); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 4px; max-width: 420px; width: 100%; padding: 40px 30px; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; font-family: 'Segoe UI', sans-serif; box-sizing: border-box; max-height: 85vh; overflow-y: auto;">
-                
-                <button onclick="closePremiumPopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 26px; cursor: pointer; font-weight: normal; transition: 0.3s;">&times;</button>
-                
-                <h2 style="color: var(--text); margin-top: 10px; margin-bottom: 5px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: normal;">VIP Privilege</h2>
-                <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Unlock exclusive clinical benefits</p>
-                
-                <div style="text-align: left; margin-bottom: 30px; background: var(--card-bg); padding: 25px; border-radius: 4px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🩺</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Direct private consultation access</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🛍️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Access to reserved apothecary items</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🏷️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Preferential acquisition pricing (-10%)</span>
-                    </div>
-                    <div style="display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🚚</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Complimentary priority logistics</span>
-                    </div>
-                </div>
-
-                <b style="color: #777; font-size: 0.8rem; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;">Select Tier Membership</b>
-                <form style="display: flex; justify-content: center; margin-bottom: 15px;">
-                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_Sv7BMoixqrZFmt" data-button_theme="rzp-outline-standard" async></script>
-                </form>
-                
-                <button onclick="closePremiumPopup()" style="margin-top: 25px; width: 100%; padding: 14px; background: transparent; border: 1px solid var(--border); color: #888; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Return to Directory</button>
-            </div>
-        </div>
-
-        <script>
-            function closePremiumPopup() {
-                var popup = document.getElementById('premium-popup');
-                if (popup) { popup.style.display = 'none'; }
-            }
-        </script>
-
-        <div id="vip-active-portal" style="display: none;">
-            <h2 style="color:var(--text); margin: 0 0 20px 0; font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.6rem;">Welcome, VIP</h2>
-            <p style="font-size: 0.95rem; color: #666; margin-bottom: 35px; line-height: 1.7; font-family: 'Segoe UI', sans-serif;">Your private channel is active. Begin your consultation with Dr. Prasiddhi.</p>
-            
-            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:18px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:25px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                Open Secure Channel
-            </a>
-        </div>
-        
-        <button onclick="closeConsult()" style="background: transparent; border: none; color: #888; padding: 12px; width: 100%; cursor: pointer; font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;">Dismiss</button>
-    </div>
-</div>
-
-<div id="dosha-quiz-overlay" class="hidden">
-    <div style="background: var(--bg); width: 90%; max-width: 520px; border-radius: 4px; padding: 50px 40px; text-align: center; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4);">
-        <button onclick="closeDoshaQuiz()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 26px; cursor: pointer; transition: 0.3s;">&times;</button>
-        
-        <div id="quiz-step-1">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Skin Dosha Analysis</h2>
-            <p style="color: #777; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 40px; line-height: 1.6;">Let us uncover your clinical profile to prescribe the perfect ritual.</p>
-            
-            <p style="font-family: 'Segoe UI', sans-serif; font-weight: normal; color: var(--text); margin-bottom: 20px; text-align:left; font-size: 1.05rem;">1. How does your skin present midday?</p>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Oily and reflective, prone to congestion (Kapha)</div>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Dry, taut, and lacking elasticity (Vata)</div>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Sensitive, warm, with occasional erythema (Pitta)</div>
-        </div>
-
-        <div id="quiz-step-2" class="hidden">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Skin Dosha Analysis</h2>
-            <p style="font-family: 'Segoe UI', sans-serif; font-weight: normal; color: var(--text); margin-bottom: 20px; text-align:left; margin-top:30px; font-size: 1.05rem;">2. What is your primary physiological concern?</p>
-            <div class="quiz-option" onclick="finishQuiz()">Deep purification & blemish control</div>
-            <div class="quiz-option" onclick="finishQuiz()">Intense cellular hydration & radiance</div>
-            <div class="quiz-option" onclick="finishQuiz()">Follicle health & dermal revitalization</div>
-        </div>
-
-        <div id="quiz-step-result" class="hidden">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Your Prescribed Ritual</h2>
-            <p style="color: #666; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 30px; line-height: 1.6;">Based on your dominant Dosha, Dr. Prasiddhi recommends focusing on balancing elements.</p>
-            <div style="background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.3); padding: 30px; border-radius: 4px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-                <h4 style="margin:0 0 12px 0; color:var(--text); font-family: 'Playfair Display', serif; font-size: 1.3rem;">The Botanical Harmony Ritual</h4>
-                <p style="font-size:0.9rem; color:#777; font-family:'Segoe UI', sans-serif; margin:0; line-height: 1.5;">Purifying, cooling, and restorative for your specific physiological profile.</p>
-            </div>
-            <button onclick="closeDoshaQuiz(); switchMainTab('store'); filterCategory('All');" class="btn-buy" style="width: 100%; padding: 18px; font-size: 0.9rem; letter-spacing: 2px;">Explore Your Prescription</button>
-        </div>
-    </div>
 </div>
 
 <div class="bottom-nav">
@@ -819,9 +701,9 @@
     window.currentGalleryIndex = 0;
 
     window.resetViews = function() {
-        clearInterval(window.galleryInterval); 
+        clearInterval(window.modalGalleryInterval); 
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
-        window.closeConsult(); window.closeDoshaQuiz();
+        window.closeConsult(); window.closeDoshaQuiz(); window.closeFullscreenImage();
     };
 
     window.openB2B = function() { window.resetViews(); window.showSafe('b2b-view'); window.scrollTo(0, 0); window.renderB2BProducts(); };
@@ -842,29 +724,68 @@
     };
     window.closePolicy = function() { window.restoreHome(); };
     
+    // 🔍 FULLSCREEN ZOOM FUNCTIONS
+    window.openFullscreenImage = (src) => {
+        document.getElementById('fullscreen-img').src = src;
+        document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
+    };
+    window.closeFullscreenImage = () => {
+        document.getElementById('fullscreen-image-overlay').classList.add('hidden');
+    };
+
+    // 🔥 THE NEW AUTO-SCROLLING, SWIPEABLE GALLERY LOGIC 🔥
     window.openProduct = (id) => { 
         const p = products.find(x => x.id === id); if(!p) return; 
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         
-        clearInterval(window.galleryInterval); 
-        const imgEl = document.getElementById('modal-img');
-        const gallery = (p.gallery && p.gallery.length > 0) ? p.gallery : [p.image];
-        window.currentGalleryIndex = 0;
+        clearInterval(window.modalGalleryInterval); 
+        const galleryContainer = document.getElementById('modal-gallery-track');
+        const dotsContainer = document.getElementById('modal-gallery-dots');
         
-        imgEl.src = gallery[0];
-        imgEl.style.transition = "opacity 0.4s ease-in-out"; 
-        imgEl.style.opacity = 1;
+        const galleryImages = (p.gallery && p.gallery.length > 0) ? p.gallery : [p.image];
+        window.modalGalleryIndex = 0;
+        
+        galleryContainer.innerHTML = galleryImages.map((img, idx) => `
+            <div style="min-width: 100%; box-sizing: border-box; padding: 10px;">
+                <img src="${img}" onclick="openFullscreenImage('${img}')" style="width: 100%; height: 350px; object-fit: contain; cursor: zoom-in; drop-shadow: 0 10px 20px rgba(0,0,0,0.05); mix-blend-mode: multiply;">
+            </div>
+        `).join('');
 
-        if (gallery.length > 1) {
-            window.galleryInterval = setInterval(() => {
-                imgEl.style.opacity = 0.3; 
-                setTimeout(() => {
-                    window.currentGalleryIndex = (window.currentGalleryIndex + 1) % gallery.length;
-                    imgEl.src = gallery[window.currentGalleryIndex]; 
-                    imgEl.style.opacity = 1; 
-                }, 400); 
-            }, 3500); 
+        if(galleryImages.length > 1) {
+            dotsContainer.innerHTML = galleryImages.map((_, i) => `<span id="gdot-${i}" style="height: 8px; width: 8px; margin: 0 5px; background-color: ${i===0 ? 'var(--amazon)' : '#ccc'}; border-radius: 50%; display: inline-block; transition: 0.3s;"></span>`).join('');
+            
+            const updateGalleryUI = () => {
+                galleryContainer.style.transform = `translateX(-${window.modalGalleryIndex * 100}%)`;
+                for(let i=0; i<galleryImages.length; i++) {
+                    const d = document.getElementById(`gdot-${i}`);
+                    if(d) d.style.backgroundColor = i === window.modalGalleryIndex ? 'var(--amazon)' : '#ccc';
+                }
+            };
+
+            window.modalGalleryInterval = setInterval(() => {
+                window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length;
+                updateGalleryUI();
+            }, 3500);
+
+            let startX = 0; let isSwiping = false;
+            const wrap = document.getElementById('modal-gallery-container');
+            
+            wrap.ontouchstart = (e) => { startX = e.touches[0].clientX; isSwiping = true; clearInterval(window.modalGalleryInterval); };
+            wrap.ontouchend = (e) => {
+                if(!isSwiping) return;
+                let endX = e.changedTouches[0].clientX;
+                if(startX - endX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; }
+                else if(endX - startX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex - 1 + galleryImages.length) % galleryImages.length; }
+                updateGalleryUI();
+                isSwiping = false;
+                window.modalGalleryInterval = setInterval(() => {
+                    window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length;
+                    updateGalleryUI();
+                }, 3500);
+            };
+        } else {
+            dotsContainer.innerHTML = '';
         }
         
         document.getElementById('modal-name').innerText = p.name; 
