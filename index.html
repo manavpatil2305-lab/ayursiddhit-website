@@ -197,6 +197,13 @@
             color: var(--gold);
             border-color: var(--amazon);
         }
+
+        /* 📸 PRODUCT CAROUSEL STYLES */
+        .product-carousel-container { width: 100%; overflow: hidden; position: relative; background: #fcfcfc; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 25px; box-sizing: border-box;}
+        .product-carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+        .product-carousel-track::-webkit-scrollbar { display: none; }
+        .product-carousel-slide { flex: 0 0 100%; width: 100%; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .product-carousel-slide img { width: 100%; max-height: 400px; object-fit: contain; }
         
     </style>
 </head>
@@ -333,7 +340,10 @@
 <div id="product-view" class="hidden product-view" style="position: relative;">
     <button onclick="closeProduct()" class="back-btn">Back</button>
     <div style="background:var(--card-bg); padding:25px; border-radius:8px; border:1px solid var(--border);">
-        <img id="modal-img" src="" style="width:100%; border-radius:4px; object-fit:contain; max-height:400px; background: #fcfcfc; padding: 20px; box-sizing: border-box; border: 1px solid var(--border);">
+        
+        <!-- NEW DYNAMIC IMAGE/CAROUSEL CONTAINER -->
+        <div id="modal-image-container"></div>
+        
         <h2 id="modal-name" style="margin:25px 0 10px 0; font-size: 1.6rem; font-weight: normal; color: var(--text);"></h2>
         <h3 id="modal-price" style="color:var(--text); margin:0 0 20px 0; font-size: 1.3rem; font-weight: 600; font-family: 'Segoe UI', sans-serif;"></h3>
         
@@ -781,7 +791,7 @@
     };
     window.closePolicy = function() { window.restoreHome(); };
     
-    window.closeProduct = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+    window.closeProduct = function() { clearInterval(window.productCarouselTimer); window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeCart = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeProfile = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
 
@@ -812,6 +822,7 @@
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
     window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
+    window.productCarouselTimer = null;
     let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     // 🛡️ CRASH-PROOF NOTIFICATION ENGINE
@@ -1323,7 +1334,31 @@
         const p = products.find(x => x.id === id); if(!p) return; 
         currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
-        document.getElementById('modal-img').src = p.image; document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`; document.getElementById('modal-desc').innerHTML = p.desc || ""; 
+        
+        clearInterval(window.productCarouselTimer);
+        const imgContainer = document.getElementById('modal-image-container');
+        if (p.gallery && p.gallery.length > 1) {
+            let slidesHtml = p.gallery.map(url => `<div class="product-carousel-slide"><img src="${url}"></div>`).join('');
+            imgContainer.innerHTML = `
+                <div class="product-carousel-container">
+                    <div class="product-carousel-track" id="p-carousel-track">
+                        ${slidesHtml}
+                    </div>
+                </div>
+            `;
+            const track = document.getElementById('p-carousel-track');
+            let slideIndex = 0;
+            window.productCarouselTimer = setInterval(() => {
+                slideIndex++;
+                if (slideIndex >= p.gallery.length) slideIndex = 0;
+                if(track) track.scrollTo({ left: track.clientWidth * slideIndex, behavior: 'smooth' });
+            }, 3500);
+            if(track) track.addEventListener('touchstart', () => { clearInterval(window.productCarouselTimer); }, { passive: true });
+        } else {
+            imgContainer.innerHTML = `<img src="${p.image}" style="width:100%; border-radius:4px; object-fit:contain; max-height:400px; background: #fcfcfc; padding: 20px; box-sizing: border-box; border: 1px solid var(--border); margin-bottom: 25px;">`;
+        }
+
+        document.getElementById('modal-name').innerText = p.name; document.getElementById('modal-price').innerText = `₹${p.price}`; document.getElementById('modal-desc').innerHTML = p.desc || ""; 
         
         if(p.isVault && !window.isUserVIP) {
             document.getElementById('modal-qty-controls').style.display = "none";
