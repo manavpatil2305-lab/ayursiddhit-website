@@ -8,7 +8,6 @@
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     
     <meta name="description" content="Premium 100% natural Ayurvedic healing soaps, face packs, and hair oils formulated by Dr. Prasiddhi Patil. Pure, clinical, and Made in India.">
-    <meta name="keywords" content="Ayurvedic soap, natural hair growth oil, Dr. Prasiddhi Patil, Ayursiddhit Naturals, organic skincare, buy ayurvedic products online">
     
     <!-- ✨ PREMIUM GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -48,7 +47,7 @@
             overscroll-behavior-x: none;
         }
 
-        button, input, .p-price, .p-badge, .nav-item span, .status-text, .sensory-badge {
+        button, input, textarea, .p-price, .p-badge, .nav-item span, .status-text, .sensory-badge {
             font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
         }
 
@@ -62,10 +61,10 @@
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
+        /* ✨ HEADER */
         header { 
             background: rgba(250, 249, 246, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; 
             border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
@@ -77,63 +76,50 @@
         .h-text span { color: var(--gold); font-size: 0.65rem; display: block; font-weight: normal; letter-spacing: 2.5px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;}
         .h-actions { display: flex; align-items: center; gap: 12px; }
 
-        .goog-te-gadget-simple { background-color: transparent !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 4px 8px !important; display: flex; align-items: center; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .goog-te-gadget-simple:hover { border-color: rgba(212, 175, 55, 0.4) !important; }
-        .goog-te-gadget-simple span { color: var(--text) !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: normal; text-decoration: none !important; }
-        .goog-te-banner-frame { display: none !important; visibility: hidden !important; }
+        .goog-te-gadget-simple { background-color: transparent !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 4px 8px !important; display: flex; align-items: center; }
+        .goog-te-gadget-simple span { color: var(--text) !important; font-size: 0.8rem; font-weight: normal; text-decoration: none !important; }
+        .goog-te-banner-frame { display: none !important; }
         .skiptranslate iframe { display: none !important; }
         body { top: 0px !important; position: static !important; }
-        html { top: 0px !important; height: 100%; }
         .goog-tooltip { display: none !important; }
-        .goog-tooltip:hover { display: none !important; }
-        .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
         .goog-te-gadget-simple img { display: none !important; }
-        .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
+        /* 🔥 STORE TOGGLE BAR 🔥 */
         #main-toggle-bar { 
-            display: flex; 
-            background: rgba(250, 249, 246, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
+            display: flex; background: rgba(250, 249, 246, 0.85); backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
             position: sticky; top: 76px; z-index: 1900; 
         }
         .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.85rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; }
         .tab-btn-main.active { color: var(--amazon); border-bottom: 2px solid var(--amazon); background: rgba(255,255,255,0.4);}
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; background: var(--bg); }
+        /* ✨ LUXURY PRODUCT GRID */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; background: var(--bg); max-width: 1200px; margin: 0 auto;}
         .p-card { 
             background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; 
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; 
         }
-        .p-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
-            border: 1px solid rgba(212, 175, 55, 0.4); 
-        }
+        .p-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212, 175, 55, 0.4); }
         
         .p-img-container { 
             position: relative; width: 100%; padding-top: 100%; cursor: pointer; 
             background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%);
             border-bottom: 1px solid var(--border); overflow: hidden; 
         }
-        .p-img { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
+        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .p-card:hover .p-img { transform: scale(1.08); filter: contrast(1.05) brightness(1.02); }
         
-        .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        
-        .sensory-badge { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; display: block; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);}
+        .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .sensory-badge { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; display: block; }
         
         .p-details { padding: 25px 15px; display: flex; flex-direction: column; flex-grow: 1; text-align: center; }
         .p-details h4 { margin: 0 0 10px 0; font-size: 1.05rem; font-weight: normal; color: var(--text); line-height: 1.4; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s; }
         .p-card:hover h4 { color: var(--amazon); }
         .p-price-row { margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .p-price { color: var(--text); font-size: 1.1rem; font-weight: 600; letter-spacing: 1px;}
+        
         .p-actions { margin-top: auto; display: flex; gap: 8px; flex-direction: column; }
         .btn-cart { background: transparent; border: 1px solid var(--amazon); color: var(--amazon); padding: 12px 0; border-radius: 4px; font-weight: 600; flex: 1; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; text-transform: uppercase; letter-spacing: 1.5px;}
         .btn-cart:hover { background: rgba(15, 61, 20, 0.05); transform: translateY(-2px); }
@@ -142,49 +128,24 @@
         
         .p-qty { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border-radius: 4px; padding: 4px; width: 100%; border: 1px solid var(--border); box-sizing: border-box; margin-top: auto;}
         .p-qty button { background: transparent; color: var(--amazon); border: none; width: 32px; height: 32px; border-radius: 4px; font-weight: normal; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
-        .p-qty button:hover { background: rgba(0,0,0,0.05); }
         .p-qty span { font-weight: 600; font-size: 0.95rem; color: var(--text); font-family: 'Segoe UI', sans-serif;}
         
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 35px; padding: 50px; max-width: 1200px; margin: 0 auto; } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
 
         .back-btn { background: transparent; color: var(--text); border: none; padding: 8px 0; font-weight: normal; font-size: 0.85rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;}
         .back-btn:hover { color: var(--amazon); transform: translateX(-4px); }
 
         .cart-view, .product-view, .policy-view, .about-view, #profile-view, #videos-view { padding: 20px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);}
+        input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);}
         input:focus, textarea:focus { outline: none; border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
 
-        .track-container { font-family: 'Segoe UI', sans-serif; max-width: 100%; margin: 15px 0; background: var(--bg); padding: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); }
-        .step { display: flex; align-items: center; position: relative; margin-bottom: 30px; }
-        .step:last-child { margin-bottom: 5px; }
-        .circle { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: transparent; display: flex; justify-content: center; align-items: center; font-weight: bold; z-index: 2; font-size: 0.7rem; border: 2px solid var(--border); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);}
-        .line { width: 2px; height: 100%; background: var(--border); position: absolute; left: 13px; top: 24px; z-index: 1; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);}
-        .status-text { margin-left: 20px; font-size: 0.9rem; color: #888; font-weight: normal; letter-spacing: 0.5px;}
-        .active-circle { background: var(--amazon); border-color: var(--amazon); color: var(--gold); box-shadow: 0 0 15px rgba(15, 61, 20, 0.3);}
-        .active-line { background: var(--amazon); }
-        .active-text { color: var(--text); font-weight: 600; }
-
-        #upsell-overlay, #dosha-quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: opacity 0.5s ease;}
-        .upsell-box { background: var(--bg); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 4px; width: 90%; max-width: 400px; text-align: center; padding: 40px 25px; box-shadow: 0 25px 60px rgba(0,0,0,0.3); position: relative; }
-        .upsell-img { width: 130px; height: 130px; object-fit: cover; border-radius: 50%; margin-bottom: 25px; border: 1px solid rgba(212, 175, 55, 0.5); background: white; padding: 8px;}
-        .upsell-price { font-size: 1.25rem; font-weight: 600; color: var(--text); margin: 15px 0; font-family: 'Segoe UI', sans-serif;}
-        .upsell-price strike { color: #999; font-size: 0.95rem; margin-right: 12px; font-weight: normal;}
-
-        #consult-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
-        #consult-overlay.show-consult { opacity: 1; pointer-events: auto; }
-        .consult-box { background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; width: 90%; max-width: 420px; text-align: center; padding: 50px 30px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); position: relative; color: var(--text); }
-        .consult-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 25px; object-fit: cover; background: white; border: 1px solid rgba(212, 175, 55, 0.6); padding: 5px;}
-        
+        /* 🔥 BOTTOM APP BAR */
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 -5px 30px rgba(0,0,0,0.04); 
-            display: flex; justify-content: space-between; align-items: center; z-index: 5000; 
-            border-top: 1px solid rgba(212, 175, 55, 0.2); 
-            padding: 12px 15px 18px 15px; box-sizing: border-box; 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; z-index: 5000; 
+            border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 12px 15px 18px 15px; box-sizing: border-box; 
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #888; text-decoration: none; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); -webkit-tap-highlight-color: transparent; position: relative; }
         .nav-item svg { width: 22px; height: 22px; fill: #888; margin-bottom: 6px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -192,68 +153,35 @@
         .nav-item.active { transform: translateY(-4px); }
         .nav-item.active svg { fill: var(--amazon); }
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
-        .nav-badge { position: absolute; top: -8px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; font-family: 'Segoe UI', sans-serif; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(15, 61, 20, 0.3);}
+        .nav-badge { position: absolute; top: -8px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; border: 1px solid var(--gold); box-shadow: 0 4px 10px rgba(15, 61, 20, 0.3);}
 
-        .lms-sub-tabs-bar {
-            display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center;
-        }
+        /* 🎒 LMS SUB-TABS */
+        .lms-sub-tabs-bar { display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center; }
         .lms-sub-tabs-bar::-webkit-scrollbar { display: none; }
-        .sub-tab-item {
-            padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Segoe UI', sans-serif;
-        }
+        .sub-tab-item { padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);}
-
-        .quiz-option {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px;
-        }
-        .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
-        
-        /* 🔥 THE 2D FROSTED GLASS LOGIN WALL 🔥 */
-        #login-wall {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(251, 251, 249, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            z-index: 99999; display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        .login-card {
-            background: var(--card-bg); padding: 40px 30px; border-radius: 8px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center;
-            width: 90%; max-width: 380px; border: 1px solid rgba(212,175,55,0.3);
-            transform: translateY(20px); opacity: 0; animation: floatUp 0.8s forwards 0.2s ease-out;
-        }
-        @keyframes floatUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
 
         /* 🔥 BANNER SIZE FIX 🔥 */
         #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 20px 20px 0 20px; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
         .image-ad-track { display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
         .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
         .image-ad-slide img { 
-            width: 100%; 
-            height: 180px; /* LOCKS THE HEIGHT SO IT IS NEVER TOO BIG */
-            object-fit: cover; /* CROPS IT PERFECTLY LIKE A LANDSCAPE BANNER */
+            width: 100%; height: 180px; 
+            object-fit: cover; 
             border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
             border: 1px solid var(--border); background: var(--light-gold); 
         }
 
+        #consult-overlay, #upsell-overlay, #dosha-quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
+        #consult-overlay.show-consult, #upsell-overlay:not(.hidden), #dosha-quiz-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
+        .consult-box, .upsell-box { background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; width: 90%; max-width: 420px; text-align: center; padding: 50px 30px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); position: relative; color: var(--text); }
+        .consult-img, .upsell-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 25px; object-fit: cover; background: white; border: 1px solid rgba(212, 175, 55, 0.6); padding: 5px;}
+        
+        .quiz-option { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-size: 0.95rem; text-align: left; letter-spacing: 0.5px; }
+        .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
     </style>
 </head>
 <body>
-
-<!-- ✨ LUXURY ANIMATED 2D LOGIN WALL ✨ -->
-<div id="login-wall">
-    <div class="login-card">
-        <img src="logo.png" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); margin-bottom: 15px; box-shadow: 0 4px 15px rgba(212,175,55,0.2); object-fit:cover; background:white;">
-        <h2 style="margin: 0 0 5px 0; color: var(--amazon); font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: normal;">Welcome to Ayursiddhit</h2>
-        <p style="color: #666; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; font-family: 'Segoe UI', sans-serif;">Sign in to unlock exclusive Ayurvedic remedies, clinical consultations, and wholesale pricing.</p>
-        
-        <button onclick="window.login()" style="width: 100%; background: white; color: var(--amazon); border: 1px solid var(--border); padding: 14px; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            Continue with Google
-        </button>
-    </div>
-</div>
 
 <div id="top-promo-bar"><div class="scrolling-multi-ads" id="multi-ad-container"></div></div>
 <div id="live-promo-banner" class="promo-banner" style="text-align: center;">✨ Loading Promos... ✨</div>
@@ -264,34 +192,31 @@
             <img src="logo.png" class="h-logo" onerror="this.src='https://via.placeholder.com/45x45/faf9f6/0f3d14?text=AN'">
             <div class="h-text">Ayursiddhit<span>Dr. Prasiddhi Patil</span></div>
         </div>
-        
         <div class="h-actions">
             <div id="google_translate_element"></div>
-            <!-- 🌗 THEME TOGGLE SWITCH -->
-            <div id="theme-switcher-btn" onclick="togglePlatformTheme()" style="font-size: 1.2rem; cursor: pointer; margin-left: 5px; opacity: 0.7; transition: 0.3s;">🌙</div>
+            <div id="theme-switcher-btn" onclick="window.togglePlatformTheme()" style="font-size: 1.2rem; cursor: pointer; margin-left: 5px; opacity: 0.7; transition: 0.3s;">🌙</div>
         </div>  
     </div>
 </header>
 
 <div id="main-toggle-bar">
-    <div id="tab-store" class="tab-btn-main active" onclick="switchMainTab('store')">Apothecary</div>
-    <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">Insights</div>
-    <div id="tab-workshops" class="tab-btn-main inactive" onclick="switchMainTab('workshops')">Consult</div>
+    <div id="tab-store" class="tab-btn-main active" onclick="window.switchMainTab('store')">Apothecary</div>
+    <div id="tab-videos" class="tab-btn-main inactive" onclick="window.switchMainTab('videos')">Insights</div>
+    <div id="tab-workshops" class="tab-btn-main inactive" onclick="window.switchMainTab('workshops')">Consult</div>
 </div>
     
-<div id="t-offer-banner" style="background: var(--amazon); color: var(--bg); text-align: center; padding: 12px; font-size: 0.75rem; font-weight: normal; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">Complimentary Shipping on orders above ₹<span id="banner-threshold">800</span></div>
+<div id="t-offer-banner" style="background: var(--amazon); color: var(--bg); text-align: center; padding: 12px; font-size: 0.75rem; font-weight: normal; letter-spacing: 2px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;">Complimentary Shipping on orders above ₹<span id="banner-threshold">800</span></div>
 
 <div id="search-section" style="background: var(--bg); padding: 30px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
-        <input type="text" id="search-box" placeholder="Search the apothecary..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 18px 20px; font-size: 1rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
-        <!-- DYNAMIC SEARCH DROPDOWN -->
+        <input type="text" id="search-box" placeholder="Search the apothecary..." onkeyup="window.liveSearch()" style="margin: 0; width: 100%; border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; padding: 18px 20px; font-size: 1rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
         <div id="search-dropdown" style="display:none; position:absolute; top:60px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.1); border-radius:4px; max-height:350px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 15px; overflow-x: auto; margin-top: 25px; padding-bottom: 10px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
-        <button class="cat-btn t-all" onclick="filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);">All</button>
-        <button class="cat-btn t-soaps" onclick="filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Soaps</button>
-        <button class="cat-btn t-oils" onclick="filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Oils</button>
-        <button class="cat-btn t-face" onclick="filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Face</button>
+        <button class="cat-btn t-all" onclick="window.filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);">All</button>
+        <button class="cat-btn t-soaps" onclick="window.filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Soaps</button>
+        <button class="cat-btn t-oils" onclick="window.filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Oils</button>
+        <button class="cat-btn t-face" onclick="window.filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Face</button>
     </div>
 </div>
 
@@ -311,7 +236,7 @@
         <p style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--amazon); font-style: italic; line-height: 1.6; margin-top:0;">"True radiance begins when we stop fighting our skin and start listening to it."</p>
         <h4 style="margin: 25px 0 5px 0; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; color: var(--text);">Dr. Prasiddhi Patil</h4>
         <span style="font-size: 0.65rem; color: #888; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">BAMS, Founder</span><br>
-        <button onclick="openDoshaQuiz()" style="margin-top: 35px; background: var(--amazon); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.5); padding: 16px 35px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; max-width: 320px; border-radius: 2px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2);">Begin Skin Dosha Analysis</button>
+        <button onclick="window.openDoshaQuiz()" style="margin-top: 35px; background: var(--amazon); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.5); padding: 16px 35px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; max-width: 320px; border-radius: 2px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2);">Begin Skin Dosha Analysis</button>
     </div>
 </div>
 
@@ -321,24 +246,24 @@
     <img src="logo.png" style="width: 50px; height: 50px; border-radius: 50%; opacity: 0.9; margin-bottom: 20px; border: 1px solid var(--gold);">
     <p style="margin: 0 0 25px 0; font-weight: normal; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; font-family: 'Playfair Display', serif; color: var(--gold);">Ayursiddhit Naturals</p>
     <div style="display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; flex-wrap: wrap;">
-        <a href="#" onclick="showAbout()" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Our Story</a>
-        <a href="#" onclick="showPolicy('contact')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Contact</a>
-        <a href="#" onclick="showPolicy('refund')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Refunds</a>
-        <a href="#" onclick="showPolicy('terms')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Terms</a>
+        <a href="#" onclick="window.showAbout()" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Our Story</a>
+        <a href="#" onclick="window.showPolicy('contact')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Contact</a>
+        <a href="#" onclick="window.showPolicy('refund')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Refunds</a>
+        <a href="#" onclick="window.showPolicy('terms')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Terms</a>
     </div>
     <p style="margin: 0; color: rgba(250,249,246,0.3); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;">© 2026 Ayursiddhit Naturals. All Rights Reserved.</p>
 </footer>
 
-<div id="videos-view" class="hidden">
+<div id="videos-view" class="hidden" style="padding:20px; max-width:800px; margin:auto;">
     <h2 style="color:var(--text); margin-top:20px; text-align:center; font-weight: normal; font-style: italic;">Clinical Insights</h2>
     <p style="text-align:center; color:#888; font-size:0.85rem; margin-bottom:40px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">Guidance from Dr. Prasiddhi Patil</p>
     <div id="video-feed-container">Loading insights...</div>
 </div>
      
-<div id="workshops-view" class="hidden" style="padding: 0;">
+<div id="workshops-view" class="hidden" style="padding: 0; max-width:800px; margin:auto;">
     <div class="lms-sub-tabs-bar">
-        <button id="sub-tab-mybatches" class="sub-tab-item active" onclick="switchLMSSubTab('mybatches')">My Regimens</button>
-        <button id="sub-tab-library" class="sub-tab-item" onclick="switchLMSSubTab('library')">Archive</button>
+        <button id="sub-tab-mybatches" class="sub-tab-item active" onclick="window.switchLMSSubTab('mybatches')">My Regimens</button>
+        <button id="sub-tab-library" class="sub-tab-item" onclick="window.switchLMSSubTab('library')">Archive</button>
     </div>
     <div style="padding: 25px;">
         <div id="lms-panel-mybatches" class="lms-panel-view hidden">
@@ -364,26 +289,48 @@
         <h3 id="up-name" style="margin:0 0 10px 0; font-size:1.2rem; color:var(--text); font-weight: normal;"></h3>
         <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
         <button id="up-btn" class="btn-buy" style="width:100%; padding: 16px; margin-top: 15px; border-radius: 4px;">Add to Ritual</button>
-        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#999; font-size:0.75rem; margin-top:25px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Proceed to Checkout</button>
+        <button class="close-upsell" onclick="window.skipUpsell()" style="background:none; border:none; color:#999; font-size:0.75rem; margin-top:25px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Proceed to Checkout</button>
     </div>
 </div>
 
 <div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); padding:40px 25px; margin-top:25px; max-width:800px; margin-left:auto; margin-right:auto; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
-    <button onclick="closeProfile()" class="back-btn">Back</button>
+    <button onclick="window.closeProfile()" class="back-btn">Back</button>
     <h2 style="color:var(--text); margin-top:15px; font-weight: normal;">My Profile</h2>
     <p style="font-size:1.2rem; font-weight:normal; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 25px; font-family: 'Segoe UI', sans-serif;" id="prof-name-display"></p>
     
-    <h3 style="color:var(--text); margin-top: 35px; font-weight: normal; font-style: italic;">Order History</h3>
-    <div id="prof-orders-list" style="font-size:0.95rem; font-family: 'Segoe UI', sans-serif; margin-top: 25px;">Indexing records...</div>
-    
-    <button onclick="logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:16px; border-radius:4px; font-weight:normal; margin-top:50px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Sign Out</button>
+    <div id="login-button-container" style="display:none; margin-top: 20px;">
+        <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif;">Sign in to access your order history and VIP benefits.</p>
+        <button onclick="window.login()" style="width: 100%; background: white; color: var(--amazon); border: 1px solid var(--border); padding: 14px; border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Continue with Google
+        </button>
+    </div>
+
+    <div id="logged-in-profile-content">
+        <h3 style="color:var(--text); margin-top: 35px; font-weight: normal; font-style: italic;">Order History</h3>
+        <div id="prof-orders-list" style="font-size:0.95rem; font-family: 'Segoe UI', sans-serif; margin-top: 25px;">Indexing records...</div>
+        <button onclick="window.logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:16px; border-radius:4px; font-weight:normal; margin-top:50px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Sign Out</button>
+    </div>
 </div>
 
+<!-- ✨ FULL SCREEN ZOOM OVERLAY ✨ -->
+<div id="fullscreen-image-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+    <button onclick="window.closeFullscreenImage()" style="position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+    <img id="fullscreen-img" src="" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px;">
+</div>
+
+<!-- 🔥 THE PRODUCT PAGE (WITH GALLERY & REVIEWS) 🔥 -->
 <div id="product-view" class="hidden product-view" style="position: relative;">
-    <button onclick="closeProduct()" class="back-btn">Back</button>
+    <button onclick="window.closeProduct()" class="back-btn">Back</button>
     <div style="background:var(--card-bg); padding:40px 30px; border-radius:4px; border:1px solid var(--border); box-shadow: 0 10px 50px rgba(0,0,0,0.03);">
-        <div style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 30px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2);">
-            <img id="modal-img" src="" style="width:100%; object-fit:contain; max-height:450px;">
+        
+        <!-- 🔥 AUTO-SCROLLING, SWIPEABLE GALLERY 🔥 -->
+        <div id="modal-gallery-container" style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 20px 0; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden; position: relative;">
+            <div id="modal-gallery-track" style="display: flex; transition: transform 0.4s ease-in-out; width: 100%;">
+                <!-- Images Injected Here -->
+            </div>
+            <!-- Interactive Dots below the gallery -->
+            <div id="modal-gallery-dots" style="text-align: center; margin-top: 15px;"></div>
         </div>
         
         <span id="modal-sensory" class="sensory-badge" style="margin-top:30px; font-size:0.75rem; color:#999; letter-spacing: 3px;"></span>
@@ -392,9 +339,8 @@
         
         <div style="margin-bottom:30px; font-family: 'Segoe UI', sans-serif;"><span id="modal-rating-avg" style="color:var(--gold); font-size:1.15rem; font-weight: 600; letter-spacing:2px;">⭐ 5.0</span> <span id="modal-rating-count" style="font-size:0.85rem; color:#888; margin-left: 10px;"></span></div>
 
-        <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444;"></p>
+        <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444; font-family: 'Segoe UI', sans-serif;"></p>
         
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Ritual Subscription UI -->
         <div style="background:var(--bg); border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; padding:25px; margin-bottom:35px;">
             <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
                 <input type="radio" name="purchase_type" value="one-time" checked style="width:auto; margin:0;"> 
@@ -411,7 +357,7 @@
         </div>
 
         <div class="p-qty" id="modal-qty-controls" style="margin:0 0 25px 0; padding:5px; border-radius:4px; display:inline-flex; width:130px; background: var(--card-bg); border: 1px solid var(--border);">
-            <button onclick="updateQty(currentModalProductId, -1)">−</button><span id="modal-qty" style="padding: 0 15px; font-size: 1.1rem;">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
+            <button onclick="window.updateQty(window.currentModalProductId, -1)">−</button><span id="modal-qty" style="padding: 0 15px; font-size: 1.1rem;">0</span><button onclick="window.updateQty(window.currentModalProductId, 1)">+</button>
         </div>
         
         <div style="display:flex; gap:20px; margin-bottom:20px;" id="modal-action-buttons">
@@ -419,14 +365,13 @@
             <button id="modal-buy-btn" class="btn-buy" style="padding:18px; font-size:0.85rem;">Secure Checkout</button>
         </div>
 
-        <!-- 🪄 HYPER-PREMIUM FEATURE: Concierge Checkout -->
-        <button onclick="conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
+        <button onclick="window.conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
 
         <div style="background:var(--bg); padding:20px; border-radius:4px; margin-bottom:30px; border: 1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <span style="font-size:0.75rem; font-weight:normal; color:#888; display:block; margin-bottom:12px; text-transform: uppercase; letter-spacing: 2px;">Delivery Availability</span>
             <div style="display:flex; gap:12px;">
                 <input type="number" id="pin-check" placeholder="Postal Code" style="margin:0; flex:1; padding:14px; border:1px solid var(--border); border-radius:4px; background: var(--card-bg);">
-                <button onclick="checkPincode()" class="btn-cart" style="padding:0 25px; margin: 0; width: auto; flex: none; letter-spacing: 2px;">Verify</button>
+                <button onclick="window.checkPincode()" class="btn-cart" style="padding:0 25px; margin: 0; width: auto; flex: none; letter-spacing: 2px;">Verify</button>
             </div>
             <p id="pin-msg" style="margin:12px 0 0 0; font-size:0.85rem; font-weight:normal;"></p>
         </div>
@@ -435,6 +380,7 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic; font-size: 1.4rem;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:40px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
+        <!-- 🔥 REVIEW PHOTO SYSTEM 🔥 -->
         <div style="background:var(--bg); padding:35px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.85rem; display:block; margin-bottom:15px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 25px;">
@@ -446,14 +392,16 @@
             </div>
             <style> .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: var(--gold) !important; text-shadow: 0 0 10px rgba(230, 194, 122, 0.4); } </style>
             <textarea id="review-text" placeholder="Detailed feedback..." rows="4" style="width:100%; padding:18px; border-radius:4px; border:1px solid var(--border); font-size:0.95rem; box-sizing:border-box; background: var(--card-bg);"></textarea>
+            
             <label style="font-size:0.75rem; font-weight:normal; margin-bottom:10px; display:block; color:#888; margin-top:20px; text-transform: uppercase; letter-spacing: 2px;">Attach Documentation (Optional)</label>
             <input type="file" id="review-image" accept="image/*" style="padding:10px 0; background:transparent; border: none; cursor:pointer; width:100%; box-sizing:border-box; color: #888;">
-            <button id="submit-rev-btn" class="btn-cart" onclick="submitReview()" style="width:100%; padding: 16px; margin-top:20px; letter-spacing: 2px;">Submit Feedback</button>
+            
+            <button id="submit-rev-btn" class="btn-cart" onclick="window.submitReview()" style="width:100%; padding: 16px; margin-top:20px; letter-spacing: 2px;">Submit Feedback</button>
         </div>
     </div>
 </div>
 
-<div id="b2b-view" class="hidden" style="background:var(--card-bg); padding:40px 30px; border-radius:4px; border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
+<div id="b2b-view" class="hidden" style="background:var(--card-bg); padding:40px 30px; border-radius:4px; border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.02); max-width:800px; margin:auto;">
     <button onclick="window.restoreHome()" class="back-btn">Back</button>
     <h2 style="color:var(--text); margin-top:15px; font-weight: normal;">Wholesale Portal</h2>
     <p style="font-size:0.95rem; color:#666; line-height: 1.7; font-family: 'Segoe UI', sans-serif;">Procurement logistics for verified clinical and retail partners.</p>
@@ -479,18 +427,18 @@
         <h3 style="display:flex; justify-content:space-between; margin: 0; color:var(--amazon); font-family:'Playfair Display', serif; font-size:1.5rem;">Bulk Total: <span id="b2b-total">₹0</span></h3>
     </div>
 
-    <button id="submit-b2b-btn" class="btn-buy" onclick="submitB2BOrder()" style="width:100%; padding:18px; font-size:1rem; margin-top:30px; letter-spacing: 2px;">Submit Purchase Order</button>
+    <button id="submit-b2b-btn" class="btn-buy" onclick="window.submitB2BOrder()" style="width:100%; padding:18px; font-size:1rem; margin-top:30px; letter-spacing: 2px;">Submit Purchase Order</button>
 </div>
     
 <div id="cart-view" class="hidden cart-view">
-    <button onclick="closeCart()" class="back-btn">Back</button>
+    <button onclick="window.closeCart()" class="back-btn">Back</button>
     <h2 id="t-cart-title" style="margin-top: 15px; font-weight: normal; color: var(--text);">Your Ritual Bag</h2>
     <div id="cart-list" style="font-family: 'Segoe UI', sans-serif; margin-top: 25px;"></div>
     <div style="background:var(--card-bg); padding:35px 25px; border-radius:4px; border:1px solid var(--border); margin-top:30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
         <div style="background: var(--bg); padding: 20px; border-radius: 4px; margin-bottom: 30px; border: 1px dashed rgba(212, 175, 55, 0.4); font-family: 'Segoe UI', sans-serif;">
             <div style="display:flex; gap:12px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Privilege Code" style="margin:0; text-transform:uppercase; background: var(--card-bg); letter-spacing: 1px;">
-                <button class="btn-cart" onclick="applyPromo()" style="padding:0 25px; width: auto; flex: none; letter-spacing: 2px;">Apply</button>
+                <button class="btn-cart" onclick="window.applyPromo()" style="padding:0 25px; width: auto; flex: none; letter-spacing: 2px;">Apply</button>
             </div>
             <div id="promo-msg" style="font-size:0.8rem; font-weight:normal; height:18px; margin-top: 8px; letter-spacing: 0.5px;"></div>
         </div>
@@ -502,7 +450,7 @@
             <textarea id="f-address" placeholder="Street Name & Locality" rows="3" required></textarea>
             
             <div class="form-grid">
-                <input type="text" id="f-city" placeholder="City" required oninput="renderCart()">
+                <input type="text" id="f-city" placeholder="City" required oninput="window.renderCart()">
                 <input type="number" id="f-pin" placeholder="Postal Code" required>
             </div>
 
@@ -546,7 +494,7 @@
 </div>
 
 <div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); padding:50px 40px; margin-top:25px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
-    <button onclick="closeAbout()" class="back-btn" style="align-self: flex-start; margin-right: auto; display: inline-flex;">Back</button><br>
+    <button onclick="window.closeAbout()" class="back-btn" style="align-self: flex-start; margin-right: auto; display: inline-flex;">Back</button><br>
     <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.5); margin-bottom: 30px; object-fit: cover; padding: 6px;">
     <h2 style="color: var(--text); margin-top:0; margin-bottom: 10px; font-weight: normal; font-size: 1.8rem;">Dr. Prasiddhi Patil</h2>
     <h4 style="color: #888; margin-top: 0; font-weight: normal; font-family: 'Segoe UI', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">BAMS, Ahilyanagar</h4>
@@ -556,107 +504,13 @@
 </div>
 
 <div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); padding:40px 35px; margin-top:25px; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
-    <button onclick="closePolicy()" class="back-btn">Back</button>
+    <button onclick="window.closePolicy()" class="back-btn">Back</button>
     <h2 id="policy-title" style="color: var(--text); margin-top:15px; font-weight: normal;"></h2>
     <div id="policy-content" style="line-height: 1.9; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 </div>
 
-<div id="consult-overlay">
-    <div class="consult-box">
-        <img src="logo.png" class="consult-img">
-        
-        <div id="premium-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(12px);">
-            <div style="background: var(--bg); border: 1px solid rgba(212, 175, 55, 0.5); border-radius: 4px; max-width: 420px; width: 100%; padding: 40px 30px; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); text-align: center; font-family: 'Segoe UI', sans-serif; box-sizing: border-box; max-height: 85vh; overflow-y: auto;">
-                
-                <button onclick="closePremiumPopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 26px; cursor: pointer; font-weight: normal; transition: 0.3s;">&times;</button>
-                
-                <h2 style="color: var(--text); margin-top: 10px; margin-bottom: 5px; font-size: 1.5rem; font-family: 'Playfair Display', serif; font-weight: normal;">VIP Privilege</h2>
-                <p style="color: #888; font-size: 0.85rem; margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">Unlock exclusive clinical benefits</p>
-                
-                <div style="text-align: left; margin-bottom: 30px; background: var(--card-bg); padding: 25px; border-radius: 4px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🩺</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Direct private consultation access</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🛍️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Access to reserved apothecary items</span>
-                    </div>
-                    <div style="margin-bottom: 15px; display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🏷️</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Preferential acquisition pricing (-10%)</span>
-                    </div>
-                    <div style="display: flex; align-items: flex-start; color: var(--text);">
-                        <span style="color: var(--gold); font-size: 1.2rem; margin-right: 15px; line-height: 1;">🚚</span>
-                        <span style="font-size: 0.95rem; line-height: 1.5;">Complimentary priority logistics</span>
-                    </div>
-                </div>
-
-                <b style="color: #777; font-size: 0.8rem; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;">Select Tier Membership</b>
-                <form style="display: flex; justify-content: center; margin-bottom: 15px;">
-                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_Sv7BMoixqrZFmt" data-button_theme="rzp-outline-standard" async></script>
-                </form>
-                
-                <button onclick="closePremiumPopup()" style="margin-top: 25px; width: 100%; padding: 14px; background: transparent; border: 1px solid var(--border); color: #888; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Return to Directory</button>
-            </div>
-        </div>
-
-        <script>
-            function closePremiumPopup() {
-                var popup = document.getElementById('premium-popup');
-                if (popup) { popup.style.display = 'none'; }
-            }
-        </script>
-
-        <div id="vip-active-portal" style="display: none;">
-            <h2 style="color:var(--text); margin: 0 0 20px 0; font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.6rem;">Welcome, VIP</h2>
-            <p style="font-size: 0.95rem; color: #666; margin-bottom: 35px; line-height: 1.7; font-family: 'Segoe UI', sans-serif;">Your private channel is active. Begin your consultation with Dr. Prasiddhi.</p>
-            
-            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:18px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:25px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                Open Secure Channel
-            </a>
-        </div>
-        
-        <button onclick="closeConsult()" style="background: transparent; border: none; color: #888; padding: 12px; width: 100%; cursor: pointer; font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;">Dismiss</button>
-    </div>
-</div>
-
-<div id="dosha-quiz-overlay" class="hidden">
-    <div style="background: var(--bg); width: 90%; max-width: 520px; border-radius: 4px; padding: 50px 40px; text-align: center; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.4);">
-        <button onclick="closeDoshaQuiz()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 26px; cursor: pointer; transition: 0.3s;">&times;</button>
-        
-        <div id="quiz-step-1">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Skin Dosha Analysis</h2>
-            <p style="color: #777; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 40px; line-height: 1.6;">Let us uncover your clinical profile to prescribe the perfect ritual.</p>
-            
-            <p style="font-family: 'Segoe UI', sans-serif; font-weight: normal; color: var(--text); margin-bottom: 20px; text-align:left; font-size: 1.05rem;">1. How does your skin present midday?</p>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Oily and reflective, prone to congestion (Kapha)</div>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Dry, taut, and lacking elasticity (Vata)</div>
-            <div class="quiz-option" onclick="nextQuizStep(2)">Sensitive, warm, with occasional erythema (Pitta)</div>
-        </div>
-
-        <div id="quiz-step-2" class="hidden">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Skin Dosha Analysis</h2>
-            <p style="font-family: 'Segoe UI', sans-serif; font-weight: normal; color: var(--text); margin-bottom: 20px; text-align:left; margin-top:30px; font-size: 1.05rem;">2. What is your primary physiological concern?</p>
-            <div class="quiz-option" onclick="finishQuiz()">Deep purification & blemish control</div>
-            <div class="quiz-option" onclick="finishQuiz()">Intense cellular hydration & radiance</div>
-            <div class="quiz-option" onclick="finishQuiz()">Follicle health & dermal revitalization</div>
-        </div>
-
-        <div id="quiz-step-result" class="hidden">
-            <h2 style="color: var(--text); font-weight: normal; margin-top:0; font-size: 1.8rem; font-family: 'Playfair Display', serif;">Your Prescribed Ritual</h2>
-            <p style="color: #666; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 30px; line-height: 1.6;">Based on your dominant Dosha, Dr. Prasiddhi recommends focusing on balancing elements.</p>
-            <div style="background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.3); padding: 30px; border-radius: 4px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
-                <h4 style="margin:0 0 12px 0; color:var(--text); font-family: 'Playfair Display', serif; font-size: 1.3rem;">The Botanical Harmony Ritual</h4>
-                <p style="font-size:0.9rem; color:#777; font-family:'Segoe UI', sans-serif; margin:0; line-height: 1.5;">Purifying, cooling, and restorative for your specific physiological profile.</p>
-            </div>
-            <button onclick="closeDoshaQuiz(); switchMainTab('store'); filterCategory('All');" class="btn-buy" style="width: 100%; padding: 18px; font-size: 0.9rem; letter-spacing: 2px;">Explore Your Prescription</button>
-        </div>
-    </div>
-</div>
-
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="activateNav(this); restoreHome();">
+    <div class="nav-item active" onclick="window.activateNav(this); window.restoreHome();">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Discover</span>
     </div>
@@ -668,18 +522,36 @@
         <span style="font-size: 1.3rem; line-height: 22px; margin-bottom: 6px;">🩺</span>
         <span>Clinic</span>
     </div>
-    <div class="nav-item" onclick="activateNav(this); if(window.handleAccountClick) window.handleAccountClick();">
+    <div class="nav-item" onclick="window.activateNav(this); if(window.handleAccountClick) window.handleAccountClick();">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         <span>Profile</span>
     </div>
-    <div class="nav-item" onclick="activateNav(this); if(window.triggerCartFlow) window.triggerCartFlow();">
+    <div class="nav-item" onclick="window.activateNav(this); if(window.triggerCartFlow) window.triggerCartFlow();">
         <span id="nav-badge" class="nav-badge">0</span>
         <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <span>Bag</span>
     </div>
 </div>
 
-<script>
+<!-- 🔥 MASTER ENGINE: FIREBASE & ALL APP LOGIC FIRED TOGETHER TO PREVENT CRASHES 🔥 -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, query, where, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+
+    const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
+    const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
+
+    // GLOBAL VARIABLES ATTACHED TO WINDOW TO PREVENT SCOPE CRASHES
+    window.currentUser = null; window.isUserVIP = false; 
+    window.products = []; window.cart = {}; window.allPromos = []; window.activePromo = null; window.appliedDiscount = 0; 
+    window.multiAds = []; window.activeUpsell = null; window.windowHasUpsellShown = false; 
+    window.currentModalProductId = null;
+    const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
+    window.dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
+    window.isStoreOffline = false;
+
     window.togglePlatformTheme = function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -689,13 +561,6 @@
         if(btn) btn.innerText = targetTheme === 'dark' ? '☀️' : '🌙';
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('platform-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        const btn = document.getElementById('theme-switcher-btn');
-        if(btn) btn.innerText = savedTheme === 'dark' ? '☀️' : '🌙';
-    });
-    
     window.switchLMSSubTab = function(tabName) {
         document.querySelectorAll('.sub-tab-item').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById('sub-tab-' + tabName);
@@ -707,8 +572,8 @@
 
     window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
-    
     window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
+    
     window.openConsult = function() {
         if (window.isUserVIP === true) {
             const el = document.getElementById('consult-overlay');
@@ -735,12 +600,10 @@
         document.getElementById('quiz-step-2').classList.add('hidden');
         document.getElementById('quiz-step-result').classList.remove('hidden');
     };
-    window.closeDoshaQuiz = function() {
-        document.getElementById('dosha-quiz-overlay').classList.add('hidden');
-    };
+    window.closeDoshaQuiz = function() { document.getElementById('dosha-quiz-overlay').classList.add('hidden'); };
 
     window.conciergeCheckout = function() {
-        const p = products.find(x => x.id === currentModalProductId);
+        const p = window.products.find(x => x.id === window.currentModalProductId);
         if(!p) return;
         const subRadio = document.querySelector('input[name="purchase_type"]:checked').value;
         const subText = subRadio === 'subscribe' ? " (Auto-Replenish Subscription 10% Off)" : "";
@@ -752,25 +615,23 @@
         const tStore = document.getElementById('tab-store');
         const tVideos = document.getElementById('tab-videos');
         const tWorkshops = document.getElementById('tab-workshops');
+        window.hideSafe('home-top-section'); window.hideSafe('search-section'); window.hideSafe('main-view'); window.hideSafe('t-offer-banner'); window.hideSafe('site-footer'); window.hideSafe('videos-view'); window.hideSafe('workshops-view');
 
         if(tab === 'store') {
             if(tStore) tStore.className = 'tab-btn-main active';
             if(tVideos) tVideos.className = 'tab-btn-main inactive';
             if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
             window.showSafe('home-top-section'); window.showSafe('search-section'); window.showSafe('main-view'); window.showSafe('t-offer-banner'); window.showSafe('site-footer'); 
-            window.hideSafe('videos-view'); window.hideSafe('workshops-view');
         } else if (tab === 'videos') {
             if(tVideos) tVideos.className = 'tab-btn-main active';
             if(tStore) tStore.className = 'tab-btn-main inactive';
             if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-            window.hideSafe('home-top-section'); window.hideSafe('search-section'); window.hideSafe('main-view'); window.hideSafe('t-offer-banner'); window.hideSafe('site-footer'); 
-            window.showSafe('videos-view'); window.hideSafe('workshops-view');
+            window.showSafe('videos-view'); 
         } else if (tab === 'workshops') {
             if(tWorkshops) tWorkshops.className = 'tab-btn-main active';
             if(tStore) tStore.className = 'tab-btn-main inactive';
             if(tVideos) tVideos.className = 'tab-btn-main inactive';
-            window.hideSafe('home-top-section'); window.hideSafe('search-section'); window.hideSafe('main-view'); window.hideSafe('t-offer-banner'); window.hideSafe('site-footer'); 
-            window.hideSafe('videos-view'); window.showSafe('workshops-view');
+            window.showSafe('workshops-view');
         }
     };
 
@@ -779,30 +640,6 @@
         if (!elem) return;
         if (elem.requestFullscreen) { elem.requestFullscreen().catch(e => console.log(e)); } 
         else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
-    };
-
-    const originalJoinLiveStream = window.joinLiveStream;
-    window.joinLiveStream = function(token) {
-        if(originalJoinLiveStream) originalJoinLiveStream(token);
-        var fsBtn = document.getElementById('fullscreen-btn');
-        if(fsBtn) fsBtn.style.display = 'block';
-        var wrapper = document.getElementById('live-video-wrapper');
-        if(wrapper && !document.getElementById('leave-class-btn')) {
-            var btn = document.createElement('button');
-            btn.id = 'leave-class-btn';
-            btn.innerHTML = 'Leave Session';
-            btn.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 99; background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 8px 16px; font-weight: normal; cursor: pointer; font-family: "Segoe UI", sans-serif; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s;';
-            btn.onclick = function() {
-                var player = document.getElementById('student-video-player');
-                if(player) { player.innerHTML = ''; player.style.display = 'none'; }
-                document.getElementById('live-banner-img').style.display = 'block';
-                if(fsBtn) fsBtn.style.display = 'none';
-                this.style.display = 'none';
-            };
-            wrapper.appendChild(btn);
-        } else if (document.getElementById('leave-class-btn')) {
-            document.getElementById('leave-class-btn').style.display = 'block';
-        }
     };
 
     window.payForWorkshop = function(title, amount, whatsappUrl) {
@@ -815,22 +652,25 @@
         var rzp = new Razorpay(options); rzp.open();
     };
     
-    window.galleryInterval = null; 
-    window.currentGalleryIndex = 0;
+    // 🔍 FULLSCREEN ZOOM FUNCTIONS
+    window.openFullscreenImage = (src) => {
+        document.getElementById('fullscreen-img').src = src;
+        document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
+    };
+    window.closeFullscreenImage = () => { document.getElementById('fullscreen-image-overlay').classList.add('hidden'); };
+
+    window.modalGalleryInterval = null; 
+    window.modalGalleryIndex = 0;
 
     window.resetViews = function() {
-        clearInterval(window.galleryInterval); 
+        clearInterval(window.modalGalleryInterval); 
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
-        window.closeConsult(); window.closeDoshaQuiz();
+        window.closeConsult(); window.closeDoshaQuiz(); window.closeFullscreenImage();
     };
 
     window.openB2B = function() { window.resetViews(); window.showSafe('b2b-view'); window.scrollTo(0, 0); window.renderB2BProducts(); };
     window.restoreHome = function() { window.resetViews(); window.switchMainTab('store'); window.scrollTo(0, 0); };
-
-    window.activateNav = function(el) {
-        if(!el) return; document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active');
-    };
-
+    window.activateNav = function(el) { if(!el) return; document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); };
     window.showAbout = function() { window.resetViews(); window.showSafe('about-view'); window.scrollTo(0, 0); };
     window.closeAbout = function() { window.restoreHome(); };
     window.showPolicy = function(type) {
@@ -842,30 +682,53 @@
     };
     window.closePolicy = function() { window.restoreHome(); };
     
-    window.openProduct = (id) => { 
-        const p = products.find(x => x.id === id); if(!p) return; 
-        currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
+    // 🔥 THE AUTO-SCROLLING, SWIPEABLE GALLERY WITH ZOOM 🔥
+    window.openProduct = function(id) { 
+        const p = window.products.find(x => x.id === id); if(!p) return; 
+        window.currentModalProductId = id; document.getElementById('modal-qty').innerText = window.cart[id] || 0; 
         window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
         
-        clearInterval(window.galleryInterval); 
-        const imgEl = document.getElementById('modal-img');
-        const gallery = (p.gallery && p.gallery.length > 0) ? p.gallery : [p.image];
-        window.currentGalleryIndex = 0;
+        clearInterval(window.modalGalleryInterval); 
+        const galleryContainer = document.getElementById('modal-gallery-track');
+        const dotsContainer = document.getElementById('modal-gallery-dots');
         
-        imgEl.src = gallery[0];
-        imgEl.style.transition = "opacity 0.4s ease-in-out"; 
-        imgEl.style.opacity = 1;
+        const galleryImages = (p.gallery && p.gallery.length > 0) ? p.gallery : [p.image];
+        window.modalGalleryIndex = 0;
+        
+        galleryContainer.innerHTML = galleryImages.map((img) => `
+            <div style="min-width: 100%; box-sizing: border-box; padding: 10px;">
+                <img src="${img}" onclick="window.openFullscreenImage('${img}')" style="width: 100%; height: 350px; object-fit: contain; cursor: zoom-in; drop-shadow: 0 10px 20px rgba(0,0,0,0.05); mix-blend-mode: multiply;">
+            </div>
+        `).join('');
 
-        if (gallery.length > 1) {
-            window.galleryInterval = setInterval(() => {
-                imgEl.style.opacity = 0.3; 
-                setTimeout(() => {
-                    window.currentGalleryIndex = (window.currentGalleryIndex + 1) % gallery.length;
-                    imgEl.src = gallery[window.currentGalleryIndex]; 
-                    imgEl.style.opacity = 1; 
-                }, 400); 
-            }, 3500); 
-        }
+        if(galleryImages.length > 1) {
+            dotsContainer.innerHTML = galleryImages.map((_, i) => `<span id="gdot-${i}" style="height: 8px; width: 8px; margin: 0 5px; background-color: ${i===0 ? 'var(--amazon)' : '#ccc'}; border-radius: 50%; display: inline-block; transition: 0.3s;"></span>`).join('');
+            
+            const updateGalleryUI = () => {
+                galleryContainer.style.transform = `translateX(-${window.modalGalleryIndex * 100}%)`;
+                for(let i=0; i<galleryImages.length; i++) {
+                    const d = document.getElementById(`gdot-${i}`);
+                    if(d) d.style.backgroundColor = i === window.modalGalleryIndex ? 'var(--amazon)' : '#ccc';
+                }
+            };
+
+            window.modalGalleryInterval = setInterval(() => {
+                window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length;
+                updateGalleryUI();
+            }, 3500);
+
+            let startX = 0; let isSwiping = false;
+            const wrap = document.getElementById('modal-gallery-container');
+            
+            wrap.ontouchstart = (e) => { startX = e.touches[0].clientX; isSwiping = true; clearInterval(window.modalGalleryInterval); };
+            wrap.ontouchend = (e) => {
+                if(!isSwiping) return; let endX = e.changedTouches[0].clientX;
+                if(startX - endX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; }
+                else if(endX - startX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex - 1 + galleryImages.length) % galleryImages.length; }
+                updateGalleryUI(); isSwiping = false;
+                window.modalGalleryInterval = setInterval(() => { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; updateGalleryUI(); }, 3500);
+            };
+        } else { dotsContainer.innerHTML = ''; }
         
         document.getElementById('modal-name').innerText = p.name; 
         document.getElementById('modal-price').innerText = `₹${p.price}`; 
@@ -882,39 +745,17 @@
             document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added"; setTimeout(() => { btn.innerText = "Add to Bag"; }, 1500); }; 
             document.getElementById('modal-add-btn').innerText = "Add to Bag";
             document.getElementById('modal-buy-btn').style.display = "block";
-            document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
+            document.getElementById('modal-buy-btn').onclick = () => { if (!window.cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
         }
 
         let avg = "5.0"; let revCount = 0; if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
         document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; document.getElementById('modal-rating-count').innerText = `(${revCount} profiles)`;
-        renderReviews(p.reviews || []);
+        window.renderReviews(p.reviews || []);
     };
 
     window.closeProduct = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeCart = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeProfile = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
-
-    window.addEventListener('load', () => { setTimeout(() => { window.openConsult(); }, 3000); });
-</script>
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,mr,hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
-    }
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, query, where, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
-
-    const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
-    const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
-
-    window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; 
-    let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     let messaging = null;
     try {
@@ -932,27 +773,27 @@
             }
         } catch (error) {}
     };
-    
-    let dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
 
     window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); window.isUserVIP = false; render(); }); };
+    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('login-button-container').style.display = 'block'; document.getElementById('logged-in-profile-content').style.display = 'none'; window.isUserVIP = false; window.render(); }); };
     
     window.handleAccountClick = () => { 
-        if(window.currentUser) { window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0); loadMyOrders(); } 
-        else { window.login(); }         
+        window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0);
+        if(window.currentUser) { 
+            document.getElementById('login-button-container').style.display = 'none';
+            document.getElementById('logged-in-profile-content').style.display = 'block';
+            window.loadMyOrders(); 
+        } else { 
+            document.getElementById('login-button-container').style.display = 'block';
+            document.getElementById('logged-in-profile-content').style.display = 'none';
+        }         
     };
 
     onAuthStateChanged(auth, async (user) => { 
         window.currentUser = user;
-        const loginWall = document.getElementById('login-wall');
-
         if(user) { 
-            // ✅ USER IS LOGGED IN - HIDE THE WALL WITH A SMOOTH FADE
-            if(loginWall) {
-                loginWall.style.opacity = '0';
-                setTimeout(() => { loginWall.style.visibility = 'hidden'; }, 600);
-            }
+            document.getElementById('login-button-container').style.display = 'none';
+            document.getElementById('logged-in-profile-content').style.display = 'block';
 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             setTimeout(() => window.requestNotificationPermission(), 2000);
@@ -966,19 +807,16 @@
                 const profDisplay = document.getElementById('prof-name-display');
                 if(profDisplay) profDisplay.innerText = user.displayName;
             }
-            if(!document.getElementById('profile-view').classList.contains('hidden')) loadMyOrders();
+            if(!document.getElementById('profile-view').classList.contains('hidden')) window.loadMyOrders();
         } else { 
-            // ❌ USER IS NOT LOGGED IN - SHOW THE WALL
             window.isUserVIP = false; 
-            if(loginWall) {
-                loginWall.style.visibility = 'visible';
-                loginWall.style.opacity = '1';
-            }
+            document.getElementById('login-button-container').style.display = 'block';
+            document.getElementById('logged-in-profile-content').style.display = 'none';
         }
-        render(); if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
+        window.render(); if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
     });
 
-    async function loadMyOrders() {
+    window.loadMyOrders = async function() {
         if(!window.currentUser) return;
         const list = document.getElementById('prof-orders-list'); list.innerHTML = 'Indexing records...';
         try {
@@ -998,7 +836,7 @@
                 if (o.status === 'Delivered') { line2 = 'active-line'; step3 = 'active-circle'; text3 = 'active-text'; }
                 let trackingBtn = '';
                 if(o.trackingLink) { trackingBtn = `<a href="${o.trackingLink}" target="_blank" class="btn-cart" style="display:block; margin-top:20px; text-decoration:none;">Track Shipment</a>`; }
-                let orderAgainBtn = o.cartData ? `<button onclick="orderAgain('${o.id}')" class="btn-cart" style="margin-top:15px; width:100%; border:1px solid rgba(212, 175, 55, 0.4); color:var(--text); letter-spacing:1px;">Restore Ritual</button>` : '';
+                let orderAgainBtn = o.cartData ? `<button onclick="window.orderAgain('${o.id}')" class="btn-cart" style="margin-top:15px; width:100%; border:1px solid rgba(212, 175, 55, 0.4); color:var(--text); letter-spacing:1px;">Restore Ritual</button>` : '';
                 html += `
                 <div style="border:1px solid var(--border); border-radius:4px; padding:25px; margin-bottom:20px; background:var(--bg); box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
                     <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-family:'Segoe UI',sans-serif;">
@@ -1028,8 +866,8 @@
     async function load() {
         try { 
             const snap = await getDocs(collection(db, "products")); 
-            products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            render();
+            window.products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
+            window.render();
         } catch(e) {}
         
         try {
@@ -1051,13 +889,13 @@
         } catch(e) {}
 
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
-        try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } } catch(e) {}
+        try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { window.allPromos = promoSnap.data().codes; } } catch(e) {}
         
         try { 
             const setSnap = await getDoc(doc(db, "settings", "store_config")); 
             if(setSnap.exists()) { 
                 const data = setSnap.data();
-                if(data.ads && data.ads.length > 0) { multiAds = data.ads; startMultiAds(); }
+                if(data.ads && data.ads.length > 0) { window.multiAds = data.ads; window.startMultiAds(); }
                 if(data.custom_image_ads && data.custom_image_ads.length > 0) {
                     const adTrack = document.getElementById('image-ad-track'); const adWrap = document.getElementById('dynamic-image-ads');
                     if(adTrack) {
@@ -1077,52 +915,53 @@
                         }
                     }
                 }
-                if(data.upsell && data.upsell.isActive) { activeUpsell = data.upsell; }
+                if(data.upsell && data.upsell.isActive) { window.activeUpsell = data.upsell; }
                 if(data.billing) {
-                    dynamicBilling.gst = data.billing.gst !== undefined ? data.billing.gst : 5;
-                    dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
-                    dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
-                    dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
-                    dynamicBilling.localCity = data.billing.localCity || "nashik";
-                    dynamicBilling.localPin = data.billing.localPin || "";
-                    dynamicBilling.b2bGst = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
-                    dynamicBilling.b2bHandling = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
-                    dynamicBilling.b2bShipping = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
-                    dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
-                    const bannerThresh = document.getElementById('banner-threshold'); if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
+                    window.dynamicBilling.gst = data.billing.gst !== undefined ? data.billing.gst : 5;
+                    window.dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
+                    window.dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
+                    window.dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
+                    window.dynamicBilling.localCity = data.billing.localCity || "nashik";
+                    window.dynamicBilling.localPin = data.billing.localPin || "";
+                    window.dynamicBilling.b2bGst = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
+                    window.dynamicBilling.b2bHandling = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
+                    window.dynamicBilling.b2bShipping = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
+                    window.dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
+                    const bannerThresh = document.getElementById('banner-threshold'); if(bannerThresh) bannerThresh.innerText = window.dynamicBilling.threshold;
                 }
+                window.isStoreOffline = (data.storeStatus === 'offline');
             } 
         } catch(e) {}
     }
 
-    function startMultiAds() {
-        if(multiAds.length === 0) return; document.getElementById('top-promo-bar').style.display = 'block';
-        const combinedAds = multiAds.join('       |       '); document.getElementById('multi-ad-container').innerHTML = combinedAds + '       |       ' + combinedAds;
+    window.startMultiAds = function() {
+        if(window.multiAds.length === 0) return; document.getElementById('top-promo-bar').style.display = 'block';
+        const combinedAds = window.multiAds.join('       |       '); document.getElementById('multi-ad-container').innerHTML = combinedAds + '       |       ' + combinedAds;
     }
 
     window.triggerCartFlow = () => {
-        let count = Object.values(cart).reduce((a,b)=>a+b,0);
-        if(count > 0 && activeUpsell && !windowHasUpsellShown && !cart[activeUpsell.productId]) {
-            const upProd = products.find(p => p.id === activeUpsell.productId);
+        let count = Object.values(window.cart).reduce((a,b)=>a+b,0);
+        if(count > 0 && window.activeUpsell && !window.windowHasUpsellShown && !window.cart[window.activeUpsell.productId]) {
+            const upProd = window.products.find(p => p.id === window.activeUpsell.productId);
             if(upProd && (!upProd.isVault || window.isUserVIP)) {
                 document.getElementById('up-img').src = upProd.image; document.getElementById('up-name').innerText = upProd.name;
-                document.getElementById('up-old-price').innerText = "₹" + upProd.price; document.getElementById('up-new-price').innerText = activeUpsell.specialPrice;
+                document.getElementById('up-old-price').innerText = "₹" + upProd.price; document.getElementById('up-new-price').innerText = window.activeUpsell.specialPrice;
                 document.getElementById('upsell-overlay').classList.remove('hidden');
-                document.getElementById('up-btn').onclick = () => { cart[upProd.id] = 1; appliedDiscount = upProd.price - activeUpsell.specialPrice; windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); updateBadge(); window.showCart(); };
+                document.getElementById('up-btn').onclick = () => { window.cart[upProd.id] = 1; window.appliedDiscount = upProd.price - window.activeUpsell.specialPrice; window.windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.updateBadge(); window.showCart(); };
                 return;
             }
         }
         window.showCart(); 
     };
 
-    window.skipUpsell = () => { windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.showCart(); };
+    window.skipUpsell = () => { window.windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.showCart(); };
     window.showCart = () => { window.resetViews(); window.showSafe('cart-view'); window.scrollTo(0, 0); window.renderCart(); };
 
     // B2B Wholesale Engine
     let b2bCart = {};
     window.renderB2BProducts = function() {
         const list = document.getElementById('b2b-product-list'); if(!list) return; list.innerHTML = '';
-        products.forEach(p => {
+        window.products.forEach(p => {
             const qty = b2bCart[p.id] || 0;
             list.innerHTML += `
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:18px; border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; background: var(--bg);">
@@ -1131,9 +970,9 @@
                         <div style="font-size:0.85rem; color:#888; margin-top:6px; letter-spacing:0.5px;">Value: ₹${p.price}</div>
                     </div>
                     <div style="display:flex; align-items:center; gap:12px; background: var(--card-bg); padding: 5px; border-radius: 4px; border: 1px solid var(--border);">
-                        <button onclick="updateB2BQty('${p.id}', -1)" style="background:transparent; border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; color:var(--text); font-size:1.1rem; transition:0.3s;">−</button>
+                        <button onclick="window.updateB2BQty('${p.id}', -1)" style="background:transparent; border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; color:var(--text); font-size:1.1rem; transition:0.3s;">−</button>
                         <span style="font-weight:600; min-width:20px; text-align:center; color: var(--text);">${qty}</span>
-                        <button onclick="updateB2BQty('${p.id}', 1)" style="background:transparent; color:var(--amazon); border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; font-size:1.1rem; transition:0.3s;">+</button>
+                        <button onclick="window.updateB2BQty('${p.id}', 1)" style="background:transparent; color:var(--amazon); border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; font-size:1.1rem; transition:0.3s;">+</button>
                     </div>
                 </div>`;
         });
@@ -1144,7 +983,7 @@
 
     window.calculateB2BTotal = function() {
         let totalQty = 0; let totalMrp = 0;
-        for(let id in b2bCart) { const p = products.find(x => x.id === id); if(p) { totalQty += b2bCart[id]; totalMrp += (p.price * b2bCart[id]); } }
+        for(let id in b2bCart) { const p = window.products.find(x => x.id === id); if(p) { totalQty += b2bCart[id]; totalMrp += (p.price * b2bCart[id]); } }
         let margin = 0;
         if(totalQty >= 100) margin = 0.35; else if(totalQty >= 50) margin = 0.30; else if(totalQty >= 20) margin = 0.25;  
         const discountAmt = Math.floor(totalMrp * margin); const finalB2BTotal = totalMrp - discountAmt;
@@ -1162,11 +1001,11 @@
         let totalQty = parseInt(document.getElementById('b2b-total-qty').innerText);
         if(totalQty < 20) { alert("A minimum of 20 units is required to apply wholesale margins."); return; }
         let orderSummary = "";
-        for(let id in b2bCart) { const p = products.find(x => x.id === id); if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`; }
+        for(let id in b2bCart) { const p = window.products.find(x => x.id === id); if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`; }
         const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', ''); const totalAmt = parseInt(totalAmtStr) || 0;
         const discountStr = document.getElementById('b2b-margin-percent').innerText;
-        const b2bGst = dynamicBilling.b2bGst !== undefined ? dynamicBilling.b2bGst : 18; const b2bShipping = dynamicBilling.b2bShipping !== undefined ? dynamicBilling.b2bShipping : 300;
-        const b2bHandling = dynamicBilling.b2bHandling !== undefined ? dynamicBilling.b2bHandling : 150; const b2bThreshold = dynamicBilling.b2bThreshold !== undefined ? dynamicBilling.b2bThreshold : 5000;
+        const b2bGst = window.dynamicBilling.b2bGst !== undefined ? window.dynamicBilling.b2bGst : 18; const b2bShipping = window.dynamicBilling.b2bShipping !== undefined ? window.dynamicBilling.b2bShipping : 300;
+        const b2bHandling = window.dynamicBilling.b2bHandling !== undefined ? window.dynamicBilling.b2bHandling : 150; const b2bThreshold = window.dynamicBilling.b2bThreshold !== undefined ? window.dynamicBilling.b2bThreshold : 5000;
         const b2bGstAmt = Math.floor(totalAmt * (b2bGst / 100)); let b2bShippingAmt = totalAmt >= b2bThreshold ? 0 : b2bShipping; let b2bHandlingAmt = b2bHandling;
         const finalGrandTotal = totalAmt + b2bGstAmt + b2bShippingAmt + b2bHandlingAmt;
         const btn = document.getElementById('submit-b2b-btn'); btn.innerText = "Securing transaction..."; btn.disabled = true;
@@ -1189,10 +1028,10 @@
         rzpB2B.open();
     };
     
-    function render() {
+    window.render = function() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
-        products.forEach(p => {
-            const q = cart[p.id] || 0; 
+        window.products.forEach(p => {
+            const q = window.cart[p.id] || 0; 
             let badgeHtml = p.tag ? `<div class="p-badge">${p.tag}</div>` : '';
             let buttonHtml = '';
             
@@ -1201,17 +1040,16 @@
             if (p.isVault) {
                 badgeHtml = `<div class="p-badge" style="background: var(--amazon); color: var(--gold); border: none; font-weight: normal; font-family:'Playfair Display', serif; font-style:italic; letter-spacing:1px; box-shadow:0 4px 10px rgba(15,61,20,0.3);">VIP Reserved</div>`;
                 if (!window.isUserVIP) {
-                    buttonHtml = `<div class="p-actions"><button style="background:transparent; color:var(--text); border:1px solid rgba(212, 175, 55, 0.4); padding:12px 0; border-radius:4px; font-weight:normal; width:100%; font-size:0.8rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);" onclick="openConsult()" onmouseover="this.style.background='rgba(212,175,55,0.05)'" onmouseout="this.style.background='transparent'">Unlock Access</button></div>`;
+                    buttonHtml = `<div class="p-actions"><button style="background:transparent; color:var(--text); border:1px solid rgba(212, 175, 55, 0.4); padding:12px 0; border-radius:4px; font-weight:normal; width:100%; font-size:0.8rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);" onclick="window.openConsult()" onmouseover="this.style.background='rgba(212,175,55,0.05)'" onmouseout="this.style.background='transparent'">Unlock Access</button></div>`;
                 } else {
-                    if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`; } 
-                    else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add to Bag</button></div>`; }
+                    if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; } 
+                    else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add to Bag</button></div>`; }
                 }
             } else {
-                if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`; } 
-                else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Purchase</button></div>`; }
+                if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; } 
+                else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="window.buyNow('${p.id}')">Purchase</button></div>`; }
             }
 
-            // 🔥 STORE OFFLINE MAINTENANCE OVERRIDE 🔥
             if(window.isStoreOffline) {
                 buttonHtml = `<div class="p-actions"><button style="background:#ddd; color:#888; border:none; padding:10px 0; border-radius:8px; font-weight:700; width:100%; font-size:0.85rem; cursor:not-allowed; font-family:'Segoe UI', sans-serif;" onclick="alert('🔴 Sorry, the store is currently closed for maintenance. Please check back later!')">Store Offline</button></div>`;
             }
@@ -1219,12 +1057,12 @@
             grid.innerHTML += `
             <div class="p-card">
                 ${badgeHtml}
-                <div class="p-img-container" onclick="openProduct('${p.id}')">
+                <div class="p-img-container" onclick="window.openProduct('${p.id}')">
                     <img src="${p.image}" class="p-img" loading="lazy">
                 </div>
                 <div class="p-details">
                     <span class="sensory-badge">${sensoryText}</span>
-                    <h4 onclick="openProduct('${p.id}')">${p.name}</h4>
+                    <h4 onclick="window.openProduct('${p.id}')">${p.name}</h4>
                     <div class="p-price-row">
                         <span class="p-price">₹${p.price}</span>
                     </div>
@@ -1236,18 +1074,18 @@
 
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); if (text.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
     
-    window.updateQty = (id, d) => { cart[id] = (cart[id] || 0) + d; if(cart[id] <= 0) delete cart[id]; render(); updateBadge(); window.renderCart(); if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; } };
+    window.updateQty = (id, d) => { window.cart[id] = (window.cart[id] || 0) + d; if(window.cart[id] <= 0) delete window.cart[id]; window.render(); window.updateBadge(); window.renderCart(); if (window.currentModalProductId === id) { document.getElementById('modal-qty').innerText = window.cart[id] || 0; } };
     
     window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = 'transparent'; btn.style.color = 'var(--text)'; btn.style.border = '1px solid var(--border)'; btn.style.boxShadow = 'none'; }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'var(--gold)'; event.target.style.border = '1px solid var(--amazon)'; event.target.style.boxShadow = '0 4px 15px rgba(15, 61, 20, 0.15)'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
 
     window.checkPincode = () => { const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg'); if(pin.length === 6) { msg.style.color = "var(--amazon)"; msg.innerText = "Serviceability confirmed: " + pin + " (Standard timeframe)"; } else { msg.style.color = "#888"; msg.innerText = "Please provide a standard 6-digit postal code."; } };
 
-    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); };
+    window.buyNow = (id) => { if(!window.cart[id]) window.cart[id] = 1; window.updateBadge(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); };
 
-    function renderReviews(reviews) {
+    window.renderReviews = function(reviews) {
         const list = document.getElementById('modal-reviews-list');
         if(reviews.length === 0) { list.innerHTML = "<p style='color:#999; margin-top:0;'>Awaiting initial clinical feedback.</p>"; return; }
-        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid rgba(212, 175, 55, 0.2); padding-bottom:25px; margin-bottom:25px;"><b style="color:var(--text); font-size:1.05rem; font-weight:normal; letter-spacing:0.5px;">${r.name}</b> <br><span style="color:var(--gold); font-size:0.85rem; letter-spacing:2px; margin-top:4px; display:inline-block;">${'★'.repeat(Number(r.rating))}</span><p style="margin:15px 0; color:#555; line-height:1.7;">${r.text}</p>${r.image ? `<img src="${r.image}" style="max-width:120px; border-radius:4px; margin-top:10px; border: 1px solid var(--border);">` : ''}</div>`).join('');
+        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid rgba(212, 175, 55, 0.2); padding-bottom:25px; margin-bottom:25px;"><b style="color:var(--text); font-size:1.05rem; font-weight:normal; letter-spacing:0.5px;">${r.name}</b> <br><span style="color:var(--gold); font-size:0.85rem; letter-spacing:2px; margin-top:4px; display:inline-block;">${'★'.repeat(Number(r.rating))}</span><p style="margin:15px 0; color:#555; line-height:1.7;">${r.text}</p>${r.image ? `<img src="${r.image}" onclick="window.openFullscreenImage('${r.image}')" style="max-width:120px; border-radius:4px; margin-top:10px; border: 1px solid var(--border); cursor:zoom-in;">` : ''}</div>`).join('');
     }
 
     window.submitReview = async () => {
@@ -1258,31 +1096,31 @@
         btn.innerText = "Processing..."; btn.disabled = true; let imageUrl = null;
         if(file) { try { const formData = new FormData(); formData.append('image', file); const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData }); const data = await response.json(); if(data.success) { imageUrl = data.data.url; } } catch (error) { console.error("Media error"); } }
         const newReview = { name: user.displayName.split(' ')[0], text: text, rating: rating, image: imageUrl, date: new Date().toISOString() };
-        try { await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Submitted."; setTimeout(() => { btn.innerText = "Submit Feedback"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "System error."; setTimeout(() => { btn.innerText = "Submit Feedback"; btn.disabled = false; }, 2000); }
+        try { await updateDoc(doc(db, "products", window.currentModalProductId), { reviews: arrayUnion(newReview) }); const p = window.products.find(x => x.id === window.currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; window.renderReviews(p.reviews); window.render(); btn.innerText = "Submitted."; setTimeout(() => { btn.innerText = "Submit Feedback"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "System error."; setTimeout(() => { btn.innerText = "Submit Feedback"; btn.disabled = false; }, 2000); }
     };
 
-    function updateBadge() { let total = Object.values(cart).reduce((a,b)=>a+b,0); document.getElementById('nav-badge').innerText = total; }
+    window.updateBadge = function() { let total = Object.values(window.cart).reduce((a,b)=>a+b,0); document.getElementById('nav-badge').innerText = total; }
 
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
-        let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
-        const matchedPromo = allPromos.find(p => p.code === input);
-        if (matchedPromo) { if (sub < matchedPromo.minOrder) { msg.style.color = "#888"; msg.innerText = `Balance of ₹${matchedPromo.minOrder - sub} required to activate.`; appliedDiscount = 0; activePromo = null; } else { msg.style.color = "var(--amazon)"; msg.innerText = `Privilege code validated.`; appliedDiscount = matchedPromo.discount; activePromo = matchedPromo; } } else { msg.style.color = "#888"; msg.innerText = "Code not recognized."; appliedDiscount = 0; activePromo = null; }
+        let sub = Object.keys(window.cart).reduce((acc, id) => acc + (window.products.find(p => p.id === id)?.price || 0) * window.cart[id], 0);
+        const matchedPromo = window.allPromos.find(p => p.code === input);
+        if (matchedPromo) { if (sub < matchedPromo.minOrder) { msg.style.color = "#888"; msg.innerText = `Balance of ₹${matchedPromo.minOrder - sub} required to activate.`; window.appliedDiscount = 0; window.activePromo = null; } else { msg.style.color = "var(--amazon)"; msg.innerText = `Privilege code validated.`; window.appliedDiscount = matchedPromo.discount; window.activePromo = matchedPromo; } } else { msg.style.color = "#888"; msg.innerText = "Code not recognized."; window.appliedDiscount = 0; window.activePromo = null; }
         window.renderCart();
     };
 
-    window.updateCartQty = (id, newQty) => { let qty = parseInt(newQty); if(qty > 0) { cart[id] = qty; } else { delete cart[id]; } render(); updateBadge(); window.renderCart(); };
-    window.removeFromCart = (id) => { delete cart[id]; render(); updateBadge(); window.renderCart(); };
+    window.updateCartQty = (id, newQty) => { let qty = parseInt(newQty); if(qty > 0) { window.cart[id] = qty; } else { delete window.cart[id]; } window.render(); window.updateBadge(); window.renderCart(); };
+    window.removeFromCart = (id) => { delete window.cart[id]; window.render(); window.updateBadge(); window.renderCart(); };
 
     window.renderCart = function() {
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
-        for(let id in cart) { 
-            const p = products.find(x => x.id === id); 
+        for(let id in window.cart) { 
+            const p = window.products.find(x => x.id === id); 
             if(p) { 
-                sub += p.price * cart[id]; count += cart[id]; 
+                sub += p.price * window.cart[id]; count += window.cart[id]; 
                 list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid rgba(212, 175, 55, 0.2); padding-bottom:20px; font-family:'Segoe UI',sans-serif;">
                     <div style="flex:1;"><b style="color:var(--text); font-size:1.05rem; display:block; font-weight:normal; letter-spacing:0.5px;">${p.name}</b><span style="color:#888; font-size:0.85rem; letter-spacing:1px; margin-top:4px; display:inline-block;">Value: ₹${p.price}</span></div>
-                    <div style="display:flex; align-items:center; gap:15px;"><input type="number" value="${cart[id]}" onchange="updateCartQty('${p.id}', this.value)" style="width:50px; padding:8px; margin:0; text-align:center; border:1px solid rgba(212, 175, 55, 0.4); border-radius:4px; background:var(--bg); transition:0.3s;"><span style="font-weight:600; min-width:60px; text-align:right; font-size:1.05rem;">₹${p.price*cart[id]}</span><button onclick="removeFromCart('${p.id}')" style="background:none; border:none; color:#999; font-size:1.4rem; cursor:pointer; transition:0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='#999'">&times;</button></div>
+                    <div style="display:flex; align-items:center; gap:15px;"><input type="number" value="${window.cart[id]}" onchange="window.updateCartQty('${p.id}', this.value)" style="width:50px; padding:8px; margin:0; text-align:center; border:1px solid rgba(212, 175, 55, 0.4); border-radius:4px; background:var(--bg); transition:0.3s;"><span style="font-weight:600; min-width:60px; text-align:right; font-size:1.05rem;">₹${p.price*window.cart[id]}</span><button onclick="window.removeFromCart('${p.id}')" style="background:none; border:none; color:#999; font-size:1.4rem; cursor:pointer; transition:0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='#999'">&times;</button></div>
                 </div>`; 
             } 
         }
@@ -1296,17 +1134,17 @@
             document.getElementById('vip-discount-row').classList.add('hidden');
         }
 
-        const discountedSubtotal = sub - vipDiscountAmount - appliedDiscount;
+        const discountedSubtotal = sub - vipDiscountAmount - window.appliedDiscount;
         
         let isNashik = false; 
         const cityField = document.getElementById('f-city');
         if(cityField) {
             const cityVal = cityField.value.toLowerCase().replace(/\s/g, '');
-            const targetCity = (dynamicBilling.localCity || "nashik").toLowerCase().replace(/\s/g, '');
+            const targetCity = (window.dynamicBilling.localCity || "nashik").toLowerCase().replace(/\s/g, '');
             if(cityVal !== "" && targetCity !== "" && (cityVal === targetCity || cityVal.includes(targetCity))) { isNashik = true; }
         }
 
-        let handlingFee = sub > 0 ? dynamicBilling.handling : 0;
+        let handlingFee = sub > 0 ? window.dynamicBilling.handling : 0;
         const payMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
         const codWarning = document.getElementById('cod-warning');
         const checkoutBtn = document.querySelector('#order-form .btn-buy');
@@ -1325,18 +1163,18 @@
             checkoutBtn.disabled = false; checkoutBtn.style.opacity = '1'; checkoutBtn.innerText = 'Complete Secure Procurement';
         }
         
-        const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (dynamicBilling.gst / 100)) : 0; 
-        const isFreeShipping = (discountedSubtotal >= dynamicBilling.threshold || count >= 5 || window.isUserVIP || isNashik); 
-        const shippingFee = (isFreeShipping || sub === 0) ? 0 : dynamicBilling.shipping;
+        const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (window.dynamicBilling.gst / 100)) : 0; 
+        const isFreeShipping = (discountedSubtotal >= window.dynamicBilling.threshold || count >= 5 || window.isUserVIP || isNashik); 
+        const shippingFee = (isFreeShipping || sub === 0) ? 0 : window.dynamicBilling.shipping;
 
         document.getElementById('subtotal').innerText = sub;
-        if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
-        document.getElementById('gst-label').innerText = dynamicBilling.gst;
+        if(window.appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = window.appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
+        document.getElementById('gst-label').innerText = window.dynamicBilling.gst;
         document.getElementById('handling-fee').innerText = `₹${handlingFee}`;
         document.getElementById('gst-fee').innerText = `₹${gstFee}`;
         
         if (isNashik && sub > 0) {
-            const localName = dynamicBilling.localCity ? dynamicBilling.localCity.toUpperCase() : "LOCAL";
+            const localName = window.dynamicBilling.localCity ? window.dynamicBilling.localCity.toUpperCase() : "LOCAL";
             document.getElementById('ship-fee').innerText = `COMPLIMENTARY (${localName})`; document.getElementById('ship-fee').style.color = "var(--amazon)";
         } else if (isFreeShipping && sub > 0) {
             document.getElementById('ship-fee').innerText = "COMPLIMENTARY"; document.getElementById('ship-fee').style.color = "var(--amazon)";
@@ -1358,15 +1196,15 @@
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, flat: document.getElementById('f-flat').value, bldg: document.getElementById('f-bldg').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
         const handlingFee = document.getElementById('handling-fee').innerText; const gstFee = document.getElementById('gst-fee').innerText; const shipFee = document.getElementById('ship-fee').innerText;
         let orderSummary = ""; let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, ${d.city} - ${d.pin}`;
-        for(let id in cart) { const p = products.find(x => x.id === id); orderSummary += `${p.name} (x${cart[id]}), `; }
+        for(let id in window.cart) { const p = window.products.find(x => x.id === id); orderSummary += `${p.name} (x${window.cart[id]}), `; }
         orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
 
         const selectedPayMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
         if (selectedPayMode === 'cod') {
             const codMsg = `[COD PROCUREMENT]\n\nPatient: ${d.name}\nValue to Remit: ₹${finalTotal} (Cash)\nTerms: Cash on Delivery\n\n[DISPATCH]\n${orderSummary}`;
-            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: cart }); } catch(e){}
+            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: window.cart }); } catch(e){}
             window.open(`https://wa.me/918080926195?text=${encodeURIComponent(codMsg)}`);
-            cart = {}; updateBadge(); window.renderCart(); window.closeCart(); btn.innerText = 'Finalize Logistics'; btn.disabled = false; return; 
+            window.cart = {}; window.updateBadge(); window.renderCart(); window.closeCart(); btn.innerText = 'Finalize Logistics'; btn.disabled = false; return; 
         }
 
         var options = {
@@ -1374,8 +1212,8 @@
             "handler": async function (response) {
                 btn.innerText = "Transaction Complete";
                 let msg = `[PREPAID PROCUREMENT]\n\nID: ${response.razorpay_payment_id}\nPatient: ${d.name}\nRemitted: ₹${finalTotal}\n\nRouting: ${fullAddress}`;
-                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: cart }); } catch(err) { }
-                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Procurement"; btn.disabled = false;
+                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: window.cart }); } catch(err) { }
+                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); window.cart = {}; window.updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Procurement"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, "theme": { "color": "#0f3d14" },
             "modal": { "ondismiss": function(){ btn.innerText = "Complete Secure Procurement"; btn.disabled = false; } }
@@ -1553,11 +1391,11 @@
     window.liveSearch = () => {
         const query = document.getElementById('search-box').value.toLowerCase().trim(); const dropdown = document.getElementById('search-dropdown');
         if(!query) { dropdown.style.display = 'none'; return; }
-        let results = products.filter(p => p.name.toLowerCase().includes(query) || (p.tag && p.tag.toLowerCase().includes(query)));
+        let results = window.products.filter(p => p.name.toLowerCase().includes(query) || (p.tag && p.tag.toLowerCase().includes(query)));
         if(results.length === 0) { dropdown.innerHTML = '<div style="padding:25px; color:#888; text-align:center; font-family:\'Segoe UI\',sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:1px;">Item unlisted</div>'; } 
         else {
             dropdown.innerHTML = results.map(p => `
-                <div onclick="document.getElementById('search-dropdown').style.display='none'; openProduct('${p.id}')" style="display:flex; align-items:center; gap:18px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(212,175,55,0.03)'" onmouseout="this.style.background='transparent'">
+                <div onclick="document.getElementById('search-dropdown').style.display='none'; window.openProduct('${p.id}')" style="display:flex; align-items:center; gap:18px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(212,175,55,0.03)'" onmouseout="this.style.background='transparent'">
                     <img src="${p.image}" style="width:50px; height:50px; border-radius:4px; object-fit:cover; border:1px solid rgba(212,175,55,0.3); padding:3px; background:var(--bg);">
                     <div style="flex:1;">
                         <b style="font-size:1rem; color:var(--text); font-weight:normal;">${p.name}</b>
@@ -1576,7 +1414,7 @@
     window.orderAgain = (orderId) => {
         const order = window.userOrders.find(o => o.id === orderId);
         if(order && order.cartData) {
-            cart = {...order.cartData}; updateBadge(); window.showCart(); window.showBeautifulAlert("Previous items recovered.", "✓");
+            window.cart = {...order.cartData}; window.updateBadge(); window.showCart(); window.showBeautifulAlert("Previous items recovered.", "✓");
         } else { alert("Archived items could not be synced."); }
     };
 </script>
