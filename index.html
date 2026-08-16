@@ -8,7 +8,6 @@
     <title>Ayursiddhit Naturals | Dr. Prasiddhi Patil</title>
     
     <meta name="description" content="Premium 100% natural Ayurvedic healing soaps, face packs, and hair oils formulated by Dr. Prasiddhi Patil. Pure, clinical, and Made in India.">
-    <meta name="keywords" content="Ayurvedic soap, natural hair growth oil, Dr. Prasiddhi Patil, Ayursiddhit Naturals, organic skincare, buy ayurvedic products online">
     
     <!-- ✨ PREMIUM GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -43,7 +42,7 @@
             font-family: 'Playfair Display', 'Merriweather', 'Georgia', serif;
             background: var(--bg);
             color: var(--text);
-            transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
             overscroll-behavior-x: none;
         }
@@ -69,7 +68,7 @@
             color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; 
             border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.02); 
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+            transition: all 0.5s ease; 
         }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
         .h-logo { height: 45px; width: 45px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.6); background: white; object-fit: cover; }
@@ -77,17 +76,13 @@
         .h-text span { color: var(--gold); font-size: 0.65rem; display: block; font-weight: normal; letter-spacing: 2.5px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;}
         .h-actions { display: flex; align-items: center; gap: 12px; }
 
-        /* 🔥 FIX: PREVENT SCROLL BLANKING GLITCH 🔥 */
         .goog-te-gadget-simple { background-color: transparent !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 4px 8px !important; display: flex; align-items: center; }
         .goog-te-gadget-simple span { color: var(--text) !important; font-size: 0.8rem; font-weight: normal; text-decoration: none !important; }
         .goog-te-banner-frame { display: none !important; }
         .skiptranslate iframe { display: none !important; }
+        body { top: 0px !important; position: static !important; }
         .goog-tooltip { display: none !important; }
         .goog-te-gadget-simple img { display: none !important; }
-        
-        /* THIS FIXED THE DISAPPEARING SCROLL BUG */
-        html { top: 0px !important; height: auto; min-height: 100%; scroll-behavior: smooth; }
-        body { top: 0px !important; position: static !important; min-height: 100vh; }
 
         /* 🔥 STORE TOGGLE BAR 🔥 */
         #main-toggle-bar { 
@@ -95,7 +90,7 @@
             -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
             position: sticky; top: 76px; z-index: 1900; 
         }
-        .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.85rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; }
+        .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; }
         .tab-btn-main.active { color: var(--amazon); border-bottom: 2px solid var(--amazon); background: rgba(255,255,255,0.4);}
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
@@ -104,7 +99,7 @@
         .p-card { 
             background: var(--card-bg); border-radius: 4px; border: 1px solid transparent; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden; display: flex; flex-direction: column; 
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; 
+            transition: all 0.3s ease; position: relative; 
         }
         .p-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212, 175, 55, 0.4); }
         
@@ -113,7 +108,7 @@
             background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%);
             border-bottom: 1px solid var(--border); overflow: hidden; 
         }
-        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .p-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease; }
         .p-card:hover .p-img { transform: scale(1.08); filter: contrast(1.05) brightness(1.02); }
         
         .p-badge { position: absolute; top: 10px; left: 10px; background: var(--card-bg); color: var(--amazon); padding: 5px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; border: 1px solid rgba(212, 175, 55, 0.3); }
@@ -126,23 +121,23 @@
         .p-price { color: var(--text); font-size: 1.1rem; font-weight: 600; letter-spacing: 1px;}
         
         .p-actions { margin-top: auto; display: flex; gap: 8px; flex-direction: column; }
-        .btn-cart { background: transparent; border: 1px solid var(--amazon); color: var(--amazon); padding: 12px 0; border-radius: 4px; font-weight: 600; flex: 1; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; text-transform: uppercase; letter-spacing: 1.5px;}
+        .btn-cart { background: transparent; border: 1px solid var(--amazon); color: var(--amazon); padding: 12px 0; border-radius: 4px; font-weight: 600; flex: 1; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; text-align: center; text-transform: uppercase; letter-spacing: 1.5px;}
         .btn-cart:hover { background: rgba(15, 61, 20, 0.05); transform: translateY(-2px); }
-        .btn-buy { background: var(--amazon); border: 1px solid var(--amazon); color: var(--gold); padding: 12px 0; border-radius: 4px; font-weight: 600; flex: 1; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; text-transform: uppercase; letter-spacing: 1.5px;}
+        .btn-buy { background: var(--amazon); border: 1px solid var(--amazon); color: var(--gold); padding: 12px 0; border-radius: 4px; font-weight: 600; flex: 1; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; text-align: center; text-transform: uppercase; letter-spacing: 1.5px;}
         .btn-buy:hover { background: #0a290d; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(15, 61, 20, 0.2); }
         
         .p-qty { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border-radius: 4px; padding: 4px; width: 100%; border: 1px solid var(--border); box-sizing: border-box; margin-top: auto;}
-        .p-qty button { background: transparent; color: var(--amazon); border: none; width: 32px; height: 32px; border-radius: 4px; font-weight: normal; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+        .p-qty button { background: transparent; color: var(--amazon); border: none; width: 32px; height: 32px; border-radius: 4px; font-weight: normal; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;}
         .p-qty span { font-weight: 600; font-size: 0.95rem; color: var(--text); font-family: 'Segoe UI', sans-serif;}
         
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
 
-        .back-btn { background: transparent; color: var(--text); border: none; padding: 8px 0; font-weight: normal; font-size: 0.85rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;}
+        .back-btn { background: transparent; color: var(--text); border: none; padding: 8px 0; font-weight: normal; font-size: 0.85rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: all 0.3s ease; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;}
         .back-btn:hover { color: var(--amazon); transform: translateX(-4px); }
 
         .cart-view, .product-view, .policy-view, .about-view, #profile-view, #videos-view { padding: 20px; max-width: 800px; margin: auto; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);}
+        input, textarea, select { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 15px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); transition: all 0.3s ease;}
         input:focus, textarea:focus { outline: none; border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 0 15px rgba(212, 175, 55, 0.1); }
 
         /* 🔥 BOTTOM APP BAR */
@@ -152,9 +147,9 @@
             box-shadow: 0 -5px 30px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; z-index: 5000; 
             border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 12px 15px 18px 15px; box-sizing: border-box; 
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #888; text-decoration: none; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); -webkit-tap-highlight-color: transparent; position: relative; }
-        .nav-item svg { width: 22px; height: 22px; fill: #888; margin-bottom: 6px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        .nav-item span { font-size: 0.6rem; font-weight: normal; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; letter-spacing: 1.5px;}
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #888; text-decoration: none; cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent; position: relative; }
+        .nav-item svg { width: 22px; height: 22px; fill: #888; margin-bottom: 6px; transition: all 0.3s ease; }
+        .nav-item span { font-size: 0.6rem; font-weight: normal; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1.5px;}
         .nav-item.active { transform: translateY(-4px); }
         .nav-item.active svg { fill: var(--amazon); }
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
@@ -163,7 +158,7 @@
         /* 🎒 LMS SUB-TABS */
         .lms-sub-tabs-bar { display: flex; gap: 12px; padding: 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; justify-content: center; }
         .lms-sub-tabs-bar::-webkit-scrollbar { display: none; }
-        .sub-tab-item { padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; }
+        .sub-tab-item { padding: 10px 24px; font-size: 0.8rem; font-weight: normal; border-radius: 30px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; transition: all 0.3s ease; white-space: nowrap; text-transform: uppercase; letter-spacing: 1.5px; }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: rgba(212, 175, 55, 0.5); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);}
 
         /* 🔥 BANNER SIZE FIX 🔥 */
@@ -177,19 +172,19 @@
             border: 1px solid var(--border); background: var(--light-gold); 
         }
 
-        #consult-overlay, #upsell-overlay, #dosha-quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; pointer-events: none; }
+        #consult-overlay, #upsell-overlay, #dosha-quiz-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: opacity 0.4s ease; opacity: 0; pointer-events: none; }
         #consult-overlay.show-consult, #upsell-overlay:not(.hidden), #dosha-quiz-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
         .consult-box, .upsell-box { background: var(--card-bg); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 4px; width: 90%; max-width: 420px; text-align: center; padding: 50px 30px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); position: relative; color: var(--text); }
         .consult-img, .upsell-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 25px; object-fit: cover; background: white; border: 1px solid rgba(212, 175, 55, 0.6); padding: 5px;}
         
-        .quiz-option { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-size: 0.95rem; text-align: left; letter-spacing: 0.5px; }
+        .quiz-option { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s ease; font-size: 0.95rem; text-align: left; letter-spacing: 0.5px; }
         .quiz-option:hover { border-color: rgba(212, 175, 55, 0.8); background: radial-gradient(circle, #fdfbf7 0%, #ffffff 100%); transform: translateX(5px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);}
         
         .track-container { font-family: 'Segoe UI', sans-serif; max-width: 100%; margin: 15px 0; background: var(--bg); padding: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); }
         .step { display: flex; align-items: center; position: relative; margin-bottom: 30px; }
         .step:last-child { margin-bottom: 5px; }
-        .circle { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: transparent; display: flex; justify-content: center; align-items: center; font-weight: bold; z-index: 2; font-size: 0.7rem; border: 2px solid var(--border); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);}
-        .line { width: 2px; height: 100%; background: var(--border); position: absolute; left: 13px; top: 24px; z-index: 1; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);}
+        .circle { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: transparent; display: flex; justify-content: center; align-items: center; font-weight: bold; z-index: 2; font-size: 0.7rem; border: 2px solid var(--border); transition: all 0.4s ease;}
+        .line { width: 2px; height: 100%; background: var(--border); position: absolute; left: 13px; top: 24px; z-index: 1; transition: all 0.4s ease;}
         .status-text { margin-left: 20px; font-size: 0.9rem; color: #888; font-weight: normal; letter-spacing: 0.5px;}
         .active-circle { background: var(--amazon); border-color: var(--amazon); color: var(--gold); box-shadow: 0 0 15px rgba(15, 61, 20, 0.3);}
         .active-line { background: var(--amazon); }
@@ -221,7 +216,7 @@
     <div id="tab-workshops" class="tab-btn-main inactive" onclick="window.switchMainTab('workshops')">Consult</div>
 </div>
     
-<div id="t-offer-banner" style="background: var(--amazon); color: var(--bg); text-align: center; padding: 12px; font-size: 0.75rem; font-weight: normal; letter-spacing: 2px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">Complimentary Shipping on orders above ₹<span id="banner-threshold">800</span></div>
+<div id="t-offer-banner" style="background: var(--amazon); color: var(--bg); text-align: center; padding: 12px; font-size: 0.75rem; font-weight: normal; letter-spacing: 2px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;">Complimentary Shipping on orders above ₹<span id="banner-threshold">800</span></div>
 
 <div id="search-section" style="background: var(--bg); padding: 30px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
@@ -229,16 +224,16 @@
         <div id="search-dropdown" style="display:none; position:absolute; top:60px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.1); border-radius:4px; max-height:350px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 15px; overflow-x: auto; margin-top: 25px; padding-bottom: 10px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
-        <button class="cat-btn t-all" onclick="window.filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);">All</button>
-        <button class="cat-btn t-soaps" onclick="window.filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Soaps</button>
-        <button class="cat-btn t-oils" onclick="window.filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Oils</button>
-        <button class="cat-btn t-face" onclick="window.filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Face</button>
+        <button class="cat-btn t-all" onclick="window.filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(15, 61, 20, 0.15);">All</button>
+        <button class="cat-btn t-soaps" onclick="window.filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.3s ease;">Soaps</button>
+        <button class="cat-btn t-oils" onclick="window.filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.3s ease;">Oils</button>
+        <button class="cat-btn t-face" onclick="window.filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 10px 22px; border-radius: 30px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; transition: all 0.3s ease;">Face</button>
     </div>
 </div>
 
 <div id="home-top-section">
-    <div id="dynamic-image-ads" style="display:none; width: 100%; overflow: hidden; background: transparent; padding: 30px 20px 0 20px; box-sizing: border-box;">
-        <div class="image-ad-track" id="image-ad-track" style="display: flex; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); width: 100%;"></div>
+    <div id="dynamic-image-ads" style="display:none;">
+        <div class="image-ad-track" id="image-ad-track"></div>
     </div>
     
     <div style="display: flex; justify-content: space-between; padding: 25px 20px; background: transparent; margin: 0 10px 10px 10px; text-align: center; font-size: 0.7rem; font-weight: normal; color: var(--text); font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">
@@ -247,12 +242,11 @@
         <div style="flex:1;">Authentic</div>
     </div>
 
-    <!-- 🪄 HYPER-PREMIUM FEATURE: Doctor Storytelling & AI Quiz Trigger -->
     <div id="luxury-story-section" style="padding: 50px 25px; text-align: center; background: radial-gradient(circle, #ffffff 0%, #faf9f6 100%); margin: 25px; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
         <p style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--amazon); font-style: italic; line-height: 1.6; margin-top:0;">"True radiance begins when we stop fighting our skin and start listening to it."</p>
         <h4 style="margin: 25px 0 5px 0; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; color: var(--text);">Dr. Prasiddhi Patil</h4>
         <span style="font-size: 0.65rem; color: #888; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px;">BAMS, Founder</span><br>
-        <button onclick="window.openDoshaQuiz()" style="margin-top: 35px; background: var(--amazon); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.5); padding: 16px 35px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; max-width: 320px; border-radius: 2px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2);">Begin Skin Dosha Analysis</button>
+        <button onclick="window.openDoshaQuiz()" style="margin-top: 35px; background: var(--amazon); color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.5); padding: 16px 35px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; width: 100%; max-width: 320px; border-radius: 2px; box-shadow: 0 8px 25px rgba(15, 61, 20, 0.2);">Begin Skin Dosha Analysis</button>
     </div>
 </div>
 
@@ -262,10 +256,10 @@
     <img src="logo.png" style="width: 50px; height: 50px; border-radius: 50%; opacity: 0.9; margin-bottom: 20px; border: 1px solid var(--gold);">
     <p style="margin: 0 0 25px 0; font-weight: normal; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; font-family: 'Playfair Display', serif; color: var(--gold);">Ayursiddhit Naturals</p>
     <div style="display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; flex-wrap: wrap;">
-        <a href="#" onclick="window.showAbout()" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Our Story</a>
-        <a href="#" onclick="window.showPolicy('contact')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Contact</a>
-        <a href="#" onclick="window.showPolicy('refund')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Refunds</a>
-        <a href="#" onclick="window.showPolicy('terms')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Terms</a>
+        <a href="#" onclick="window.showAbout()" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Our Story</a>
+        <a href="#" onclick="window.showPolicy('contact')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Contact</a>
+        <a href="#" onclick="window.showPolicy('refund')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Refunds</a>
+        <a href="#" onclick="window.showPolicy('terms')" style="color: var(--bg); text-decoration: none; opacity: 0.7; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px;">Terms</a>
     </div>
     <p style="margin: 0; color: rgba(250,249,246,0.3); font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;">© 2026 Ayursiddhit Naturals. All Rights Reserved.</p>
 </footer>
@@ -305,7 +299,7 @@
         <h3 id="up-name" style="margin:0 0 10px 0; font-size:1.2rem; color:var(--text); font-weight: normal;"></h3>
         <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
         <button id="up-btn" class="btn-buy" style="width:100%; padding: 16px; margin-top: 15px; border-radius: 4px;">Add to Ritual</button>
-        <button class="close-upsell" onclick="window.skipUpsell()" style="background:none; border:none; color:#999; font-size:0.75rem; margin-top:25px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Proceed to Checkout</button>
+        <button class="close-upsell" onclick="window.skipUpsell()" style="background:none; border:none; color:#999; font-size:0.75rem; margin-top:25px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease;">Proceed to Checkout</button>
     </div>
 </div>
 
@@ -325,7 +319,7 @@
     <div id="logged-in-profile-content">
         <h3 style="color:var(--text); margin-top: 35px; font-weight: normal; font-style: italic;">Order History</h3>
         <div id="prof-orders-list" style="font-size:0.95rem; font-family: 'Segoe UI', sans-serif; margin-top: 25px;">Indexing records...</div>
-        <button onclick="window.logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:16px; border-radius:4px; font-weight:normal; margin-top:50px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">Sign Out</button>
+        <button onclick="window.logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:16px; border-radius:4px; font-weight:normal; margin-top:50px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease;">Sign Out</button>
     </div>
 </div>
 
@@ -335,15 +329,14 @@
     <img id="fullscreen-img" src="" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px;">
 </div>
 
-<!-- 🔥 THE PRODUCT PAGE (WITH GALLERY & REVIEWS) 🔥 -->
 <div id="product-view" class="hidden product-view" style="position: relative;">
     <button onclick="window.closeProduct()" class="back-btn">Back</button>
     <div style="background:var(--card-bg); padding:40px 30px; border-radius:4px; border:1px solid var(--border); box-shadow: 0 10px 50px rgba(0,0,0,0.03);">
         
-        <!-- 🔥 AUTO-SCROLLING, SWIPEABLE GALLERY 🔥 -->
+        <!-- 🔥 THE SWIPEABLE AUTO-SCROLLING GALLERY WITH ZOOM 🔥 -->
         <div id="modal-gallery-container" style="background: radial-gradient(circle, #fdfbf7 0%, #f4f0ea 100%); padding: 20px 0; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden; position: relative;">
             <div id="modal-gallery-track" style="display: flex; transition: transform 0.4s ease-in-out; width: 100%;">
-                <!-- Images Injected Here -->
+                <!-- Images Injected Here by JavaScript -->
             </div>
             <div id="modal-gallery-dots" style="text-align: center; margin-top: 15px;"></div>
         </div>
@@ -354,7 +347,7 @@
         
         <div style="margin-bottom:30px; font-family: 'Segoe UI', sans-serif;"><span id="modal-rating-avg" style="color:var(--gold); font-size:1.15rem; font-weight: 600; letter-spacing:2px;">⭐ 5.0</span> <span id="modal-rating-count" style="font-size:0.85rem; color:#888; margin-left: 10px;"></span></div>
 
-        <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444; font-family: 'Segoe UI', sans-serif;"></p>
+        <p id="modal-desc" style="font-size:1rem; line-height: 1.9; margin-bottom: 40px; color: #444;"></p>
         
         <div style="background:var(--bg); border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; padding:25px; margin-bottom:35px;">
             <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
@@ -380,7 +373,7 @@
             <button id="modal-buy-btn" class="btn-buy" style="padding:18px; font-size:0.85rem;">Secure Checkout</button>
         </div>
 
-        <button onclick="window.conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
+        <button onclick="window.conciergeCheckout()" style="width:100%; background:#25D366; color:white; border:none; padding:18px; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:2px; cursor:pointer; margin-bottom: 40px; border-radius:4px; font-weight:600; transition:all 0.3s ease; box-shadow: 0 8px 25px rgba(37,211,102,0.25);">💬 Concierge Checkout</button>
 
         <div style="background:var(--bg); padding:20px; border-radius:4px; margin-bottom:30px; border: 1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <span style="font-size:0.75rem; font-weight:normal; color:#888; display:block; margin-bottom:12px; text-transform: uppercase; letter-spacing: 2px;">Delivery Availability</span>
@@ -395,7 +388,6 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic; font-size: 1.4rem;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:40px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
-        <!-- 🔥 REVIEW PHOTO SYSTEM (INTACT) 🔥 -->
         <div style="background:var(--bg); padding:35px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.85rem; display:block; margin-bottom:15px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 25px;">
@@ -445,85 +437,6 @@
     <button id="submit-b2b-btn" class="btn-buy" onclick="window.submitB2BOrder()" style="width:100%; padding:18px; font-size:1rem; margin-top:30px; letter-spacing: 2px;">Submit Purchase Order</button>
 </div>
     
-<div id="cart-view" class="hidden cart-view">
-    <button onclick="window.closeCart()" class="back-btn">Back</button>
-    <h2 id="t-cart-title" style="margin-top: 15px; font-weight: normal; color: var(--text);">Your Ritual Bag</h2>
-    <div id="cart-list" style="font-family: 'Segoe UI', sans-serif; margin-top: 25px;"></div>
-    <div style="background:var(--card-bg); padding:35px 25px; border-radius:4px; border:1px solid var(--border); margin-top:30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-        <div style="background: var(--bg); padding: 20px; border-radius: 4px; margin-bottom: 30px; border: 1px dashed rgba(212, 175, 55, 0.4); font-family: 'Segoe UI', sans-serif;">
-            <div style="display:flex; gap:12px; margin-bottom:5px;">
-                <input type="text" id="cart-promo-input" placeholder="Privilege Code" style="margin:0; text-transform:uppercase; background: var(--card-bg); letter-spacing: 1px;">
-                <button class="btn-cart" onclick="window.applyPromo()" style="padding:0 25px; width: auto; flex: none; letter-spacing: 2px;">Apply</button>
-            </div>
-            <div id="promo-msg" style="font-size:0.8rem; font-weight:normal; height:18px; margin-top: 8px; letter-spacing: 0.5px;"></div>
-        </div>
-        
-        <form id="order-form">
-            <input type="text" id="f-name" placeholder="Full Legal Name" required>
-            <input type="tel" id="f-phone" placeholder="Mobile Contact (10 Digits)" required pattern="[0-9]{10}">
-            <div class="form-grid"><input type="text" id="f-flat" placeholder="Suite / House No." required><input type="text" id="f-bldg" placeholder="Building / Premise" required></div>
-            <textarea id="f-address" placeholder="Street Name & Locality" rows="3" required></textarea>
-            
-            <div class="form-grid">
-                <input type="text" id="f-city" placeholder="City" required oninput="window.renderCart()">
-                <input type="number" id="f-pin" placeholder="Postal Code" required>
-            </div>
-
-            <div style="margin: 40px 0 25px 0; font-family: 'Segoe UI', sans-serif;">
-                <b style="font-size: 0.8rem; color: #888; display: block; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; font-weight: normal;">Remittance Method</b>
-                <div style="display: flex; gap: 15px;">
-                    <label style="flex: 1; border: 1px solid var(--border); padding: 15px; border-radius: 4px; text-align: center; cursor: pointer; background: var(--bg); font-weight: normal; font-size: 0.95rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                        <input type="radio" name="pay_mode" value="prepaid" checked onchange="window.renderCart()" style="display:none;"> 💳 Prepaid (Secure)
-                    </label>
-                    <label style="flex: 1; border: 1px solid var(--border); padding: 15px; border-radius: 4px; text-align: center; cursor: pointer; background: var(--bg); font-weight: normal; font-size: 0.95rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
-                        <input type="radio" name="pay_mode" value="cod" onchange="window.renderCart()" style="display:none;"> 💵 Pay on Delivery (+₹55)
-                    </label>
-                </div>
-                <style>
-                    input[type="radio"]:checked + label, label:has(input[type="radio"]:checked) {
-                        border-color: var(--amazon) !important;
-                        background: rgba(15, 61, 20, 0.05) !important;
-                        color: var(--amazon) !important;
-                        font-weight: 600 !important;
-                        box-shadow: 0 4px 15px rgba(15, 61, 20, 0.1);
-                    }
-                </style>
-                <p id="cod-warning" style="display: none; color: var(--text); font-size: 0.85rem; margin-top: 15px; font-weight: normal; text-align: center;">A minimum order value of ₹399 is required for Pay on Delivery.</p>
-            </div>
-            
-            <div style="border-top:1px solid rgba(212, 175, 55, 0.3); padding-top:25px; margin-top:25px; font-family: 'Segoe UI', sans-serif;">
-                <p style="display:flex; justify-content:space-between; margin: 12px 0; font-size: 0.95rem; color: var(--text);">Subtotal: <span>₹<span id="subtotal">0</span></span></p>
-                <p id="vip-discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--amazon); font-weight:600; background:rgba(212, 175, 55, 0.1); padding:10px 15px; border-radius:4px; margin: 12px 0; font-size: 0.95rem; border: 1px solid rgba(212, 175, 55, 0.3);">VIP Privilege: <span>-₹<span id="vip-discount-amt">0</span></span></p>
-                <p id="discount-row" class="hidden" style="display:flex; justify-content:space-between; color:var(--amazon); font-weight:normal; margin: 12px 0; font-size: 0.95rem;">Privilege Applied: <span>-₹<span id="discount-amt">0</span></span></p>
-                
-                <p style="display:flex; justify-content:space-between; margin: 12px 0; color:#888; font-size:0.85rem;">Logistics & Handling: <span id="handling-fee">₹0</span></p>
-                <p style="display:flex; justify-content:space-between; margin: 12px 0; color:#888; font-size:0.85rem;">Taxes (<span id="gst-label">5</span>%): <span id="gst-fee">₹0</span></p>
-                <p style="display:flex; justify-content:space-between; margin: 12px 0; color:#888; font-size:0.85rem;">Priority Shipping: <span id="ship-fee" style="font-weight:600; color:var(--text);">₹0</span></p>
-                
-                <h3 style="display:flex; justify-content:space-between; color:var(--text); border-top:1px solid var(--border); padding-top:20px; margin-top:20px; font-size: 1.3rem; font-weight: 600;">Net Payable: <span>₹<span id="total">0</span></span></h3>
-                
-                <button type="submit" class="btn-buy" style="padding:18px; font-size:1rem; margin-top: 25px; width: 100%; letter-spacing: 2px;">Complete Secure Procurement</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); padding:50px 40px; margin-top:25px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
-    <button onclick="window.closeAbout()" class="back-btn" style="align-self: flex-start; margin-right: auto; display: inline-flex;">Back</button><br>
-    <img src="logo.png" style="width: 120px; height: 120px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.5); margin-bottom: 30px; object-fit: cover; padding: 6px;">
-    <h2 style="color: var(--text); margin-top:0; margin-bottom: 10px; font-weight: normal; font-size: 1.8rem;">Dr. Prasiddhi Patil</h2>
-    <h4 style="color: #888; margin-top: 0; font-weight: normal; font-family: 'Segoe UI', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">BAMS, Ahilyanagar</h4>
-    <p style="font-size:1.05rem; color:var(--text); line-height: 1.9; text-align: left; margin-top: 35px; font-family: 'Georgia', serif;">
-        Welcome to <b>Ayursiddhit Naturals</b>. As an Ayurvedic practitioner, I maintain that true radiance and internal wellness derive exclusively from pure, clinical-grade botanicals. Every formulation presented here is meticulously calibrated to restore your natural physiological balance and cellular vitality.
-    </p>
-</div>
-
-<div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); padding:40px 35px; margin-top:25px; box-shadow: 0 10px 40px rgba(0,0,0,0.02);">
-    <button onclick="window.closePolicy()" class="back-btn">Back</button>
-    <h2 id="policy-title" style="color: var(--text); margin-top:15px; font-weight: normal;"></h2>
-    <div id="policy-content" style="line-height: 1.9; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
-</div>
-
 <div class="bottom-nav">
     <div class="nav-item active" onclick="window.activateNav(this); window.restoreHome();">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -563,12 +476,22 @@
     import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
 
     const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
-    const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
+    const app = initializeApp(firebaseConfig); 
+    const db = getFirestore(app); 
+    const auth = getAuth(app); 
+    const provider = new GoogleAuthProvider();
 
     // GLOBAL VARIABLES ATTACHED TO WINDOW TO PREVENT SCOPE CRASHES
-    window.currentUser = null; window.isUserVIP = false; 
-    window.products = []; window.cart = {}; window.allPromos = []; window.activePromo = null; window.appliedDiscount = 0; 
-    window.multiAds = []; window.activeUpsell = null; window.windowHasUpsellShown = false; 
+    window.currentUser = null; 
+    window.isUserVIP = false; 
+    window.products = []; 
+    window.cart = {}; 
+    window.allPromos = []; 
+    window.activePromo = null; 
+    window.appliedDiscount = 0; 
+    window.multiAds = []; 
+    window.activeUpsell = null; 
+    window.windowHasUpsellShown = false; 
     window.currentModalProductId = null;
     const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
     window.dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
@@ -592,9 +515,20 @@
         if(activePanel) activePanel.classList.remove('hidden');
     };
 
-    window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
-    window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
-    window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
+    window.hideSafe = function(id) { 
+        const el = document.getElementById(id); 
+        if(el) el.classList.add('hidden'); 
+    };
+
+    window.showSafe = function(id) { 
+        const el = document.getElementById(id); 
+        if(el) el.classList.remove('hidden'); 
+    };
+
+    window.closeConsult = function() { 
+        const el = document.getElementById('consult-overlay'); 
+        if(el) el.classList.remove('show-consult'); 
+    };
     
     window.openConsult = function() {
         if (window.isUserVIP === true) {
@@ -614,15 +548,20 @@
         document.getElementById('quiz-step-2').classList.add('hidden');
         document.getElementById('quiz-step-result').classList.add('hidden');
     };
+
     window.nextQuizStep = function(step) {
         document.getElementById('quiz-step-1').classList.add('hidden');
         document.getElementById('quiz-step-' + step).classList.remove('hidden');
     };
+
     window.finishQuiz = function() {
         document.getElementById('quiz-step-2').classList.add('hidden');
         document.getElementById('quiz-step-result').classList.remove('hidden');
     };
-    window.closeDoshaQuiz = function() { document.getElementById('dosha-quiz-overlay').classList.add('hidden'); };
+
+    window.closeDoshaQuiz = function() { 
+        document.getElementById('dosha-quiz-overlay').classList.add('hidden'); 
+    };
 
     window.conciergeCheckout = function() {
         const p = window.products.find(x => x.id === window.currentModalProductId);
@@ -637,13 +576,23 @@
         const tStore = document.getElementById('tab-store');
         const tVideos = document.getElementById('tab-videos');
         const tWorkshops = document.getElementById('tab-workshops');
-        window.hideSafe('home-top-section'); window.hideSafe('search-section'); window.hideSafe('main-view'); window.hideSafe('t-offer-banner'); window.hideSafe('site-footer'); window.hideSafe('videos-view'); window.hideSafe('workshops-view');
+        window.hideSafe('home-top-section'); 
+        window.hideSafe('search-section'); 
+        window.hideSafe('main-view'); 
+        window.hideSafe('t-offer-banner'); 
+        window.hideSafe('site-footer'); 
+        window.hideSafe('videos-view'); 
+        window.hideSafe('workshops-view');
 
         if(tab === 'store') {
             if(tStore) tStore.className = 'tab-btn-main active';
             if(tVideos) tVideos.className = 'tab-btn-main inactive';
             if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-            window.showSafe('home-top-section'); window.showSafe('search-section'); window.showSafe('main-view'); window.showSafe('t-offer-banner'); window.showSafe('site-footer'); 
+            window.showSafe('home-top-section'); 
+            window.showSafe('search-section'); 
+            window.showSafe('main-view'); 
+            window.showSafe('t-offer-banner'); 
+            window.showSafe('site-footer'); 
         } else if (tab === 'videos') {
             if(tVideos) tVideos.className = 'tab-btn-main active';
             if(tStore) tStore.className = 'tab-btn-main inactive';
@@ -679,7 +628,9 @@
         document.getElementById('fullscreen-img').src = src;
         document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
     };
-    window.closeFullscreenImage = () => { document.getElementById('fullscreen-image-overlay').classList.add('hidden'); };
+    window.closeFullscreenImage = () => { 
+        document.getElementById('fullscreen-image-overlay').classList.add('hidden'); 
+    };
 
     window.modalGalleryInterval = null; 
     window.modalGalleryIndex = 0;
@@ -687,7 +638,9 @@
     window.resetViews = function() {
         clearInterval(window.modalGalleryInterval); 
         ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
-        window.closeConsult(); window.closeDoshaQuiz(); window.closeFullscreenImage();
+        window.closeConsult(); 
+        window.closeDoshaQuiz(); 
+        window.closeFullscreenImage();
     };
 
     window.openB2B = function() { window.resetViews(); window.showSafe('b2b-view'); window.scrollTo(0, 0); window.renderB2BProducts(); };
@@ -706,9 +659,15 @@
     
     // 🔥 THE AUTO-SCROLLING, SWIPEABLE GALLERY WITH ZOOM 🔥
     window.openProduct = function(id) { 
-        const p = window.products.find(x => x.id === id); if(!p) return; 
-        window.currentModalProductId = id; document.getElementById('modal-qty').innerText = window.cart[id] || 0; 
-        window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
+        const p = window.products.find(x => x.id === id); 
+        if(!p) return; 
+        
+        window.currentModalProductId = id; 
+        document.getElementById('modal-qty').innerText = window.cart[id] || 0; 
+        
+        window.resetViews(); 
+        window.showSafe('product-view'); 
+        window.scrollTo(0, 0); 
         
         clearInterval(window.modalGalleryInterval); 
         const galleryContainer = document.getElementById('modal-gallery-track');
@@ -742,15 +701,29 @@
             let startX = 0; let isSwiping = false;
             const wrap = document.getElementById('modal-gallery-container');
             
-            wrap.ontouchstart = (e) => { startX = e.touches[0].clientX; isSwiping = true; clearInterval(window.modalGalleryInterval); };
+            wrap.ontouchstart = (e) => { 
+                startX = e.touches[0].clientX; 
+                isSwiping = true; 
+                clearInterval(window.modalGalleryInterval); 
+            };
+            
             wrap.ontouchend = (e) => {
-                if(!isSwiping) return; let endX = e.changedTouches[0].clientX;
+                if(!isSwiping) return; 
+                let endX = e.changedTouches[0].clientX;
                 if(startX - endX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; }
                 else if(endX - startX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex - 1 + galleryImages.length) % galleryImages.length; }
-                updateGalleryUI(); isSwiping = false;
-                window.modalGalleryInterval = setInterval(() => { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; updateGalleryUI(); }, 3500);
+                
+                updateGalleryUI(); 
+                isSwiping = false;
+                
+                window.modalGalleryInterval = setInterval(() => { 
+                    window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; 
+                    updateGalleryUI(); 
+                }, 3500);
             };
-        } else { dotsContainer.innerHTML = ''; }
+        } else { 
+            dotsContainer.innerHTML = ''; 
+        }
         
         document.getElementById('modal-name').innerText = p.name; 
         document.getElementById('modal-price').innerText = `₹${p.price}`; 
@@ -764,14 +737,29 @@
             document.getElementById('modal-buy-btn').style.display = "none";
         } else {
             document.getElementById('modal-qty-controls').style.display = "inline-flex";
-            document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added"; setTimeout(() => { btn.innerText = "Add to Bag"; }, 1500); }; 
+            document.getElementById('modal-add-btn').onclick = () => { 
+                window.updateQty(id, 1); 
+                const btn = document.getElementById('modal-add-btn'); 
+                btn.innerText = "Added"; 
+                setTimeout(() => { btn.innerText = "Add to Bag"; }, 1500); 
+            }; 
             document.getElementById('modal-add-btn').innerText = "Add to Bag";
             document.getElementById('modal-buy-btn').style.display = "block";
-            document.getElementById('modal-buy-btn').onclick = () => { if (!window.cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
+            document.getElementById('modal-buy-btn').onclick = () => { 
+                if (!window.cart[id]) window.updateQty(id, 1); 
+                window.closeProduct(); 
+                window.triggerCartFlow(); 
+                window.activateNav(document.querySelectorAll('.nav-item')[4]); 
+            }; 
         }
 
-        let avg = "5.0"; let revCount = 0; if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
-        document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; document.getElementById('modal-rating-count').innerText = `(${revCount} profiles)`;
+        let avg = "5.0"; let revCount = 0; 
+        if(p.reviews && p.reviews.length > 0) { 
+            revCount = p.reviews.length; 
+            avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); 
+        }
+        document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; 
+        document.getElementById('modal-rating-count').innerText = `(${revCount} profiles)`;
         window.renderReviews(p.reviews || []);
     };
 
@@ -796,11 +784,26 @@
         } catch (error) {}
     };
 
-    window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
-    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('login-button-container').style.display = 'block'; document.getElementById('logged-in-profile-content').style.display = 'none'; window.isUserVIP = false; window.render(); }); };
+    window.login = () => { 
+        setPersistence(auth, browserLocalPersistence)
+        .then(() => signInWithPopup(auth, provider))
+        .catch(e => console.error(e)); 
+    };
+    
+    window.logoutUser = () => { 
+        auth.signOut().then(() => { 
+            window.closeProfile(); 
+            document.getElementById('login-button-container').style.display = 'block'; 
+            document.getElementById('logged-in-profile-content').style.display = 'none'; 
+            window.isUserVIP = false; 
+            window.render(); 
+        }); 
+    };
     
     window.handleAccountClick = () => { 
-        window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0);
+        window.resetViews(); 
+        window.showSafe('profile-view'); 
+        window.scrollTo(0,0);
         if(window.currentUser) { 
             document.getElementById('login-button-container').style.display = 'none';
             document.getElementById('logged-in-profile-content').style.display = 'block';
@@ -819,11 +822,12 @@
 
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             setTimeout(() => window.requestNotificationPermission(), 2000);
+            
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if(userDoc.exists() && userDoc.data().isPremium) {
                 window.isUserVIP = true;
                 const profDisplay = document.getElementById('prof-name-display');
-                if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.7rem; background:var(--amazon); padding:4px 8px; border-radius:6px; font-weight:800; font-family:'Segoe UI',sans-serif; vertical-align:middle; margin-left:12px; letter-spacing:1px; box-shadow: 0 4px 10px rgba(15, 61, 20, 0.2);">VIP TIER</span>`;
+                if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.7rem; background:var(--amazon); padding:6px 10px; border-radius:4px; font-family:'Segoe UI',sans-serif; vertical-align:middle; margin-left:12px; letter-spacing:1px; box-shadow: 0 4px 10px rgba(15, 61, 20, 0.2);">VIP TIER</span>`;
             } else {
                 window.isUserVIP = false;
                 const profDisplay = document.getElementById('prof-name-display');
@@ -835,7 +839,8 @@
             document.getElementById('login-button-container').style.display = 'block';
             document.getElementById('logged-in-profile-content').style.display = 'none';
         }
-        window.render(); if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
+        window.render(); 
+        if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
     });
 
     window.loadMyOrders = async function() {
@@ -844,7 +849,7 @@
         try {
             const q = query(collection(db, "orders"), where("uid", "==", window.currentUser.uid));
             const snap = await getDocs(q);
-            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>You haven't placed any orders yet.</p>"; return; }
+            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>No past records found in directory.</p>"; return; }
             let html = ''; const ordersArray = [];
             snap.forEach(doc => ordersArray.push({id: doc.id, ...doc.data()}));
             ordersArray.sort((a,b) => new Date(b.date) - new Date(a.date));
@@ -876,14 +881,6 @@
             list.innerHTML = html;
         } catch(e) { list.innerHTML = "<p>Error loading orders.</p>"; }
     }
-    
-    function getYouTubeEmbedUrl(url) {
-        let videoId = '';
-        if(url.includes('v=')) { videoId = url.split('v=')[1].split('&')[0]; } 
-        else if(url.includes('youtu.be/')) { videoId = url.split('youtu.be/')[1].split('?')[0]; } 
-        else if(url.includes('shorts/')) { videoId = url.split('shorts/')[1].split('?')[0]; }
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-    }
 
     async function load() {
         try { 
@@ -897,9 +894,19 @@
             const vList = document.getElementById('video-feed-container'); vList.innerHTML = '';
             if(vSnap.empty) { vList.innerHTML = '<p style="text-align:center; color:#888; font-family: \'Segoe UI\', sans-serif;">No insights published currently.</p>'; }
             vSnap.forEach(doc => {
-                const v = doc.data(); const embedUrl = getYouTubeEmbedUrl(v.link); let mediaHtml = '';
-                if(embedUrl.includes('youtube.com/embed/')) { mediaHtml = `<iframe width="100%" height="250" src="${embedUrl}" title="${v.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:4px;"></iframe>`; } 
-                else { mediaHtml = `<a href="${v.link}" target="_blank" class="btn-buy" style="display:block; text-decoration:none;">View Publication</a>`; }
+                const v = doc.data(); 
+                let videoId = '';
+                if(v.link.includes('v=')) { videoId = v.link.split('v=')[1].split('&')[0]; } 
+                else if(v.link.includes('youtu.be/')) { videoId = v.link.split('youtu.be/')[1].split('?')[0]; } 
+                else if(v.link.includes('shorts/')) { videoId = v.link.split('shorts/')[1].split('?')[0]; }
+                const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : v.link;
+                
+                let mediaHtml = '';
+                if(embedUrl.includes('youtube.com/embed/')) { 
+                    mediaHtml = `<iframe width="100%" height="250" src="${embedUrl}" title="${v.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:4px;"></iframe>`; 
+                } else { 
+                    mediaHtml = `<a href="${v.link}" target="_blank" class="btn-buy" style="display:block; text-decoration:none;">View Publication</a>`; 
+                }
                 vList.innerHTML += `
                 <div style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); overflow:hidden; margin-bottom:30px; box-shadow:0 10px 30px rgba(0,0,0,0.03);">
                     <div style="padding:25px; text-align:center;">
@@ -1064,12 +1071,18 @@
                 if (!window.isUserVIP) {
                     buttonHtml = `<div class="p-actions"><button style="background:transparent; color:var(--text); border:1px solid rgba(212, 175, 55, 0.4); padding:12px 0; border-radius:4px; font-weight:normal; width:100%; font-size:0.8rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);" onclick="window.openConsult()" onmouseover="this.style.background='rgba(212,175,55,0.05)'" onmouseout="this.style.background='transparent'">Unlock Access</button></div>`;
                 } else {
-                    if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; } 
-                    else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add to Bag</button></div>`; }
+                    if (q > 0) { 
+                        buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; 
+                    } else { 
+                        buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add to Bag</button></div>`; 
+                    }
                 }
             } else {
-                if (q > 0) { buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; } 
-                else { buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="window.buyNow('${p.id}')">Purchase</button></div>`; }
+                if (q > 0) { 
+                    buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; 
+                } else { 
+                    buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="window.buyNow('${p.id}')">Purchase</button></div>`; 
+                }
             }
 
             if(window.isStoreOffline) {
