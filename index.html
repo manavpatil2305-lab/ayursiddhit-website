@@ -14,12 +14,13 @@
     <meta property="og:description" content="100% Doctor Formulated Ayurvedic Skincare & Haircare.">
     <meta property="og:image" content="https://ayursiddhitnaturals.in/logo.png">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
     <style>
-
         :root {
-            /* 👑 LUXURY CLINICAL PALETTE UPDATE */
             --amazon: #0f3d14; 
             --green: #155724;  
             --gold: #e6c27a;   
@@ -65,7 +66,6 @@
         .scrolling-text { display: inline-block; padding-left: 100%; animation: scrollLeft 15s linear infinite; }
         @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* ✨ PREMIUM LUXURY HEADER */
         header { background: var(--bg); color: var(--amazon); padding: 15px 12px; position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: background 0.3s; }
         .h-row { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
         .h-logo { height: 45px; width: 45px; border-radius: 50%; border: 1.5px solid var(--luxury); background: white; object-fit: cover; }
@@ -73,26 +73,22 @@
         .h-text span { color: var(--gold); font-size: 0.7rem; display: block; font-weight: normal; letter-spacing: 1px; text-transform: uppercase; font-family: 'Segoe UI', sans-serif;}
         .h-actions { display: flex; align-items: center; gap: 12px; }
 
-        /* Invert Translate Button for Light Theme */
         .goog-te-gadget-simple { background-color: transparent !important; border: 1px solid var(--border) !important; border-radius: 4px !important; padding: 4px 8px !important; display: flex; align-items: center; }
         .goog-te-gadget-simple span { color: var(--text) !important; font-size: 0.8rem; font-family: 'Segoe UI', sans-serif !important; font-weight: normal; text-decoration: none !important; }
-
-        /* 🔥 KILL GOOGLE TRANSLATE BANNER (NUCLEAR OPTION) 🔥 */
         .goog-te-banner-frame { display: none !important; visibility: hidden !important; }
         .skiptranslate iframe { display: none !important; }
         .goog-tooltip { display: none !important; }
         .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
         .goog-te-gadget-simple img { display: none !important; }
+        .goog-te-banner-frame.skiptranslate { display: none !important; } 
 
-        /* 🔥 STORE / VIDEOS TOGGLE BAR 🔥 */
         #main-toggle-bar { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 76px; z-index: 1900; }
         .tab-btn-main { flex: 1; text-align: center; padding: 14px 10px; font-weight: normal; cursor: pointer; font-size: 0.95rem; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; font-family: 'Segoe UI', sans-serif; }
         .tab-btn-main.active { color: var(--amazon); border-bottom: 2px solid var(--amazon); background: var(--card-bg);}
         .tab-btn-main.inactive { color: #999; border-bottom: 2px solid transparent; }
 
-        /* ✨ LUXURY PRODUCT GRID */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; background: var(--bg); max-width: 1200px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; background: var(--bg); max-width: 1200px; margin: 0 auto;}
         .p-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); box-shadow: none; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; }
         .p-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .p-img-container { position: relative; width: 100%; padding-top: 100%; cursor: pointer; background: #fcfcfc; border-bottom: 1px solid var(--border); }
@@ -114,7 +110,7 @@
         .p-qty button:hover { background: rgba(0,0,0,0.05); }
         .p-qty span { font-weight: 600; font-size: 0.95rem; color: var(--text); font-family: 'Segoe UI', sans-serif;}
         
-        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); } }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 30px; } }
 
         .back-btn { background: transparent; color: var(--text); border: none; padding: 8px 0; font-weight: normal; font-size: 0.9rem; cursor: pointer; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 5px; transition: 0.3s; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1px;}
         .back-btn:hover { color: var(--amazon); }
@@ -124,7 +120,6 @@
         input, textarea, select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; margin-bottom: 12px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); font-family: 'Segoe UI', sans-serif;}
         input:focus, textarea:focus { outline: none; border-color: var(--amazon); }
 
-        /* 🔥 VISUAL TRACKER CSS 🔥 */
         .track-container { font-family: 'Segoe UI', sans-serif; max-width: 100%; margin: 15px 0; background: var(--bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
         .step { display: flex; align-items: center; position: relative; margin-bottom: 30px; }
         .step:last-child { margin-bottom: 5px; }
@@ -141,13 +136,11 @@
         .upsell-price { font-size: 1.2rem; font-weight: 600; color: var(--text); margin: 15px 0; font-family: 'Segoe UI', sans-serif;}
         .upsell-price strike { color: #999; font-size: 0.9rem; margin-right: 12px; font-weight: normal;}
 
-        /* 🩺 VIP CONSULTATION POPUP */
         #consult-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: opacity 0.5s ease; opacity: 0; pointer-events: none; }
         #consult-overlay.show-consult { opacity: 1; pointer-events: auto; }
         .consult-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; width: 90%; max-width: 400px; text-align: center; padding: 40px 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; color: var(--text); }
         .consult-img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px; object-fit: cover; background: white; border: 1px solid var(--border); padding: 4px;}
         
-        /* 📱 BOTTOM APP BAR */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); box-shadow: 0 -5px 20px rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: center; z-index: 5000; border-top: 1px solid var(--border); padding: 10px 15px 15px 15px; box-sizing: border-box; }
         .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: #888; text-decoration: none; cursor: pointer; transition: 0.3s; -webkit-tap-highlight-color: transparent; position: relative; }
         .nav-item svg { width: 22px; height: 22px; fill: #888; margin-bottom: 6px; transition: 0.3s; }
@@ -156,7 +149,6 @@
         .nav-item.active span { color: var(--amazon); font-weight: 600; }
         .nav-badge { position: absolute; top: -6px; right: 20px; background: var(--amazon); color: var(--gold); border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: bold; min-width: 14px; text-align: center; font-family: 'Segoe UI', sans-serif;}
 
-        /* 🎒 LMS SUB-TABS */
         .lms-sub-tabs-bar {
             display: flex; gap: 12px; padding: 15px 20px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none;
         }
@@ -166,35 +158,34 @@
         }
         .sub-tab-item.active { background: var(--amazon); color: var(--gold); border-color: var(--amazon); }
 
-        /* 🔥 PERFECT BANNER SCALING FIX 🔥 */
-        #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 20px 20px 0 20px; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
+        /* 🔥 DYNAMIC BANNER SCALING - ZERO MISMATCH 🔥 */
+        #dynamic-image-ads { width: 100%; overflow: hidden; background: transparent; padding: 15px 15px 0 15px; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
         .image-ad-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; }
         .image-ad-slide { min-width: 100%; padding: 0; box-sizing: border-box; }
         .image-ad-slide img { 
             width: 100%; 
             height: auto; 
-            aspect-ratio: 16 / 8; /* Dynamic ratio so it never stretches awkwardly */
-            max-height: 220px; /* Caps the height on big screens */
-            object-fit: cover; /* Smart cropping */
-            border-radius: 12px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06); 
+            aspect-ratio: 16 / 8;
+            max-height: 220px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             border: 1px solid var(--border); 
             display: block;
         }
         @media (min-width: 768px) {
-            .image-ad-slide img { aspect-ratio: 21 / 9; }
+            .image-ad-slide img { aspect-ratio: 21 / 9; max-height: 260px; }
         }
 
         /* 📸 PRODUCT CAROUSEL STYLES */
         .product-carousel-container { width: 100%; overflow: hidden; position: relative; background: #fcfcfc; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 25px; box-sizing: border-box;}
-        .product-carousel-track { display: flex; width: 100%; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .product-carousel-slide { min-width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; padding: 15px; }
-        .product-carousel-slide img { width: 100%; max-height: 380px; object-fit: contain; cursor: zoom-in; }
-        
-        #modal-gallery-dots { text-align: center; margin-bottom: 20px; }
-        .gdot { height: 8px; width: 8px; margin: 0 5px; background-color: #ccc; border-radius: 50%; display: inline-block; transition: 0.3s; }
-        .gdot.active { background-color: var(--amazon); transform: scale(1.2); }
+        .product-carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+        .product-carousel-track::-webkit-scrollbar { display: none; }
+        .product-carousel-slide { flex: 0 0 100%; width: 100%; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .product-carousel-slide img { width: 100%; max-height: 400px; object-fit: contain; cursor: zoom-in; }
 
+        .gdot { height: 8px; width: 8px; margin: 0 4px; background-color: #ccc; border-radius: 50%; display: inline-block; transition: 0.3s; }
+        .gdot.active { background-color: var(--amazon); transform: scale(1.2); }
     </style>
 </head>
 <body>
@@ -212,30 +203,30 @@
         <div class="h-actions">
             <div id="google_translate_element"></div>
             <!-- 🌗 THEME TOGGLE SWITCH -->
-            <div id="theme-switcher-btn" onclick="window.togglePlatformTheme()" style="font-size: 1.2rem; cursor: pointer; margin-left: 5px; opacity: 0.7; transition: 0.3s;">🌙</div>
+            <div id="theme-switcher-btn" onclick="togglePlatformTheme()" style="font-size: 1.2rem; cursor: pointer; margin-left: 5px; opacity: 0.7; transition: 0.3s;">🌙</div>
         </div>  
     </div>
 </header>
 
 <div id="main-toggle-bar">
-    <div id="tab-store" class="tab-btn-main active" onclick="window.switchMainTab('store')">Apothecary</div>
-    <div id="tab-videos" class="tab-btn-main inactive" onclick="window.switchMainTab('videos')">Insights</div>
-    <div id="tab-workshops" class="tab-btn-main inactive" onclick="window.switchMainTab('workshops')">Consult</div>
+    <div id="tab-store" class="tab-btn-main active" onclick="switchMainTab('store')">Apothecary</div>
+    <div id="tab-videos" class="tab-btn-main inactive" onclick="switchMainTab('videos')">Insights</div>
+    <div id="tab-workshops" class="tab-btn-main inactive" onclick="switchMainTab('workshops')">Consult</div>
 </div>
     
 <div id="t-offer-banner" style="background: var(--amazon); color: var(--bg); text-align: center; padding: 10px; font-size: 0.8rem; font-weight: normal; letter-spacing: 1px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase;">Complimentary Shipping on orders above ₹<span id="banner-threshold">800</span></div>
 
 <div id="search-section" style="background: var(--bg); padding: 20px; border-bottom: 1px solid var(--border);">
     <div class="search-container" style="position: relative; display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto;">
-        <input type="text" id="search-box" placeholder="Search our collection..." onkeyup="window.liveSearch()" style="margin: 0; width: 100%; border: 1px solid var(--border); border-radius: 4px; padding: 14px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
+        <input type="text" id="search-box" placeholder="Search our collection..." onkeyup="liveSearch()" style="margin: 0; width: 100%; border: 1px solid var(--border); border-radius: 4px; padding: 14px 15px; font-size: 0.95rem; outline: none; box-sizing: border-box; z-index: 1001; background: var(--card-bg); font-family: 'Playfair Display', serif; font-style: italic;">
         <!-- DYNAMIC SEARCH DROPDOWN -->
         <div id="search-dropdown" style="display:none; position:absolute; top:52px; left:0; width:100%; background:var(--card-bg); z-index:1000; box-shadow:0 15px 35px rgba(0,0,0,0.1); border-radius:4px; max-height:300px; overflow-y:auto; border:1px solid var(--border);"></div>
     </div>
     <div style="display: flex; gap: 12px; overflow-x: auto; margin-top: 20px; padding-bottom: 5px; scrollbar-width: none; max-width: 1200px; margin-left: auto; margin-right: auto;">
-        <button class="cat-btn t-all" onclick="window.filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">All</button>
-        <button class="cat-btn t-soaps" onclick="window.filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Soaps</button>
-        <button class="cat-btn t-oils" onclick="window.filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Oils</button>
-        <button class="cat-btn t-face" onclick="window.filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Face</button>
+        <button class="cat-btn t-all" onclick="filterCategory('All')" style="background: var(--amazon); color: var(--gold); border: 1px solid var(--amazon); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">All</button>
+        <button class="cat-btn t-soaps" onclick="filterCategory('Soap')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Soaps</button>
+        <button class="cat-btn t-oils" onclick="filterCategory('Oil')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Oils</button>
+        <button class="cat-btn t-face" onclick="filterCategory('Face')" style="background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-weight: normal; white-space: nowrap; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem;">Face</button>
     </div>
 </div>
 
@@ -257,36 +248,36 @@
     <img src="logo.png" style="width: 40px; height: 40px; border-radius: 50%; opacity: 0.8; margin-bottom: 15px; border: 1px solid var(--gold);">
     <p style="margin: 0 0 20px 0; font-weight: normal; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; font-family: 'Playfair Display', serif;">Ayursiddhit Naturals</p>
     <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
-        <a href="#" onclick="window.showAbout()" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Our Story</a>
-        <a href="#" onclick="window.showPolicy('contact')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Contact</a>
-        <a href="#" onclick="window.showPolicy('refund')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Refunds</a>
-        <a href="#" onclick="window.showPolicy('terms')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Terms</a>
+        <a href="#" onclick="showAbout()" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Our Story</a>
+        <a href="#" onclick="showPolicy('contact')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Contact</a>
+        <a href="#" onclick="showPolicy('refund')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Refunds</a>
+        <a href="#" onclick="showPolicy('terms')" style="color: var(--gold); text-decoration: none; opacity: 0.8; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Terms</a>
     </div>
     <p style="margin: 0; color: rgba(250,249,246,0.4); font-size: 0.75rem; letter-spacing: 1px;">© 2026 Ayursiddhit Naturals. All Rights Reserved.</p>
 </footer>
 
-<div id="videos-view" class="hidden" style="padding:20px; max-width:800px; margin:auto;">
-    <h2 style="color:var(--text); margin-top:20px; text-align:center; font-weight: normal; font-style: italic;">Clinical Insights</h2>
-    <p style="text-align:center; color:#888; font-size:0.9rem; margin-bottom:40px; font-family: 'Segoe UI', sans-serif;">Guidance from Dr. Prasiddhi Patil</p>
+<div id="videos-view" class="hidden">
+    <h2 style="color:var(--text); margin-top:10px; text-align:center; font-weight: normal; font-style: italic;">Clinical Insights</h2>
+    <p style="text-align:center; color:#888; font-size:0.9rem; margin-bottom:30px; font-family: 'Segoe UI', sans-serif;">Guidance from Dr. Prasiddhi Patil</p>
     <div id="video-feed-container">Loading insights...</div>
 </div>
      
-<div id="workshops-view" class="hidden" style="padding: 0; max-width:800px; margin:auto;">
+<div id="workshops-view" class="hidden" style="padding: 0;">
     <div class="lms-sub-tabs-bar">
-        <button id="sub-tab-mybatches" class="sub-tab-item active" onclick="window.switchLMSSubTab('mybatches')">My Regimens</button>
-        <button id="sub-tab-library" class="sub-tab-item" onclick="window.switchLMSSubTab('library')">Archive</button>
+        <button id="sub-tab-mybatches" class="sub-tab-item active" onclick="switchLMSSubTab('mybatches')">My Regimens</button>
+        <button id="sub-tab-library" class="sub-tab-item" onclick="switchLMSSubTab('library')">Archive</button>
     </div>
-    <div style="padding: 25px;">
+    <div style="padding: 20px;">
         <div id="lms-panel-mybatches" class="lms-panel-view hidden">
-            <h3 style="color: var(--text); margin-top: 0; font-size: 1.3rem; font-weight: normal; font-style: italic;">Active Regimens</h3>
+            <h3 style="color: var(--text); margin-top: 0; font-size: 1.2rem; font-weight: normal; font-style: italic;">Active Regimens</h3>
             <div id="student-unlocked-batches-grid">
-                <p style="color: #999; text-align: center; padding: 50px 20px; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem;">You haven't enrolled in any clinical regimens yet.</p>
+                <p style="color: #999; text-align: center; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem;">You haven't enrolled in any clinical regimens yet.</p>
             </div>
         </div>
         <div id="lms-panel-library" class="lms-panel-view">
-            <h3 style="color: var(--text); margin-top: 0; font-size: 1.3rem; font-weight: normal; font-style: italic;">Clinical Archive</h3>
+            <h3 style="color: var(--text); margin-top: 0; font-size: 1.2rem; font-weight: normal; font-style: italic;">Clinical Archive</h3>
             <div id="student-historical-recordings-list">
-                <p style="color: #999; text-align: center; padding: 50px 20px; font-family: 'Segoe UI', sans-serif; font-size: 0.95rem;">Your completed session materials will appear here.</p>
+                <p style="color: #999; text-align: center; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; font-size: 0.9rem;">Your completed session materials will appear here.</p>
             </div>
         </div>
     </div>
@@ -300,53 +291,44 @@
         <h3 id="up-name" style="margin:0 0 10px 0; font-size:1.1rem; color:var(--text); font-weight: normal;"></h3>
         <div class="upsell-price"><strike id="up-old-price"></strike> ₹<span id="up-new-price"></span></div>
         <button id="up-btn" class="btn-buy" style="width:100%; padding: 14px; margin-top: 10px;">Add to Ritual</button>
-        <button class="close-upsell" onclick="window.skipUpsell()" style="background:none; border:none; color:#999; font-size:0.8rem; margin-top:20px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Proceed to Checkout</button>
+        <button class="close-upsell" onclick="skipUpsell()" style="background:none; border:none; color:#999; font-size:0.8rem; margin-top:20px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Proceed to Checkout</button>
     </div>
 </div>
 
 <div id="profile-view" class="hidden" style="background:var(--card-bg); border-radius:8px; border:1px solid var(--border); padding:30px 20px; margin-top:20px; max-width:800px; margin-left:auto; margin-right:auto;">
-    <button onclick="window.closeProfile()" class="back-btn">Back</button>
+    <button onclick="closeProfile()" class="back-btn">Back</button>
     <h2 style="color:var(--text); margin-top:10px; font-weight: normal;">My Profile</h2>
     <p style="font-size:1.1rem; font-weight:normal; border-bottom: 1px solid var(--border); padding-bottom: 20px; font-family: 'Segoe UI', sans-serif;" id="prof-name-display"></p>
     
-    <!-- ✨ SIMPLE GOOGLE LOGIN BUTTON (Only shows when logged out) ✨ -->
     <div id="login-button-container" style="display:none; margin-top: 20px;">
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif;">Sign in to access your order history and VIP benefits.</p>
-        <button onclick="window.login()" style="width: 100%; background: white; color: var(--amazon); border: 1px solid var(--border); padding: 14px; border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <button onclick="login()" style="width: 100%; background: white; color: var(--amazon); border: 1px solid var(--border); padding: 14px; border-radius: 4px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
             <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
             Continue with Google
         </button>
     </div>
 
-    <!-- Hides until logged in -->
-    <div id="logged-in-profile-content" style="display:none;">
+    <div id="logged-in-profile-content">
         <h3 style="color:var(--text); margin-top: 35px; font-weight: normal; font-style: italic;">Order History</h3>
         <div id="prof-orders-list" style="font-size:0.95rem; font-family: 'Segoe UI', sans-serif; margin-top: 20px;">Indexing records...</div>
-        <button onclick="window.logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:14px; border-radius:4px; font-weight:normal; margin-top:40px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Sign Out</button>
+        <button onclick="logoutUser()" style="background:transparent; color:var(--text); border:1px solid var(--border); width:100%; padding:14px; border-radius:4px; font-weight:normal; margin-top:40px; cursor:pointer; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 1px;">Sign Out</button>
     </div>
 </div>
 
 <!-- ✨ FULL SCREEN ZOOM OVERLAY ✨ -->
 <div id="fullscreen-image-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
-    <button onclick="window.closeFullscreenImage()" style="position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+    <button onclick="closeFullscreenImage()" style="position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
     <img id="fullscreen-img" src="" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px;">
 </div>
 
-<!-- 🔥 THE PRODUCT PAGE (WITH GALLERY & REVIEWS) 🔥 -->
 <div id="product-view" class="hidden product-view" style="position: relative;">
-    <button onclick="window.closeProduct()" class="back-btn">Back</button>
+    <button onclick="closeProduct()" class="back-btn">Back</button>
     <div style="background:var(--card-bg); padding:25px; border-radius:8px; border:1px solid var(--border);">
         
-        <!-- 🔥 AUTO-SCROLLING, SWIPEABLE GALLERY 🔥 -->
-        <div class="product-carousel-container" id="modal-gallery-container">
-            <div class="product-carousel-track" id="modal-gallery-track">
-                <!-- Images Injected Here by JavaScript -->
-            </div>
-        </div>
-        <!-- Interactive Dots below the gallery -->
-        <div id="modal-gallery-dots"></div>
+        <!-- DYNAMIC IMAGE/CAROUSEL CONTAINER -->
+        <div id="modal-image-container"></div>
         
-        <h2 id="modal-name" style="margin:10px 0 10px 0; font-size: 1.6rem; font-weight: normal; color: var(--text);"></h2>
+        <h2 id="modal-name" style="margin:25px 0 10px 0; font-size: 1.6rem; font-weight: normal; color: var(--text);"></h2>
         <h3 id="modal-price" style="color:var(--text); margin:0 0 20px 0; font-size: 1.3rem; font-weight: 600; font-family: 'Segoe UI', sans-serif;"></h3>
         
         <div style="margin-bottom:25px; font-family: 'Segoe UI', sans-serif;"><span id="modal-rating-avg" style="color:var(--gold); font-size:1.1rem; font-weight: 600;">⭐ 5.0</span> <span id="modal-rating-count" style="font-size:0.85rem; color:#888;"></span></div>
@@ -355,7 +337,7 @@
             <span style="font-size:0.8rem; font-weight:normal; color:#777; display:block; margin-bottom:10px; text-transform: uppercase; letter-spacing: 1px;">Delivery Availability</span>
             <div style="display:flex; gap:10px;">
                 <input type="number" id="pin-check" placeholder="Enter Pincode" style="margin:0; flex:1; padding:12px; border:1px solid var(--border); border-radius:4px; background: var(--card-bg);">
-                <button onclick="window.checkPincode()" class="btn-cart" style="padding:0 20px; margin: 0; width: auto; flex: none;">Check</button>
+                <button onclick="checkPincode()" class="btn-cart" style="padding:0 20px; margin: 0; width: auto; flex: none;">Check</button>
             </div>
             <p id="pin-msg" style="margin:10px 0 0 0; font-size:0.85rem; font-weight:normal;"></p>
         </div>
@@ -363,7 +345,7 @@
         <p id="modal-desc" style="font-size:0.95rem; line-height: 1.8; margin-bottom: 30px; color: #555;"></p>
         
         <div class="p-qty" id="modal-qty-controls" style="margin:0 0 20px 0; padding:5px; border-radius:4px; display:inline-flex; width:120px; background: var(--card-bg);">
-            <button onclick="window.updateQty(window.currentModalProductId, -1)">−</button><span id="modal-qty" style="padding: 0 15px;">0</span><button onclick="window.updateQty(window.currentModalProductId, 1)">+</button>
+            <button onclick="updateQty(currentModalProductId, -1)">−</button><span id="modal-qty" style="padding: 0 15px;">0</span><button onclick="updateQty(currentModalProductId, 1)">+</button>
         </div>
         
         <div style="display:flex; gap:15px; margin-bottom:30px;" id="modal-action-buttons">
@@ -375,7 +357,6 @@
         <h3 style="margin-top:0; color: var(--text); font-weight: normal; font-style: italic;">Patient Reviews</h3>
         <div id="modal-reviews-list" style="margin-bottom:30px; font-size:0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
 
-        <!-- 🔥 REVIEW PHOTO SYSTEM (INTACT) 🔥 -->
         <div style="background:var(--bg); padding:25px; border-radius:4px; border:1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <b style="font-size:0.95rem; display:block; margin-bottom:10px; color: var(--text); font-weight: normal; text-transform: uppercase; letter-spacing: 1px;">Share Your Experience</b>
             <div class="rating-box" style="display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 20px;">
@@ -387,17 +368,15 @@
             </div>
             <style> .rating-box input:checked ~ label, .rating-box label:hover, .rating-box label:hover ~ label { color: var(--gold) !important; } </style>
             <textarea id="review-text" placeholder="Your thoughts..." rows="4" style="width:100%; padding:15px; border-radius:4px; border:1px solid var(--border); font-size:0.95rem; box-sizing:border-box; background: var(--card-bg);"></textarea>
-            
             <label style="font-size:0.8rem; font-weight:normal; margin-bottom:8px; display:block; color:#777; margin-top:15px; text-transform: uppercase; letter-spacing: 1px;">Attach Image (Optional)</label>
             <input type="file" id="review-image" accept="image/*" style="padding:10px 0; background:transparent; border: none; cursor:pointer; width:100%; box-sizing:border-box; color: #888;">
-            
-            <button id="submit-rev-btn" class="btn-cart" onclick="window.submitReview()" style="width:100%; padding: 14px; margin-top:15px;">Submit Review</button>
+            <button id="submit-rev-btn" class="btn-cart" onclick="submitReview()" style="width:100%; padding: 14px; margin-top:15px;">Submit Review</button>
         </div>
     </div>
 </div>
 
 <div id="b2b-view" class="hidden" style="background:var(--card-bg); padding:30px 20px; border-radius:8px; border: 1px solid var(--border); margin-bottom: 20px;">
-    <button onclick="window.restoreHome()" class="back-btn">Back</button>
+    <button onclick="restoreHome()" class="back-btn">Back</button>
     <h2 style="color:var(--text); margin-top:10px; font-weight: normal;">Wholesale Portal</h2>
     <p style="font-size:0.9rem; color:#777; line-height: 1.6; font-family: 'Segoe UI', sans-serif;">Procurement for clinical and retail partners.</p>
     
@@ -423,18 +402,18 @@
         <h3 style="display:flex; justify-content:space-between; margin: 0; color:var(--text); font-weight: 600; font-size: 1.1rem;">Total Due: <span id="b2b-total">₹0</span></h3>
     </div>
 
-    <button id="submit-b2b-btn" class="btn-buy" onclick="window.submitB2BOrder()" style="width:100%; padding:16px; font-size:1rem; margin-top:25px;">Submit Purchase Order</button>
+    <button id="submit-b2b-btn" class="btn-buy" onclick="submitB2BOrder()" style="width:100%; padding:16px; font-size:1rem; margin-top:25px;">Submit Purchase Order</button>
 </div>
     
 <div id="cart-view" class="hidden cart-view">
-    <button onclick="window.closeCart()" class="back-btn">Back</button>
+    <button onclick="closeCart()" class="back-btn">Back</button>
     <h2 id="t-cart-title" style="margin-top: 10px; font-weight: normal; color: var(--text);">Your Ritual Bag</h2>
     <div id="cart-list" style="font-family: 'Segoe UI', sans-serif;"></div>
     <div style="background:var(--card-bg); padding:25px 20px; border-radius:8px; border:1px solid var(--border); margin-top:20px;">
         <div style="background: var(--bg); padding: 15px; border-radius: 4px; margin-bottom: 25px; border: 1px solid var(--border); font-family: 'Segoe UI', sans-serif;">
             <div style="display:flex; gap:10px; margin-bottom:5px;">
                 <input type="text" id="cart-promo-input" placeholder="Promo Code" style="margin:0; text-transform:uppercase; background: var(--card-bg);">
-                <button class="btn-cart" onclick="window.applyPromo()" style="padding:0 20px; width: auto; flex: none;">Apply</button>
+                <button class="btn-cart" onclick="applyPromo()" style="padding:0 20px; width: auto; flex: none;">Apply</button>
             </div>
             <div id="promo-msg" style="font-size:0.8rem; font-weight:normal; height:15px; margin-top: 5px;"></div>
         </div>
@@ -446,7 +425,7 @@
             <textarea id="f-address" placeholder="Street Name & Area" rows="3" required></textarea>
             
             <div class="form-grid">
-                <input type="text" id="f-city" placeholder="City" required oninput="window.renderCart()">
+                <input type="text" id="f-city" placeholder="City" required oninput="renderCart()">
                 <input type="number" id="f-pin" placeholder="Pincode" required>
             </div>
 
@@ -454,10 +433,10 @@
                 <b style="font-size: 0.85rem; color: #777; display: block; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: normal;">Payment Method</b>
                 <div style="display: flex; gap: 12px;">
                     <label style="flex: 1; border: 1px solid var(--border); padding: 12px; border-radius: 4px; text-align: center; cursor: pointer; background: var(--bg); font-weight: normal; font-size: 0.9rem; transition: 0.3s;">
-                        <input type="radio" name="pay_mode" value="prepaid" checked onchange="window.renderCart()" style="display:none;"> 💳 Prepaid
+                        <input type="radio" name="pay_mode" value="prepaid" checked onchange="renderCart()" style="display:none;"> 💳 Prepaid
                     </label>
                     <label style="flex: 1; border: 1px solid var(--border); padding: 12px; border-radius: 4px; text-align: center; cursor: pointer; background: var(--bg); font-weight: normal; font-size: 0.9rem; transition: 0.3s;">
-                        <input type="radio" name="pay_mode" value="cod" onchange="window.renderCart()" style="display:none;"> 💵 COD (+₹55)
+                        <input type="radio" name="pay_mode" value="cod" onchange="renderCart()" style="display:none;"> 💵 COD (+₹55)
                     </label>
                 </div>
                 <style>
@@ -488,8 +467,87 @@
     </div>
 </div>
 
+<div id="about-view" class="hidden about-view" style="background:var(--card-bg); border-radius:8px; border:1px solid var(--border); padding:40px 30px; margin-top:20px; text-align: center;">
+    <button onclick="closeAbout()" class="back-btn" style="align-self: flex-start; margin-right: auto; display: inline-flex;">Back</button><br>
+    <img src="logo.png" style="width: 100px; height: 100px; border-radius: 50%; border: 1px solid var(--border); margin-bottom: 25px; object-fit: cover; padding: 5px;">
+    <h2 style="color: var(--text); margin-top:0; margin-bottom: 8px; font-weight: normal;">Dr. Prasiddhi Patil</h2>
+    <h4 style="color: #777; margin-top: 0; font-weight: normal; font-family: 'Segoe UI', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem;">BAMS, Ahilyanagar</h4>
+    <p style="font-size:1rem; color:var(--text); line-height: 1.8; text-align: left; margin-top: 30px;">
+        Welcome to <b>Ayursiddhit Naturals</b>. As an Ayurvedic doctor, I believe that true beauty and wellness come from pure, clinical-grade natural ingredients. Every formulation is meticulously crafted to restore balance and vitality.
+    </p>
+</div>
+
+<div id="policy-view" class="hidden policy-view" style="background:var(--card-bg); border-radius:8px; border:1px solid var(--border); padding:30px 25px; margin-top:20px;">
+    <button onclick="closePolicy()" class="back-btn">Back</button>
+    <h2 id="policy-title" style="color: var(--text); margin-top:10px; font-weight: normal;"></h2>
+    <div id="policy-content" style="line-height: 1.8; color: #555; font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;"></div>
+</div>
+
+<div id="consult-overlay">
+    <div class="consult-box">
+        <img src="logo.png" class="consult-img">
+        
+        <div id="premium-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 10000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(8px);">
+            <div style="background: var(--bg); border: 1px solid var(--luxury); border-radius: 8px; max-width: 400px; width: 100%; padding: 30px 25px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.2); text-align: center; font-family: 'Segoe UI', sans-serif; box-sizing: border-box; max-height: 85vh; overflow-y: auto;">
+                
+                <button onclick="closePremiumPopup()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #999; font-size: 24px; cursor: pointer; font-weight: normal; transition: 0.3s;">&times;</button>
+                
+                <h2 style="color: var(--text); margin-top: 10px; margin-bottom: 5px; font-size: 1.3rem; font-family: 'Playfair Display', serif; font-weight: normal;">VIP Privilege</h2>
+                <p style="color: #777; font-size: 0.85rem; margin-bottom: 25px;">Unlock exclusive clinical benefits</p>
+                
+                <div style="text-align: left; margin-bottom: 25px; background: var(--card-bg); padding: 20px; border-radius: 4px; border: 1px solid var(--border);">
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.1rem; margin-right: 12px; line-height: 1;">🩺</span>
+                        <span style="font-size: 0.9rem; line-height: 1.4;">Private consultation access</span>
+                    </div>
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.1rem; margin-right: 12px; line-height: 1;">🛍️</span>
+                        <span style="font-size: 0.9rem; line-height: 1.4;">Access to reserved apothecary items</span>
+                    </div>
+                    <div style="margin-bottom: 12px; display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.1rem; margin-right: 12px; line-height: 1;">🏷️</span>
+                        <span style="font-size: 0.9rem; line-height: 1.4;">Preferential pricing (-10%)</span>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; color: var(--text);">
+                        <span style="color: var(--gold); font-size: 1.1rem; margin-right: 12px; line-height: 1;">🚚</span>
+                        <span style="font-size: 0.9rem; line-height: 1.4;">Complimentary priority shipping</span>
+                    </div>
+                </div>
+
+                <b style="color: #555; font-size: 0.8rem; display: block; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: normal;">Select Membership</b>
+                <form style="display: flex; justify-content: center; margin-bottom: 10px;">
+                    <script src="https://cdn.razorpay.com/static/widget/subscription-button.js" data-subscription_button_id="pl_Sv7BMoixqrZFmt" data-button_theme="rzp-outline-standard" async></script>
+                </form>
+                
+                <button onclick="closePremiumPopup()" style="margin-top: 20px; width: 100%; padding: 12px; background: transparent; border: none; color: #999; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Return to Menu</button>
+                
+            </div>
+        </div>
+
+        <script>
+            function closePremiumPopup() {
+                var popup = document.getElementById('premium-popup');
+                if (popup) {
+                    popup.style.display = 'none';
+                }
+            }
+        </script>
+
+        <div id="vip-active-portal" style="display: none;">
+            <h2 style="color:var(--text); margin: 0 0 15px 0; font-family: 'Playfair Display', serif; font-weight: normal;">Welcome, VIP</h2>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.6; font-family: 'Segoe UI', sans-serif;">Your private channel is open. Begin your consultation with Dr. Prasiddhi.</p>
+            
+            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:16px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:20px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">
+                Open Secure Chat
+            </a>
+        </div>
+        
+        <button onclick="closeConsult()" style="background: transparent; border: none; color: #999; padding: 10px; width: 100%; cursor: pointer; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Close</button>
+    </div>
+</div>
+
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="window.activateNav(this); window.restoreHome();">
+    <div class="nav-item active" onclick="activateNav(this); restoreHome();">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Discover</span>
     </div>
@@ -497,57 +555,23 @@
         <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
         <span>Partner</span>
     </div>
+    
     <div class="nav-item" onclick="window.activateNav(this); window.openConsult();"> 
-        <span style="font-size: 1.3rem; line-height: 22px; margin-bottom: 6px;">🩺</span>
+        <span style="font-size: 1.2rem; line-height: 22px; margin-bottom: 6px;">🩺</span>
         <span>Clinic</span>
     </div>
-    <div class="nav-item" onclick="window.activateNav(this); if(window.handleAccountClick) window.handleAccountClick();">
+    <div class="nav-item" onclick="activateNav(this); if(window.handleAccountClick) window.handleAccountClick();">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         <span>Profile</span>
     </div>
-    <div class="nav-item" onclick="window.activateNav(this); if(window.triggerCartFlow) window.triggerCartFlow();">
+    <div class="nav-item" onclick="activateNav(this); if(window.triggerCartFlow) window.triggerCartFlow();">
         <span id="nav-badge" class="nav-badge">0</span>
         <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <span>Bag</span>
     </div>
 </div>
 
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,mr,hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
-    }
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<!-- 🔥 MASTER ENGINE: ALL LOGIC UNIFIED TO PREVENT CRASHES 🔥 -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, query, where, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
-
-    const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
-    const app = initializeApp(firebaseConfig); 
-    const db = getFirestore(app); 
-    const auth = getAuth(app); 
-    const provider = new GoogleAuthProvider();
-
-    // GLOBAL VARIABLES
-    window.currentUser = null; 
-    window.isUserVIP = false; 
-    window.products = []; 
-    window.cart = {}; 
-    window.allPromos = []; 
-    window.activePromo = null; 
-    window.appliedDiscount = 0; 
-    window.multiAds = []; 
-    window.activeUpsell = null; 
-    window.windowHasUpsellShown = false; 
-    window.currentModalProductId = null;
-    const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
-    window.dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
-    window.isStoreOffline = false;
-
+<script>
     window.togglePlatformTheme = function() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -557,6 +581,13 @@
         if(btn) btn.innerText = targetTheme === 'dark' ? '☀️' : '🌙';
     };
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('platform-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('theme-switcher-btn');
+        if(btn) btn.innerText = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+    
     window.switchLMSSubTab = function(tabName) {
         document.querySelectorAll('.sub-tab-item').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById('sub-tab-' + tabName);
@@ -568,9 +599,8 @@
 
     window.hideSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
     window.showSafe = function(id) { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
-
-    window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
     
+    window.closeConsult = function() { const el = document.getElementById('consult-overlay'); if(el) el.classList.remove('show-consult'); };
     window.openConsult = function() {
         if (window.isUserVIP === true) {
             const el = document.getElementById('consult-overlay');
@@ -579,58 +609,58 @@
             if(portal) portal.style.display = 'block';
         } else {
             const popup = document.getElementById('premium-popup');
-            if (popup) { document.body.appendChild(popup); popup.style.display = 'flex'; }
+            if (popup) {
+                document.body.appendChild(popup); 
+                popup.style.display = 'flex';
+            }
         }
     };
     
-    window.openDoshaQuiz = function() {
-        document.getElementById('dosha-quiz-overlay').classList.remove('hidden');
-        document.getElementById('quiz-step-1').classList.remove('hidden');
-        document.getElementById('quiz-step-2').classList.add('hidden');
-        document.getElementById('quiz-step-result').classList.add('hidden');
-    };
-
-    window.nextQuizStep = function(step) {
-        document.getElementById('quiz-step-1').classList.add('hidden');
-        document.getElementById('quiz-step-' + step).classList.remove('hidden');
-    };
-
-    window.finishQuiz = function() {
-        document.getElementById('quiz-step-2').classList.add('hidden');
-        document.getElementById('quiz-step-result').classList.remove('hidden');
-    };
-
-    window.closeDoshaQuiz = function() { document.getElementById('dosha-quiz-overlay').classList.add('hidden'); };
-
-    window.conciergeCheckout = function() {
-        const p = window.products.find(x => x.id === window.currentModalProductId);
-        if(!p) return;
-        const subRadio = document.querySelector('input[name="purchase_type"]:checked').value;
-        const subText = subRadio === 'subscribe' ? " (Auto-Replenish Subscription 10% Off)" : "";
-        const msg = `Hi Dr. Prasiddhi! ✨\n\nI would like to instantly checkout via VIP Concierge for:\n*${p.name}*${subText}\n\nPlease share the Razorpay link or UPI details!`;
-        window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`);
-    };
-
     window.switchMainTab = function(tab) {
         const tStore = document.getElementById('tab-store');
         const tVideos = document.getElementById('tab-videos');
         const tWorkshops = document.getElementById('tab-workshops');
-        window.hideSafe('home-top-section'); window.hideSafe('search-section'); window.hideSafe('main-view'); window.hideSafe('t-offer-banner'); window.hideSafe('site-footer'); window.hideSafe('videos-view'); window.hideSafe('workshops-view');
 
         if(tab === 'store') {
             if(tStore) tStore.className = 'tab-btn-main active';
             if(tVideos) tVideos.className = 'tab-btn-main inactive';
             if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-            window.showSafe('home-top-section'); window.showSafe('search-section'); window.showSafe('main-view'); window.showSafe('t-offer-banner'); window.showSafe('site-footer'); 
+
+            window.showSafe('home-top-section');
+            window.showSafe('search-section');
+            window.showSafe('main-view');
+            window.showSafe('t-offer-banner');
+            window.showSafe('site-footer'); 
+
+            window.hideSafe('videos-view');
+            window.hideSafe('workshops-view');
+            
         } else if (tab === 'videos') {
             if(tVideos) tVideos.className = 'tab-btn-main active';
             if(tStore) tStore.className = 'tab-btn-main inactive';
             if(tWorkshops) tWorkshops.className = 'tab-btn-main inactive';
-            window.showSafe('videos-view'); 
+
+            window.hideSafe('home-top-section');
+            window.hideSafe('search-section');
+            window.hideSafe('main-view');
+            window.hideSafe('t-offer-banner');
+            window.hideSafe('site-footer'); 
+
+            window.showSafe('videos-view');
+            window.hideSafe('workshops-view');
+            
         } else if (tab === 'workshops') {
             if(tWorkshops) tWorkshops.className = 'tab-btn-main active';
             if(tStore) tStore.className = 'tab-btn-main inactive';
             if(tVideos) tVideos.className = 'tab-btn-main inactive';
+
+            window.hideSafe('home-top-section');
+            window.hideSafe('search-section');
+            window.hideSafe('main-view');
+            window.hideSafe('t-offer-banner');
+            window.hideSafe('site-footer'); 
+
+            window.hideSafe('videos-view');
             window.showSafe('workshops-view');
         }
     };
@@ -638,263 +668,268 @@
     window.makeFullscreen = function(elementId) {
         var elem = document.getElementById(elementId);
         if (!elem) return;
-        if (elem.requestFullscreen) { elem.requestFullscreen().catch(e => console.log(e)); } 
-        else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(e => console.log("Fullscreen blocked: ", e));
+        } else if (elem.webkitRequestFullscreen) { 
+            elem.webkitRequestFullscreen();
+        }
+    };
+
+    const originalJoinLiveStream = window.joinLiveStream;
+    window.joinLiveStream = function(token) {
+        if(originalJoinLiveStream) originalJoinLiveStream(token);
+        var fsBtn = document.getElementById('fullscreen-btn');
+        if(fsBtn) fsBtn.style.display = 'block';
+
+        var wrapper = document.getElementById('live-video-wrapper');
+        if(wrapper && !document.getElementById('leave-class-btn')) {
+            var btn = document.createElement('button');
+            btn.id = 'leave-class-btn';
+            btn.innerHTML = 'Leave Session';
+            btn.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 99; background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 6px 12px; font-weight: normal; cursor: pointer; font-family: "Segoe UI", sans-serif; text-transform: uppercase; font-size: 0.75rem;';
+            
+            btn.onclick = function() {
+                var player = document.getElementById('student-video-player');
+                if(player) {
+                    player.innerHTML = ''; 
+                    player.style.display = 'none';
+                }
+                document.getElementById('live-banner-img').style.display = 'block';
+                if(fsBtn) fsBtn.style.display = 'none';
+                this.style.display = 'none';
+            };
+            wrapper.appendChild(btn);
+        } else if (document.getElementById('leave-class-btn')) {
+            document.getElementById('leave-class-btn').style.display = 'block';
+        }
     };
 
     window.payForWorkshop = function(title, amount, whatsappUrl) {
         if(amount <= 0 || !whatsappUrl) return;
         var options = {
-            "key": "rzp_live_SeWOakhF098GMI", "amount": amount * 100, "currency": "INR", "name": "Ayursiddhit Naturals", "description": "Clinical Regimen: " + title,
-            "handler": function (response) { alert("Transaction approved. Accessing regimen..."); window.location.href = whatsappUrl; },
+            "key": "rzp_live_SeWOakhF098GMI", 
+            "amount": amount * 100, 
+            "currency": "INR",
+            "name": "Ayursiddhit Naturals",
+            "description": "Clinical Regimen: " + title,
+            "handler": function (response) {
+                alert("Payment Successful! Accessing your regimen...");
+                window.location.href = whatsappUrl;
+            },
             "theme": { "color": "#0f3d14" }
         };
-        var rzp = new Razorpay(options); rzp.open();
+        var rzp = new Razorpay(options);
+        rzp.open();
     };
-    
-    // 🔍 FULLSCREEN ZOOM FUNCTIONS
+
     window.openFullscreenImage = (src) => {
-        document.getElementById('fullscreen-img').src = src;
-        document.getElementById('fullscreen-image-overlay').classList.remove('hidden');
+        const modalImg = document.getElementById('fullscreen-img');
+        if(modalImg) modalImg.src = src;
+        window.showSafe('fullscreen-image-overlay');
     };
-    window.closeFullscreenImage = () => { document.getElementById('fullscreen-image-overlay').classList.add('hidden'); };
-
-    window.modalGalleryInterval = null; 
-    window.modalGalleryIndex = 0;
-
+    window.closeFullscreenImage = () => { window.hideSafe('fullscreen-image-overlay'); };
+    
     window.resetViews = function() {
-        clearInterval(window.modalGalleryInterval); 
-        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer'].forEach(id => window.hideSafe(id));
-        window.closeConsult(); window.closeDoshaQuiz(); window.closeFullscreenImage();
+        ['home-top-section', 'main-view', 'product-view', 'cart-view', 'search-section', 'profile-view', 'about-view', 'policy-view', 'videos-view', 'b2b-view', 'site-footer', 'fullscreen-image-overlay'].forEach(id => window.hideSafe(id));
+        window.closeConsult();
     };
 
-    window.openB2B = function() { window.resetViews(); window.showSafe('b2b-view'); window.scrollTo(0, 0); window.renderB2BProducts(); };
-    window.restoreHome = function() { window.resetViews(); window.switchMainTab('store'); window.scrollTo(0, 0); };
-    window.activateNav = function(el) { if(!el) return; document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); };
+    window.openB2B = function() {
+        window.resetViews();
+        window.showSafe('b2b-view');
+        window.scrollTo(0, 0);
+        window.renderB2BProducts();
+    };
+  
+    window.restoreHome = function() { 
+        window.resetViews();
+        window.switchMainTab('store'); 
+        window.scrollTo(0, 0); 
+    };
+
+    window.activateNav = function(el) {
+        if(!el) return;
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
+    };
+
     window.showAbout = function() { window.resetViews(); window.showSafe('about-view'); window.scrollTo(0, 0); };
     window.closeAbout = function() { window.restoreHome(); };
     
     window.showPolicy = function(type) {
         window.resetViews(); window.showSafe('policy-view'); window.scrollTo(0, 0);
         const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact Directory"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>Dr. Prasiddhi Patil</p><p>Email: ayursiddhitnaturals@gmail.com</p><p>Direct: +91 8080926195</p>"; } 
-        else if (type === 'refund') { title.innerText = "Refunds & Cancellations"; content.innerHTML = "<p>Due to the pure, clinical nature of our formulations, we cannot accept returns once a product has been opened.</p><p>In the event of transit damage, please contact our desk within 48 hours for immediate resolution.</p>"; } 
+        if (type === 'contact') { title.innerText = "Contact"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>Dr. Prasiddhi Patil</p><p>Email: ayursiddhitnaturals@gmail.com</p><p>Direct: +91 8080926195</p>"; } 
+        else if (type === 'refund') { title.innerText = "Refunds & Cancellations"; content.innerHTML = "<p>Due to the pure, clinical nature of our formulations, we cannot accept returns once a product has been opened.</p><p>In the event of transit damage, please contact our desk within 48 hours.</p>"; } 
         else if (type === 'terms') { title.innerText = "Terms of Service"; content.innerHTML = "<p>Access to and use of this apothecary portal is subject to the following terms. Formulations are intended for personal wellness.</p>"; }
     };
     window.closePolicy = function() { window.restoreHome(); };
     
-    // 🔥 THE AUTO-SCROLLING, SWIPEABLE GALLERY WITH ZOOM 🔥
-    window.openProduct = function(id) { 
-        const p = window.products.find(x => x.id === id); 
-        if(!p) return; 
-        
-        window.currentModalProductId = id; 
-        document.getElementById('modal-qty').innerText = window.cart[id] || 0; 
-        
-        window.resetViews(); 
-        window.showSafe('product-view'); 
-        window.scrollTo(0, 0); 
-        
-        clearInterval(window.modalGalleryInterval); 
-        const galleryContainer = document.getElementById('modal-gallery-track');
-        const dotsContainer = document.getElementById('modal-gallery-dots');
-        
-        // Dynamically handle if you've uploaded 1 image or a full 4 image gallery
-        let galleryImages = [];
-        if(p.gallery && Array.isArray(p.gallery) && p.gallery.length > 0) {
-            galleryImages = p.gallery;
-        } else if(p.images && Array.isArray(p.images) && p.images.length > 0) {
-            galleryImages = p.images;
-        } else {
-            galleryImages = [p.image];
-        }
-
-        window.modalGalleryIndex = 0;
-        
-        galleryContainer.innerHTML = galleryImages.map((img) => `
-            <div class="product-carousel-slide">
-                <img src="${img}" onclick="window.openFullscreenImage('${img}')">
-            </div>
-        `).join('');
-
-        if(galleryImages.length > 1) {
-            dotsContainer.innerHTML = galleryImages.map((_, i) => `<span id="gdot-${i}" class="gdot ${i===0 ? 'active':''}"></span>`).join('');
-            
-            const updateGalleryUI = () => {
-                galleryContainer.style.transform = `translateX(-${window.modalGalleryIndex * 100}%)`;
-                for(let i=0; i<galleryImages.length; i++) {
-                    const d = document.getElementById(`gdot-${i}`);
-                    if(d) {
-                        if(i === window.modalGalleryIndex) d.classList.add('active');
-                        else d.classList.remove('active');
-                    }
-                }
-            };
-
-            window.modalGalleryInterval = setInterval(() => {
-                window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length;
-                updateGalleryUI();
-            }, 3500);
-
-            let startX = 0; let isSwiping = false;
-            const wrap = document.getElementById('modal-gallery-container');
-            
-            wrap.ontouchstart = (e) => { 
-                startX = e.touches[0].clientX; 
-                isSwiping = true; 
-                clearInterval(window.modalGalleryInterval); 
-            };
-            
-            wrap.ontouchend = (e) => {
-                if(!isSwiping) return; 
-                let endX = e.changedTouches[0].clientX;
-                if(startX - endX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; }
-                else if(endX - startX > 40) { window.modalGalleryIndex = (window.modalGalleryIndex - 1 + galleryImages.length) % galleryImages.length; }
-                
-                updateGalleryUI(); 
-                isSwiping = false;
-                
-                window.modalGalleryInterval = setInterval(() => { 
-                    window.modalGalleryIndex = (window.modalGalleryIndex + 1) % galleryImages.length; 
-                    updateGalleryUI(); 
-                }, 3500);
-            };
-        } else { 
-            dotsContainer.innerHTML = ''; 
-        }
-        
-        document.getElementById('modal-name').innerText = p.name; 
-        document.getElementById('modal-price').innerText = `₹${p.price}`; 
-        document.getElementById('modal-desc').innerHTML = p.desc || ""; 
-        document.getElementById('modal-sensory').innerText = p.sensory || '🌿 Earthy & Pure';
-        
-        let avg = "5.0"; let revCount = 0; 
-        if(p.reviews && p.reviews.length > 0) { 
-            revCount = p.reviews.length; 
-            avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); 
-        }
-        document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; 
-        document.getElementById('modal-rating-count').innerText = `(${revCount} profiles)`;
-        window.renderReviews(p.reviews || []);
-    };
-
-    window.closeProduct = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+    window.closeProduct = function() { clearInterval(window.productCarouselTimer); window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeCart = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
     window.closeProfile = function() { window.restoreHome(); window.activateNav(document.querySelectorAll('.nav-item')[0]); };
+
+    window.addEventListener('load', () => {
+        setTimeout(() => { window.openConsult(); }, 3000);
+    });
+</script>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,mr,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc, setDoc, query, where, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+
+    const firebaseConfig = { apiKey: "AIzaSyAOBW9PJetbBmROBV2GEMft7QM0HaGpdB0", authDomain: "ayursiddhitnaturals-d2ecb.firebaseapp.com", projectId: "ayursiddhitnaturals-d2ecb" };
+    const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
+
+    window.currentUser = null; window.isUserVIP = false; let products = []; let cart = {}; let allPromos = []; let activePromo = null; let appliedDiscount = 0; window.currentModalProductId = null;
+    window.productCarouselTimer = null;
+    let multiAds = []; let activeUpsell = null; let windowHasUpsellShown = false; const IMGBB_API_KEY = "1074867f3a02f0963bbadfb9be7bf07d";
 
     let messaging = null;
     try {
         messaging = getMessaging(app);
         onMessage(messaging, (payload) => { alert(`📢 ${payload.notification.title}\n\n${payload.notification.body}`); });
-    } catch (e) {}
+    } catch (e) {
+        console.warn("Firebase Messaging paused, but store safely loaded!", e);
+    }
 
     window.requestNotificationPermission = async () => {
         if (!messaging) return; 
         try {
             const permission = await Notification.requestPermission();
             if (permission === 'granted') {
-                const token = await getToken(messaging, { vapidKey: "BOqrl8oP9Ou42o4-WWgAbofURLAzc9uU4s_xkxngXqs1wHsTE0Io_slrK2dp8rpB3KKJLLgPZa5gCl6a_zduRY8" });
-                if (token && window.currentUser) { await setDoc(doc(db, "users", window.currentUser.uid), { fcmToken: token }, { merge: true }); }
+                const token = await getToken(messaging, { 
+                    vapidKey: "BOqrl8oP9Ou42o4-WWgAbofURLAzc9uU4s_xkxngXqs1wHsTE0Io_slrK2dp8rpB3KKJLLgPZa5gCl6a_zduRY8" 
+                });
+                if (token && window.currentUser) {
+                    await setDoc(doc(db, "users", window.currentUser.uid), { fcmToken: token }, { merge: true });
+                }
             }
-        } catch (error) {}
-    };
-
-    window.login = () => { 
-        setPersistence(auth, browserLocalPersistence)
-        .then(() => signInWithPopup(auth, provider))
-        .catch(e => console.error(e)); 
+        } catch (error) {
+            console.error("FCM Permission Error:", error);
+        }
     };
     
-    window.logoutUser = () => { 
-        auth.signOut().then(() => { 
-            window.closeProfile(); 
-            document.getElementById('login-button-container').style.display = 'block'; 
-            document.getElementById('logged-in-profile-content').style.display = 'none'; 
-            window.isUserVIP = false; 
-            window.render(); 
-        }); 
-    };
+    let dynamicBilling = { gst: 5, handling: 25, shipping: 50, threshold: 800 };
+
+    window.login = () => { setPersistence(auth, browserLocalPersistence).then(() => signInWithPopup(auth, provider)).catch(e => console.error(e)); };
+    window.logoutUser = () => { auth.signOut().then(() => { window.closeProfile(); document.getElementById('user-name').innerText = "Sign In"; window.isUserVIP = false; render(); }); };
     
     window.handleAccountClick = () => { 
-        window.resetViews(); 
-        window.showSafe('profile-view'); 
-        window.scrollTo(0,0);
         if(window.currentUser) { 
-            document.getElementById('login-button-container').style.display = 'none';
-            document.getElementById('logged-in-profile-content').style.display = 'block';
-            window.loadMyOrders(); 
+            window.resetViews(); window.showSafe('profile-view'); window.scrollTo(0,0);
+            loadMyOrders(); 
         } else { 
-            document.getElementById('login-button-container').style.display = 'block';
-            document.getElementById('logged-in-profile-content').style.display = 'none';
+            window.login(); 
         }         
     };
 
     onAuthStateChanged(auth, async (user) => { 
         window.currentUser = user;
         if(user) { 
-            document.getElementById('login-button-container').style.display = 'none';
-            document.getElementById('logged-in-profile-content').style.display = 'block';
-
             await setDoc(doc(db, "users", user.uid), { name: user.displayName, email: user.email }, { merge: true });
             setTimeout(() => window.requestNotificationPermission(), 2000);
-            
+ 
             const userDoc = await getDoc(doc(db, "users", user.uid));
             if(userDoc.exists() && userDoc.data().isPremium) {
                 window.isUserVIP = true;
                 const profDisplay = document.getElementById('prof-name-display');
-                if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.7rem; background:var(--amazon); padding:4px 8px; border-radius:4px; font-family:'Segoe UI',sans-serif; vertical-align:middle; margin-left:12px; letter-spacing:1px; box-shadow: 0 4px 10px rgba(15, 61, 20, 0.2);">VIP TIER</span>`;
+                if(profDisplay) profDisplay.innerHTML = `${user.displayName} <span style="color:var(--gold); font-size:0.7rem; background:var(--amazon); padding:4px 8px; border-radius:4px; font-family:'Segoe UI',sans-serif; vertical-align:middle; margin-left:10px;">VIP STATUS</span>`;
             } else {
                 window.isUserVIP = false;
                 const profDisplay = document.getElementById('prof-name-display');
                 if(profDisplay) profDisplay.innerText = user.displayName;
             }
-            if(!document.getElementById('profile-view').classList.contains('hidden')) window.loadMyOrders();
-        } else { 
-            window.isUserVIP = false; 
-            document.getElementById('login-button-container').style.display = 'block';
-            document.getElementById('logged-in-profile-content').style.display = 'none';
+            if(!document.getElementById('profile-view').classList.contains('hidden')) loadMyOrders();
+        } else {
+            window.isUserVIP = false;
         }
-        window.render(); 
+        render(); 
         if(!document.getElementById('cart-view').classList.contains('hidden')) window.renderCart();
     });
 
-    window.loadMyOrders = async function() {
+    async function loadMyOrders() {
         if(!window.currentUser) return;
-        const list = document.getElementById('prof-orders-list'); list.innerHTML = 'Indexing records...';
+        const list = document.getElementById('prof-orders-list');
+        list.innerHTML = 'Retrieving history...';
+        
         try {
             const q = query(collection(db, "orders"), where("uid", "==", window.currentUser.uid));
             const snap = await getDocs(q);
-            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>You haven't placed any orders yet.</p>"; return; }
-            let html = ''; const ordersArray = [];
+            
+            if(snap.empty) { list.innerHTML = "<p style='color:#888;'>No past orders found.</p>"; return; }
+            
+            let html = '';
+            const ordersArray = [];
             snap.forEach(doc => ordersArray.push({id: doc.id, ...doc.data()}));
             ordersArray.sort((a,b) => new Date(b.date) - new Date(a.date));
+
             window.userOrders = ordersArray; 
+
             ordersArray.forEach(o => {
                 const d = new Date(o.date).toLocaleDateString();
                 let step1 = 'active-circle', line1 = '', text1 = 'active-text';
                 let step2 = '', line2 = '', text2 = '';
                 let step3 = '', text3 = '';
-                if (o.status === 'Shipped' || o.status === 'Delivered') { line1 = 'active-line'; step2 = 'active-circle'; text2 = 'active-text'; }
-                if (o.status === 'Delivered') { line2 = 'active-line'; step3 = 'active-circle'; text3 = 'active-text'; }
+                
+                if (o.status === 'Shipped' || o.status === 'Delivered') {
+                    line1 = 'active-line'; step2 = 'active-circle'; text2 = 'active-text';
+                }
+                if (o.status === 'Delivered') {
+                    line2 = 'active-line'; step3 = 'active-circle'; text3 = 'active-text';
+                }
+
                 let trackingBtn = '';
-                if(o.trackingLink) { trackingBtn = `<a href="${o.trackingLink}" target="_blank" class="btn-cart" style="display:block; margin-top:20px; text-decoration:none;">Track Shipment</a>`; }
-                let orderAgainBtn = o.cartData ? `<button onclick="window.orderAgain('${o.id}')" class="btn-cart" style="margin-top:15px; width:100%; border:1px solid var(--border); color:var(--text);">Order Again</button>` : '';
+                if(o.trackingLink) {
+                    trackingBtn = `<a href="${o.trackingLink}" target="_blank" class="btn-cart" style="display:block; margin-top:15px; text-decoration:none;">Track Shipment</a>`;
+                }
+
+                let orderAgainBtn = o.cartData ? `<button onclick="orderAgain('${o.id}')" class="btn-cart" style="margin-top:15px; width:100%; border:1px solid var(--border); color:var(--text);">Order Again</button>` : '';
+
                 html += `
-                <div style="border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:20px; background:#fff; box-shadow:0 4px 15px rgba(0,0,0,0.02);">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-family:'Playfair Display', serif;">
-                        <b style="font-size:1.1rem;">Order on ${d}</b> <b style="color:var(--amazon); font-size:1.2rem;">₹${o.total}</b>
+                <div style="border:1px solid var(--border); border-radius:4px; padding:20px; margin-bottom:15px; background:var(--bg);">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-family:'Segoe UI',sans-serif;">
+                        <span style="color:#777; font-size:0.85rem;">Date: ${d}</span> <b style="color:var(--text); font-size:1rem;">₹${o.total}</b>
                     </div>
-                    <p style="font-size:0.9rem; color:#666; margin:0 0 20px 0; line-height:1.5;">${o.items}</p>
+                    <p style="font-size:0.9rem; color:var(--text); margin:0 0 20px 0; line-height:1.5;">${o.items}</p>
+                    
                     <div class="track-container">
-                      <div class="step"><div class="circle ${step1}">✓</div><div class="line ${line1}"></div><div class="status-text ${text1}">Order Placed</div></div>
-                      <div class="step"><div class="circle ${step2}">🚚</div><div class="line ${line2}"></div><div class="status-text ${text2}">Packed & Shipped</div></div>
-                      <div class="step"><div class="circle ${step3}">✅</div><div class="status-text ${text3}">Delivered</div></div>
+                      <div class="step">
+                        <div class="circle ${step1}">✓</div>
+                        <div class="line ${line1}"></div>
+                        <div class="status-text ${text1}">Placed</div>
+                      </div>
+                      <div class="step">
+                        <div class="circle ${step2}">✓</div>
+                        <div class="line ${line2}"></div>
+                        <div class="status-text ${text2}">Dispatched</div>
+                      </div>
+                      <div class="step">
+                        <div class="circle ${step3}">✓</div>
+                        <div class="status-text ${text3}">Delivered</div>
+                      </div>
                     </div>
-                    ${trackingBtn} ${orderAgainBtn}
+                    ${trackingBtn}
+                    ${orderAgainBtn}
                 </div>`;
             });
             list.innerHTML = html;
-        } catch(e) { list.innerHTML = "<p>Error loading orders.</p>"; }
+        } catch(e) {
+            list.innerHTML = "<p>Error retrieving history.</p>";
+        }
     }
     
     function getYouTubeEmbedUrl(url) {
@@ -908,33 +943,31 @@
     async function load() {
         try { 
             const snap = await getDocs(collection(db, "products")); 
-            window.products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            window.render();
+            products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
+            render();
         } catch(e) {}
         
         try {
             const vSnap = await getDocs(collection(db, "videos"));
-            const vList = document.getElementById('video-feed-container'); vList.innerHTML = '';
+            const vList = document.getElementById('video-feed-container');
+            vList.innerHTML = '';
             if(vSnap.empty) { vList.innerHTML = '<p style="text-align:center; color:#888; font-family: \'Segoe UI\', sans-serif;">No insights published currently.</p>'; }
             
             vSnap.forEach(doc => {
-                const v = doc.data(); 
-                let videoId = '';
-                if(v.link.includes('v=')) { videoId = v.link.split('v=')[1].split('&')[0]; } 
-                else if(v.link.includes('youtu.be/')) { videoId = v.link.split('youtu.be/')[1].split('?')[0]; } 
-                else if(v.link.includes('shorts/')) { videoId = v.link.split('shorts/')[1].split('?')[0]; }
-                const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : v.link;
-                
+                const v = doc.data();
+                const embedUrl = getYouTubeEmbedUrl(v.link);
                 let mediaHtml = '';
-                if(embedUrl.includes('youtube.com/embed/')) { 
-                    mediaHtml = `<iframe width="100%" height="250" src="${embedUrl}" title="${v.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:4px;"></iframe>`; 
-                } else { 
-                    mediaHtml = `<a href="${v.link}" target="_blank" class="btn-buy" style="display:block; text-decoration:none;">View Publication</a>`; 
+                
+                if(embedUrl.includes('youtube.com/embed/')) {
+                    mediaHtml = `<iframe width="100%" height="250" src="${embedUrl}" title="${v.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:4px;"></iframe>`;
+                } else {
+                    mediaHtml = `<a href="${v.link}" target="_blank" class="btn-buy" style="display:block; text-decoration:none;">Watch Insight</a>`;
                 }
+
                 vList.innerHTML += `
-                <div style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); overflow:hidden; margin-bottom:30px; box-shadow:0 10px 30px rgba(0,0,0,0.03);">
-                    <div style="padding:25px; text-align:center;">
-                        <h3 style="margin:0 0 25px 0; color:var(--text); font-size:1.2rem; line-height:1.5; font-weight:normal;">${v.title}</h3>
+                <div style="background:var(--card-bg); border-radius:4px; border:1px solid var(--border); overflow:hidden; margin-bottom:25px; box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                    <div style="padding:20px; text-align:center;">
+                        <h3 style="margin:0 0 20px 0; color:var(--text); font-size:1.1rem; line-height:1.5; font-weight:normal;">${v.title}</h3>
                         ${mediaHtml}
                     </div>
                 </div>`;
@@ -942,189 +975,294 @@
         } catch(e) {}
 
         try { const scrollSnap = await getDoc(doc(db, "settings", "scrolling_banner")); if(scrollSnap.exists() && scrollSnap.data().isActive) { document.getElementById('promo-text').innerText = scrollSnap.data().text; document.getElementById('promo-banner').style.display = 'block'; } } catch(e) {}
-        try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { window.allPromos = promoSnap.data().codes; } } catch(e) {}
+        try { const promoSnap = await getDoc(doc(db, "settings", "promos")); if(promoSnap.exists() && promoSnap.data().codes) { allPromos = promoSnap.data().codes; } } catch(e) {}
         
         try { 
             const setSnap = await getDoc(doc(db, "settings", "store_config")); 
             if(setSnap.exists()) { 
                 const data = setSnap.data();
-                if(data.ads && data.ads.length > 0) { window.multiAds = data.ads; window.startMultiAds(); }
+                if(data.ads && data.ads.length > 0) { multiAds = data.ads; startMultiAds(); }
+                
                 if(data.custom_image_ads && data.custom_image_ads.length > 0) {
-                    const adTrack = document.getElementById('image-ad-track'); const adWrap = document.getElementById('dynamic-image-ads');
+                    const adTrack = document.getElementById('image-ad-track');
+                    const adWrap = document.getElementById('dynamic-image-ads');
                     if(adTrack) {
                         adWrap.style.display = 'block';
                         adTrack.innerHTML = data.custom_image_ads.map(url => `<div class="image-ad-slide"><img src="${url}"></div>`).join('');
+                        
                         if(data.custom_image_ads.length > 1) {
-                            window.imgAdIndex = 0; let startX = 0, isSwiping = false;
-                            const startAutoSlide = () => { clearInterval(window.adInterval); window.adInterval = setInterval(() => { window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`; }, 5000); };
+                            window.imgAdIndex = 0;
+                            let startX = 0, isSwiping = false;
+                            
+                            const startAutoSlide = () => {
+                                clearInterval(window.adInterval);
+                                window.adInterval = setInterval(() => { 
+                                    window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; 
+                                    adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`; 
+                                }, 4000); 
+                            };
+                            
                             startAutoSlide(); 
+                            
                             adWrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isSwiping = true; clearInterval(window.adInterval); }, {passive: true});
                             adWrap.addEventListener('touchend', e => {
-                                if(!isSwiping) return; let endX = e.changedTouches[0].clientX;
+                                if(!isSwiping) return;
+                                let endX = e.changedTouches[0].clientX;
                                 if(startX - endX > 40) { window.imgAdIndex = (window.imgAdIndex + 1) % data.custom_image_ads.length; } 
                                 else if(endX - startX > 40) { window.imgAdIndex = (window.imgAdIndex - 1 + data.custom_image_ads.length) % data.custom_image_ads.length; } 
-                                adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`; isSwiping = false; startAutoSlide(); 
+                                adTrack.style.transform = `translateX(-${window.imgAdIndex * 100}%)`;
+                                isSwiping = false;
+                                startAutoSlide(); 
                             });
                         }
                     }
                 }
-                if(data.upsell && data.upsell.isActive) { window.activeUpsell = data.upsell; }
+                
+                if(data.upsell && data.upsell.isActive) { activeUpsell = data.upsell; }
+                
                 if(data.billing) {
-                    window.dynamicBilling.gst = data.billing.gst !== undefined ? data.billing.gst : 5;
-                    window.dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
-                    window.dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
-                    window.dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
-                    window.dynamicBilling.localCity = data.billing.localCity || "nashik";
-                    window.dynamicBilling.localPin = data.billing.localPin || "";
-                    window.dynamicBilling.b2bGst = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
-                    window.dynamicBilling.b2bHandling = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
-                    window.dynamicBilling.b2bShipping = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
-                    window.dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
-                    const bannerThresh = document.getElementById('banner-threshold'); if(bannerThresh) bannerThresh.innerText = window.dynamicBilling.threshold;
+                    dynamicBilling.gst = data.billing.gst !== undefined ? data.billing.gst : 5;
+                    dynamicBilling.handling = data.billing.handling !== undefined ? data.billing.handling : 25;
+                    dynamicBilling.shipping = data.billing.shipping !== undefined ? data.billing.shipping : 50;
+                    dynamicBilling.threshold = data.billing.threshold !== undefined ? data.billing.threshold : 800;
+                    dynamicBilling.localCity = data.billing.localCity || "nashik";
+                    dynamicBilling.localPin = data.billing.localPin || "";
+                    dynamicBilling.b2bGst = data.billing.b2bGst !== undefined ? data.billing.b2bGst : 18;
+                    dynamicBilling.b2bHandling = data.billing.b2bHandling !== undefined ? data.billing.b2bHandling : 150;
+                    dynamicBilling.b2bShipping = data.billing.b2bShipping !== undefined ? data.billing.b2bShipping : 300;
+                    dynamicBilling.b2bThreshold = data.billing.b2bThreshold !== undefined ? data.billing.b2bThreshold : 5000;
+                    
+                    const bannerThresh = document.getElementById('banner-threshold');
+                    if(bannerThresh) bannerThresh.innerText = dynamicBilling.threshold;
                 }
-                window.isStoreOffline = (data.storeStatus === 'offline');
             } 
         } catch(e) {}
     }
 
-    window.startMultiAds = function() {
-        if(window.multiAds.length === 0) return; document.getElementById('top-promo-bar').style.display = 'block';
-        const combinedAds = window.multiAds.join('       |       '); document.getElementById('multi-ad-container').innerHTML = combinedAds + '       |       ' + combinedAds;
+    function startMultiAds() {
+        if(multiAds.length === 0) return;
+        document.getElementById('top-promo-bar').style.display = 'block';
+        const combinedAds = multiAds.join('       |       ');
+        document.getElementById('multi-ad-container').innerHTML = combinedAds + '       |       ' + combinedAds;
     }
 
     window.triggerCartFlow = () => {
-        let count = Object.values(window.cart).reduce((a,b)=>a+b,0);
-        if(count > 0 && window.activeUpsell && !window.windowHasUpsellShown && !window.cart[window.activeUpsell.productId]) {
-            const upProd = window.products.find(p => p.id === window.activeUpsell.productId);
+        let count = Object.values(cart).reduce((a,b)=>a+b,0);
+        if(count > 0 && activeUpsell && !windowHasUpsellShown && !cart[activeUpsell.productId]) {
+            const upProd = products.find(p => p.id === activeUpsell.productId);
             if(upProd && (!upProd.isVault || window.isUserVIP)) {
-                document.getElementById('up-img').src = upProd.image; document.getElementById('up-name').innerText = upProd.name;
-                document.getElementById('up-old-price').innerText = "₹" + upProd.price; document.getElementById('up-new-price').innerText = window.activeUpsell.specialPrice;
+                document.getElementById('up-img').src = upProd.image;
+                document.getElementById('up-name').innerText = upProd.name;
+                document.getElementById('up-old-price').innerText = "₹" + upProd.price;
+                document.getElementById('up-new-price').innerText = activeUpsell.specialPrice;
                 document.getElementById('upsell-overlay').classList.remove('hidden');
-                document.getElementById('up-btn').onclick = () => { window.cart[upProd.id] = 1; window.appliedDiscount = upProd.price - window.activeUpsell.specialPrice; window.windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.updateBadge(); window.showCart(); };
+                
+                document.getElementById('up-btn').onclick = () => {
+                    cart[upProd.id] = 1;
+                    appliedDiscount = upProd.price - activeUpsell.specialPrice;
+                    windowHasUpsellShown = true;
+                    document.getElementById('upsell-overlay').classList.add('hidden');
+                    updateBadge(); window.showCart();
+                };
                 return;
             }
         }
         window.showCart(); 
     };
 
-    window.skipUpsell = () => { window.windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.showCart(); };
+    window.skipUpsell = () => { windowHasUpsellShown = true; document.getElementById('upsell-overlay').classList.add('hidden'); window.showCart(); };
     window.showCart = () => { window.resetViews(); window.showSafe('cart-view'); window.scrollTo(0, 0); window.renderCart(); };
 
-    // B2B Wholesale Engine
     let b2bCart = {};
+
     window.renderB2BProducts = function() {
-        const list = document.getElementById('b2b-product-list'); if(!list) return; list.innerHTML = '';
-        window.products.forEach(p => {
+        const list = document.getElementById('b2b-product-list');
+        if(!list) return;
+        list.innerHTML = '';
+        
+        products.forEach(p => {
             const qty = b2bCart[p.id] || 0;
             list.innerHTML += `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:18px; border:1px solid rgba(212, 175, 55, 0.2); border-radius:4px; background: var(--bg);">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border:1px solid var(--border); border-radius:4px; background: var(--bg);">
                     <div style="flex: 1;">
                         <b style="color:var(--text); font-size:0.95rem; font-weight:normal;">${p.name}</b>
-                        <div style="font-size:0.85rem; color:#888; margin-top:6px; letter-spacing:0.5px;">Value: ₹${p.price}</div>
+                        <div style="font-size:0.85rem; color:#777; margin-top:4px;">Value: ₹${p.price}</div>
                     </div>
                     <div style="display:flex; align-items:center; gap:12px; background: var(--card-bg); padding: 5px; border-radius: 4px; border: 1px solid var(--border);">
-                        <button onclick="window.updateB2BQty('${p.id}', -1)" style="background:transparent; border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; color:var(--text); font-size:1.1rem; transition:0.3s;">−</button>
+                        <button onclick="updateB2BQty('${p.id}', -1)" style="background:transparent; border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; color:var(--text); font-size:1.1rem;">−</button>
                         <span style="font-weight:600; min-width:20px; text-align:center; color: var(--text);">${qty}</span>
-                        <button onclick="window.updateB2BQty('${p.id}', 1)" style="background:transparent; color:var(--amazon); border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; font-size:1.1rem; transition:0.3s;">+</button>
+                        <button onclick="updateB2BQty('${p.id}', 1)" style="background:transparent; color:var(--amazon); border:none; padding:5px 12px; border-radius:4px; font-weight:normal; cursor:pointer; font-size:1.1rem;">+</button>
                     </div>
-                </div>`;
+                </div>
+            `;
         });
         window.calculateB2BTotal();
     };
 
-    window.updateB2BQty = function(id, change) { b2bCart[id] = (b2bCart[id] || 0) + change; if(b2bCart[id] <= 0) delete b2bCart[id]; window.renderB2BProducts(); };
+    window.updateB2BQty = function(id, change) {
+        b2bCart[id] = (b2bCart[id] || 0) + change;
+        if(b2bCart[id] <= 0) delete b2bCart[id];
+        window.renderB2BProducts();
+    };
 
     window.calculateB2BTotal = function() {
-        let totalQty = 0; let totalMrp = 0;
-        for(let id in b2bCart) { const p = window.products.find(x => x.id === id); if(p) { totalQty += b2bCart[id]; totalMrp += (p.price * b2bCart[id]); } }
+        let totalQty = 0;
+        let totalMrp = 0;
+        
+        for(let id in b2bCart) {
+            const p = products.find(x => x.id === id);
+            if(p) {
+                totalQty += b2bCart[id];
+                totalMrp += (p.price * b2bCart[id]);
+            }
+        }
+
         let margin = 0;
-        if(totalQty >= 100) margin = 0.35; else if(totalQty >= 50) margin = 0.30; else if(totalQty >= 20) margin = 0.25;  
-        const discountAmt = Math.floor(totalMrp * margin); const finalB2BTotal = totalMrp - discountAmt;
-        document.getElementById('b2b-total-qty').innerText = totalQty; document.getElementById('b2b-mrp').innerText = `₹${totalMrp}`;
-        const marginSpan = document.getElementById('b2b-margin-percent'); marginSpan.innerText = `${margin * 100}%`;
-        if (margin > 0) marginSpan.style.color = "var(--amazon)"; else marginSpan.style.color = "var(--text)";
-        document.getElementById('b2b-discount').innerText = `-₹${discountAmt}`; document.getElementById('b2b-total').innerText = `₹${finalB2BTotal}`;
+        if(totalQty >= 100) margin = 0.35;      
+        else if(totalQty >= 50) margin = 0.30;  
+        else if(totalQty >= 20) margin = 0.25;  
+
+        const discountAmt = Math.floor(totalMrp * margin);
+        const finalB2BTotal = totalMrp - discountAmt;
+
+        document.getElementById('b2b-total-qty').innerText = totalQty;
+        document.getElementById('b2b-mrp').innerText = `₹${totalMrp}`;
+        
+        const marginSpan = document.getElementById('b2b-margin-percent');
+        marginSpan.innerText = `${margin * 100}%`;
+        if (margin > 0) marginSpan.style.color = "var(--amazon)";
+        else marginSpan.style.color = "var(--text)";
+
+        document.getElementById('b2b-discount').innerText = `-₹${discountAmt}`;
+        document.getElementById('b2b-total').innerText = `₹${finalB2BTotal}`;
     };
 
     window.submitB2BOrder = function() {
         if (!window.currentUser) { 
-            window.showBeautifulAlert("Please sign in to secure your wholesale order.", "🔒"); 
-            return window.login(); 
+            if(window.showBeautifulAlert) window.showBeautifulAlert("Please sign in to submit a wholesale order.", "🔒");
+            window.login(); 
+            return; 
         }
 
-        const store = document.getElementById('b2b-store').value.trim(); const owner = document.getElementById('b2b-owner').value.trim();
-        const phone = document.getElementById('b2b-phone').value.trim(); const city = document.getElementById('b2b-city').value.trim();
-        const pin = document.getElementById('b2b-pin').value.trim(); const addr = document.getElementById('b2b-address').value.trim();
-        if(!store || !owner || !phone || !city || !pin || !addr) { alert("Please complete all fields to request wholesale procurement."); return; }
+        const store = document.getElementById('b2b-store').value.trim();
+        const owner = document.getElementById('b2b-owner').value.trim();
+        const phone = document.getElementById('b2b-phone').value.trim();
+        const city = document.getElementById('b2b-city').value.trim();
+        const pin = document.getElementById('b2b-pin').value.trim();
+        const addr = document.getElementById('b2b-address').value.trim();
+
+        if(!store || !owner || !phone || !city || !pin || !addr) {
+            alert("Please complete all fields to request wholesale procurement.");
+            return;
+        }
+
         let totalQty = parseInt(document.getElementById('b2b-total-qty').innerText);
-        if(totalQty < 20) { alert("A minimum of 20 units is required to apply wholesale margins."); return; }
+        if(totalQty < 20) {
+            alert("A minimum of 20 units is required to apply wholesale margins.");
+            return;
+        }
+
         let orderSummary = "";
-        for(let id in b2bCart) { const p = window.products.find(x => x.id === id); if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`; }
-        const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', ''); const totalAmt = parseInt(totalAmtStr) || 0;
+        for(let id in b2bCart) {
+            const p = products.find(x => x.id === id);
+            if(p) orderSummary += `▪️ ${p.name} (x${b2bCart[id]})\n`;
+        }
+
+        const totalAmtStr = document.getElementById('b2b-total').innerText.replace('₹', '');
+        const totalAmt = parseInt(totalAmtStr) || 0;
         const discountStr = document.getElementById('b2b-margin-percent').innerText;
-        const b2bGst = window.dynamicBilling.b2bGst !== undefined ? window.dynamicBilling.b2bGst : 18; const b2bShipping = window.dynamicBilling.b2bShipping !== undefined ? window.dynamicBilling.b2bShipping : 300;
-        const b2bHandling = window.dynamicBilling.b2bHandling !== undefined ? window.dynamicBilling.b2bHandling : 150; const b2bThreshold = window.dynamicBilling.b2bThreshold !== undefined ? window.dynamicBilling.b2bThreshold : 5000;
-        const b2bGstAmt = Math.floor(totalAmt * (b2bGst / 100)); let b2bShippingAmt = totalAmt >= b2bThreshold ? 0 : b2bShipping; let b2bHandlingAmt = b2bHandling;
+
+        const b2bGst = dynamicBilling.b2bGst !== undefined ? dynamicBilling.b2bGst : 18;
+        const b2bShipping = dynamicBilling.b2bShipping !== undefined ? dynamicBilling.b2bShipping : 300;
+        const b2bHandling = dynamicBilling.b2bHandling !== undefined ? dynamicBilling.b2bHandling : 150;
+        const b2bThreshold = dynamicBilling.b2bThreshold !== undefined ? dynamicBilling.b2bThreshold : 5000;
+
+        const b2bGstAmt = Math.floor(totalAmt * (b2bGst / 100));
+        let b2bShippingAmt = totalAmt >= b2bThreshold ? 0 : b2bShipping;
+        let b2bHandlingAmt = b2bHandling;
+        
         const finalGrandTotal = totalAmt + b2bGstAmt + b2bShippingAmt + b2bHandlingAmt;
-        const btn = document.getElementById('submit-b2b-btn'); btn.innerText = "Securing transaction..."; btn.disabled = true;
+
+        const btn = document.getElementById('submit-b2b-btn');
+        btn.innerText = "Securing transaction...";
+        btn.disabled = true;
 
         var options = {
-            "key": "rzp_live_SeWOakhF098GMI", "amount": finalGrandTotal * 100, "currency": "INR", "name": "Ayursiddhit Naturals", "description": "Wholesale Procurement",
-            "notes": { "firebase_uid": window.currentUser ? window.currentUser.uid : "guest" }, "image": "logo.png",
+            "key": "rzp_live_SeWOakhF098GMI", 
+            "amount": finalGrandTotal * 100, 
+            "currency": "INR", 
+            "name": "Ayursiddhit Naturals", 
+            "description": "Wholesale Procurement",
+            "notes": { "firebase_uid": window.currentUser ? window.currentUser.uid : "guest" },
+            "image": "logo.png",
             "handler": async function (response) {
                 btn.innerText = "Transaction Complete";
                 let paidMsg = `[WHOLSESALE PROCUREMENT]\n\nID: ${response.razorpay_payment_id}\nPartner: ${store}\nContact: ${owner}\nPhone: ${phone}\nAddress: ${addr}, ${city} - ${pin}\n\n[INVENTORY]\n${orderSummary}\nUnits: ${totalQty}\nMargin: ${discountStr}\n\nREMITTANCE: ₹${finalGrandTotal}`;
                 window.open(`https://wa.me/918080926195?text=${encodeURIComponent(paidMsg)}`);
-                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "B2B Partner", payMode: "Razorpay", date: new Date().toISOString() }); } catch(e){}
-                b2bCart = {}; window.renderB2BProducts(); window.restoreHome(); btn.innerText = "Submit Purchase Order"; btn.disabled = false;
+                try { 
+                    await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "B2B Partner", payMode: "Razorpay", date: new Date().toISOString() }); 
+                } catch(e){}
+
+                b2bCart = {}; 
+                window.renderB2BProducts(); 
+                window.restoreHome();
+                btn.innerText = "Submit Purchase Order";
+                btn.disabled = false;
             },
-            "prefill": { "name": owner, "contact": phone }, "theme": { "color": "#0f3d14" },
-            "modal": { "ondismiss": function(){ btn.innerText = "Submit Purchase Order"; btn.disabled = false; } }
+            "prefill": { "name": owner, "contact": phone },
+            "theme": { "color": "#0f3d14" },
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerText = "Submit Purchase Order";
+                    btn.disabled = false;
+                }
+            }
         };
         var rzpB2B = new Razorpay(options);
-        rzpB2B.on('payment.failed', function (response) { btn.innerText = "Submit Purchase Order"; btn.disabled = false; alert("Transaction voided. Reason: " + response.error.reason); });
+        rzpB2B.on('payment.failed', function (response) {
+            btn.innerText = "Submit Purchase Order";
+            btn.disabled = false;
+            alert("Transaction voided. Reason: " + response.error.reason);
+        });
+
         rzpB2B.open();
     };
     
-    window.render = function() {
+    function render() {
         const grid = document.getElementById('main-view'); grid.innerHTML = '';
-        window.products.forEach(p => {
-            const q = window.cart[p.id] || 0; 
+        products.forEach(p => {
+            const q = cart[p.id] || 0; 
             let badgeHtml = p.tag ? `<div class="p-badge">${p.tag}</div>` : '';
             let buttonHtml = '';
 
             if (p.isVault) {
-                badgeHtml = `<div class="p-badge" style="background: var(--amazon); color: var(--gold); border: none; font-weight: normal; font-family:'Playfair Display', serif; font-style:italic; letter-spacing:1px; box-shadow:0 4px 10px rgba(15,61,20,0.3);">VIP Reserved</div>`;
+                badgeHtml = `<div class="p-badge" style="background: var(--amazon); color: var(--gold); border: none; font-weight: normal; font-family:'Playfair Display', serif; font-style:italic;">VIP Reserved</div>`;
+                
                 if (!window.isUserVIP) {
-                    buttonHtml = `<div class="p-actions"><button style="background:transparent; color:var(--text); border:1px solid var(--border); padding:10px 0; border-radius:4px; font-weight:normal; width:100%; font-size:0.8rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif; transition: all 0.3s ease;" onclick="window.openConsult()">Unlock Access</button></div>`;
+                    buttonHtml = `<div class="p-actions"><button style="background:transparent; color:var(--text); border:1px solid var(--border); padding:10px 0; border-radius:4px; font-weight:normal; width:100%; font-size:0.8rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif;" onclick="openConsult()">Unlock Access</button></div>`;
                 } else {
-                    if (q > 0) { 
-                        buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; 
-                    } else { 
-                        buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add to Bag</button></div>`; 
+                    if (q > 0) {
+                        buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+                    } else {
+                        buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add to Bag</button></div>`;
                     }
                 }
             } else {
-                if (q > 0) { 
-                    buttonHtml = `<div class="p-qty"><button onclick="window.updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="window.updateQty('${p.id}',1)">+</button></div>`; 
-                } else { 
-                    buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="window.updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="window.buyNow('${p.id}')">Purchase</button></div>`; 
+                if (q > 0) {
+                    buttonHtml = `<div class="p-qty"><button onclick="updateQty('${p.id}',-1)">−</button><span>${q}</span><button onclick="updateQty('${p.id}',1)">+</button></div>`;
+                } else {
+                    buttonHtml = `<div class="p-actions"><button class="btn-cart" onclick="updateQty('${p.id}',1)">Add</button><button class="btn-buy" onclick="buyNow('${p.id}')">Purchase</button></div>`;
                 }
-            }
-
-            if(window.isStoreOffline) {
-                buttonHtml = `<div class="p-actions"><button style="background:#ddd; color:#888; border:none; padding:10px 0; border-radius:8px; font-weight:700; width:100%; font-size:0.85rem; cursor:not-allowed; font-family:'Segoe UI', sans-serif;" onclick="alert('🔴 Sorry, the store is currently closed for maintenance. Please check back later!')">Store Offline</button></div>`;
             }
 
             grid.innerHTML += `
             <div class="p-card">
                 ${badgeHtml}
-                <div class="p-img-container" onclick="window.openProduct('${p.id}')">
+                <div class="p-img-container" onclick="openProduct('${p.id}')">
                     <img src="${p.image}" class="p-img" loading="lazy">
                 </div>
                 <div class="p-details">
-                    <span class="sensory-badge">${p.sensory || '🌿 Earthy & Pure'}</span>
-                    <h4 onclick="window.openProduct('${p.id}')">${p.name}</h4>
+                    <h4 onclick="openProduct('${p.id}')">${p.name}</h4>
                     <div class="p-price-row">
                         <span class="p-price">₹${p.price}</span>
                     </div>
@@ -1136,62 +1274,143 @@
 
     window.searchProducts = () => { const query = document.getElementById('search-box').value.toLowerCase(); const cards = document.querySelectorAll('.p-card'); cards.forEach(card => { const text = card.innerText.toLowerCase(); if (text.includes(query)) card.style.display = 'flex'; else card.style.display = 'none'; }); };
     
-    window.updateQty = (id, d) => { window.cart[id] = (window.cart[id] || 0) + d; if(window.cart[id] <= 0) delete window.cart[id]; window.render(); window.updateBadge(); window.renderCart(); if (window.currentModalProductId === id) { document.getElementById('modal-qty').innerText = window.cart[id] || 0; } };
+    window.updateQty = (id, d) => { 
+        cart[id] = (cart[id] || 0) + d; 
+        if(cart[id] <= 0) delete cart[id]; 
+        render(); updateBadge(); window.renderCart(); 
+        if (currentModalProductId === id) { document.getElementById('modal-qty').innerText = cart[id] || 0; } 
+    };
     
-    window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = 'transparent'; btn.style.color = 'var(--text)'; btn.style.border = '1px solid var(--border)'; btn.style.boxShadow = 'none'; }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'var(--gold)'; event.target.style.border = '1px solid var(--amazon)'; event.target.style.boxShadow = '0 4px 15px rgba(15, 61, 20, 0.15)'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
+    window.filterCategory = (cat) => { document.querySelectorAll('.cat-btn').forEach(btn => { btn.style.background = 'transparent'; btn.style.color = 'var(--text)'; btn.style.border = '1px solid var(--border)' }); event.target.style.background = 'var(--amazon)'; event.target.style.color = 'var(--gold)'; event.target.style.border = '1px solid var(--amazon)'; const cards = document.querySelectorAll('.p-card'); const searchCat = cat.toLowerCase(); cards.forEach(card => { const productName = card.querySelector('h4').innerText.toLowerCase(); if (cat === 'All' || productName.includes(searchCat)) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); };
 
     window.checkPincode = () => { const pin = document.getElementById('pin-check').value; const msg = document.getElementById('pin-msg'); if(pin.length === 6) { msg.style.color = "var(--amazon)"; msg.innerText = "Serviceability confirmed: " + pin + " (Standard timeframe)"; } else { msg.style.color = "#888"; msg.innerText = "Please provide a standard 6-digit postal code."; } };
 
-    window.buyNow = (id) => { if(!window.cart[id]) window.cart[id] = 1; window.updateBadge(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); };
+    window.openProduct = (id) => { 
+        const p = products.find(x => x.id === id); if(!p) return; 
+        currentModalProductId = id; document.getElementById('modal-qty').innerText = cart[id] || 0; 
+        window.resetViews(); window.showSafe('product-view'); window.scrollTo(0, 0); 
+        
+        clearInterval(window.productCarouselTimer);
+        const imgContainer = document.getElementById('modal-image-container');
+        
+        const galleryImages = (p.gallery && p.gallery.length > 0) ? p.gallery : (p.images && p.images.length > 0) ? p.images : [p.image];
 
-    window.renderReviews = function(reviews) {
+        if (galleryImages.length > 1) {
+            let slidesHtml = galleryImages.map(url => `<div class="product-carousel-slide"><img src="${url}" onclick="openFullscreenImage('${url}')"></div>`).join('');
+            imgContainer.innerHTML = `
+                <div class="product-carousel-container" id="modal-gallery-container">
+                    <div class="product-carousel-track" id="p-carousel-track">
+                        ${slidesHtml}
+                    </div>
+                    <div id="modal-gallery-dots" style="text-align:center; padding-bottom:10px;">
+                        ${galleryImages.map((_, i) => `<span class="gdot ${i===0?'active':''}" id="gdot-${i}"></span>`).join('')}
+                    </div>
+                </div>
+            `;
+            const track = document.getElementById('p-carousel-track');
+            let slideIndex = 0;
+
+            const updateDots = (idx) => {
+                for(let i=0; i<galleryImages.length; i++) {
+                    const d = document.getElementById(`gdot-${i}`);
+                    if(d) {
+                        if(i === idx) d.classList.add('active');
+                        else d.classList.remove('active');
+                    }
+                }
+            };
+
+            window.productCarouselTimer = setInterval(() => {
+                slideIndex = (slideIndex + 1) % galleryImages.length;
+                if(track) {
+                    track.scrollTo({ left: track.clientWidth * slideIndex, behavior: 'smooth' });
+                    updateDots(slideIndex);
+                }
+            }, 3500);
+
+            if(track) {
+                track.addEventListener('touchstart', () => { clearInterval(window.productCarouselTimer); }, { passive: true });
+                track.addEventListener('scroll', () => {
+                    const idx = Math.round(track.scrollLeft / track.clientWidth);
+                    updateDots(idx);
+                }, { passive: true });
+            }
+        } else {
+            imgContainer.innerHTML = `<img src="${p.image}" onclick="openFullscreenImage('${p.image}')" style="width:100%; border-radius:4px; object-fit:contain; max-height:400px; background: #fcfcfc; padding: 20px; box-sizing: border-box; border: 1px solid var(--border); margin-bottom: 25px; cursor:zoom-in;">`;
+        }
+
+        document.getElementById('modal-name').innerText = p.name; 
+        document.getElementById('modal-price').innerText = `₹${p.price}`; 
+        document.getElementById('modal-desc').innerHTML = p.desc || ""; 
+        
+        if(p.isVault && !window.isUserVIP) {
+            document.getElementById('modal-qty-controls').style.display = "none";
+            document.getElementById('modal-add-btn').onclick = window.openConsult; 
+            document.getElementById('modal-add-btn').innerText = "Unlock Access"; 
+            document.getElementById('modal-buy-btn').style.display = "none";
+        } else {
+            document.getElementById('modal-qty-controls').style.display = "inline-flex";
+            document.getElementById('modal-add-btn').onclick = () => { window.updateQty(id, 1); const btn = document.getElementById('modal-add-btn'); btn.innerText = "Added"; setTimeout(() => { btn.innerText = "Add to Cart"; }, 1500); }; 
+            document.getElementById('modal-add-btn').innerText = "Add to Cart";
+            document.getElementById('modal-buy-btn').style.display = "block";
+            document.getElementById('modal-buy-btn').onclick = () => { if (!cart[id]) window.updateQty(id, 1); window.closeProduct(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); }; 
+        }
+
+        let avg = "5.0"; let revCount = 0; if(p.reviews && p.reviews.length > 0) { revCount = p.reviews.length; avg = (p.reviews.reduce((a,b) => a + Number(b.rating), 0) / revCount).toFixed(1); }
+        document.getElementById('modal-rating-avg').innerText = `⭐ ${avg}`; document.getElementById('modal-rating-count').innerText = `(${revCount} profiles)`;
+        renderReviews(p.reviews || []);
+    };
+
+    window.buyNow = (id) => { if(!cart[id]) cart[id] = 1; updateBadge(); window.triggerCartFlow(); window.activateNav(document.querySelectorAll('.nav-item')[4]); };
+
+    function renderReviews(reviews) {
         const list = document.getElementById('modal-reviews-list');
         if(reviews.length === 0) { list.innerHTML = "<p style='color:#999; margin-top:0;'>Awaiting initial clinical feedback.</p>"; return; }
-        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:20px;"><b style="color:var(--text); font-size:1.05rem; font-weight:normal; letter-spacing:0.5px;">${r.name}</b> <br><span style="color:var(--gold); font-size:0.85rem; letter-spacing:2px; margin-top:4px; display:inline-block;">${'★'.repeat(Number(r.rating))}</span><p style="margin:15px 0; color:#555; line-height:1.7;">${r.text}</p>${r.image ? `<img src="${r.image}" onclick="window.openFullscreenImage('${r.image}')" style="max-width:120px; border-radius:4px; margin-top:10px; border: 1px solid var(--border); cursor:zoom-in;">` : ''}</div>`).join('');
+        list.innerHTML = reviews.map(r => `<div style="border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:20px;"><b style="color:var(--text); font-size:1rem; font-weight:normal;">${r.name}</b> <br><span style="color:var(--gold); font-size:0.8rem;">${'★'.repeat(Number(r.rating))}</span><p style="margin:10px 0; color:#555; line-height:1.6;">${r.text}</p>${r.image ? `<img src="${r.image}" onclick="openFullscreenImage('${r.image}')" style="max-width:100px; border-radius:4px; margin-top:10px; border: 1px solid var(--border); cursor:zoom-in;">` : ''}</div>`).join('');
     }
 
     window.submitReview = async () => {
         const btn = document.getElementById('submit-rev-btn'); const user = auth.currentUser;
-        
-        // 🔥 GUEST INTERCEPT 🔥
         if(!user) { 
-            btn.innerText = "Sign In Required"; 
-            window.showBeautifulAlert("Please sign in to submit a review.", "🔒");
-            window.login(); 
+            btn.innerText = "Authentication Required"; 
+            if(window.showBeautifulAlert) window.showBeautifulAlert("Please sign in to submit a review.", "🔒");
+            window.login();
             setTimeout(() => { btn.innerText = "Submit Review"; }, 2500); 
             return; 
         }
-
         const text = document.getElementById('review-text').value.trim(); const rating = document.querySelector('input[name="rating"]:checked').value; const fileInput = document.getElementById('review-image'); const file = fileInput.files[0];
         if(!text) { btn.innerText = "Content required."; setTimeout(() => { btn.innerText = "Submit Review"; }, 2000); return; }
         btn.innerText = "Processing..."; btn.disabled = true; let imageUrl = null;
         if(file) { try { const formData = new FormData(); formData.append('image', file); const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData }); const data = await response.json(); if(data.success) { imageUrl = data.data.url; } } catch (error) { console.error("Media error"); } }
         const newReview = { name: user.displayName.split(' ')[0], text: text, rating: rating, image: imageUrl, date: new Date().toISOString() };
-        try { await updateDoc(doc(db, "products", window.currentModalProductId), { reviews: arrayUnion(newReview) }); const p = window.products.find(x => x.id === window.currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; window.renderReviews(p.reviews); window.render(); btn.innerText = "Submitted."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "System error."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
+        try { await updateDoc(doc(db, "products", currentModalProductId), { reviews: arrayUnion(newReview) }); const p = products.find(x => x.id === currentModalProductId); if(!p.reviews) p.reviews = []; p.reviews.push(newReview); document.getElementById('review-text').value = ''; fileInput.value = ''; document.getElementById('star5').checked = true; renderReviews(p.reviews); render(); btn.innerText = "Submitted."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); } catch (error) { btn.innerText = "System error."; setTimeout(() => { btn.innerText = "Submit Review"; btn.disabled = false; }, 2000); }
     };
 
-    window.updateBadge = function() { let total = Object.values(window.cart).reduce((a,b)=>a+b,0); document.getElementById('nav-badge').innerText = total; }
+    function updateBadge() { 
+        let total = Object.values(cart).reduce((a,b)=>a+b,0);
+        document.getElementById('nav-badge').innerText = total; 
+    }
 
     window.applyPromo = () => {
         const input = document.getElementById('cart-promo-input').value.trim().toUpperCase(); const msg = document.getElementById('promo-msg');
-        let sub = Object.keys(window.cart).reduce((acc, id) => acc + (window.products.find(p => p.id === id)?.price || 0) * window.cart[id], 0);
-        const matchedPromo = window.allPromos.find(p => p.code === input);
-        if (matchedPromo) { if (sub < matchedPromo.minOrder) { msg.style.color = "#888"; msg.innerText = `Balance of ₹${matchedPromo.minOrder - sub} required to activate.`; window.appliedDiscount = 0; window.activePromo = null; } else { msg.style.color = "var(--amazon)"; msg.innerText = `Privilege code validated.`; window.appliedDiscount = matchedPromo.discount; window.activePromo = matchedPromo; } } else { msg.style.color = "#888"; msg.innerText = "Code not recognized."; window.appliedDiscount = 0; window.activePromo = null; }
+        let sub = Object.keys(cart).reduce((acc, id) => acc + (products.find(p => p.id === id)?.price || 0) * cart[id], 0);
+        const matchedPromo = allPromos.find(p => p.code === input);
+        if (matchedPromo) { if (sub < matchedPromo.minOrder) { msg.style.color = "#888"; msg.innerText = `Balance of ₹${matchedPromo.minOrder - sub} required to activate.`; appliedDiscount = 0; activePromo = null; } else { msg.style.color = "var(--amazon)"; msg.innerText = `Privilege code validated.`; appliedDiscount = matchedPromo.discount; activePromo = matchedPromo; } } else { msg.style.color = "#888"; msg.innerText = "Code not recognized."; appliedDiscount = 0; activePromo = null; }
         window.renderCart();
     };
 
-    window.updateCartQty = (id, newQty) => { let qty = parseInt(newQty); if(qty > 0) { window.cart[id] = qty; } else { delete window.cart[id]; } window.render(); window.updateBadge(); window.renderCart(); };
-    window.removeFromCart = (id) => { delete window.cart[id]; window.render(); window.updateBadge(); window.renderCart(); };
+    window.updateCartQty = (id, newQty) => { let qty = parseInt(newQty); if(qty > 0) { cart[id] = qty; } else { delete cart[id]; } render(); updateBadge(); window.renderCart(); };
+    window.removeFromCart = (id) => { delete cart[id]; render(); updateBadge(); window.renderCart(); };
 
     window.renderCart = function() {
         const list = document.getElementById('cart-list'); list.innerHTML = ''; let sub = 0; let count = 0;
-        for(let id in window.cart) { 
-            const p = window.products.find(x => x.id === id); 
+        for(let id in cart) { 
+            const p = products.find(x => x.id === id); 
             if(p) { 
-                sub += p.price * window.cart[id]; count += window.cart[id]; 
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid rgba(212, 175, 55, 0.2); padding-bottom:20px; font-family:'Segoe UI',sans-serif;">
-                    <div style="flex:1;"><b style="color:var(--text); font-size:1.05rem; display:block; font-weight:normal; letter-spacing:0.5px;">${p.name}</b><span style="color:#888; font-size:0.85rem; letter-spacing:1px; margin-top:4px; display:inline-block;">Value: ₹${p.price}</span></div>
-                    <div style="display:flex; align-items:center; gap:15px;"><input type="number" value="${window.cart[id]}" onchange="window.updateCartQty('${p.id}', this.value)" style="width:50px; padding:8px; margin:0; text-align:center; border:1px solid rgba(212, 175, 55, 0.4); border-radius:4px; background:var(--bg); transition:0.3s;"><span style="font-weight:600; min-width:60px; text-align:right; font-size:1.05rem;">₹${p.price*window.cart[id]}</span><button onclick="window.removeFromCart('${p.id}')" style="background:none; border:none; color:#999; font-size:1.4rem; cursor:pointer; transition:0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='#999'">&times;</button></div>
+                sub += p.price * cart[id]; count += cart[id]; 
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px; font-family:'Segoe UI',sans-serif;">
+                    <div style="flex:1;"><b style="color:var(--text); font-size:0.95rem; display:block; font-weight:normal;">${p.name}</b><span style="color:#777; font-size:0.8rem;">Value: ₹${p.price}</span></div>
+                    <div style="display:flex; align-items:center; gap:12px;"><input type="number" value="${cart[id]}" onchange="updateCartQty('${p.id}', this.value)" style="width:45px; padding:6px; margin:0; text-align:center; border:1px solid var(--border); border-radius:4px; background:var(--bg);"><span style="font-weight:600; min-width:60px; text-align:right;">₹${p.price*cart[id]}</span><button onclick="removeFromCart('${p.id}')" style="background:none; border:none; color:#999; font-size:1.2rem; cursor:pointer;">&times;</button></div>
                 </div>`; 
             } 
         }
@@ -1205,17 +1424,20 @@
             document.getElementById('vip-discount-row').classList.add('hidden');
         }
 
-        const discountedSubtotal = sub - vipDiscountAmount - window.appliedDiscount;
+        const discountedSubtotal = sub - vipDiscountAmount - appliedDiscount;
         
         let isNashik = false; 
         const cityField = document.getElementById('f-city');
         if(cityField) {
             const cityVal = cityField.value.toLowerCase().replace(/\s/g, '');
-            const targetCity = (window.dynamicBilling.localCity || "nashik").toLowerCase().replace(/\s/g, '');
-            if(cityVal !== "" && targetCity !== "" && (cityVal === targetCity || cityVal.includes(targetCity))) { isNashik = true; }
+            const targetCity = (dynamicBilling.localCity || "nashik").toLowerCase().replace(/\s/g, '');
+            
+            if(cityVal !== "" && targetCity !== "" && (cityVal === targetCity || cityVal.includes(targetCity))) { 
+                isNashik = true; 
+            }
         }
 
-        let handlingFee = sub > 0 ? window.dynamicBilling.handling : 0;
+        let handlingFee = sub > 0 ? dynamicBilling.handling : 0;
         const payMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
         const codWarning = document.getElementById('cod-warning');
         const checkoutBtn = document.querySelector('#order-form .btn-buy');
@@ -1223,34 +1445,44 @@
         if (payMode === 'cod') {
             if (discountedSubtotal < 399) {
                 if(codWarning) codWarning.style.display = 'block';
-                checkoutBtn.disabled = true; checkoutBtn.style.opacity = '0.5'; checkoutBtn.innerText = 'Minimum ₹399 required';
+                checkoutBtn.disabled = true;
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.innerText = 'Minimum ₹399 required';
             } else {
                 if(codWarning) codWarning.style.display = 'none';
-                checkoutBtn.disabled = false; checkoutBtn.style.opacity = '1';
-                handlingFee = 55; checkoutBtn.innerText = 'Finalize Logistics';
+                checkoutBtn.disabled = false;
+                checkoutBtn.style.opacity = '1';
+                handlingFee = 55; 
+                checkoutBtn.innerText = 'Finalize COD Order';
             }
         } else {
             if(codWarning) codWarning.style.display = 'none';
-            checkoutBtn.disabled = false; checkoutBtn.style.opacity = '1'; checkoutBtn.innerText = 'Complete Secure Purchase';
+            checkoutBtn.disabled = false;
+            checkoutBtn.style.opacity = '1';
+            checkoutBtn.innerText = 'Complete Secure Purchase';
         }
         
-        const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (window.dynamicBilling.gst / 100)) : 0; 
-        const isFreeShipping = (discountedSubtotal >= window.dynamicBilling.threshold || count >= 5 || window.isUserVIP || isNashik); 
-        const shippingFee = (isFreeShipping || sub === 0) ? 0 : window.dynamicBilling.shipping;
+        const gstFee = sub > 0 ? Math.floor(discountedSubtotal * (dynamicBilling.gst / 100)) : 0; 
+        const isFreeShipping = (discountedSubtotal >= dynamicBilling.threshold || count >= 5 || window.isUserVIP || isNashik); 
+        const shippingFee = (isFreeShipping || sub === 0) ? 0 : dynamicBilling.shipping;
 
         document.getElementById('subtotal').innerText = sub;
-        if(window.appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = window.appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
-        document.getElementById('gst-label').innerText = window.dynamicBilling.gst;
+        if(appliedDiscount > 0) { document.getElementById('discount-row').classList.remove('hidden'); document.getElementById('discount-amt').innerText = appliedDiscount; } else { document.getElementById('discount-row').classList.add('hidden'); }
+        
+        document.getElementById('gst-label').innerText = dynamicBilling.gst;
         document.getElementById('handling-fee').innerText = `₹${handlingFee}`;
         document.getElementById('gst-fee').innerText = `₹${gstFee}`;
         
         if (isNashik && sub > 0) {
-            const localName = window.dynamicBilling.localCity ? window.dynamicBilling.localCity.toUpperCase() : "LOCAL";
-            document.getElementById('ship-fee').innerText = `COMPLIMENTARY (${localName})`; document.getElementById('ship-fee').style.color = "var(--amazon)";
+            const localName = dynamicBilling.localCity ? dynamicBilling.localCity.toUpperCase() : "LOCAL";
+            document.getElementById('ship-fee').innerText = `COMPLIMENTARY (${localName})`;
+            document.getElementById('ship-fee').style.color = "var(--amazon)";
         } else if (isFreeShipping && sub > 0) {
-            document.getElementById('ship-fee').innerText = "COMPLIMENTARY"; document.getElementById('ship-fee').style.color = "var(--amazon)";
+            document.getElementById('ship-fee').innerText = "COMPLIMENTARY";
+            document.getElementById('ship-fee').style.color = "var(--amazon)";
         } else {
-            document.getElementById('ship-fee').innerText = `₹${shippingFee}`; document.getElementById('ship-fee').style.color = "var(--text)";
+            document.getElementById('ship-fee').innerText = `₹${shippingFee}`;
+            document.getElementById('ship-fee').style.color = "var(--text)";
         }
         
         const finalTotal = discountedSubtotal + handlingFee + gstFee + shippingFee;
@@ -1262,117 +1494,251 @@
         const btn = document.querySelector('#order-form .btn-buy'); 
 
         const finalTotal = parseInt(document.getElementById('total').innerText);
-        if (finalTotal < 1 || isNaN(finalTotal)) { alert("Cart must contain valid items to proceed."); return; }
+        if (finalTotal < 1 || isNaN(finalTotal)) {
+            alert("Cart must contain valid items to proceed.");
+            return;
+        }
 
         // 🔥 GUEST CHECKOUT INTERCEPT 🔥
         if (!window.currentUser) { 
-            window.showBeautifulAlert("Please sign in to secure your order.", "🔒"); 
-            return window.login(); 
+            if(window.showBeautifulAlert) window.showBeautifulAlert("Please sign in to complete your purchase.", "🔒");
+            window.login(); 
+            return; 
         }
 
-        btn.innerText = "Securing link..."; btn.disabled = true;
+        btn.innerText = "Securing link..."; 
+        btn.disabled = true;
 
         const d = { name: document.getElementById('f-name').value, phone: document.getElementById('f-phone').value, flat: document.getElementById('f-flat').value, bldg: document.getElementById('f-bldg').value, addr: document.getElementById('f-address').value, city: document.getElementById('f-city').value, pin: document.getElementById('f-pin').value };
-        const handlingFee = document.getElementById('handling-fee').innerText; const gstFee = document.getElementById('gst-fee').innerText; const shipFee = document.getElementById('ship-fee').innerText;
+        
+        const handlingFee = document.getElementById('handling-fee').innerText;
+        const gstFee = document.getElementById('gst-fee').innerText;
+        const shipFee = document.getElementById('ship-fee').innerText;
+
         let orderSummary = ""; let fullAddress = `${d.flat}, ${d.bldg}, ${d.addr}, ${d.city} - ${d.pin}`;
-        for(let id in window.cart) { const p = window.products.find(x => x.id === id); orderSummary += `${p.name} (x${window.cart[id]}), `; }
+        for(let id in cart) { const p = products.find(x => x.id === id); orderSummary += `${p.name} (x${cart[id]}), `; }
+        
         orderSummary += ` | [Fees -> Handling: ${handlingFee}, GST: ${gstFee}, Shipping: ${shipFee}]`;
 
         const selectedPayMode = document.querySelector('input[name="pay_mode"]:checked')?.value || 'prepaid';
+
         if (selectedPayMode === 'cod') {
             const codMsg = `[COD PROCUREMENT]\n\nPatient: ${d.name}\nValue to Remit: ₹${finalTotal} (Cash)\nTerms: Cash on Delivery\n\n[DISPATCH]\n${orderSummary}`;
-            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: window.cart }); } catch(e){}
+            
+            try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: cart }); } catch(e){}
+
             window.open(`https://wa.me/918080926195?text=${encodeURIComponent(codMsg)}`);
-            window.cart = {}; window.updateBadge(); window.renderCart(); window.closeCart(); btn.innerText = 'Finalize Logistics'; btn.disabled = false; return; 
+            
+            cart = {}; updateBadge(); window.renderCart(); window.closeCart();
+            btn.innerText = 'Finalize COD Order';
+            btn.disabled = false;
+            return; 
         }
 
         var options = {
-            "key": "rzp_live_SeWOakhF098GMI", "amount": finalTotal * 100, "currency": "INR", "name": "Ayursiddhit Naturals", "image": "logo.png",
+            "key": "rzp_live_SeWOakhF098GMI", 
+            "amount": finalTotal * 100, 
+            "currency": "INR", 
+            "name": "Ayursiddhit Naturals", 
+            "image": "logo.png",
             "handler": async function (response) {
                 btn.innerText = "Transaction Complete";
                 let msg = `[PREPAID PROCUREMENT]\n\nID: ${response.razorpay_payment_id}\nPatient: ${d.name}\nRemitted: ₹${finalTotal}\n\nRouting: ${fullAddress}`;
-                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: window.cart }); } catch(err) { }
-                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); window.cart = {}; window.updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Purchase"; btn.disabled = false;
+                try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: cart }); } catch(err) { }
+                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Purchase"; btn.disabled = false;
             },
-            "prefill": { "name": d.name, "contact": d.phone }, "theme": { "color": "#0f3d14" },
-            "modal": { "ondismiss": function(){ btn.innerText = "Complete Secure Purchase"; btn.disabled = false; } }
+            "prefill": { "name": d.name, "contact": d.phone }, 
+            "theme": { "color": "#0f3d14" },
+            "modal": {
+                "ondismiss": function(){
+                    btn.innerText = "Complete Secure Purchase";
+                    btn.disabled = false;
+                }
+            }
         };
+
         var rzp1 = new Razorpay(options); 
-        rzp1.on('payment.failed', function (response){ alert("Transaction voided.\nCode: " + response.error.reason); btn.innerText = "Complete Secure Purchase"; btn.disabled = false; });
+        rzp1.on('payment.failed', function (response){
+            alert("Transaction voided.\nCode: " + response.error.reason);
+            btn.innerText = "Complete Secure Purchase"; 
+            btn.disabled = false;
+        });
+
         rzp1.open();
     };
 
-    let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 4500);
+    let slideIndex = 0; setInterval(() => { const track = document.getElementById('slide-track'); if(track) { slideIndex++; if(slideIndex >= 3) slideIndex = 0; track.style.transform = `translateX(-${slideIndex * 33.333}%)`; } }, 4000);
+
+    load();
     
-    // 🔥 Start the app!
-    window.load();
-    
-    setTimeout(async () => { try { const ref = doc(db, "settings", "analytics"); const snap = await getDoc(ref); if(snap.exists()) { await updateDoc(ref, { visitors: (snap.data().visitors || 0) + 1 }); } else { await setDoc(ref, { visitors: 1, clicks: 0 }); } } catch(e) {} }, 4000); 
-    document.addEventListener('click', async (e) => { if(e.target.closest('.product-item') || e.target.closest('.slide-card')) { try { const ref = doc(db, "settings", "analytics"); const snap = await getDoc(ref); if(snap.exists()) { await updateDoc(ref, { clicks: (snap.data().clicks || 0) + 1 }); } } catch(err) {} } });
+    setTimeout(async () => {
+        try {
+            const ref = doc(db, "settings", "analytics");
+            const snap = await getDoc(ref);
+            if(snap.exists()) {
+                await updateDoc(ref, { visitors: (snap.data().visitors || 0) + 1 });
+            } else {
+                await setDoc(ref, { visitors: 1, clicks: 0 });
+            }
+        } catch(e) {}
+    }, 4000); 
+
+    document.addEventListener('click', async (e) => {
+        if(e.target.closest('.product-item') || e.target.closest('.slide-card')) {
+            try {
+                const ref = doc(db, "settings", "analytics");
+                const snap = await getDoc(ref);
+                if(snap.exists()) {
+                    await updateDoc(ref, { clicks: (snap.data().clicks || 0) + 1 });
+                }
+            } catch(err) {}
+        }
+    });
 
     setTimeout(async () => {
         try {
             const snap = await getDoc(doc(db, "settings", "promos"));
             if(snap.exists()) {
-                const promos = snap.data().codes || []; const banner = document.getElementById('live-promo-banner');
-                if(banner) { if(promos.length > 0) { const codeNames = promos.map(p => p.code).join(" & "); banner.innerHTML = `<div class="scrolling-text">Unlock privileges with code ${codeNames}</div>`; banner.style.display = 'block'; } else { banner.style.display = 'none'; } }
+                const promos = snap.data().codes || [];
+                const banner = document.getElementById('live-promo-banner');
+                if(banner) {
+                    if(promos.length > 0) {
+                        const codeNames = promos.map(p => p.code).join(" & ");
+                        banner.innerHTML = `<div class="scrolling-text">Unlock privileges with code ${codeNames}</div>`;
+                        banner.style.display = 'block'; 
+                    } else {
+                        banner.style.display = 'none'; 
+                    }
+                }
             }
         } catch(e) {}
     }, 1000);
 
     let customerPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); customerPrompt = e; const popup = document.getElementById('customer-install-popup'); if(popup) popup.style.display = 'block'; });
-    window.installCustomerApp = async () => { if (customerPrompt) { customerPrompt.prompt(); const { outcome } = await customerPrompt.userChoice; customerPrompt = null; document.getElementById('customer-install-popup').style.display = 'none'; } };
-    window.closeCustomerPopup = () => { document.getElementById('customer-install-popup').style.display = 'none'; }; 
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        customerPrompt = e;
+        const popup = document.getElementById('customer-install-popup');
+        if(popup) popup.style.display = 'block';
+    });
+
+    window.installCustomerApp = async () => {
+        if (customerPrompt) {
+            customerPrompt.prompt();
+            const { outcome } = await customerPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('App deployed.');
+            }
+            customerPrompt = null;
+            document.getElementById('customer-install-popup').style.display = 'none';
+        }
+    };
+
+    window.closeCustomerPopup = () => {
+        document.getElementById('customer-install-popup').style.display = 'none';
+    }; 
 
     window.showBeautifulAlert = function(message, icon = '🎓') {
-        const existing = document.getElementById('custom-pw-alert'); if(existing) existing.remove();
-        const alertBox = document.createElement('div'); alertBox.id = 'custom-pw-alert';
-        alertBox.innerHTML = `<div style="display:flex; align-items:center; gap:15px;"><span style="font-size:1.8rem;">${icon}</span><span style="font-weight:normal; font-size:1rem; font-family:'Segoe UI',sans-serif; letter-spacing:0.5px;">${message}</span></div>`;
-        Object.assign(alertBox.style, { position: 'fixed', bottom: '90px', left: '50%', transform: 'translateX(-50%) translateY(50px)', background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)', color: 'var(--text)', border: '1px solid rgba(212,175,55,0.4)', padding: '16px 30px', borderRadius: '4px', boxShadow: '0 15px 40px rgba(0,0,0,0.1)', zIndex: '9999', opacity: '0', transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)', width: 'max-content', maxWidth: '90%' });
+        const existing = document.getElementById('custom-pw-alert');
+        if(existing) existing.remove();
+
+        const alertBox = document.createElement('div');
+        alertBox.id = 'custom-pw-alert';
+        alertBox.innerHTML = `
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.6rem;">${icon}</span>
+                <span style="font-weight:normal; font-size:0.95rem; font-family:'Segoe UI',sans-serif;">${message}</span>
+            </div>
+        `;
+        
+        Object.assign(alertBox.style, {
+            position: 'fixed', bottom: '85px', left: '50%', transform: 'translateX(-50%) translateY(50px)',
+            background: 'var(--card-bg)', color: 'var(--text)', border: '1px solid var(--border)',
+            padding: '12px 24px', borderRadius: '4px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+            zIndex: '9999', opacity: '0', transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            width: 'max-content', maxWidth: '90%'
+        });
+
         document.body.appendChild(alertBox);
-        setTimeout(() => { alertBox.style.transform = 'translateX(-50%) translateY(0)'; alertBox.style.opacity = '1'; }, 10);
-        setTimeout(() => { alertBox.style.transform = 'translateX(-50%) translateY(50px)'; alertBox.style.opacity = '0'; setTimeout(() => alertBox.remove(), 500); }, 3500); 
+
+        setTimeout(() => {
+            alertBox.style.transform = 'translateX(-50%) translateY(0)';
+            alertBox.style.opacity = '1';
+        }, 10);
+
+        setTimeout(() => {
+            alertBox.style.transform = 'translateX(-50%) translateY(50px)';
+            alertBox.style.opacity = '0';
+            setTimeout(() => alertBox.remove(), 400);
+        }, 3000); 
     };
 
     window.loadLMSBatches = async () => {
-        const unlockedContainer = document.getElementById('student-unlocked-batches-grid'); if(!unlockedContainer) return;
-        unlockedContainer.innerHTML = "<div style='text-align:center; padding: 40px;'><h3 style='color:var(--text); font-weight:normal; font-size:1.2rem; letter-spacing:1px;'>Accessing archives...</h3></div>";
+        const unlockedContainer = document.getElementById('student-unlocked-batches-grid');
+        if(!unlockedContainer) return;
+
+        unlockedContainer.innerHTML = "<div style='text-align:center; padding: 30px;'><h3 style='color:var(--text); font-weight:normal;'>Accessing archives...</h3></div>";
+
         try {
             const snap = await getDocs(collection(db, "Batches"));
-            let unlockedHtml = ""; let storeHtml = "<div style='margin-top: 40px;'><h3 style='color:var(--text); padding-bottom: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); font-weight:normal; font-style:italic; font-size:1.4rem;'>Available Regimens</h3></div>";
-            const isVIP = window.isUserVIP === true; const uid = window.currentUser ? window.currentUser.uid : null;
-            if (snap.empty) { unlockedContainer.innerHTML = storeHtml + "<p style='color:#888; text-align:center; padding: 30px; font-family: \"Segoe UI\", sans-serif; letter-spacing:1px; text-transform:uppercase; font-size:0.85rem;'>No clinical regimens listed currently.</p>"; return; }
+            let unlockedHtml = "";
+            let storeHtml = "<div style='margin-top: 30px;'><h3 style='color:var(--text); padding-bottom: 10px; border-bottom: 1px solid var(--border); font-weight:normal; font-style:italic;'>Available Regimens</h3></div>";
+            
+            const isVIP = window.isUserVIP === true;
+            const uid = window.currentUser ? window.currentUser.uid : null;
+
+            if (snap.empty) {
+                unlockedContainer.innerHTML = storeHtml + "<p style='color:#888; text-align:center; padding: 20px; font-family: \"Segoe UI\", sans-serif;'>No clinical regimens listed currently.</p>"; 
+                return;
+            }
+
             snap.forEach(doc => {
                 try {
-                    const data = doc.data(); const batchId = doc.id;
+                    const data = doc.data(); 
+                    const batchId = doc.id;
                     const enrolledArr = Array.isArray(data.enrolledStudents) ? data.enrolledStudents : [];
-                    const isEnrolled = uid && enrolledArr.includes(uid); const safeTitle = String(data.title || "Course").replace(/'/g, "\\'");
+                    const isEnrolled = uid && enrolledArr.includes(uid);
+                    const safeTitle = String(data.title || "Course").replace(/'/g, "\\'");
+
                     let actionButton = "";
-                    if (isEnrolled) { actionButton = `<button onclick="window.openBatchLibrary('${batchId}', '${safeTitle}')" class="btn-cart" style="width: 100%; padding: 16px; font-weight: 600; cursor: pointer; letter-spacing:2px;">Open Materials</button>`; } 
-                    else if (isVIP) { actionButton = `<button onclick="window.enrollVIP('${batchId}')" class="btn-buy" style="width: 100%; padding: 16px; font-weight: 600; cursor: pointer; background: var(--gold); color: var(--text); border: 1px solid var(--gold); letter-spacing:2px;">Grant Access</button>`; } 
-                    else { actionButton = `<button onclick="window.payForBatch('${batchId}', '${safeTitle}', ${data.price || 0})" class="btn-buy" style="width: 100%; padding: 16px; font-weight: 600; cursor: pointer; letter-spacing:2px;">Procure - ₹${data.price || 0}</button>`; }
+                    if (isEnrolled) {
+                        actionButton = `<button onclick="window.openBatchLibrary('${batchId}', '${safeTitle}')" class="btn-cart" style="width: 100%; padding: 12px; font-weight: 600; cursor: pointer;">Open Materials</button>`;
+                    } else if (isVIP) {
+                        actionButton = `<button onclick="window.enrollVIP('${batchId}')" class="btn-buy" style="width: 100%; padding: 12px; font-weight: 600; cursor: pointer; background: var(--gold); color: var(--text); border: 1px solid var(--gold);">Grant Access</button>`;
+                    } else {
+                        actionButton = `<button onclick="window.payForBatch('${batchId}', '${safeTitle}', ${data.price || 0})" class="btn-buy" style="width: 100%; padding: 12px; font-weight: 600; cursor: pointer;">Procure - ₹${data.price || 0}</button>`;
+                    }
+
                     const cardHtml = `
-                        <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
-                            <img src="${data.bannerUrl || 'logo.png'}" style="width: 100%; height: 160px; object-fit: cover;">
-                            <div style="padding: 25px;">
+                        <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                            <img src="${data.bannerUrl || 'logo.png'}" style="width: 100%; height: 140px; object-fit: cover;">
+                            <div style="padding: 20px;">
                                 <div style="display:flex; justify-content:space-between; align-items:start;">
-                                    <h3 style="margin: 0 0 15px 0; color: var(--text); font-size: 1.25rem; font-weight: normal; line-height:1.4;">${data.title || 'Unnamed Regimen'}</h3>
-                                    ${isEnrolled ? '<span style="background:var(--bg); color:var(--text); padding:6px 12px; border-radius:4px; font-size:0.7rem; font-weight:normal; text-transform:uppercase; border:1px solid rgba(212,175,55,0.4); letter-spacing:1px;">Active</span>' : ''}
+                                    <h3 style="margin: 0 0 15px 0; color: var(--text); font-size: 1.1rem; font-weight: normal;">${data.title || 'Unnamed Regimen'}</h3>
+                                    ${isEnrolled ? '<span style="background:var(--bg); color:var(--text); padding:4px 8px; border-radius:4px; font-size:0.7rem; font-weight:normal; text-transform:uppercase; border:1px solid var(--border);">Active</span>' : ''}
                                 </div>
-                                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 15px; margin-bottom: 25px; font-family:'Segoe UI',sans-serif;">
-                                    <p style="margin: 0 0 10px 0; font-size: 0.85rem; color: #888; letter-spacing:0.5px;">Commences: <b style="color:var(--text); font-weight:normal;">${data.Workshop_start || 'TBA'}</b></p>
-                                    <p style="margin: 0 0 0 0; font-size: 0.85rem; color: #888; letter-spacing:0.5px;">Closure: <b style="color:var(--text); font-weight:normal;">${data.RegClose || 'TBA'}</b></p>
+                                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 12px; margin-bottom: 20px; font-family:'Segoe UI',sans-serif;">
+                                    <p style="margin: 0 0 8px 0; font-size: 0.8rem; color: #777;">Commences: <b style="color:var(--text); font-weight:normal;">${data.Workshop_start || 'TBA'}</b></p>
+                                    <p style="margin: 0 0 0 0; font-size: 0.8rem; color: #777;">Closure: <b style="color:var(--text); font-weight:normal;">${data.RegClose || 'TBA'}</b></p>
                                 </div>
-                                <p style="margin: 0 0 25px 0; font-size: 1.2rem; font-weight:600; color: var(--text); font-family:'Segoe UI',sans-serif; letter-spacing:1px;">₹${data.price || 0}</p>
+                                <p style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight:600; color: var(--text); font-family:'Segoe UI',sans-serif;">₹${data.price || 0}</p>
                                 ${actionButton}
                             </div>
-                        </div>`;
-                    if (isEnrolled) { unlockedHtml += cardHtml; } else { storeHtml += cardHtml; }
+                        </div>
+                    `;
+
+                    if (isEnrolled) {
+                        unlockedHtml += cardHtml;
+                    } else {
+                        storeHtml += cardHtml;
+                    }
                 } catch(loopErr) {}
             }); 
-            unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center; padding:30px; text-transform:uppercase; font-size:0.85rem; letter-spacing:1px; font-family:\"Segoe UI\",sans-serif;'>No regimens available.</p>";
-        } catch (error) { unlockedContainer.innerHTML = `<div style="text-align:center; padding:30px;"><h3 style="color:var(--text); font-weight:normal;">System Error</h3><p style="color:#888;">${error.message}</p></div>`; }
+
+            unlockedContainer.innerHTML = (unlockedHtml + storeHtml) || "<p style='color:#888; text-align:center;'>No regimens available.</p>";
+        } catch (error) { 
+            unlockedContainer.innerHTML = `<div style="text-align:center; padding:20px;"><h3 style="color:var(--text);">System Error</h3><p style="color:#888;">${error.message}</p></div>`;
+        }
     };
 
     setTimeout(window.loadLMSBatches, 1500);
@@ -1380,44 +1746,69 @@
     window.openBatchLibrary = async (batchId, batchTitle) => {
         let modal = document.getElementById('pw-library-modal');
         if(!modal) {
-            modal = document.createElement('div'); modal.id = 'pw-library-modal';
-            modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(250,249,246,0.95); backdrop-filter:blur(10px); z-index:9999; overflow-y:auto; display:none; flex-direction:column;";
+            modal = document.createElement('div');
+            modal.id = 'pw-library-modal';
+            modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; overflow-y:auto; display:none; flex-direction:column;";
             document.body.appendChild(modal);
         }
+
         modal.innerHTML = `
-            <div style="background:var(--card-bg); padding:25px; position:sticky; top:0; z-index:10; border-bottom:1px solid rgba(212,175,55,0.3); display:flex; align-items:center; gap:20px; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-                <button onclick="document.getElementById('pw-library-modal').style.display='none'" style="background:transparent; border:1px solid var(--border); border-radius:50%; width:45px; height:45px; font-size:1.5rem; display:flex; align-items:center; justify-content:center; color:#888; cursor:pointer; transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.color='var(--text)'; this.style.borderColor='rgba(212,175,55,0.5)'" onmouseout="this.style.color='#888'; this.style.borderColor='var(--border)'">&times;</button>
-                <div><h2 style="margin:0; color:var(--text); font-size:1.4rem; font-weight:normal;">${batchTitle}</h2><p style="margin:4px 0 0 0; color:#888; font-size:0.85rem; font-family:'Segoe UI',sans-serif; text-transform:uppercase; letter-spacing:1.5px;">Clinical Archive</p></div>
+            <div style="background:var(--card-bg); padding:20px; position:sticky; top:0; z-index:10; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                <button onclick="document.getElementById('pw-library-modal').style.display='none'" style="background:transparent; border:none; width:40px; height:40px; font-size:1.2rem; display:flex; align-items:center; justify-content:center; color:#999; cursor:pointer;">&times;</button>
+                <div>
+                    <h2 style="margin:0; color:var(--text); font-size:1.2rem; font-weight:normal;">${batchTitle}</h2>
+                    <p style="margin:2px 0 0 0; color:#777; font-size:0.8rem; font-family:'Segoe UI',sans-serif;">Clinical Archive</p>
+                </div>
             </div>
-            <div id="library-folders-container" style="padding:30px; display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:25px; max-width:1200px; margin:0 auto; width:100%; box-sizing:border-box;">
-                <div style="grid-column:1/-1; text-align:center; padding:60px 20px;"><h3 style="color:var(--text); font-weight:normal; font-size:1.2rem; letter-spacing:1px;">Indexing...</h3></div>
-            </div>`;
+            <div id="library-folders-container" style="padding:25px; display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:20px;">
+                <div style="grid-column:1/-1; text-align:center; padding:40px 20px;">
+                    <h3 style="color:var(--text); font-weight:normal;">Indexing...</h3>
+                </div>
+            </div>
+        `;
         modal.style.display = 'flex';
+
         try {
-            const snap = await getDocs(collection(db, "Batches", batchId, "Folders")); const container = document.getElementById('library-folders-container');
-            if(snap.empty) { container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:80px 20px;"><h3 style="color:var(--text); margin-top:20px; font-weight:normal; font-size:1.4rem;">Archive Empty</h3><p style="color:#888; font-family:'Segoe UI',sans-serif; font-size:0.95rem; line-height:1.6; max-width:400px; margin:15px auto 0 auto;">Documents are currently pending upload from the practitioner.</p></div>`; return; }
+            const snap = await getDocs(collection(db, "Batches", batchId, "Folders"));
+            const container = document.getElementById('library-folders-container');
+            
+            if(snap.empty) {
+                container.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:50px 20px;">
+                        <h3 style="color:var(--text); margin-top:15px; font-weight:normal;">Archive Empty</h3>
+                        <p style="color:#888; font-family:'Segoe UI',sans-serif;">Documents are currently pending upload from the practitioner.</p>
+                    </div>
+                `;
+                return;
+            }
+
             let foldersHtml = "";
             snap.forEach(doc => {
                 const fData = doc.data();
                 foldersHtml += `
-                    <div onclick="window.showBeautifulAlert('Accessing ${fData.title || doc.id}...', '📄')" style="background:var(--card-bg); border:1px solid var(--border); border-radius:4px; padding:40px 20px; text-align:center; cursor:pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow:0 10px 30px rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(212,175,55,0.4)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.06)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.02)'">
-                        <h4 style="margin:0; color:var(--text); font-size:1.15rem; font-weight:normal; line-height:1.4;">${fData.title || doc.id}</h4>
-                        <p style="margin:15px 0 0 0; color:#888; font-size:0.75rem; text-transform:uppercase; letter-spacing:1.5px; font-family:'Segoe UI',sans-serif;">Open Directory</p>
-                    </div>`;
+                    <div onclick="window.showBeautifulAlert('Accessing ${fData.title || doc.id}...', '📄')" style="background:var(--card-bg); border:1px solid var(--border); border-radius:4px; padding:30px 15px; text-align:center; cursor:pointer; transition: transform 0.2s; box-shadow:0 4px 15px rgba(0,0,0,0.02);">
+                        <h4 style="margin:0; color:var(--text); font-size:1.05rem; font-weight:normal;">${fData.title || doc.id}</h4>
+                        <p style="margin:10px 0 0 0; color:#999; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; font-family:'Segoe UI',sans-serif;">Open Directory</p>
+                    </div>
+                `;
             });
             container.innerHTML = foldersHtml;
-        } catch(error) { document.getElementById('library-folders-container').innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;"><h3 style="color:var(--text); font-weight:normal;">System Error</h3><p style="color:#888; font-family:'Segoe UI',sans-serif;">${error.message}</p></div>`; }
+        } catch(error) {
+            document.getElementById('library-folders-container').innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;"><h3 style="color:var(--text); font-weight:normal;">System Error</h3><p style="color:#888;">${error.message}</p></div>`;
+        }
     };
 
     window.payForBatch = async (batchId, title, amount) => {
         if(!window.currentUser) { window.showBeautifulAlert("Authentication required prior to procurement.", "🔒"); return window.login(); }
+
         var options = {
             "key": "rzp_live_SeWOakhFO9BGMI", "amount": amount * 100, "currency": "INR", "name": "Ayursiddhit Naturals", "description": "Enrollment: " + title,
             "handler": async function (response) {
                 window.showBeautifulAlert("Transaction approved.", "✓");
                 try {
                     await updateDoc(doc(db, "Batches", batchId), { enrolledStudents: arrayUnion(window.currentUser.uid) });
-                    window.loadLMSBatches(); setTimeout(() => window.showBeautifulAlert("Regimen transferred to active archive.", "📄"), 2000);
+                    window.loadLMSBatches();
+                    setTimeout(() => window.showBeautifulAlert("Regimen transferred to active archive.", "📄"), 2000);
                 } catch(e) { window.showBeautifulAlert("System Error: " + e.message, "✕"); }
             },
             "theme": { "color": "#0f3d14" }
@@ -1427,60 +1818,112 @@
 
     window.enrollVIP = async (batchId) => {
         if(!window.currentUser) return;
-        try { await updateDoc(doc(db, "Batches", batchId), { enrolledStudents: arrayUnion(window.currentUser.uid) }); window.loadLMSBatches(); window.showBeautifulAlert("Privilege recognized. Access granted.", "✓"); } 
-        catch(e) { window.showBeautifulAlert("Error: " + e.message, "✕"); }
+        try {
+            await updateDoc(doc(db, "Batches", batchId), { enrolledStudents: arrayUnion(window.currentUser.uid) });
+            window.loadLMSBatches(); 
+            window.showBeautifulAlert("Privilege recognized. Access granted.", "✓");
+        } catch(e) { window.showBeautifulAlert("Error: " + e.message, "✕"); }
     };
+
     setTimeout(window.loadLMSBatches, 2000);  
 
     window.switchClassTab = (tabName) => {
-        const liveSec = document.getElementById('liveClassesSection'); const upSec = document.getElementById('upcomingClassesSection');
-        const liveBtn = document.getElementById('liveTabBtn'); const upBtn = document.getElementById('upcomingTabBtn');
+        const liveSec = document.getElementById('liveClassesSection');
+        const upSec = document.getElementById('upcomingClassesSection');
+        const liveBtn = document.getElementById('liveTabBtn');
+        const upBtn = document.getElementById('upcomingTabBtn');
+        
         if (tabName === 'live') {
-            liveSec.style.display = 'block'; upSec.style.display = 'none';
-            liveBtn.style.borderBottom = '1px solid var(--text)'; liveBtn.style.color = 'var(--text)';
-            upBtn.style.borderBottom = '1px solid transparent'; upBtn.style.color = '#888';
+            liveSec.style.display = 'block';
+            upSec.style.display = 'none';
+            liveBtn.style.borderBottom = '1px solid var(--text)';
+            liveBtn.style.color = 'var(--text)';
+            upBtn.style.borderBottom = '1px solid transparent';
+            upBtn.style.color = '#888';
         } else {
-            liveSec.style.display = 'none'; upSec.style.display = 'block';
-            liveBtn.style.borderBottom = '1px solid transparent'; liveBtn.style.color = '#888';
-            upBtn.style.borderBottom = '1px solid var(--text)'; upBtn.style.color = 'var(--text)';
+            liveSec.style.display = 'none';
+            upSec.style.display = 'block';
+            liveBtn.style.borderBottom = '1px solid transparent';
+            liveBtn.style.color = '#888';
+            upBtn.style.borderBottom = '1px solid var(--text)';
+            upBtn.style.color = 'var(--text)';
         }
     };
+
     setTimeout(window.loadWorkshops, 1000);
     
     window.createMasterBatch = async () => {
         const btn = document.querySelector('button[onclick="createMasterBatch()"]');
         if(btn) { btn.innerText = "Indexing..."; btn.disabled = true; }
+
         try {
-            const title = document.getElementById('batchName').value.trim(); const fees = document.getElementById('batchPrice').value;
-            const regStart = document.getElementById('regOpen').value; const regEnd = document.getElementById('regClose').value;
-            const workStart = document.getElementById('batchStart').value; const workEnd = document.getElementById('batchEnd').value;
+            const title = document.getElementById('batchName').value.trim();
+            const fees = document.getElementById('batchPrice').value;
+            const regStart = document.getElementById('regOpen').value;
+            const regEnd = document.getElementById('regClose').value;
+            const workStart = document.getElementById('batchStart').value;
+            const workEnd = document.getElementById('batchEnd').value;
             const fileInput = document.getElementById('batchBanner');
-            if(!title || !fees || !fileInput.files[0]) { alert("Missing required fields for publication."); if(btn) { btn.innerText = "Publish Regimen"; btn.disabled = false; } return; }
+            
+            if(!title || !fees || !fileInput.files[0]) {
+                alert("Missing required fields for publication.");
+                if(btn) { btn.innerText = "Publish Regimen"; btn.disabled = false; }
+                return;
+            }
+
             const file = fileInput.files[0];
-            const formData = new FormData(); formData.append('image', file);
+            const formData = new FormData();
+            formData.append('image', file);
             const response = await fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_API_KEY, { method: 'POST', body: formData });
             const data = await response.json();
+
             if (!data.success) throw new Error("Media sync failed.");
-            await addDoc(collection(db, "Batches"), { title: title, price: Number(fees), RegOpen: regStart, RegClose: regEnd, Workshop_start: workStart, Workshop_end: workEnd, bannerUrl: data.data.url, Status: "upcoming", StreamUrl: "", enrolledStudents: [], description: "" });
+
+            await addDoc(collection(db, "Batches"), {
+                title: title, 
+                price: Number(fees), 
+                RegOpen: regStart, 
+                RegClose: regEnd,
+                Workshop_start: workStart, 
+                Workshop_end: workEnd,
+                bannerUrl: data.data.url,
+                Status: "upcoming",
+                StreamUrl: "",
+                enrolledStudents: [], 
+                description: ""
+            });
+
             alert("Master Regimen deployed to server.");
-            document.getElementById('batchName').value = ""; document.getElementById('batchPrice').value = ""; fileInput.value = "";
+            
+            document.getElementById('batchName').value = "";
+            document.getElementById('batchPrice').value = "";
+            fileInput.value = "";
+            
             if(typeof window.loadWorkshopsAdmin === 'function') window.loadWorkshopsAdmin();
             if(btn) { btn.innerText = "Publish Regimen"; btn.disabled = false; }
-        } catch (error) { console.error("Deploy Error:", error); alert("System fault: " + error.message); if(btn) { btn.innerText = "Publish Regimen"; btn.disabled = false; } }
+        } catch (error) {
+            console.error("Deploy Error:", error);
+            alert("System fault: " + error.message);
+            if(btn) { btn.innerText = "Publish Regimen"; btn.disabled = false; }
+        }
     };
     
     window.liveSearch = () => {
-        const query = document.getElementById('search-box').value.toLowerCase().trim(); const dropdown = document.getElementById('search-dropdown');
+        const query = document.getElementById('search-box').value.toLowerCase().trim();
+        const dropdown = document.getElementById('search-dropdown');
         if(!query) { dropdown.style.display = 'none'; return; }
-        let results = window.products.filter(p => p.name.toLowerCase().includes(query) || (p.tag && p.tag.toLowerCase().includes(query)));
-        if(results.length === 0) { dropdown.innerHTML = '<div style="padding:25px; color:#888; text-align:center; font-family:\'Segoe UI\',sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:1px;">Item unlisted</div>'; } 
-        else {
+        
+        let results = products.filter(p => p.name.toLowerCase().includes(query) || (p.tag && p.tag.toLowerCase().includes(query)));
+        
+        if(results.length === 0) {
+            dropdown.innerHTML = '<div style="padding:20px; color:#888; text-align:center; font-family:\'Segoe UI\',sans-serif; font-size:0.9rem;">Item unlisted</div>';
+        } else {
             dropdown.innerHTML = results.map(p => `
-                <div onclick="document.getElementById('search-dropdown').style.display='none'; window.openProduct('${p.id}')" style="display:flex; align-items:center; gap:18px; padding:18px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:all 0.3s ease;" onmouseover="this.style.background='rgba(212,175,55,0.03)'" onmouseout="this.style.background='transparent'">
-                    <img src="${p.image}" style="width:50px; height:50px; border-radius:4px; object-fit:cover; border:1px solid rgba(212,175,55,0.3); padding:3px; background:var(--bg);">
+                <div onclick="document.getElementById('search-dropdown').style.display='none'; openProduct('${p.id}')" style="display:flex; align-items:center; gap:15px; padding:15px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <img src="${p.image}" style="width:45px; height:45px; border-radius:4px; object-fit:cover; border:1px solid var(--border); padding:2px;">
                     <div style="flex:1;">
-                        <b style="font-size:1rem; color:var(--text); font-weight:normal;">${p.name}</b>
-                        <div style="color:#666; font-size:0.9rem; font-weight:normal; margin-top:6px; font-family:'Segoe UI',sans-serif; letter-spacing:0.5px;">₹${p.price}</div>
+                        <b style="font-size:0.95rem; color:var(--text); font-weight:normal;">${p.name}</b>
+                        <div style="color:var(--text); font-size:0.85rem; font-weight:normal; margin-top:4px; font-family:'Segoe UI',sans-serif;">₹${p.price}</div>
                     </div>
                 </div>
             `).join('');
@@ -1489,15 +1932,34 @@
     };
 
     document.addEventListener('click', (e) => {
-        if(!e.target.closest('.search-container')) { const dd = document.getElementById('search-dropdown'); if(dd) dd.style.display = 'none'; }
+        if(!e.target.closest('.search-container')) {
+            const dd = document.getElementById('search-dropdown');
+            if(dd) dd.style.display = 'none';
+        }
     });
 
     window.orderAgain = (orderId) => {
         const order = window.userOrders.find(o => o.id === orderId);
         if(order && order.cartData) {
-            window.cart = {...order.cartData}; window.updateBadge(); window.showCart(); window.showBeautifulAlert("Previous items recovered.", "✓");
-        } else { alert("Archived items could not be synced."); }
+            cart = {...order.cartData}; 
+            updateBadge();
+            window.showCart();
+            if(window.showBeautifulAlert) window.showBeautifulAlert("Previous items recovered.", "✓");
+        } else {
+            alert("Archived items could not be synced.");
+        }
     };
 </script>
+    
+<!-- 🌿 CUSTOMER APP DOWNLOAD POPUP -->
+<div id="customer-install-popup" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--bg); padding: 30px 25px; border-radius: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); z-index: 10000; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--border);">
+    <h3 style="margin: 0 0 10px 0; color: var(--text); font-weight: normal; font-size: 1.2rem;">Native Application</h3>
+    <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Segoe UI', sans-serif;">Install the Ayursiddhit Naturals environment for optimal performance and priority notifications.</p>
+    <div style="display: flex; gap: 12px; justify-content: center;">
+        <button onclick="installCustomerApp()" class="btn-buy" style="padding: 12px 20px; flex: 1;">Install</button>
+        <button onclick="closeCustomerPopup()" class="btn-cart" style="padding: 12px 20px; flex: 1;">Dismiss</button>
+    </div>
+</div>
+  
 </body>
 </html>
