@@ -537,7 +537,7 @@
             <h2 style="color:var(--text); margin: 0 0 15px 0; font-family: 'Playfair Display', serif; font-weight: normal;">Welcome, VIP</h2>
             <p style="font-size: 0.9rem; color: #666; margin-bottom: 30px; line-height: 1.6; font-family: 'Segoe UI', sans-serif;">Your private channel is open. Begin your consultation with Dr. Prasiddhi.</p>
             
-            <a href="https://wa.me/918080926195?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:16px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:20px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">
+            <a href="https://wa.me/918625825400?text=Hi%20Dr.%20Prasiddhi!%20I%20am%20an%20Ayursiddhit%20VIP%20Member%20ready%20for%20my%20monthly%20consultation.%20%E2%9C%A8" target="_blank" style="display:block; background:var(--amazon); color:var(--gold); text-decoration:none; padding:16px; border-radius:4px; font-weight:600; font-size:1rem; margin-bottom:20px; font-family: 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">
                 Open Secure Chat
             </a>
         </div>
@@ -759,7 +759,7 @@
     window.showPolicy = function(type) {
         window.resetViews(); window.showSafe('policy-view'); window.scrollTo(0, 0);
         const title = document.getElementById('policy-title'); const content = document.getElementById('policy-content');
-        if (type === 'contact') { title.innerText = "Contact"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>Dr. Prasiddhi Patil</p><p>Email: ayursiddhitnaturals@gmail.com</p><p>Direct: +91 8080926195</p>"; } 
+        if (type === 'contact') { title.innerText = "Contact"; content.innerHTML = "<p><b>Ayursiddhit Naturals</b><br>Dr. Prasiddhi Patil</p><p>Email: ayursiddhitnaturals@gmail.com</p><p>Direct: +91 8625825400</p>"; } 
         else if (type === 'refund') { title.innerText = "Refunds & Cancellations"; content.innerHTML = "<p>Due to the pure, clinical nature of our formulations, we cannot accept returns once a product has been opened.</p><p>In the event of transit damage, please contact our desk within 48 hours.</p>"; } 
         else if (type === 'terms') { title.innerText = "Terms of Service"; content.innerHTML = "<p>Access to and use of this apothecary portal is subject to the following terms. Formulations are intended for personal wellness.</p>"; }
     };
@@ -1198,7 +1198,7 @@
             "handler": async function (response) {
                 btn.innerText = "Transaction Complete";
                 let paidMsg = `[WHOLSESALE PROCUREMENT]\n\nID: ${response.razorpay_payment_id}\nPartner: ${store}\nContact: ${owner}\nPhone: ${phone}\nAddress: ${addr}, ${city} - ${pin}\n\n[INVENTORY]\n${orderSummary}\nUnits: ${totalQty}\nMargin: ${discountStr}\n\nREMITTANCE: ₹${finalGrandTotal}`;
-                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(paidMsg)}`);
+                window.open(`https://wa.me/918625825400?text=${encodeURIComponent(paidMsg)}`);
                 try { 
                     await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', total: finalGrandTotal, status: "B2B Partner", payMode: "Razorpay", date: new Date().toISOString() }); 
                 } catch(e){}
@@ -1527,7 +1527,7 @@
             
             try { await addDoc(collection(db, "orders"), { uid: window.currentUser.uid, total: finalTotal, status: "Pending COD", payMode: "COD", date: new Date().toISOString(), cartData: cart }); } catch(e){}
 
-            window.open(`https://wa.me/918080926195?text=${encodeURIComponent(codMsg)}`);
+            window.open(`https://wa.me/918625825400?text=${encodeURIComponent(codMsg)}`);
             
             cart = {}; updateBadge(); window.renderCart(); window.closeCart();
             btn.innerText = 'Finalize COD Order';
@@ -1545,7 +1545,7 @@
                 btn.innerText = "Transaction Complete";
                 let msg = `[PREPAID PROCUREMENT]\n\nID: ${response.razorpay_payment_id}\nPatient: ${d.name}\nRemitted: ₹${finalTotal}\n\nRouting: ${fullAddress}`;
                 try { await addDoc(collection(db, "orders"), { uid: window.currentUser ? window.currentUser.uid : 'guest', name: d.name, phone: d.phone, items: orderSummary, total: finalTotal, status: 'Processing', payment_id: response.razorpay_payment_id, date: new Date().toISOString(), address: fullAddress, cartData: cart }); } catch(err) { }
-                window.open(`https://wa.me/918080926195?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Purchase"; btn.disabled = false;
+                window.open(`https://wa.me/918625825400?text=${encodeURIComponent(msg)}`); cart = {}; updateBadge(); window.closeCart(); btn.innerText = "Complete Secure Purchase"; btn.disabled = false;
             },
             "prefill": { "name": d.name, "contact": d.phone }, 
             "theme": { "color": "#0f3d14" },
